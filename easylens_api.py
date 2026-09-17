@@ -85,14 +85,14 @@ class EasyLensClient:
             res = self.session.get(url, timeout=15)
             if res.status_code == 200:
                 lens = res.json()
-                bundle = lens.get("lens_bundle_data") or {}
-                archive_url = bundle.get("lens_archive_url")
+                archive_url = lens.get("download_url") or (lens.get("lens_bundle_data") or {}).get("lens_archive_url")
                 if archive_url:
                     print("[LENS GENERATED SUCCESS]")
+                    print(f"Lens Name: {lens.get('lens_name')}")
+                    print(f"Checkpoint ID: {lens.get('checkpoint_id')}")
                     print(f"Archive URL: {archive_url}")
-                    print(f"Checksum: {bundle.get('checksum')}")
-                    print(f"Preview Image: {bundle.get('preview_image_url')}")
-                    print(f"Preview Video: {bundle.get('preview_video_url')}")
+                    print(f"Checksum: {lens.get('checksum')}")
+                    print(f"Icon URL: {lens.get('lens_icon_download_url')}")
                     return lens
             time.sleep(poll_interval)
         raise TimeoutError("Lens generation polling timed out.")
@@ -119,16 +119,16 @@ class EasyLensClient:
         return data
 
     def get_publish_status(self, checkpoint_id: str, max_wait_sec: int = 120):
-        url = f"{AILC_BASE}/assistant/publish/{checkpoint_id}/status"
+        url = f"{AILC_BASE}/assistant/me/lenses?page_number=1&page_size=20&filter_by=submitted"
         start = time.time()
         while time.time() - start < max_wait_sec:
             res = self.session.get(url, timeout=15)
             if res.status_code == 200:
                 data = res.json()
-                state = data.get("state")
-                snapcode = data.get("snapcode")
-                print(f"[PUBLISH STATUS] State: {state}, Snapcode: {snapcode}")
-                if snapcode or state in ["published", "failed"]:
-                    return data
+                for item in data.get("items", []):
+                    if item.get("checkpoint_id") == checkpoint_id:
+                        status = item.get("status")
+                        print(f"[PUBLISH STATUS] Status: {status}, Lens ID: {item.get('lens_central_lens_id')}")
+                        return item
             time.sleep(4)
         return None

@@ -32,14 +32,17 @@ def main():
     print("\n=== STEP 4: POLLING FOR LENS GENERATION & VERIFICATION ===")
     lens_data = client.poll_lens(cid, max_wait_sec=180)
 
-    bundle = lens_data.get("lens_bundle_data") or {}
     checkpoint_id = lens_data.get("checkpoint_id")
+    archive_url = lens_data.get("download_url") or (lens_data.get("lens_bundle_data") or {}).get("lens_archive_url")
+    checksum = lens_data.get("checksum") or (lens_data.get("lens_bundle_data") or {}).get("checksum")
+    icon_url = lens_data.get("lens_icon_download_url")
 
     print("\n=== LENS VERIFICATION RESULTS ===")
+    print(f"Generated Lens Name: {lens_data.get('lens_name')}")
     print(f"Checkpoint ID: {checkpoint_id}")
-    print(f"Archive URL: {bundle.get('lens_archive_url')}")
-    print(f"Checksum: {bundle.get('checksum')}")
-    print(f"Preview Video: {bundle.get('preview_video_url')}")
+    print(f"Archive URL: {archive_url}")
+    print(f"Checksum: {checksum}")
+    print(f"Icon URL: {icon_url}")
 
     # Save output metadata for GHA artifact upload
     with open("generated_lens_metadata.json", "w") as f:
@@ -47,13 +50,11 @@ def main():
 
     if AUTO_PUBLISH:
         print("\n=== STEP 5: PUBLISHING LENS TO SNAPCHAT ===")
-        preview_url = bundle.get("preview_video_url") or bundle.get("preview_image_url")
-        icon_url = bundle.get("preview_image_url")
+        final_lens_name = LENS_NAME or lens_data.get("lens_name") or "Greek Myth - Cassius Oracle"
         pub_res = client.publish_lens(
             conversation_id=cid,
-            lens_name=LENS_NAME,
+            lens_name=final_lens_name,
             tags=TAGS,
-            preview_url=preview_url,
             icon_url=icon_url
         )
         print("Publish response:", pub_res)
@@ -62,8 +63,8 @@ def main():
             print("\n=== STEP 6: MONITORING SNAPCODE & PUBLISH STATUS ===")
             status_data = client.get_publish_status(checkpoint_id)
             if status_data:
-                print(f"[SUCCESS] Lens Snapcode: {status_data.get('snapcode')}")
-                print(f"[SUCCESS] Status: {status_data.get('state')}")
+                print(f"[SUCCESS] Lens ID: {status_data.get('lens_central_lens_id')}")
+                print(f"[SUCCESS] Status: {status_data.get('status')}")
                 with open("publish_status.json", "w") as f:
                     json.dump(status_data, f, indent=2)
 
