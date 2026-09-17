@@ -21,8 +21,14 @@ class EasyLensClient:
             "Authorization": f"Bearer {sso_token}",
             "Origin": "https://easylens.snapchat.com",
             "Referer": "https://easylens.snapchat.com/",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
-            "X-Snap-Client-User-Agent": "LensStudioWeb/2.56.0 PROD (Windows NT 10.0; Win64; x64) Chrome/128 Core/372 AppId/easylens.snapchat.com"
+            "User-Agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36",
+            "x-snap-client-user-agent": "LensStudioWeb/2.56.0 PROD (K; android 10) Chrome/143 Core/372 AppId/easylens.snapchat.com",
+            "sec-ch-ua": '"Quetta";v="143", "Chromium";v="143", "Not A(Brand";v="24"',
+            "sec-ch-ua-mobile": "?1",
+            "sec-ch-ua-platform": '"Android"',
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-site"
         })
         if cookie_header:
             self.session.headers["Cookie"] = cookie_header
