@@ -54,8 +54,7 @@ def main():
         pub_res = client.publish_lens(
             conversation_id=cid,
             lens_name=final_lens_name,
-            tags=TAGS,
-            icon_url=icon_url
+            tags=TAGS
         )
         print("Publish response:", pub_res)
 
