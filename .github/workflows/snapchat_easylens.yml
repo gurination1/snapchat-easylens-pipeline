@@ -44,10 +44,10 @@ jobs:
         env:
           SNAP_SSO_TOKEN: ${{ secrets.SNAP_SSO_TOKEN }}
           SNAP_COOKIE_HEADER: ${{ secrets.SNAP_COOKIE_HEADER }}
-          LENS_PROMPT: ${{ github.event.inputs.prompt || 'Create a Greek mythology lens inspired by Tiresias and Cassius: ancient marble temple ruins with glowing ethereal oracle runes, mystic golden laurel, and mythical interactive particle effects' }}
-          LENS_NAME: ${{ github.event.inputs.lens_name || 'Greek Myth - Cassius Oracle' }}
-          LENS_TAGS: ${{ github.event.inputs.tags || 'greek,mythology,cassius,oracle' }}
-          AUTO_PUBLISH: ${{ github.event.inputs.auto_publish || 'true' }}
+          LENS_PROMPT: ${{ inputs.prompt }}
+          LENS_NAME: ${{ inputs.lens_name }}
+          LENS_TAGS: ${{ inputs.tags }}
+          AUTO_PUBLISH: ${{ inputs.auto_publish }}
         run: |
           python pipeline_runner.py
 

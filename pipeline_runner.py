@@ -5,13 +5,10 @@ from easylens_api import EasyLensClient
 
 SSO_TOKEN = os.getenv("SNAP_SSO_TOKEN")
 COOKIE_HEADER = os.getenv("SNAP_COOKIE_HEADER", "")
-PROMPT = os.getenv(
-    "LENS_PROMPT",
-    "Create a Greek mythology lens inspired by Tiresias and Cassius: ancient marble temple ruins with glowing ethereal oracle runes, mystic golden laurel, and mythical interactive particle effects reacting to user facial movements"
-)
-LENS_NAME = os.getenv("LENS_NAME", "Greek Myth - Cassius Oracle")
-TAGS = [t.strip() for t in os.getenv("LENS_TAGS", "greek,mythology,cassius,oracle").split(",")]
-AUTO_PUBLISH = os.getenv("AUTO_PUBLISH", "true").lower() == "true"
+PROMPT = os.getenv("LENS_PROMPT") or "Create a Greek mythology lens inspired by Tiresias and Cassius: ancient marble temple ruins with glowing ethereal oracle runes, mystic golden laurel, and mythical interactive particle effects reacting to user facial movements"
+LENS_NAME = os.getenv("LENS_NAME") or "Greek Myth - Cassius Oracle"
+TAGS = [t.strip() for t in (os.getenv("LENS_TAGS") or "greek,mythology,cassius,oracle").split(",")]
+AUTO_PUBLISH = (os.getenv("AUTO_PUBLISH") or "true").lower() == "true"
 
 
 def main():
