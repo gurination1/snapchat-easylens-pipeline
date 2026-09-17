@@ -1,0 +1,60 @@
+name: Snapchat EasyLens Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      prompt:
+        description: 'Lens prompt / theme concept'
+        required: false
+        default: 'Create a Greek mythology lens inspired by Tiresias and Cassius: ancient marble temple ruins with glowing ethereal oracle runes, mystic golden laurel, and mythical interactive particle effects'
+      lens_name:
+        description: 'Snapchat Lens Name'
+        required: false
+        default: 'Greek Myth - Cassius Oracle'
+      tags:
+        description: 'Comma-separated tags'
+        required: false
+        default: 'greek,mythology,cassius,oracle'
+      auto_publish:
+        description: 'Publish lens to Snapchat'
+        type: boolean
+        default: true
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          pip install requests playwright
+          playwright install --with-deps chromium
+
+      - name: Run EasyLens Pipeline
+        env:
+          SNAP_SSO_TOKEN: ${{ secrets.SNAP_SSO_TOKEN }}
+          SNAP_COOKIE_HEADER: ${{ secrets.SNAP_COOKIE_HEADER }}
+          LENS_PROMPT: ${{ github.event.inputs.prompt || 'Create a Greek mythology lens inspired by Tiresias and Cassius: ancient marble temple ruins with glowing ethereal oracle runes, mystic golden laurel, and mythical interactive particle effects' }}
+          LENS_NAME: ${{ github.event.inputs.lens_name || 'Greek Myth - Cassius Oracle' }}
+          LENS_TAGS: ${{ github.event.inputs.tags || 'greek,mythology,cassius,oracle' }}
+          AUTO_PUBLISH: ${{ github.event.inputs.auto_publish || 'true' }}
+        run: |
+          python pipeline_runner.py
+
+      - name: Upload Lens Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: snapchat-lens-data
+          path: |
+            generated_lens_metadata.json
+            publish_status.json
+            *.png
