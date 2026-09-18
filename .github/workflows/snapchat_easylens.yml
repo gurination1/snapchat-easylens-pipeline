@@ -1,33 +1,38 @@
-name: Snapchat EasyLens Pipeline
+name: Snapchat EasyLens Autonomous Agent Pipeline
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
     inputs:
-      prompt:
-        description: 'Lens prompt / theme concept'
+      account_id:
+        description: 'Account Persona (1: Beasts, 2: Dance, 3: Meme, 4: Luxury 35mm, 5: Surreal)'
+        required: true
+        default: '1'
+        type: choice
+        options:
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+      use_gemini:
+        description: 'Use Gemini Autonomous Prompt Architect'
+        type: boolean
+        default: true
+      custom_instructions:
+        description: 'Optional custom instructions for Gemini'
         required: false
-        default: 'Create a Greek mythology lens inspired by Tiresias and Cassius: ancient marble temple ruins with glowing ethereal oracle runes, mystic golden laurel, and mythical interactive particle effects'
-      lens_name:
-        description: 'Snapchat Lens Name'
-        required: false
-        default: 'Greek Myth - Cassius Oracle'
-      tags:
-        description: 'Comma-separated tags'
-        required: false
-        default: 'greek,mythology,cassius,oracle'
+        default: ''
       auto_publish:
-        description: 'Publish lens to Snapchat'
+        description: 'Publish lens if 100% verified'
         type: boolean
         default: true
 
 jobs:
-  build-and-publish:
+  run-autonomous-agent:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -37,26 +42,28 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install requests playwright
-          playwright install --with-deps chromium
+          pip install requests
 
-      - name: Run EasyLens Pipeline
+      - name: Execute Autonomous Lens Pipeline & Verifier
         env:
           SNAP_SSO_TOKEN: ${{ secrets.SNAP_SSO_TOKEN }}
           SNAP_COOKIE_HEADER: ${{ secrets.SNAP_COOKIE_HEADER }}
-          LENS_PROMPT: ${{ inputs.prompt }}
-          LENS_NAME: ${{ inputs.lens_name }}
-          LENS_TAGS: ${{ inputs.tags }}
-          AUTO_PUBLISH: ${{ inputs.auto_publish }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEYS: ${{ secrets.GEMINI_API_KEYS }}
+          ACCOUNT_ID: ${{ inputs.account_id || '1' }}
+          USE_GEMINI: ${{ inputs.use_gemini != false }}
+          CUSTOM_INSTRUCTIONS: ${{ inputs.custom_instructions || '' }}
+          AUTO_PUBLISH: ${{ inputs.auto_publish != false }}
         run: |
           python pipeline_runner.py
 
-      - name: Upload Lens Artifacts
+      - name: Upload Lens Verification & Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: snapchat-lens-data
+          name: snapchat-lens-verified-data
           path: |
+            verification_report.json
+            gemini_generation_plan.json
             generated_lens_metadata.json
             publish_status.json
-            *.png
