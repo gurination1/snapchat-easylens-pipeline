@@ -12,6 +12,8 @@ import os
 import sys
 import json
 import time
+import random
+import re
 import base64
 import asyncio
 import subprocess
@@ -21,6 +23,92 @@ from playwright.async_api import async_playwright
 SNAPML_BASE = "https://gcp.api.snapchat.com/lens-studio-web-snapml"
 ACCOUNTS_BASE = "https://accounts.snapchat.com"
 REPO = "gurination1/snapchat-easylens-pipeline"
+
+
+def get_gemini_api_keys() -> list:
+    keys = []
+    if os.getenv("GEMINI_API_KEY"):
+        keys.append(os.getenv("GEMINI_API_KEY").strip())
+    if os.getenv("GEMINI_API_KEYS"):
+        for k in os.getenv("GEMINI_API_KEYS").split(","):
+            k = k.strip()
+            if k and k not in keys:
+                keys.append(k)
+    return keys
+
+
+def solve_captcha_with_gemini(image_path: str, instruction: str) -> list:
+    """Uses Gemini Vision API to solve reCAPTCHA image grids."""
+    api_keys = get_gemini_api_keys()
+    if not api_keys or not os.path.exists(image_path):
+        return []
+
+    try:
+        with open(image_path, "rb") as f:
+            b64_img = base64.b64encode(f.read()).decode("utf-8")
+    except Exception:
+        return []
+
+    prompt = f"""You are an accessibility visual assistant.
+Analyze this CAPTCHA grid image with user instruction: '{instruction}'.
+Tiles are arranged in a grid numbered 1 to N from top-left to bottom-right (e.g. 1-9 for 3x3).
+Return ONLY a raw JSON array of integer tile numbers that match the target object.
+Example: [2, 4, 7]
+Do NOT write markdown fences, explanations, or any other characters."""
+
+    for k in api_keys:
+        for model in ["gemini-2.5-flash", "gemini-3.1-pro-preview"]:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={k}"
+            payload = {
+                "contents": [{
+                    "parts": [
+                        {"text": prompt},
+                        {"inlineData": {"mimeType": "image/png", "data": b64_img}}
+                    ]
+                }],
+                "generationConfig": {"temperature": 0.1, "maxOutputTokens": 100}
+            }
+            try:
+                r = requests.post(url, json=payload, timeout=20)
+                if r.status_code == 200:
+                    text = r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
+                    m = re.search(r"\[[\d,\s]+\]", text)
+                    if m:
+                        tiles = json.loads(m.group(0))
+                        print(f"[GEMINI CAPTCHA SOLVER] Recommended tiles: {tiles}")
+                        return tiles
+            except Exception as e:
+                print(f"[GEMINI CAPTCHA WARN] {model} query error: {e}")
+    return []
+
+
+async def human_type(page, locator, text: str):
+    """Simulates realistic human typing dynamics with randomized delays."""
+    await locator.click()
+    await page.wait_for_timeout(random.randint(250, 400))
+    await page.keyboard.press("Control+A")
+    await page.keyboard.press("Backspace")
+    await page.wait_for_timeout(random.randint(150, 280))
+    for ch in text:
+        await page.keyboard.type(ch, delay=random.randint(50, 95))
+        if random.random() < 0.12:
+            await page.wait_for_timeout(random.randint(120, 260))
+    await page.wait_for_timeout(random.randint(350, 650))
+
+
+async def human_click(page, locator):
+    """Simulates realistic human cursor movement and click timing."""
+    box = await locator.bounding_box()
+    if box:
+        target_x = box["x"] + box["width"] * (0.3 + random.random() * 0.4)
+        target_y = box["y"] + box["height"] * (0.3 + random.random() * 0.4)
+        await page.mouse.move(target_x, target_y, steps=random.randint(8, 14))
+        await page.wait_for_timeout(random.randint(180, 320))
+        await page.mouse.down()
+        await page.wait_for_timeout(random.randint(60, 130))
+        await page.mouse.up()
+    else:
+        await locator.click()
 
 
 def test_bearer_token(ticket: str, cookie_header: str = "") -> dict:
@@ -62,7 +150,6 @@ def mint_sso_ticket_from_cookies(cookie_header: str) -> str:
         res = requests.post(url, headers=headers, data=data, timeout=12)
         if res.status_code == 200 and not res.text.strip().startswith("<"):
             raw = res.text.strip()
-            # Response may be base64-encoded or raw text
             try:
                 ticket = base64.b64decode(raw).decode("utf-8").strip()
             except Exception:
@@ -106,19 +193,16 @@ except ImportError:
 async def browser_login_flow(username: str, passwords: list, existing_cookie: str = "") -> dict:
     """
     Stealth Playwright automation flow:
-    1. Seeds existing cookies if present to test direct session resumption
-    2. Navigates to accounts.snapchat.com/v2/login?continue=/accounts/sso
-    3. Types username/email and clicks Next (with visibility check)
-    4. Waits for password field to become genuinely visible (not hidden in DOM)
-    5. Enters password candidates (DM id wale1 priority)
-    6. Network listener captures minted Bearer ticket (hCgw...) and updated session cookies
+    - Clean browser context (no poisoned stale session cookies)
+    - Realistic Windows Chrome fingerprint + human typing & mouse dynamics
+    - Gemini-powered visual puzzle solver fallback
+    - Captures fresh SSO ticket & session cookies
     """
     print(f"\n=== LAUNCHING STEALTH BROWSER AUTH FLOW FOR {username} ===")
     captured_ticket = None
     captured_cookies = []
 
     async with async_playwright() as p:
-        # Launch Chromium with robust CI & stealth flags
         launch_args = [
             "--no-sandbox",
             "--disable-setuid-sandbox",
@@ -126,10 +210,9 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
             "--disable-gpu",
             "--disable-blink-features=AutomationControlled",
             "--disable-infobars",
-            "--window-size=1280,800"
+            "--window-size=1920,1080"
         ]
 
-        # Prefer Playwright bundled Chromium; only use external exec_path if explicitly set
         exec_path = os.getenv("PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH")
         print(f"[BROWSER] Launching Chromium (exec_path: {exec_path or 'playwright-bundled'})...")
         launch_kwargs = {"headless": True, "args": launch_args}
@@ -138,47 +221,17 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
 
         browser = await p.chromium.launch(**launch_kwargs)
         context = await browser.new_context(
-            viewport={"width": 1280, "height": 800},
-            user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+            viewport={"width": 1920, "height": 1080},
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
             locale="en-US",
             timezone_id="America/New_York"
         )
 
-        # Seed existing non-session cookies into browser context if available
-        if existing_cookie:
-            try:
-                cookie_objs = []
-                for part in existing_cookie.split(";"):
-                    if "=" in part:
-                        k, v = part.strip().split("=", 1)
-                        k = k.strip()
-                        v = v.strip()
-                        # Do NOT seed expired session auth tokens into browser!
-                        if any(s in k.lower() for s in ["sc-a-session", "sc-sub-session", "session"]):
-                            continue
-                        if k.startswith("__Host-"):
-                            cookie_objs.append({
-                                "name": k,
-                                "value": v,
-                                "url": "https://accounts.snapchat.com",
-                                "secure": True
-                            })
-                        else:
-                            cookie_objs.append({
-                                "name": k,
-                                "value": v,
-                                "domain": ".snapchat.com",
-                                "path": "/"
-                            })
-                if cookie_objs:
-                    await context.add_cookies(cookie_objs)
-                    print(f"[BROWSER] Pre-seeded {len(cookie_objs)} non-session cookies into browser context")
-            except Exception as e:
-                print(f"[BROWSER WARN] Could not seed cookies: {e}")
-
         # Inject stealth scripts
         await context.add_init_script("""
             Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+            Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });
+            Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3, 4, 5] });
             window.chrome = { runtime: {}, loadTimes: function() {}, csi: function() {}, app: {} };
             const originalQuery = window.navigator.permissions.query;
             window.navigator.permissions.query = (parameters) => (
@@ -192,6 +245,10 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
         if stealth_async:
             await stealth_async(page)
             print("[BROWSER] Applied playwright-stealth patches to page")
+
+        # Capture browser console & JS errors
+        page.on("console", lambda msg: print(f"[BROWSER CONSOLE {msg.type}] {msg.text}"))
+        page.on("pageerror", lambda err: print(f"[BROWSER JS ERROR] {err}"))
 
         # Monitor all network responses for tickets & sessions
         async def on_response(res):
@@ -219,41 +276,29 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
         await page.wait_for_timeout(3000)
         await page.screenshot(path="login_step0_initial.png")
 
-        # Check if pre-seeded cookies immediately authorized session
-        if captured_ticket or "easylens" in page.url:
-            print("[AUTH SUCCESS] Existing session cookies automatically authenticated!")
-            captured_cookies = await context.cookies()
-            await browser.close()
-            cookie_str = "; ".join([f"{c['name']}={c['value']}" for c in captured_cookies if "snapchat.com" in c.get("domain", "") or c.get("name", "").startswith("__Host-")])
-            return {"ticket": captured_ticket, "cookie_header": cookie_str, "cookies": captured_cookies}
-
         # Dismiss cookie banner if present
         try:
             cookie_btn = await page.query_selector("button:has-text('Accept All'), button:has-text('Accept all cookies'), button#accept-recommended-btn-handler")
             if cookie_btn and await cookie_btn.is_visible():
-                await cookie_btn.click()
+                await human_click(page, cookie_btn)
                 await page.wait_for_timeout(500)
         except Exception:
             pass
 
         # Step 1: Fill Account Identifier (Username)
         login_user = "gman21478" if ("@" in username or "gurination" in username or not username) else username
-        print(f"[STEP 1] Locating username / email field (attempting: {login_user})...")
+        print(f"[STEP 1] Locating username field (human typing: {login_user})...")
         account_input = await page.wait_for_selector(
             "input[name='accountIdentifier'], input#accountIdentifier, input[type='text']",
             state="visible",
             timeout=15000
         )
-        await account_input.click()
-        await account_input.fill(login_user)
+        await human_type(page, account_input, login_user)
         await page.wait_for_timeout(300)
         curr_val = await account_input.evaluate("el => el.value")
         if curr_val != login_user:
-            print(f"[STEP 1 WARN] Fill value mismatch ('{curr_val}' != '{login_user}'). Typing via keyboard...")
-            await account_input.click()
-            await page.keyboard.press("Control+A")
-            await page.keyboard.press("Backspace")
-            await page.keyboard.type(login_user, delay=50)
+            print(f"[STEP 1 WARN] Fill value mismatch ('{curr_val}' != '{login_user}'). Re-typing...")
+            await human_type(page, account_input, login_user)
         await page.wait_for_timeout(500)
         await page.screenshot(path="login_step1_username.png")
 
@@ -264,14 +309,14 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
             state="visible",
             timeout=8000
         )
-        await next_btn.click()
+        await human_click(page, next_btn)
 
         # Step 2: Wait for Password input to become genuinely VISIBLE
         print("[STEP 2] Waiting for password input to become visible...")
         pwd_visible = False
-        for wait_s in range(30):
+        for wait_s in range(45):
             await page.wait_for_timeout(1000)
-            if captured_ticket or "easylens" in page.url:
+            if captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
                 break
             try:
                 el = await page.query_selector("input[type='password']")
@@ -280,8 +325,35 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                     break
             except Exception:
                 pass
+
+            # Random natural cursor motion
+            if wait_s % 3 == 0:
+                await page.mouse.move(random.randint(200, 800), random.randint(200, 600), steps=random.randint(5, 10))
+
+            if "captcha" in page.url.lower():
+                # Check for bframe visual challenge
+                for frame in page.frames:
+                    if "bframe" in frame.url or "challenge" in frame.url:
+                        print(f"[CAPTCHA PUZZLE DETECTED] Frame: {frame.url[:80]}")
+                        try:
+                            await frame.screenshot(path="captcha_puzzle.png")
+                            instr_el = await frame.query_selector(".rc-imageselect-desc-wrapper, .rc-imageselect-instructions")
+                            instr = await instr_el.inner_text() if instr_el else "Select matching tiles"
+                            tiles_to_click = solve_captcha_with_gemini("captcha_puzzle.png", instr)
+                            tile_els = await frame.query_selector_all(".rc-image-tile-wrapper, .rc-imageselect-tile")
+                            for idx in tiles_to_click:
+                                if 1 <= idx <= len(tile_els):
+                                    await tile_els[idx - 1].click()
+                                    await page.wait_for_timeout(random.randint(300, 600))
+                            verify_btn = await frame.query_selector("#recaptcha-verify-button")
+                            if verify_btn and tiles_to_click:
+                                await verify_btn.click()
+                                await page.wait_for_timeout(2000)
+                        except Exception as puzzle_err:
+                            print(f"[CAPTCHA PUZZLE WARN] {puzzle_err}")
+
             if wait_s % 5 == 0:
-                print(f"[STEP 2] Waiting for password screen ({wait_s}/30s)... URL: {page.url[:80]}")
+                print(f"[STEP 2] Waiting for password screen ({wait_s}/45s)... URL: {page.url[:80]}")
 
         await page.screenshot(path="login_step2_password_screen.png")
 
@@ -310,20 +382,16 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                     break
 
                 if pwd_el and not captured_ticket:
-                    await pwd_el.click()
-                    await pwd_el.fill(pwd)
+                    await human_type(page, pwd_el, pwd)
                     await page.wait_for_timeout(300)
                     filled_val = await pwd_el.evaluate("el => el.value")
                     if filled_val != pwd:
-                        print(f"[STEP 3 WARN] Fill value mismatch ('{filled_val}' != '{pwd}'), re-typing...")
-                        await pwd_el.click()
-                        await page.keyboard.press("Control+A")
-                        await page.keyboard.press("Backspace")
-                        await page.keyboard.type(pwd, delay=50)
+                        print(f"[STEP 3 WARN] Password evaluation mismatch, re-typing...")
+                        await human_type(page, pwd_el, pwd)
                     await page.wait_for_timeout(500)
 
                     submit_btn = await page.wait_for_selector(
-                        "button:has-text('Next'), button[type='submit']:visible, button:has-text('Log In'), button:has-text('Sign In'), button:has-text('Log in')",
+                        "button:has-text('Next'), button[type='submit']:visible, button:has-text('Log In'), button:has-text('Sign In')",
                         state="visible",
                         timeout=8000
                     )
@@ -332,7 +400,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                             if await submit_btn.is_enabled():
                                 break
                             await page.wait_for_timeout(500)
-                        await submit_btn.click()
+                        await human_click(page, submit_btn)
                     else:
                         await page.keyboard.press("Enter")
 
