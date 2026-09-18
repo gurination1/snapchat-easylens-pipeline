@@ -321,11 +321,13 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                     break
 
                 if pwd_el and not captured_ticket:
-                    await pwd_el.click()
-                    await page.keyboard.press("Control+A")
-                    await page.keyboard.press("Backspace")
-                    await pwd_el.fill("")
-                    await page.keyboard.type(pwd, delay=60)
+                    await pwd_el.fill(pwd)
+                    await page.wait_for_timeout(300)
+                    filled_val = await pwd_el.evaluate("el => el.value")
+                    if not filled_val:
+                        print("[STEP 3 WARN] Value not populated via fill, fallback to direct type...")
+                        await pwd_el.click()
+                        await page.keyboard.type(pwd, delay=60)
                     await page.wait_for_timeout(500)
 
                     submit_btn = await page.wait_for_selector(
@@ -445,14 +447,8 @@ def obtain_valid_snap_session() -> dict:
     username = os.getenv("SNAP_USERNAME", "gurination1@gmail.com")
     env_pass = os.getenv("SNAP_PASSWORD", "")
     candidates = [
-        env_pass,
         "DM id wale1",
-        "Dmidwale1",
-        "DM id wale 1",
-        "dm id wale1",
-        "fakeidwale1",
-        "fake id wale1",
-        "fake id wale"
+        env_pass,
     ]
     seen = set()
     passwords = []
