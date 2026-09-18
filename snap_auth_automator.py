@@ -151,12 +151,22 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                 for part in existing_cookie.split(";"):
                     if "=" in part:
                         k, v = part.strip().split("=", 1)
-                        cookie_objs.append({
-                            "name": k.strip(),
-                            "value": v.strip(),
-                            "domain": ".snapchat.com",
-                            "path": "/"
-                        })
+                        k = k.strip()
+                        v = v.strip()
+                        if k.startswith("__Host-"):
+                            cookie_objs.append({
+                                "name": k,
+                                "value": v,
+                                "url": "https://accounts.snapchat.com",
+                                "secure": True
+                            })
+                        else:
+                            cookie_objs.append({
+                                "name": k,
+                                "value": v,
+                                "domain": ".snapchat.com",
+                                "path": "/"
+                            })
                 if cookie_objs:
                     await context.add_cookies(cookie_objs)
                     print(f"[BROWSER] Pre-seeded {len(cookie_objs)} cookies into browser context")
@@ -211,7 +221,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
             print("[AUTH SUCCESS] Existing session cookies automatically authenticated!")
             captured_cookies = await context.cookies()
             await browser.close()
-            cookie_str = "; ".join([f"{c['name']}={c['value']}" for c in captured_cookies if "snapchat.com" in c.get("domain", "")])
+            cookie_str = "; ".join([f"{c['name']}={c['value']}" for c in captured_cookies if "snapchat.com" in c.get("domain", "") or c.get("name", "").startswith("__Host-")])
             return {"ticket": captured_ticket, "cookie_header": cookie_str, "cookies": captured_cookies}
 
         # Dismiss cookie banner if present
@@ -319,21 +329,52 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                     await page.wait_for_timeout(500)
 
                     submit_btn = await page.wait_for_selector(
-                        "button:has-text('Log In'), button:has-text('Sign In'), button:has-text('Log in'), button[type='submit']:visible",
+                        "button:has-text('Next'), button[type='submit']:visible, button:has-text('Log In'), button:has-text('Sign In'), button:has-text('Log in')",
                         state="visible",
                         timeout=8000
                     )
                     if submit_btn:
+                        for _ in range(10):
+                            if await submit_btn.is_enabled():
+                                break
+                            await page.wait_for_timeout(500)
                         await submit_btn.click()
                     else:
                         await page.keyboard.press("Enter")
 
-                    # Wait for response, redirect, or error notice
+                    # Wait for response, redirect, security verification, or error notice
                     rejected = False
-                    for wait_i in range(15):
+                    for wait_i in range(40):
                         await page.wait_for_timeout(1000)
-                        if captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
+                        curr_url = page.url
+                        if captured_ticket or "easylens" in curr_url or "accounts/sso" in curr_url:
+                            print(f"[AUTH SUCCESS] Redirected to session URL: {curr_url}")
                             break
+
+                        # Handle security verification / captcha challenges
+                        if "captcha" in curr_url.lower():
+                            if wait_i % 5 == 0:
+                                print(f"[SECURITY CHALLENGE] Security verification page active (URL: {curr_url[:90]}). Waiting for verification...")
+                            # If on /v2/login with captchaChallenge, click Next if available
+                            if "captchaChallenge" in curr_url:
+                                try:
+                                    ch_btn = await page.query_selector("button:has-text('Next'), button[type='submit']:visible")
+                                    if ch_btn and await ch_btn.is_visible() and await ch_btn.is_enabled():
+                                        btn_text = (await ch_btn.inner_text()).strip()
+                                        if "Next" in btn_text or btn_text != "":
+                                            print(f"[SECURITY CHALLENGE] Submitting challenge Next button (text: '{btn_text}')...")
+                                            await ch_btn.click()
+                                            await page.wait_for_timeout(2000)
+                                except Exception:
+                                    pass
+
+                            # If on /v2/captcha, wait for invisible verification to execute
+                            if "/v2/captcha" in curr_url:
+                                for frame in page.frames:
+                                    if any(x in frame.url for x in ["hcaptcha.com", "recaptcha", "arkoselabs"]):
+                                        print(f"[SECURITY CHALLENGE] Active verification frame: {frame.url[:80]}")
+
+                        # Check for login errors
                         err = await page.query_selector("p[class*='error'], div[class*='error'], span[class*='error'], [data-testid*='error']")
                         if err and await err.is_visible():
                             err_text = await err.inner_text()
@@ -346,10 +387,16 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                     if captured_ticket:
                         print("[STEP 3 SUCCESS] Authenticated successfully!")
                         break
-                    if not rejected:
-                        await page.wait_for_timeout(3000)
+
+                    # If captcha is still active, don't immediately fail to next password
+                    if "captcha" in page.url.lower():
+                        print(f"[SECURITY CHALLENGE] Still on challenge page ({page.url[:80]}), waiting extra 15s for completion...")
+                        for _ in range(15):
+                            await page.wait_for_timeout(1000)
+                            if captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
+                                print("[AUTH SUCCESS] Challenge resolved successfully!")
+                                break
                         if captured_ticket:
-                            print("[STEP 3 SUCCESS] Authenticated successfully!")
                             break
 
         # Collect final cookies
@@ -357,7 +404,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
         await browser.close()
 
     # Format cookie header
-    cookie_str = "; ".join([f"{c['name']}={c['value']}" for c in captured_cookies if "snapchat.com" in c.get("domain", "")])
+    cookie_str = "; ".join([f"{c['name']}={c['value']}" for c in captured_cookies if "snapchat.com" in c.get("domain", "") or c.get("name", "").startswith("__Host-")])
 
     return {
         "ticket": captured_ticket,
