@@ -20,14 +20,36 @@ AUTO_PUBLISH = (os.getenv("AUTO_PUBLISH") or "true").lower() == "true"
 
 def main():
     accounts_cookie = os.getenv("SNAP_ACCOUNTS_COOKIE") or COOKIE_HEADER
-    if not SSO_TOKEN and not accounts_cookie:
-        print("[ERROR] Either SNAP_SSO_TOKEN or SNAP_ACCOUNTS_COOKIE environment variable is required!")
-        print("Please set SNAP_SSO_TOKEN or SNAP_ACCOUNTS_COOKIE in GitHub repository secrets.")
-        sys.exit(1)
+    client = EasyLensClient(sso_token=SSO_TOKEN, cookie_header=COOKIE_HEADER, accounts_cookie=accounts_cookie)
 
-    # 1. Determine Prompt, Lens Name, and Tags
+    print("\n=== STEP 1: VERIFYING SNAPCHAT AUTHENTICATION ===")
+    user = None
+    try:
+        if SSO_TOKEN or accounts_cookie:
+            user = client.verify_auth()
+    except Exception as e:
+        print(f"[AUTH EXPIRED / 401] Initial auth check failed ({e}). Triggering autonomous recovery...")
+
+    if not user:
+        print("[AUTO-AUTH] Calling Autonomous Snapchat Auth Automator behind Cloudflare WARP...")
+        try:
+            from snap_auth_automator import obtain_valid_snap_session
+            fresh_session = obtain_valid_snap_session()
+            client = EasyLensClient(
+                sso_token=fresh_session["ticket"],
+                cookie_header=fresh_session.get("cookie_header", ""),
+                accounts_cookie=fresh_session.get("cookie_header", "")
+            )
+            user = fresh_session["user"]
+        except Exception as auth_err:
+            print(f"[FATAL AUTH ERROR] Autonomous auth failed: {auth_err}")
+            sys.exit(1)
+
+    print(f"Logged in as: {user.get('displayName')} (@{user.get('username')})")
+
+    # Step 0: Determine Prompt, Lens Name, and Tags
     if USE_GEMINI:
-        print(f"=== STEP 0: AUTONOMOUS GEMINI PROMPT ARCHITECT (ACCOUNT #{ACCOUNT_ID}) ===")
+        print(f"\n=== STEP 0: AUTONOMOUS GEMINI PROMPT ARCHITECT (ACCOUNT #{ACCOUNT_ID}) ===")
         try:
             gemini_plan = generate_lens_prompt(account_id=ACCOUNT_ID, custom_instructions=CUSTOM_INSTRUCTIONS)
             prompt = gemini_plan["prompt"]
@@ -46,12 +68,6 @@ def main():
         prompt = STATIC_PROMPT
         lens_name = STATIC_LENS_NAME
         tags = STATIC_TAGS
-
-    client = EasyLensClient(sso_token=SSO_TOKEN, cookie_header=COOKIE_HEADER, accounts_cookie=accounts_cookie)
-
-    print("\n=== STEP 1: VERIFYING SNAPCHAT AUTHENTICATION ===")
-    user = client.verify_auth()
-    print(f"Logged in as: {user.get('displayName')} (@{user.get('username')})")
 
     print("\n=== STEP 2: CREATING LENS CONVERSATION ===")
     cid = client.create_conversation()
