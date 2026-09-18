@@ -13,12 +13,16 @@ BOLT_BASE = "https://aws.api.snapchat.com/lens-studio-web-bolt"
 SNAPML_BASE = "https://gcp.api.snapchat.com/lens-studio-web-snapml"
 
 
+ACCOUNTS_BASE = "https://accounts.snapchat.com"
+
+
 class EasyLensClient:
-    def __init__(self, sso_token: str, cookie_header: str = ""):
+    def __init__(self, sso_token: str = "", cookie_header: str = "", accounts_cookie: str = ""):
         self.sso_token = sso_token
+        self.accounts_cookie = accounts_cookie or cookie_header
         self.session = requests.Session()
         self.session.headers.update({
-            "Authorization": f"Bearer {sso_token}",
+            "Authorization": f"Bearer {sso_token}" if sso_token else "",
             "Origin": "https://easylens.snapchat.com",
             "Referer": "https://easylens.snapchat.com/",
             "User-Agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36",
@@ -33,13 +37,56 @@ class EasyLensClient:
         if cookie_header:
             self.session.headers["Cookie"] = cookie_header
 
+    def refresh_sso_ticket(self) -> str:
+        """Calls accounts.snapchat.com/accounts/sso with persistent session cookies to mint a new Bearer ticket"""
+        import base64
+        url = f"{ACCOUNTS_BASE}/accounts/sso"
+        cookie = self.accounts_cookie or self.session.headers.get("Cookie", "")
+        headers = {
+            "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
+            "Origin": "https://easylens.snapchat.com",
+            "Referer": "https://easylens.snapchat.com/",
+            "User-Agent": self.session.headers.get("User-Agent"),
+            "Cookie": cookie
+        }
+        data = "client_id=web-ar-applier"
+        try:
+            print("[SSO] Requesting fresh Bearer ticket from accounts.snapchat.com/accounts/sso...")
+            res = requests.post(url, headers=headers, data=data, timeout=15)
+            if res.status_code == 200 and not res.text.strip().startswith("<"):
+                ticket = base64.b64decode(res.text).decode("utf-8").strip()
+                if ticket.startswith("hCgw"):
+                    print(f"[SSO SUCCESS] Minted fresh Bearer ticket: {ticket[:16]}...")
+                    self.sso_token = ticket
+                    self.session.headers["Authorization"] = f"Bearer {ticket}"
+                    return ticket
+            print(f"[SSO WARN] Refresh response status {res.status_code} (body starts: {res.text[:60]})")
+        except Exception as e:
+            print(f"[SSO ERROR] Refresh exception: {e}")
+        return ""
+
     def verify_auth(self):
         url = f"{SNAPML_BASE}/api/me"
+        # If no token provided initially, try refreshing from accounts cookie
+        if not self.sso_token and self.accounts_cookie:
+            self.refresh_sso_ticket()
+
         res = self.session.get(url, timeout=15)
         if res.status_code == 200:
             user_data = res.json()
             print(f"[AUTH OK] User: {user_data.get('displayName')} (@{user_data.get('username')})")
             return user_data
+
+        if res.status_code == 401:
+            print("[AUTH 401] Bearer ticket expired. Triggering self-healing SSO refresh...")
+            new_ticket = self.refresh_sso_ticket()
+            if new_ticket:
+                res2 = self.session.get(url, timeout=15)
+                if res2.status_code == 200:
+                    user_data = res2.json()
+                    print(f"[AUTH REFRESHED OK] User: {user_data.get('displayName')} (@{user_data.get('username')})")
+                    return user_data
+
         raise RuntimeError(f"Auth failed ({res.status_code}): {res.text}")
 
     def create_conversation(self):

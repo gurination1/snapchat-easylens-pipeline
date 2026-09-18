@@ -48,6 +48,7 @@ jobs:
         env:
           SNAP_SSO_TOKEN: ${{ secrets.SNAP_SSO_TOKEN }}
           SNAP_COOKIE_HEADER: ${{ secrets.SNAP_COOKIE_HEADER }}
+          SNAP_ACCOUNTS_COOKIE: ${{ secrets.SNAP_ACCOUNTS_COOKIE }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_API_KEYS: ${{ secrets.GEMINI_API_KEYS }}
           ACCOUNT_ID: ${{ inputs.account_id || '1' }}

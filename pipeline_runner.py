@@ -19,9 +19,10 @@ AUTO_PUBLISH = (os.getenv("AUTO_PUBLISH") or "true").lower() == "true"
 
 
 def main():
-    if not SSO_TOKEN:
-        print("[ERROR] SNAP_SSO_TOKEN environment variable is required!")
-        print("Please set SNAP_SSO_TOKEN in GitHub repository secrets.")
+    accounts_cookie = os.getenv("SNAP_ACCOUNTS_COOKIE") or COOKIE_HEADER
+    if not SSO_TOKEN and not accounts_cookie:
+        print("[ERROR] Either SNAP_SSO_TOKEN or SNAP_ACCOUNTS_COOKIE environment variable is required!")
+        print("Please set SNAP_SSO_TOKEN or SNAP_ACCOUNTS_COOKIE in GitHub repository secrets.")
         sys.exit(1)
 
     # 1. Determine Prompt, Lens Name, and Tags
@@ -46,7 +47,7 @@ def main():
         lens_name = STATIC_LENS_NAME
         tags = STATIC_TAGS
 
-    client = EasyLensClient(sso_token=SSO_TOKEN, cookie_header=COOKIE_HEADER)
+    client = EasyLensClient(sso_token=SSO_TOKEN, cookie_header=COOKIE_HEADER, accounts_cookie=accounts_cookie)
 
     print("\n=== STEP 1: VERIFYING SNAPCHAT AUTHENTICATION ===")
     user = client.verify_auth()
