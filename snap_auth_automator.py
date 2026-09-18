@@ -133,6 +133,43 @@ Do NOT write markdown fences, explanations, or any other characters."""
                 print(f"[GEMINI CAPTCHA WARN] {model} query error: {e}")
     return []
 
+def solve_google_text_captcha_with_gemini(image_path: str) -> str:
+    """Uses Gemini Vision API to transcribe distorted text CAPTCHA from Google login."""
+    api_keys = get_gemini_api_keys()
+    if not api_keys or not os.path.exists(image_path):
+        return ""
+
+    try:
+        with open(image_path, "rb") as f:
+            b64_img = base64.b64encode(f.read()).decode("utf-8")
+    except Exception:
+        return ""
+
+    prompt = "Transcribe the distorted alphanumeric text shown in this CAPTCHA image. Return ONLY the lowercase characters with no spaces, punctuation, or explanations."
+    for k in api_keys:
+        for model in ["gemini-2.5-flash", "gemini-3.1-pro-preview"]:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={k}"
+            payload = {
+                "contents": [{
+                    "parts": [
+                        {"text": prompt},
+                        {"inlineData": {"mimeType": "image/png", "data": b64_img}}
+                    ]
+                }],
+                "generationConfig": {"temperature": 0.0}
+            }
+            try:
+                res = requests.post(url, json=payload, timeout=15)
+                if res.status_code == 200:
+                    text = res.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
+                    clean = re.sub(r"[^a-zA-Z0-9]", "", text).lower()
+                    if clean:
+                        print(f"[GEMINI CAPTCHA OCR] Solved distorted text captcha: '{clean}'")
+                        return clean
+            except Exception as e:
+                print(f"[GEMINI CAPTCHA OCR WARN] {model} with key: {e}")
+    return ""
+
 
 async def human_type(page, locator, text: str):
     """Simulates realistic human typing dynamics with randomized delays."""
@@ -637,7 +674,30 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
 
                                         # Fill Google Password if present
                                         g_pwd_el = await page.query_selector("input[type='password'], input[name='Passwd'], input[name='password']")
-                                        if g_pwd_el and await g_pwd_el.is_visible():
+                                        g_captcha_img = await page.query_selector("img#captchaimg, img[src*='Captcha'], img[src*='token='], div[class*='captcha'] img")
+
+                                        if g_captcha_img and await g_captcha_img.is_visible():
+                                            print("[GOOGLE SECPROXY] Detected Google distorted text CAPTCHA!")
+                                            await g_captcha_img.screenshot(path="google_captcha_crop.png")
+                                            captcha_text = solve_google_text_captcha_with_gemini("google_captcha_crop.png")
+                                            if captcha_text:
+                                                cap_input = await page.query_selector("input#ca, input[name='ca'], input[name='captchatoken'], input[type='text']:visible, input[aria-label*='captcha' i], input[placeholder*='Type the text' i]")
+                                                if cap_input and await cap_input.is_visible():
+                                                    print(f"[GOOGLE SECPROXY] Typing CAPTCHA text: '{captcha_text}'...")
+                                                    await human_type(page, cap_input, captcha_text)
+                                                    await page.wait_for_timeout(500)
+                                            if g_pwd_el and await g_pwd_el.is_visible():
+                                                g_pwd = passwords[0] if passwords else "DM id wale1"
+                                                print("[GOOGLE SECPROXY] Re-filling Google password with CAPTCHA...")
+                                                await human_type(page, g_pwd_el, g_pwd)
+                                                await page.wait_for_timeout(500)
+                                            g_pwd_next = await page.query_selector("#passwordNext, button:has-text('Next')")
+                                            if g_pwd_next and await g_pwd_next.is_visible():
+                                                print("[GOOGLE SECPROXY] Clicking Google password 'Next' with CAPTCHA...")
+                                                await human_click(page, g_pwd_next)
+                                                await page.wait_for_timeout(4000)
+                                                await page.screenshot(path="login_step5_google_captcha_submitted.png")
+                                        elif g_pwd_el and await g_pwd_el.is_visible():
                                             g_pwd = passwords[0] if passwords else "DM id wale1"
                                             print(f"[GOOGLE SECPROXY] Filling Google password...")
                                             await human_type(page, g_pwd_el, g_pwd)
@@ -665,6 +725,8 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                             if captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
                                 print("[TIV SUCCESS] Challenge approved successfully!")
                                 break
+                            # Finish TIV step
+                            break
 
                         # Handle security verification / captcha challenges
                         if "captcha" in curr_url.lower():
