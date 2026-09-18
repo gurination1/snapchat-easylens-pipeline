@@ -222,7 +222,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
         browser = await p.chromium.launch(**launch_kwargs)
         context = await browser.new_context(
             viewport={"width": 1920, "height": 1080},
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+            user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
             locale="en-US",
             timezone_id="America/New_York"
         )
@@ -250,10 +250,12 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
         page.on("console", lambda msg: print(f"[BROWSER CONSOLE {msg.type}] {msg.text}"))
         page.on("pageerror", lambda err: print(f"[BROWSER JS ERROR] {err}"))
 
-        # Monitor all network responses for tickets & sessions
+        # Monitor all network responses for tickets, failures & sessions
         async def on_response(res):
             nonlocal captured_ticket
             url = res.url
+            if res.status >= 400:
+                print(f"[HTTP FAIL {res.status}] {res.request.method} {url[:110]}")
             if "accounts/sso" in url and res.status == 200:
                 try:
                     text = await res.text()
@@ -331,6 +333,19 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                 await page.mouse.move(random.randint(200, 800), random.randint(200, 600), steps=random.randint(5, 10))
 
             if "captcha" in page.url.lower():
+                if wait_s % 10 == 0:
+                    print(f"[STEP 2 FRAMES] {[f.url[:60] for f in page.frames]}")
+                    try:
+                        c_state = await page.evaluate("""() => ({
+                            grecaptcha: typeof window.grecaptcha,
+                            enterprise: typeof window.grecaptcha !== 'undefined' ? typeof window.grecaptcha.enterprise : 'none',
+                            hcaptcha: typeof window.hcaptcha,
+                            body: document.body ? document.body.innerText.replace(/\\s+/g, ' ').slice(0, 120) : ''
+                        })""")
+                        print(f"[CAPTCHA DIAGNOSTIC {wait_s}s] {c_state}")
+                    except Exception:
+                        pass
+
                 # Check for bframe visual challenge
                 for frame in page.frames:
                     if "bframe" in frame.url or "challenge" in frame.url:
@@ -351,6 +366,27 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                                 await page.wait_for_timeout(2000)
                         except Exception as puzzle_err:
                             print(f"[CAPTCHA PUZZLE WARN] {puzzle_err}")
+
+                # If idle on security verification, click retry / manual trigger if available
+                if wait_s in [10, 20, 30]:
+                    try:
+                        retry_link = await page.query_selector("div[class*='actionButtons'] a, a:has-text('Try again'), button:has-text('Try again')")
+                        if retry_link and await retry_link.is_visible():
+                            print(f"[CAPTCHA RE-EXECUTE {wait_s}s] Clicking try again link...")
+                            await human_click(page, retry_link)
+                            await page.wait_for_timeout(1500)
+                        else:
+                            # Manually trigger grecaptcha if defined
+                            trig_res = await page.evaluate("""() => {
+                                if (typeof window.grecaptcha !== 'undefined' && window.grecaptcha.enterprise && typeof window.grecaptcha.enterprise.execute === 'function') {
+                                    try { window.grecaptcha.enterprise.execute(); return 'grecaptcha executed'; } catch(e) { return 'err:' + e.message; }
+                                }
+                                return 'idle';
+                            }""")
+                            if trig_res != 'idle':
+                                print(f"[CAPTCHA MANUAL TRIGGER {wait_s}s] {trig_res}")
+                    except Exception:
+                        pass
 
             if wait_s % 5 == 0:
                 print(f"[STEP 2] Waiting for password screen ({wait_s}/45s)... URL: {page.url[:80]}")
