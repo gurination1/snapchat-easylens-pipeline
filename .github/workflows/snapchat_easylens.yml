@@ -1,6 +1,9 @@
 name: Snapchat EasyLens Autonomous Agent Pipeline
 
 on:
+  schedule:
+    # Autonomous 2 lenses per day: 08:00 UTC and 20:00 UTC
+    - cron: '0 8,20 * * *'
   workflow_dispatch:
     inputs:
       account_id:
@@ -51,11 +54,21 @@ jobs:
           SNAP_ACCOUNTS_COOKIE: ${{ secrets.SNAP_ACCOUNTS_COOKIE }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_API_KEYS: ${{ secrets.GEMINI_API_KEYS }}
-          ACCOUNT_ID: ${{ inputs.account_id || '1' }}
+          TARGET_ACC: ${{ inputs.account_id }}
           USE_GEMINI: ${{ inputs.use_gemini != false }}
           CUSTOM_INSTRUCTIONS: ${{ inputs.custom_instructions || '' }}
           AUTO_PUBLISH: ${{ inputs.auto_publish != false }}
         run: |
+          if [ -n "$TARGET_ACC" ]; then
+            export ACCOUNT_ID="$TARGET_ACC"
+          else
+            # Scheduled cron: dynamically cycle across accounts 1 to 5
+            DAY=$(date -u +%j)
+            HOUR=$(date -u +%H)
+            SLOT=$(( (10#$DAY * 2 + 10#$HOUR / 12) % 5 + 1 ))
+            echo "Cron triggered: Auto-assigned Account Persona #$SLOT"
+            export ACCOUNT_ID="$SLOT"
+          fi
           python pipeline_runner.py
 
       - name: Upload Lens Verification & Artifacts
