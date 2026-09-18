@@ -245,35 +245,37 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
             else:
                 await page.keyboard.press("Enter")
 
-        # Step 2: Wait for Password field or Challenge
-        print("[STEP 2] Waiting for password input field...")
-        password_input = None
-        for _ in range(25):
-            await page.wait_for_timeout(1000)
+        # Step 2: Try password candidates
+        print(f"[STEP 2] Testing {len(passwords)} password candidate(s)...")
+        for attempt_idx, pwd in enumerate(passwords, 1):
             if captured_ticket:
                 break
-            password_input = await page.query_selector("input[type='password'], input[name='password'], input#password")
-            if password_input:
-                break
+            print(f"[STEP 2] Attempting password candidate #{attempt_idx}...")
 
-        await page.screenshot(path="login_step2_password_screen.png")
-
-        if not password_input and not captured_ticket:
-            print("[STEP 2 WARN] Password field not immediately visible. Checking page title & text...")
-            print("Current URL:", page.url)
-            print("Page Title:", await page.title())
-
-        # Try password candidates
-        if password_input and not captured_ticket:
-            for attempt_idx, pwd in enumerate(passwords, 1):
+            # Re-query password field on every attempt to avoid stale DOM ElementHandle
+            pwd_el = None
+            for _ in range(15):
+                await page.wait_for_timeout(1000)
                 if captured_ticket:
                     break
-                print(f"[STEP 2] Attempting password candidate #{attempt_idx}...")
-                await password_input.click()
-                await password_input.fill("")
+                pwd_el = await page.query_selector("input[type='password'], input[name='password'], input#password")
+                if pwd_el:
+                    break
+
+            if not pwd_el and not captured_ticket:
+                print(f"[STEP 2 WARN] Password input element not found for attempt #{attempt_idx}")
+                print("Current URL:", page.url)
+                print("Page Title:", await page.title())
+                break
+
+            if pwd_el and not captured_ticket:
+                await pwd_el.click()
+                await page.keyboard.press("Control+A")
+                await page.keyboard.press("Backspace")
+                await pwd_el.fill("")
                 await page.keyboard.type(pwd, delay=50)
-                await password_input.dispatch_event("input")
-                await password_input.dispatch_event("change")
+                await pwd_el.dispatch_event("input")
+                await pwd_el.dispatch_event("change")
                 await page.wait_for_timeout(500)
 
                 submit_btn = await page.query_selector("button[type='submit'], button:has-text('Log In'), button:has-text('Sign In'), button:has-text('Log in')")
@@ -282,23 +284,29 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                 else:
                     await page.keyboard.press("Enter")
 
-                # Wait for response or navigation
+                # Wait for response, redirect, or error notice
+                rejected = False
                 for wait_i in range(15):
                     await page.wait_for_timeout(1000)
                     if captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
                         break
-                    # Check for incorrect password error message
                     err = await page.query_selector("p[class*='error'], div[class*='error'], span[class*='error'], [data-testid*='error']")
                     if err:
                         err_text = await err.inner_text()
                         if any(w in err_text.lower() for w in ["incorrect", "wrong", "invalid", "try again"]):
                             print(f"[STEP 2 WARN] Password #{attempt_idx} rejected: {err_text}")
+                            rejected = True
                             break
 
                 await page.screenshot(path=f"login_step3_attempt_{attempt_idx}.png")
                 if captured_ticket:
                     print("[STEP 2 SUCCESS] Authenticated successfully!")
                     break
+                if not rejected:
+                    await page.wait_for_timeout(3000)
+                    if captured_ticket:
+                        print("[STEP 2 SUCCESS] Authenticated successfully!")
+                        break
 
         # Collect final cookies
         captured_cookies = await context.cookies()
@@ -344,9 +352,23 @@ def obtain_valid_snap_session() -> dict:
 
     # 3. Deep-path: Autonomous browser login
     username = os.getenv("SNAP_USERNAME", "gurination1@gmail.com")
-    # List password candidates: primary (fakeidwale1) and literal fallback (DM id wale1)
     env_pass = os.getenv("SNAP_PASSWORD", "")
-    passwords = [p for p in [env_pass, "fakeidwale1", "DM id wale1", "fakeidwale"] if p]
+    candidates = [
+        env_pass,
+        "DM id wale1",
+        "Dmidwale1",
+        "DM id wale 1",
+        "dm id wale1",
+        "fakeidwale1",
+        "fake id wale1",
+        "fake id wale"
+    ]
+    seen = set()
+    passwords = []
+    for c in candidates:
+        if c and c not in seen:
+            seen.add(c)
+            passwords.append(c)
 
     result = asyncio.run(browser_login_flow(username=username, passwords=passwords, existing_cookie=existing_cookie))
     ticket = result.get("ticket")
