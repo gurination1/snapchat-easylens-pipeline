@@ -95,6 +95,8 @@ jobs:
           SNAP_ACCOUNTS_COOKIE: ${{ secrets.SNAP_ACCOUNTS_COOKIE }}
           SNAP_USERNAME: ${{ secrets.SNAP_USERNAME }}
           SNAP_PASSWORD: ${{ secrets.SNAP_PASSWORD }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS || 'gurination1@gmail.com' }}
           GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_API_KEYS: ${{ secrets.GEMINI_API_KEYS }}

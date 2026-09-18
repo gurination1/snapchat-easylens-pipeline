@@ -18,11 +18,63 @@ import base64
 import asyncio
 import subprocess
 import requests
+import imaplib
+import email
+import email.utils
+import urllib.parse
 from playwright.async_api import async_playwright
 
 SNAPML_BASE = "https://gcp.api.snapchat.com/lens-studio-web-snapml"
 ACCOUNTS_BASE = "https://accounts.snapchat.com"
 REPO = "gurination1/snapchat-easylens-pipeline"
+
+
+def fetch_latest_snap_tiv_url(gmail_user: str, gmail_app_pwd: str, min_timestamp: float) -> str:
+    """
+    Polls Gmail via IMAP for a Snapchat Sign-In Verification email received after min_timestamp.
+    Extracts and returns the 'Approve' link.
+    """
+    if not gmail_user or not gmail_app_pwd:
+        return ""
+    try:
+        clean_pwd = gmail_app_pwd.replace(" ", "")
+        mail = imaplib.IMAP4_SSL("imap.gmail.com", timeout=15)
+        mail.login(gmail_user, clean_pwd)
+        mail.select("inbox")
+        status, messages = mail.search(None, '(FROM "snapchat")')
+        if not messages or not messages[0]:
+            status, messages = mail.search(None, '(SUBJECT "Snapchat")')
+        if not messages or not messages[0]:
+            mail.logout()
+            return ""
+        ids = messages[0].split()
+        for mid in reversed(ids[-6:]):
+            _, data = mail.fetch(mid, "(RFC822)")
+            msg = email.message_from_bytes(data[0][1])
+            date_tuple = email.utils.parsedate_tz(msg.get("Date"))
+            msg_time = email.utils.mktime_tz(date_tuple) if date_tuple else 0
+            if msg_time < min_timestamp:
+                continue
+            subject = msg.get("Subject", "")
+            if any(w in subject.lower() for w in ["verification", "sign-in", "signin", "security", "snapchat"]):
+                html = ""
+                for part in msg.walk():
+                    if part.get_content_type() == "text/html":
+                        html = part.get_payload(decode=True).decode("utf-8", errors="ignore")
+                        break
+                if not html and not msg.is_multipart():
+                    html = msg.get_payload(decode=True).decode("utf-8", errors="ignore")
+                anchors = re.findall(r"<a[^>]*href=[\"\x27]([^\"]+)[\"\x27][^>]*>(.*?)</a>", html, re.DOTALL)
+                for href, text in anchors:
+                    clean_text = re.sub(r"<[^>]+>", "", text).strip()
+                    if "Approve" in clean_text or "tiv/landing" in href:
+                        print(f"[GMAIL IMAP] Found Snapchat Approve link in message #{mid.decode()} ('{clean_text}')")
+                        mail.logout()
+                        return href
+        mail.logout()
+    except Exception as e:
+        print(f"[GMAIL IMAP WARN] {e}")
+    return ""
 
 
 def get_gemini_api_keys() -> list:
@@ -272,6 +324,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
 
         page.on("response", on_response)
 
+        login_start_time = time.time() - 30
         target_url = "https://accounts.snapchat.com/v2/login?continue=%2Faccounts%2Fsso%3Fclient_id%3Dweb-ar-applier"
         print(f"[NAVIGATING] {target_url}")
         await page.goto(target_url, wait_until="domcontentloaded", timeout=45000)
@@ -479,14 +532,22 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
 
                         # Handle Snapchat TIV (Two-step Identity Verification - Email Approval)
                         if "/v2/tiv" in curr_url or "tiv" in curr_url.lower():
+                            gmail_addr = os.getenv("GMAIL_ADDRESS", "gurination1@gmail.com").strip()
+                            gmail_pwd = os.getenv("GMAIL_APP_PASSWORD", "").strip()
                             print("\n" + "=" * 65)
                             print("[TIV VERIFICATION DETECTED] Snapchat sent login confirmation email!")
-                            print("Target Email: gurination1@gmail.com")
-                            print("ACTION REQUIRED: Open your Gmail and tap 'Confirm Login' / 'Yes, this was me'.")
+                            print(f"Target Email: {gmail_addr}")
+                            if gmail_pwd:
+                                print("[AUTONOMOUS TIV] Gmail App Password detected - starting autonomous IMAP listener!")
+                            else:
+                                print("ACTION REQUIRED: Open your Gmail and tap 'Confirm Login' / 'Yes, this was me'.")
                             print("The browser is keeping a live session with GetTivStatus polling every 3s.")
                             print("Holding live session for up to 360 seconds (6 minutes)...")
                             print("=" * 65 + "\n")
                             await page.screenshot(path="login_step3_tiv_pending.png")
+
+                            tiv_start_time = login_start_time
+                            approved_urls = set()
 
                             for tiv_s in range(360):
                                 await page.wait_for_timeout(1000)
@@ -495,17 +556,77 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                                     print(f"\n[TIV APPROVED] Email approval confirmed! Redirecting to: {curr_url}")
                                     break
 
+                                # Autonomous Gmail IMAP check every 4 seconds
+                                if gmail_pwd and tiv_s % 4 == 0:
+                                    tiv_link = fetch_latest_snap_tiv_url(gmail_addr, gmail_pwd, tiv_start_time)
+                                    if tiv_link and tiv_link not in approved_urls:
+                                        approved_urls.add(tiv_link)
+                                        print(f"\n[AUTONOMOUS TIV] Discovered Snapchat verification link in Gmail!")
+                                        print(f"[AUTONOMOUS TIV] Navigating to approval landing in browser context: {tiv_link[:85]}...")
+                                        approval_page = await context.new_page()
+                                        try:
+                                            await approval_page.goto(tiv_link, wait_until="domcontentloaded", timeout=25000)
+                                            await approval_page.wait_for_timeout(2000)
+                                            await approval_page.screenshot(path="login_step3_tiv_landing.png")
+
+                                            # Try clicking the Approve button
+                                            approve_btn = await approval_page.query_selector(
+                                                "button:has-text('Approve'), #tiv-landing-approve-form button, .tiv-button"
+                                            )
+                                            if approve_btn and await approve_btn.is_visible():
+                                                print("[AUTONOMOUS TIV] Clicking 'Approve' button...")
+                                                await human_click(approval_page, approve_btn)
+                                                await approval_page.wait_for_timeout(2000)
+                                            else:
+                                                print("[AUTONOMOUS TIV] Triggering form submit via JavaScript...")
+                                                await approval_page.evaluate("""() => {
+                                                    const f = document.getElementById('tiv-landing-approve-form');
+                                                    if (f) { f.submit(); return true; }
+                                                    return false;
+                                                }""")
+                                                await approval_page.wait_for_timeout(2000)
+
+                                            # Also direct fetch fallback within landing page context
+                                            await approval_page.evaluate("""() => {
+                                                const root = document.getElementById('tiv-landing-root');
+                                                if (root) {
+                                                    const xsrf = root.getAttribute('data-xsrf') || '';
+                                                    const nonce = root.getAttribute('data-nonce') || '';
+                                                    fetch('/accounts/tiv/landing' + window.location.search, {
+                                                        method: 'POST',
+                                                        headers: {'Content-Type': 'application/x-www-form-urlencoded', 'X-XSRF-TOKEN': xsrf},
+                                                        body: new URLSearchParams({'xsrf_token': xsrf, 'n': nonce, 's': '1'})
+                                                    }).catch(() => {});
+                                                }
+                                            }""")
+                                            await approval_page.wait_for_timeout(2000)
+                                            await approval_page.screenshot(path="login_step3_tiv_approved.png")
+                                            print("[AUTONOMOUS TIV] Approval dispatched successfully! Waiting for main session redirect...")
+                                        except Exception as app_err:
+                                            print(f"[AUTONOMOUS TIV WARN] Error submitting approval: {app_err}")
+                                        finally:
+                                            try:
+                                                await approval_page.close()
+                                            except Exception:
+                                                pass
+
                                 # Check for Google OAuth / SecProxy redirection
                                 if "accounts.google.com" in curr_url or "secproxy" in curr_url:
                                     if tiv_s % 5 == 0:
                                         print(f"\n[GOOGLE SECPROXY] Detected Google Sign-in redirection (URL: {curr_url[:80]})!")
                                     try:
+                                        # Account chooser click if present
+                                        g_acc = await page.query_selector(f"div[data-identifier*='{gmail_addr}'], div[data-email*='{gmail_addr}'], li:has-text('{gmail_addr}')")
+                                        if g_acc and await g_acc.is_visible():
+                                            print("[GOOGLE SECPROXY] Selecting existing account...")
+                                            await human_click(page, g_acc)
+                                            await page.wait_for_timeout(2000)
+
                                         # Fill Google Email if present
                                         g_email_el = await page.query_selector("input[type='email'], input#identifierId, input[name='identifier']")
                                         if g_email_el and await g_email_el.is_visible():
-                                            g_email = "gurination1@gmail.com"
-                                            print(f"[GOOGLE SECPROXY] Filling Google email ({g_email})...")
-                                            await human_type(page, g_email_el, g_email)
+                                            print(f"[GOOGLE SECPROXY] Filling Google email ({gmail_addr})...")
+                                            await human_type(page, g_email_el, gmail_addr)
                                             await page.wait_for_timeout(500)
                                             g_next_btn = await page.query_selector("#identifierNext, button:has-text('Next')")
                                             if g_next_btn and await g_next_btn.is_visible():
@@ -527,6 +648,13 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                                                 await human_click(page, g_pwd_next)
                                                 await page.wait_for_timeout(4000)
                                                 await page.screenshot(path="login_step5_google_pwd_submitted.png")
+
+                                        # Continue / Allow authorization button if present
+                                        g_cont = await page.query_selector("button:has-text('Continue'), button:has-text('Allow'), #submit_approve_access")
+                                        if g_cont and await g_cont.is_visible():
+                                            print("[GOOGLE SECPROXY] Clicking Continue / Allow authorization...")
+                                            await human_click(page, g_cont)
+                                            await page.wait_for_timeout(3000)
                                     except Exception as g_err:
                                         print(f"[GOOGLE SECPROXY WARN] {g_err}")
 
