@@ -50,25 +50,27 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install Dependencies
+        run: |
+          echo "=== [1/3] INSTALLING PYTHON PACKAGES & PLAYWRIGHT BROWSERS ==="
+          python -m pip install --upgrade pip
+          pip install requests pillow playwright
+          playwright install --with-deps chromium
+
       - name: Setup Cloudflare WARP via WireGuard
         if: env.WARP_CONF != ''
         env:
           WARP_CONF: ${{ secrets.WARP_CONF }}
         run: |
-          echo "=== [1/3] CONFIGURING CLOUDFLARE WARP TUNNEL ==="
+          echo "=== [2/3] CONFIGURING CLOUDFLARE WARP TUNNEL ==="
           sudo apt-get update -y && sudo apt-get install -y wireguard resolvconf
-          echo "$WARP_CONF" | sudo tee /etc/wireguard/wg0.conf > /dev/null
+          # Filter out DNS line so wg-quick does not clobber runner DNS resolution
+          echo "$WARP_CONF" | grep -v "^DNS" | sudo tee /etc/wireguard/wg0.conf > /dev/null
           sudo chmod 600 /etc/wireguard/wg0.conf
           sudo wg-quick up wg0
-          echo "=== [2/3] VERIFYING CLOUDFLARE WARP EGRESS ==="
+          echo "=== [3/3] VERIFYING CLOUDFLARE WARP EGRESS & DNS ==="
           curl -s https://cloudflare.com/cdn-cgi/trace | grep -E "warp|ip" || true
-
-      - name: Install Dependencies
-        run: |
-          echo "=== [3/3] INSTALLING DEPENDENCIES & PLAYWRIGHT BROWSERS ==="
-          python -m pip install --upgrade pip
-          pip install requests pillow playwright
-          playwright install --with-deps chromium
+          getent hosts accounts.snapchat.com || true
 
       - name: Execute Autonomous Lens Pipeline & Verifier
         env:
