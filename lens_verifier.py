@@ -189,6 +189,8 @@ class LensVerifier:
         }
         if not passed:
             self.report["errors"].append("Gate 5 Failed: No prefetched assets or controller script found in bundle")
+        return passed
+
     def verify_judge_ai(self) -> bool:
         """Gate 6: Multimodal Judge AI scoring virality, aesthetic quality, and safety (threshold >= 85)"""
         prompt = self.plan.get("prompt", "")

@@ -55,6 +55,7 @@ def main():
     print(f"Logged in as: {user.get('displayName')} (@{user.get('username')})")
 
     # Step 0: Determine Prompt, Lens Name, and Tags
+    gemini_plan = None
     if USE_GEMINI:
         print(f"\n=== STEP 0: AUTONOMOUS GEMINI PROMPT ARCHITECT (ACCOUNT #{ACCOUNT_ID}) ===")
         try:
