@@ -24,6 +24,12 @@ import email.utils
 import urllib.parse
 from playwright.async_api import async_playwright
 
+try:
+    sys.stdout.reconfigure(line_buffering=True)
+    sys.stderr.reconfigure(line_buffering=True)
+except Exception:
+    pass
+
 SNAPML_BASE = "https://gcp.api.snapchat.com/lens-studio-web-snapml"
 ACCOUNTS_BASE = "https://accounts.snapchat.com"
 REPO = "gurination1/snapchat-easylens-pipeline"
@@ -109,7 +115,7 @@ Example: [2, 4, 7]
 Do NOT write markdown fences, explanations, or any other characters."""
 
     for k in api_keys:
-        for model in ["gemini-2.5-flash", "gemini-3.1-pro-preview"]:
+        for model in ["gemini-flash-latest", "gemini-flash-lite-latest", "gemini-2.5-flash"]:
             url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={k}"
             payload = {
                 "contents": [{
@@ -121,7 +127,7 @@ Do NOT write markdown fences, explanations, or any other characters."""
                 "generationConfig": {"temperature": 0.1, "maxOutputTokens": 100}
             }
             try:
-                r = requests.post(url, json=payload, timeout=20)
+                r = requests.post(url, json=payload, timeout=25)
                 if r.status_code == 200:
                     text = r.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
                     m = re.search(r"\[[\d,\s]+\]", text)
@@ -136,38 +142,60 @@ Do NOT write markdown fences, explanations, or any other characters."""
 def solve_google_text_captcha_with_gemini(image_path: str) -> str:
     """Uses Gemini Vision API to transcribe distorted text CAPTCHA from Google login."""
     api_keys = get_gemini_api_keys()
-    if not api_keys or not os.path.exists(image_path):
+    if not os.path.exists(image_path):
         return ""
 
+    b64_img = ""
     try:
         with open(image_path, "rb") as f:
             b64_img = base64.b64encode(f.read()).decode("utf-8")
     except Exception:
-        return ""
+        pass
 
     prompt = "Transcribe the distorted alphanumeric text shown in this CAPTCHA image. Return ONLY the lowercase characters with no spaces, punctuation, or explanations."
-    for k in api_keys:
-        for model in ["gemini-2.5-flash", "gemini-3.1-pro-preview"]:
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={k}"
-            payload = {
-                "contents": [{
-                    "parts": [
-                        {"text": prompt},
-                        {"inlineData": {"mimeType": "image/png", "data": b64_img}}
-                    ]
-                }],
-                "generationConfig": {"temperature": 0.0}
-            }
-            try:
-                res = requests.post(url, json=payload, timeout=15)
-                if res.status_code == 200:
-                    text = res.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
-                    clean = re.sub(r"[^a-zA-Z0-9]", "", text).lower()
-                    if clean:
-                        print(f"[GEMINI CAPTCHA OCR] Solved distorted text captcha: '{clean}'")
-                        return clean
-            except Exception as e:
-                print(f"[GEMINI CAPTCHA OCR WARN] {model} with key: {e}")
+    if b64_img and api_keys:
+        for k in api_keys:
+            for model in ["gemini-flash-latest", "gemini-flash-lite-latest", "gemini-2.5-flash"]:
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={k}"
+                payload = {
+                    "contents": [{
+                        "parts": [
+                            {"text": prompt},
+                            {"inlineData": {"mimeType": "image/png", "data": b64_img}}
+                        ]
+                    }],
+                    "generationConfig": {"temperature": 0.0}
+                }
+                try:
+                    res = requests.post(url, json=payload, timeout=30)
+                    if res.status_code == 200:
+                        text = res.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
+                        clean = re.sub(r"[^a-zA-Z0-9]", "", text).lower()
+                        if clean:
+                            print(f"[GEMINI CAPTCHA OCR] Solved distorted text captcha via {model}: '{clean}'")
+                            return clean
+                except Exception as e:
+                    print(f"[GEMINI CAPTCHA OCR WARN] {model} with key: {e}")
+
+    # Fallback to local pytesseract OCR if Gemini is unreachable or rate-limited
+    try:
+        import pytesseract
+        from PIL import Image
+        pil_img = Image.open(image_path).convert("L")
+        w, h = pil_img.size
+        large_img = pil_img.resize((w * 3, h * 3), Image.Resampling.BICUBIC)
+        for psm in [8, 13, 7]:
+            ocr_text = pytesseract.image_to_string(
+                large_img,
+                config=f"--psm {psm} -c tessedit_char_whitelist=abcdefghijklmnopqrstuvwxyz0123456789"
+            ).strip()
+            clean_ocr = re.sub(r"[^a-zA-Z0-9]", "", ocr_text).lower()
+            if len(clean_ocr) >= 3:
+                print(f"[TESSERACT FALLBACK OCR] Solved text captcha (psm {psm}): '{clean_ocr}'")
+                return clean_ocr
+    except Exception as t_err:
+        print(f"[TESSERACT OCR WARN] {t_err}")
+
     return ""
 
 
@@ -277,6 +305,125 @@ try:
     from playwright_stealth import stealth_async
 except ImportError:
     stealth_async = None
+
+
+async def handle_google_secproxy_flow(page, gmail_addr: str, passwords: list, max_seconds: int = 150) -> bool:
+    """
+    Autonomous Google OAuth & SecProxy solver with multimodal Gemini Vision OCR:
+    - Screen 1: Google Account chooser or Email entry (+ distorted text CAPTCHA)
+    - Screen 2: Google Password entry (+ distorted text CAPTCHA retry)
+    - Screen 3: OAuth Consent ("Continue", "Allow", "Yes, I agree", "#submit_approve_access")
+    Returns True if redirected back to Snapchat.
+    """
+    print(f"\n[GOOGLE SECPROXY FLOW] Initiating Google Sign-in handler (Initial URL: {page.url[:85]})...", flush=True)
+    g_pwd = passwords[0] if passwords else "DM id wale1"
+    start_t = time.time()
+
+    while time.time() - start_t < max_seconds:
+        await page.wait_for_timeout(1000)
+        curr_url = page.url
+
+        # Success condition: redirected to Snapchat SSO or EasyLens
+        if "accounts.snapchat.com" in curr_url or "easylens" in curr_url or "accounts/sso" in curr_url:
+            print(f"[GOOGLE SECPROXY SUCCESS] Redirected back to Snapchat session URL: {curr_url[:85]}", flush=True)
+            return True
+
+        if "accounts.google.com" not in curr_url and "secproxy" not in curr_url:
+            print(f"[GOOGLE SECPROXY INFO] URL transitioned off Google: {curr_url[:85]}", flush=True)
+            return True
+
+        # 1. Account chooser
+        try:
+            chooser = await page.query_selector(
+                f"div[data-identifier*='{gmail_addr}'], div[data-email*='{gmail_addr}'], li:has-text('{gmail_addr}')"
+            )
+            if chooser and await chooser.is_visible():
+                print("[GOOGLE SECPROXY] Selecting existing account...", flush=True)
+                await chooser.click()
+                await page.wait_for_timeout(2500)
+                continue
+        except Exception:
+            pass
+
+        # 2. Email entry
+        try:
+            em_inp = await page.query_selector("input#identifierId, input[name='identifier'], input[type='email']")
+            if em_inp and await em_inp.is_visible():
+                print(f"[GOOGLE SECPROXY] Entering email: {gmail_addr}", flush=True)
+                # Check for email CAPTCHA
+                em_cap = await page.query_selector("img#captchaimg, img[src*='Captcha'], img[src*='token=']")
+                if em_cap and await em_cap.is_visible():
+                    print("[GOOGLE SECPROXY] Detected distorted CAPTCHA on email screen!", flush=True)
+                    await em_cap.screenshot(path="google_email_captcha_crop.png")
+                    cap_ans = solve_google_text_captcha_with_gemini("google_email_captcha_crop.png")
+                    if cap_ans:
+                        cap_box = await page.query_selector("input[aria-label*='text you hear or see' i], input[placeholder*='Type the text' i], input[name='ca'], input#ca")
+                        if not cap_box:
+                            cap_box = await page.query_selector("xpath=//img[contains(@src, 'Captcha') or @id='captchaimg']/following::input[1]")
+                        if cap_box and await cap_box.is_visible():
+                            await cap_box.fill(cap_ans)
+                await em_inp.fill(gmail_addr)
+                await page.wait_for_timeout(300)
+                next_btn = await page.query_selector("#identifierNext, button:has-text('Next')")
+                if next_btn and await next_btn.is_visible():
+                    await next_btn.click()
+                    await page.wait_for_timeout(3500)
+                    await page.screenshot(path="login_step4_google_email_submitted.png")
+                continue
+        except Exception as em_err:
+            print(f"[GOOGLE SECPROXY WARN] Email step error: {em_err}", flush=True)
+
+        # 3. Password entry & distorted CAPTCHA
+        try:
+            pwd_inp = await page.query_selector("input[type='password'], input[name='Passwd'], input[name='password']")
+            if pwd_inp and await pwd_inp.is_visible():
+                # Check for distorted CAPTCHA
+                cap_img = await page.query_selector("img#captchaimg, img[src*='Captcha'], img[src*='token=']")
+                if cap_img and await cap_img.is_visible():
+                    print("[GOOGLE SECPROXY] Detected distorted CAPTCHA on password screen! Transcribing with Gemini Vision...", flush=True)
+                    await cap_img.screenshot(path="google_pwd_captcha_crop.png")
+                    captcha_text = solve_google_text_captcha_with_gemini("google_pwd_captcha_crop.png")
+                    if captcha_text:
+                        cap_box = await page.query_selector("input[aria-label*='text you hear or see' i], input[placeholder*='Type the text' i], input[name='ca'], input#ca")
+                        if not cap_box:
+                            cap_box = await page.query_selector("xpath=//img[contains(@src, 'Captcha') or @id='captchaimg']/following::input[1]")
+                        if cap_box and await cap_box.is_visible():
+                            print(f"[GOOGLE SECPROXY] Typing CAPTCHA text: '{captcha_text}'...", flush=True)
+                            await cap_box.click()
+                            await cap_box.fill(captcha_text)
+                            await page.wait_for_timeout(300)
+
+                # Fill password
+                print(f"[GOOGLE SECPROXY] Typing password...", flush=True)
+                await pwd_inp.click()
+                await pwd_inp.fill(g_pwd)
+                await page.wait_for_timeout(400)
+
+                # Click password Next
+                pwd_next = await page.query_selector("#passwordNext, button:has-text('Next')")
+                if pwd_next and await pwd_next.is_visible():
+                    print("[GOOGLE SECPROXY] Clicking password 'Next'...", flush=True)
+                    await pwd_next.click()
+                    await page.wait_for_timeout(4000)
+                    await page.screenshot(path="login_step5_google_pwd_submitted.png")
+                    continue
+        except Exception as pwd_err:
+            print(f"[GOOGLE SECPROXY WARN] Password step error: {pwd_err}", flush=True)
+
+        # 4. Consent / Allow / Continue buttons
+        try:
+            consent_btn = await page.query_selector(
+                "button:has-text('Continue'), button:has-text('Allow'), #submit_approve_access, button:has-text('Yes, I agree'), div[role='button']:has-text('Continue')"
+            )
+            if consent_btn and await consent_btn.is_visible():
+                print("[GOOGLE SECPROXY] Submitting Google OAuth authorization 'Continue/Allow'...", flush=True)
+                await consent_btn.click()
+                await page.wait_for_timeout(3000)
+                continue
+        except Exception:
+            pass
+
+    return False
 
 
 async def browser_login_flow(username: str, passwords: list, existing_cookie: str = "") -> dict:
@@ -651,81 +798,22 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
 
                                 # Check for Google OAuth / SecProxy redirection
                                 if "accounts.google.com" in curr_url or "secproxy" in curr_url:
-                                    if tiv_s % 4 == 0:
-                                        print(f"\n[GOOGLE SECPROXY] Detected Google Sign-in redirection (URL: {curr_url[:80]})!")
-                                    try:
-                                        # Account chooser click if present
-                                        g_acc = await page.query_selector(f"div[data-identifier*='{gmail_addr}'], div[data-email*='{gmail_addr}'], li:has-text('{gmail_addr}')")
-                                        if g_acc and await g_acc.is_visible():
-                                            print("[GOOGLE SECPROXY] Selecting existing account...")
-                                            await human_click(page, g_acc)
-                                            await page.wait_for_timeout(2000)
-
-                                        # Fill Google Email if present
-                                        g_email_el = await page.query_selector("input[type='email'], input#identifierId, input[name='identifier']")
-                                        if g_email_el and await g_email_el.is_visible():
-                                            # Check if email screen has captcha
-                                            em_cap_img = await page.query_selector("img#captchaimg, img[src*='Captcha'], img[src*='token='], div[role='presentation'] img, form img")
-                                            if em_cap_img and await em_cap_img.is_visible():
-                                                print("[GOOGLE SECPROXY] Detected distorted CAPTCHA on Google email screen!")
-                                                await em_cap_img.screenshot(path="google_email_captcha_crop.png")
-                                                cap_ans = solve_google_text_captcha_with_gemini("google_email_captcha_crop.png")
-                                                if cap_ans:
-                                                    cap_inp = await page.query_selector("input#ca, input[name='ca'], input[name='captchatoken'], input[aria-label*='text you hear or see' i], input[placeholder*='Type the text' i], input[type='text']:visible")
-                                                    if cap_inp and await cap_inp.is_visible():
-                                                        print(f"[GOOGLE SECPROXY] Typing email CAPTCHA: '{cap_ans}'...")
-                                                        await human_type(page, cap_inp, cap_ans)
-                                                        await page.wait_for_timeout(500)
-                                            print(f"[GOOGLE SECPROXY] Filling Google email ({gmail_addr})...")
-                                            await human_type(page, g_email_el, gmail_addr)
-                                            await page.wait_for_timeout(500)
-                                            g_next_btn = await page.query_selector("#identifierNext, button:has-text('Next')")
-                                            if g_next_btn and await g_next_btn.is_visible():
-                                                print("[GOOGLE SECPROXY] Clicking Google email 'Next'...")
-                                                await human_click(page, g_next_btn)
-                                                await page.wait_for_timeout(4000)
-                                                await page.screenshot(path="login_step4_google_email_submitted.png")
-
-                                        # Fill Google Password if present
-                                        g_pwd_el = await page.query_selector("input[type='password'], input[name='Passwd'], input[name='password']")
-                                        if g_pwd_el and await g_pwd_el.is_visible():
-                                            pwd_cap_img = await page.query_selector("img#captchaimg, img[src*='Captcha'], img[src*='token='], div[role='presentation'] img, form img")
-                                            if pwd_cap_img and await pwd_cap_img.is_visible():
-                                                print("[GOOGLE SECPROXY] Detected distorted CAPTCHA on Google password screen!")
-                                                await pwd_cap_img.screenshot(path="google_pwd_captcha_crop.png")
-                                                cap_ans = solve_google_text_captcha_with_gemini("google_pwd_captcha_crop.png")
-                                                if cap_ans:
-                                                    cap_inp = await page.query_selector("input#ca, input[name='ca'], input[name='captchatoken'], input[aria-label*='text you hear or see' i], input[placeholder*='Type the text' i], input[type='text']:visible")
-                                                    if cap_inp and await cap_inp.is_visible():
-                                                        print(f"[GOOGLE SECPROXY] Typing password CAPTCHA: '{cap_ans}'...")
-                                                        await human_type(page, cap_inp, cap_ans)
-                                                        await page.wait_for_timeout(500)
-                                            g_pwd = passwords[0] if passwords else "DM id wale1"
-                                            print("[GOOGLE SECPROXY] Filling Google password...")
-                                            await human_type(page, g_pwd_el, g_pwd)
-                                            await page.wait_for_timeout(500)
-                                            g_pwd_next = await page.query_selector("#passwordNext, button:has-text('Next')")
-                                            if g_pwd_next and await g_pwd_next.is_visible():
-                                                print("[GOOGLE SECPROXY] Clicking Google password 'Next'...")
-                                                await human_click(page, g_pwd_next)
-                                                await page.wait_for_timeout(4000)
-                                                await page.screenshot(path="login_step5_google_pwd_submitted.png")
-
-                                        # Continue / Allow authorization button if present
-                                        g_cont = await page.query_selector("button:has-text('Continue'), button:has-text('Allow'), #submit_approve_access, button:has-text('Yes, I agree')")
-                                        if g_cont and await g_cont.is_visible():
-                                            print("[GOOGLE SECPROXY] Clicking Continue / Allow authorization...")
-                                            await human_click(page, g_cont)
-                                            await page.wait_for_timeout(3000)
-                                    except Exception as g_err:
-                                        print(f"[GOOGLE SECPROXY WARN] {g_err}")
+                                    print(f"\n[GOOGLE SECPROXY] Detected Google Sign-in redirection (URL: {curr_url[:80]})! Launching solver...", flush=True)
+                                    g_ok = await handle_google_secproxy_flow(page, gmail_addr, passwords, max_seconds=120)
+                                    if g_ok or captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
+                                        print("[TIV/GOOGLE SUCCESS] Authentication completed via Google SecProxy flow!", flush=True)
+                                        break
 
                                 if tiv_s % 15 == 0:
-                                    print(f"[TIV WAITING {tiv_s}s/120s] Awaiting verification flow... URL: {curr_url[:80]}")
+                                    print(f"[TIV WAITING {tiv_s}s/120s] Awaiting verification flow... URL: {curr_url[:80]}", flush=True)
                                     await page.screenshot(path="login_step3_tiv_waiting.png")
 
+                            if not captured_ticket and ("accounts.google.com" in page.url or "secproxy" in page.url):
+                                print("[TIV REDIRECT] Page transitioned to Google OAuth post-TIV, executing handler...", flush=True)
+                                await handle_google_secproxy_flow(page, gmail_addr, passwords, max_seconds=90)
+
                             if captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
-                                print("[TIV SUCCESS] Challenge approved successfully!")
+                                print("[TIV SUCCESS] Challenge approved successfully!", flush=True)
                                 break
                             # Finish TIV step
                             break

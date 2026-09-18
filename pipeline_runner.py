@@ -1,6 +1,13 @@
 import os
 import sys
 import json
+
+try:
+    sys.stdout.reconfigure(line_buffering=True)
+    sys.stderr.reconfigure(line_buffering=True)
+except Exception:
+    pass
+
 from easylens_api import EasyLensClient
 from lens_verifier import LensVerifier
 from gemini_lens_agent import generate_lens_prompt
