@@ -346,6 +346,44 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                     except Exception:
                         pass
 
+                # Check for anchor frame and click checkbox if available
+                for frame in page.frames:
+                    if "recaptcha" in frame.url and "anchor" in frame.url:
+                        try:
+                            checkbox = await frame.query_selector("#recaptcha-anchor, .recaptcha-checkbox")
+                            if checkbox and await checkbox.is_visible():
+                                print(f"[ANCHOR CLICK {wait_s}s] Clicking reCAPTCHA anchor checkbox...")
+                                await human_click(page, checkbox)
+                                await page.wait_for_timeout(2000)
+                        except Exception as a_err:
+                            print(f"[ANCHOR WARN] {a_err}")
+
+                # Manually trigger grecaptcha execute if idle
+                if wait_s in [5, 12, 20, 30]:
+                    try:
+                        trig_res = await page.evaluate("""() => {
+                            let res = [];
+                            if (typeof window.grecaptcha !== 'undefined') {
+                                try {
+                                    if (typeof window.grecaptcha.execute === 'function') {
+                                        window.grecaptcha.execute();
+                                        res.push('grecaptcha.execute()');
+                                    }
+                                } catch(e) { res.push('err:' + e.message); }
+                                for (let i = 0; i < 5; i++) {
+                                    try {
+                                        window.grecaptcha.execute(i);
+                                        res.push('widget_' + i);
+                                    } catch(e) {}
+                                }
+                            }
+                            return res.join(', ') || 'idle';
+                        }""")
+                        if trig_res != 'idle':
+                            print(f"[CAPTCHA MANUAL TRIGGER {wait_s}s] {trig_res}")
+                    except Exception:
+                        pass
+
                 # Check for bframe visual challenge
                 for frame in page.frames:
                     if "bframe" in frame.url or "challenge" in frame.url:
@@ -367,24 +405,14 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                         except Exception as puzzle_err:
                             print(f"[CAPTCHA PUZZLE WARN] {puzzle_err}")
 
-                # If idle on security verification, click retry / manual trigger if available
-                if wait_s in [10, 20, 30]:
+                # If idle on security verification, click retry if available
+                if wait_s in [15, 30]:
                     try:
                         retry_link = await page.query_selector("div[class*='actionButtons'] a, a:has-text('Try again'), button:has-text('Try again')")
                         if retry_link and await retry_link.is_visible():
                             print(f"[CAPTCHA RE-EXECUTE {wait_s}s] Clicking try again link...")
                             await human_click(page, retry_link)
                             await page.wait_for_timeout(1500)
-                        else:
-                            # Manually trigger grecaptcha if defined
-                            trig_res = await page.evaluate("""() => {
-                                if (typeof window.grecaptcha !== 'undefined' && window.grecaptcha.enterprise && typeof window.grecaptcha.enterprise.execute === 'function') {
-                                    try { window.grecaptcha.enterprise.execute(); return 'grecaptcha executed'; } catch(e) { return 'err:' + e.message; }
-                                }
-                                return 'idle';
-                            }""")
-                            if trig_res != 'idle':
-                                print(f"[CAPTCHA MANUAL TRIGGER {wait_s}s] {trig_res}")
                     except Exception:
                         pass
 
