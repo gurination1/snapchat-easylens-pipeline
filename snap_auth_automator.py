@@ -144,7 +144,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
             timezone_id="America/New_York"
         )
 
-        # Seed existing session cookies into browser context if available
+        # Seed existing non-session cookies into browser context if available
         if existing_cookie:
             try:
                 cookie_objs = []
@@ -153,6 +153,9 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                         k, v = part.strip().split("=", 1)
                         k = k.strip()
                         v = v.strip()
+                        # Do NOT seed expired session auth tokens into browser!
+                        if any(s in k.lower() for s in ["sc-a-session", "sc-sub-session", "session"]):
+                            continue
                         if k.startswith("__Host-"):
                             cookie_objs.append({
                                 "name": k,
@@ -169,7 +172,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                             })
                 if cookie_objs:
                     await context.add_cookies(cookie_objs)
-                    print(f"[BROWSER] Pre-seeded {len(cookie_objs)} cookies into browser context")
+                    print(f"[BROWSER] Pre-seeded {len(cookie_objs)} non-session cookies into browser context")
             except Exception as e:
                 print(f"[BROWSER WARN] Could not seed cookies: {e}")
 
@@ -233,18 +236,24 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
         except Exception:
             pass
 
-        # Step 1: Fill Account Identifier (Email / Username)
-        print(f"[STEP 1] Locating username / email field (attempting: {username})...")
+        # Step 1: Fill Account Identifier (Username)
+        login_user = "gman21478" if ("@" in username or "gurination" in username or not username) else username
+        print(f"[STEP 1] Locating username / email field (attempting: {login_user})...")
         account_input = await page.wait_for_selector(
             "input[name='accountIdentifier'], input#accountIdentifier, input[type='text']",
             state="visible",
             timeout=15000
         )
         await account_input.click()
-        await page.keyboard.press("Control+A")
-        await page.keyboard.press("Backspace")
-        await account_input.fill("")
-        await page.keyboard.type(username, delay=60)
+        await account_input.fill(login_user)
+        await page.wait_for_timeout(300)
+        curr_val = await account_input.evaluate("el => el.value")
+        if curr_val != login_user:
+            print(f"[STEP 1 WARN] Fill value mismatch ('{curr_val}' != '{login_user}'). Typing via keyboard...")
+            await account_input.click()
+            await page.keyboard.press("Control+A")
+            await page.keyboard.press("Backspace")
+            await page.keyboard.type(login_user, delay=50)
         await page.wait_for_timeout(500)
         await page.screenshot(path="login_step1_username.png")
 
@@ -260,7 +269,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
         # Step 2: Wait for Password input to become genuinely VISIBLE
         print("[STEP 2] Waiting for password input to become visible...")
         pwd_visible = False
-        for wait_s in range(15):
+        for wait_s in range(30):
             await page.wait_for_timeout(1000)
             if captured_ticket or "easylens" in page.url:
                 break
@@ -271,37 +280,17 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                     break
             except Exception:
                 pass
+            if wait_s % 5 == 0:
+                print(f"[STEP 2] Waiting for password screen ({wait_s}/30s)... URL: {page.url[:80]}")
 
         await page.screenshot(path="login_step2_password_screen.png")
 
-        # If password not visible and captcha triggered on email, try fallback handle (gman21478)
         if not pwd_visible and not captured_ticket:
             curr_url = page.url
             print(f"[STEP 2 WARN] Password field not visible (URL: {curr_url}). Page Title: {await page.title()}")
-            fallback_user = "gman21478"
-            if username != fallback_user and ("captcha" in curr_url.lower() or "@" in username):
-                print(f"[STEP 1 RETRY] Retrying with Snapchat handle '{fallback_user}'...")
-                await page.goto(target_url, wait_until="domcontentloaded", timeout=30000)
-                await page.wait_for_timeout(2000)
-                try:
-                    account_input = await page.wait_for_selector("input[name='accountIdentifier'], input[type='text']", state="visible", timeout=10000)
-                    await account_input.click()
-                    await page.keyboard.press("Control+A")
-                    await page.keyboard.press("Backspace")
-                    await page.keyboard.type(fallback_user, delay=60)
-                    await page.wait_for_timeout(500)
-                    next_btn = await page.wait_for_selector("button:has-text('Next'), button[type='submit']", state="visible", timeout=8000)
-                    await next_btn.click()
-                    for _ in range(15):
-                        await page.wait_for_timeout(1000)
-                        el = await page.query_selector("input[type='password']")
-                        if el and await el.is_visible():
-                            pwd_visible = True
-                            print(f"[STEP 1 SUCCESS] Snapchat handle '{fallback_user}' revealed password field!")
-                            break
-                    await page.screenshot(path="login_step2_fallback_screen.png")
-                except Exception as fb_err:
-                    print(f"[STEP 1 WARN] Fallback username attempt failed: {fb_err}")
+            err_el = await page.query_selector("p[class*='error'], div[class*='error'], span[class*='error'], [data-testid*='error']")
+            if err_el and await err_el.is_visible():
+                print(f"[STEP 2 PAGE ERROR] {await err_el.inner_text()}")
 
         # Step 3: Try password candidates
         if pwd_visible and not captured_ticket:
@@ -321,13 +310,16 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                     break
 
                 if pwd_el and not captured_ticket:
+                    await pwd_el.click()
                     await pwd_el.fill(pwd)
                     await page.wait_for_timeout(300)
                     filled_val = await pwd_el.evaluate("el => el.value")
-                    if not filled_val:
-                        print("[STEP 3 WARN] Value not populated via fill, fallback to direct type...")
+                    if filled_val != pwd:
+                        print(f"[STEP 3 WARN] Fill value mismatch ('{filled_val}' != '{pwd}'), re-typing...")
                         await pwd_el.click()
-                        await page.keyboard.type(pwd, delay=60)
+                        await page.keyboard.press("Control+A")
+                        await page.keyboard.press("Backspace")
+                        await page.keyboard.type(pwd, delay=50)
                     await page.wait_for_timeout(500)
 
                     submit_btn = await page.wait_for_selector(
@@ -360,11 +352,11 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                             # If on /v2/login with captchaChallenge, click Next if available
                             if "captchaChallenge" in curr_url:
                                 try:
-                                    ch_btn = await page.query_selector("button:has-text('Next'), button[type='submit']:visible")
+                                    ch_btn = await page.query_selector("button:has-text('Next'), button:has-text('Continue'), button:has-text('Verify')")
                                     if ch_btn and await ch_btn.is_visible() and await ch_btn.is_enabled():
                                         btn_text = (await ch_btn.inner_text()).strip()
-                                        if "Next" in btn_text or btn_text != "":
-                                            print(f"[SECURITY CHALLENGE] Submitting challenge Next button (text: '{btn_text}')...")
+                                        if any(w in btn_text.lower() for w in ["next", "continue", "verify"]) and "cancel" not in btn_text.lower():
+                                            print(f"[SECURITY CHALLENGE] Submitting challenge button (text: '{btn_text}')...")
                                             await ch_btn.click()
                                             await page.wait_for_timeout(2000)
                                 except Exception:
@@ -380,8 +372,8 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                         err = await page.query_selector("p[class*='error'], div[class*='error'], span[class*='error'], [data-testid*='error']")
                         if err and await err.is_visible():
                             err_text = await err.inner_text()
-                            if any(w in err_text.lower() for w in ["incorrect", "wrong", "invalid", "try again"]):
-                                print(f"[STEP 3 WARN] Password #{attempt_idx} rejected: {err_text}")
+                            if any(w in err_text.lower() for w in ["incorrect", "wrong", "invalid", "try again", "reached the maximum"]):
+                                print(f"[STEP 3 WARN] Password #{attempt_idx} rejected or limit hit: {err_text}")
                                 rejected = True
                                 break
 
@@ -444,20 +436,18 @@ def obtain_valid_snap_session() -> dict:
                 return {"ticket": fresh_ticket, "cookie_header": existing_cookie, "user": user}
 
     # 3. Deep-path: Autonomous browser login
-    username = os.getenv("SNAP_USERNAME", "gurination1@gmail.com")
-    env_pass = os.getenv("SNAP_PASSWORD", "")
+    username = os.getenv("SNAP_USERNAME", "gman21478")
+    if "@" in username or "gurination" in username:
+        username = "gman21478"
+
+    env_pass = os.getenv("SNAP_PASSWORD", "").strip()
     candidates = [
         "DM id wale1",
-        env_pass,
     ]
-    seen = set()
-    passwords = []
-    for c in candidates:
-        if c and c not in seen:
-            seen.add(c)
-            passwords.append(c)
+    if env_pass and env_pass not in candidates:
+        candidates.append(env_pass)
 
-    result = asyncio.run(browser_login_flow(username=username, passwords=passwords, existing_cookie=existing_cookie))
+    result = asyncio.run(browser_login_flow(username=username, passwords=candidates, existing_cookie=existing_cookie))
     ticket = result.get("ticket")
     cookie_header = result.get("cookie_header")
 
