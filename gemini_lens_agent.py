@@ -74,12 +74,18 @@ def extract_json(text: str) -> dict:
         text = "\n".join(lines).strip()
 
     try:
-        return json.loads(text)
+        return json.loads(text, strict=False)
     except Exception:
         import re
         match = re.search(r"\{.*\}", text, re.DOTALL)
         if match:
-            return json.loads(match.group(0))
+            clean_text = match.group(0)
+            try:
+                return json.loads(clean_text, strict=False)
+            except Exception:
+                # Replace unescaped literal newlines inside quotes
+                sanitized = re.sub(r'(?<!\\)\n', r'\\n', clean_text)
+                return json.loads(sanitized, strict=False)
         raise
 
 
