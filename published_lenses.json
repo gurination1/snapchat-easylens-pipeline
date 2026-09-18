@@ -32,5 +32,23 @@
     ],
     "visual_hook": "Instantaneous appearance of dancing holographic clones mirroring the user's movement, surrounded by pulsing laser rings.",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-18T19:17:04Z",
+    "account_id": "1",
+    "lens_name": "Aether Dragon Crown",
+    "lens_id": "0ad4547a-02ea-4cab-9e75-139fc1163d7a",
+    "checkpoint_id": "06aad8de-39f2-7fe4-8000-a415df8fdbaf",
+    "prompt": "Fitted mythic 3D dragon horn headpiece anchored strictly to head, crafted from anisotropic obsidian scales and liquid 24k gold filigree. 3-point contrast lighting with warm key light, cool 6500K rim light, and ray-traced contact shadows. Opening mouth triggers flowing emerald flame particles and rising embers. Smiling activates bright golden runic eye flares. PBR materials, no strobing, ultra-realistic.",
+    "tags": [
+      "dragon",
+      "3d",
+      "headpiece",
+      "horns",
+      "fantasy",
+      "pbr"
+    ],
+    "visual_hook": "Instant appearance of gleaming obsidian and gold dragon horns fitted to the user's head with hyper-realistic reflections.",
+    "status": "pending"
   }
 ]
