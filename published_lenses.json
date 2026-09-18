@@ -1,0 +1,36 @@
+[
+  {
+    "timestamp": "2026-09-18T04:12:43Z",
+    "account_id": "1",
+    "lens_name": "Obsidian Sentinel",
+    "lens_id": "083295b2-1d8b-4a65-8168-ddb853d13396",
+    "checkpoint_id": "06aacb9f-f610-7e35-8000-319e6ba3ecc7",
+    "prompt": "A photorealistic, ancient sentinel wyvern perches securely on the user's outer shoulder. Its body features PBR anisotropic obsidian scales with liquid mercury glints, porous basalt claws, and subtle 24k gold accents on its horns, with subsurface scattering on its leathery wings. Lit by 3-point contrast lighting (key, 6500K/2800K rim) with ray-traced contact shadows. Opening mouth triggers a powerful volumetric emerald breath weapon. Smiling creates a soft golden bloom.",
+    "tags": [
+      "dragon",
+      "3d",
+      "creature",
+      "fantasy",
+      "pbr"
+    ],
+    "visual_hook": "A photorealistic, ancient wyvern instantly appears, perched with striking PBR materials and dramatic lighting.",
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-18T04:41:16Z",
+    "account_id": "2",
+    "lens_name": "Chrono Echo Groove",
+    "lens_id": "b70c1424-004c-4eee-aafb-c8a80f1e3bd3",
+    "checkpoint_id": "06aacc0b-9ea2-7afa-8000-f26cfd1417bb",
+    "prompt": "User's full-body movement activates two iridescent, translucent holographic clones, dancing in synchronized motion. Clones feature subsurface scattering for an ethereal glow. Audio-reactive liquid mercury laser rings pulse from the floor, casting ray-traced contact shadows. Background evolves into an anisotropic metal club visualizer with subtle 24k gold accents. Lighting: 3-point contrast, key light, 6500K/2800K rim lights. Head tilt projects a glowing audio waveform.",
+    "tags": [
+      "dance",
+      "fullbody",
+      "rave",
+      "music",
+      "audioreactive"
+    ],
+    "visual_hook": "Instantaneous appearance of dancing holographic clones mirroring the user's movement, surrounded by pulsing laser rings.",
+    "status": "pending"
+  }
+]

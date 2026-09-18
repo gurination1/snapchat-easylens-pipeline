@@ -72,18 +72,20 @@ def main():
     with open("generated_lens_metadata.json", "w") as f:
         json.dump(lens_data, f, indent=2)
 
-    print("\n=== STEP 5: 6-GATE COMPREHENSIVE LENS & JUDGE AI VERIFICATION ===")
+    print("\n=== STEP 5: 7-GATE COMPREHENSIVE LENS & JUDGE AI VERIFICATION ===")
     plan_data = gemini_plan if USE_GEMINI else {"prompt": prompt, "lens_name": lens_name}
     verifier = LensVerifier(lens_data=lens_data, session=client.session, plan=plan_data)
     passed = verifier.verify_all()
     report = verifier.export_report("verification_report.json")
 
-    print(f"Gate 1 (Metadata Status): {report['gates']['gate1_metadata_status']['passed']}")
-    print(f"Gate 2 (Icon Health):     {report['gates']['gate2_icon_health']['passed']}")
-    print(f"Gate 3 (Checksum Hash):   {report['gates']['gate3_checksum_integrity']['passed']}")
-    print(f"Gate 4 (Size Boundaries): {report['gates']['gate4_size_limits']['passed']} (Compressed: {report['metrics'].get('compressed_size_bytes', 0) // 1024}KB, Unpacked: {report['metrics'].get('uncompressed_size_bytes', 0) // 1024}KB)")
-    print(f"Gate 5 (Assets & Events): {report['gates']['gate5_assets_and_controller']['passed']}")
-    print(f"Gate 6 (Judge AI Score):  {report['gates']['gate6_judge_ai']['passed']} ({report['gates']['gate6_judge_ai'].get('score')}/100 - {report['gates']['gate6_judge_ai'].get('verdict')})")
+    print(f"Gate 1 (Metadata Status): {report['gates'].get('gate1_metadata_status', {}).get('passed')}")
+    print(f"Gate 2 (Icon Health):     {report['gates'].get('gate2_icon_health', {}).get('passed')}")
+    print(f"Gate 3 (Checksum Hash):   {report['gates'].get('gate3_checksum_integrity', {}).get('passed')}")
+    print(f"Gate 4 (Size Boundaries): {report['gates'].get('gate4_size_limits', {}).get('passed')} (Compressed: {report['metrics'].get('compressed_size_bytes', 0) // 1024}KB, Unpacked: {report['metrics'].get('uncompressed_size_bytes', 0) // 1024}KB)")
+    print(f"Gate 5 (Assets & Events): {report['gates'].get('gate5_assets_and_controller', {}).get('passed')}")
+    print(f"Gate 6 (Judge AI Score):  {report['gates'].get('gate6_judge_ai', {}).get('passed')} ({report['gates'].get('gate6_judge_ai', {}).get('score')}/100 - {report['gates'].get('gate6_judge_ai', {}).get('verdict')})")
+    g7 = report['gates'].get('gate7_visual_simulation', {})
+    print(f"Gate 7 (Vision Simulation): {g7.get('passed')} (Score: {g7.get('score')}/100, 3D Mesh: {g7.get('has_3d_mesh')}, BG Only: {g7.get('is_background_only')})")
     print(f"OVERALL VERIFICATION VERDICT: {'PASSED (100%)' if passed else 'FAILED'}")
 
     if not passed:

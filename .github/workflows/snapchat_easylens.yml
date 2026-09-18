@@ -52,7 +52,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install requests
+          pip install requests pillow
 
       - name: Execute Autonomous Lens Pipeline & Verifier
         env:
@@ -88,6 +88,8 @@ jobs:
             gemini_generation_plan.json
             generated_lens_metadata.json
             publish_status.json
+            preview_neutral_simulated.png
+            preview_mouth_open_simulated.png
 
       - name: Commit Pipeline State (Deduplication History)
         if: always()

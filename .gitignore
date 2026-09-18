@@ -7,5 +7,7 @@ __pycache__/
 *.json
 !generated_lens_metadata.json
 !publish_status.json
+!published_lenses.json
+!assets/*.png
 easylens_full.har
 artifacts/

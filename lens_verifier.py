@@ -29,8 +29,9 @@ class LensVerifier:
         g4 = self.verify_archive_boundaries(bundle_bytes) if g3 else False
         g5 = self.verify_controller_and_assets(bundle_bytes) if g4 else False
         g6 = self.verify_judge_ai()
+        g7 = self.verify_visual_simulation(bundle_bytes) if g3 else False
 
-        self.report["passed"] = all([g1, g2, g3, g4, g5, g6])
+        self.report["passed"] = all([g1, g2, g3, g4, g5, g6, g7])
         return self.report["passed"]
 
     def verify_metadata_status(self) -> bool:
@@ -246,6 +247,56 @@ class LensVerifier:
         if not passed:
             self.report["errors"].append(f"Gate 6 Failed: Judge AI Score {score}/100 (<85 threshold). Deductions: {deductions}")
         return passed
+
+    def verify_visual_simulation(self, bundle_bytes: bytes) -> bool:
+        """Gate 7: Visual AR simulation over portrait frames and Gemini Vision Judge (threshold >= 85, strictly reject background-only)"""
+        try:
+            from lens_simulator import LensSimulator
+            simulator = LensSimulator(bundle_bytes, lens_data=self.lens_data, portrait_dir="assets")
+            analysis = simulator.inspect_bundle()
+
+            # Render simulation screenshots
+            out_neutral, out_trigger = simulator.render_simulation_screenshots(
+                out_neutral="preview_neutral_simulated.png",
+                out_trigger="preview_mouth_open_simulated.png"
+            )
+
+            # Evaluate with Gemini Multimodal Vision AI
+            judge_res = simulator.judge_visuals_with_gemini_vision(out_trigger)
+
+            has_3d = analysis.get("has_3d_mesh", False)
+            is_bg_only = analysis.get("is_background_only", False) or judge_res.get("is_background_only", False)
+            judge_passed = judge_res.get("passed", False)
+            score = judge_res.get("virality_score", judge_res.get("score", 0))
+
+            # Strictly reject background-only or lack of 3D mesh
+            passed = has_3d and (not is_bg_only) and judge_passed
+
+            self.report["gates"]["gate7_visual_simulation"] = {
+                "passed": passed,
+                "score": score,
+                "has_3d_mesh": has_3d,
+                "is_background_only": is_bg_only,
+                "has_particles": analysis.get("has_particles", False),
+                "has_head_binding": analysis.get("has_head_binding", False),
+                "critique": judge_res.get("critique", ""),
+                "neutral_preview": out_neutral,
+                "trigger_preview": out_trigger
+            }
+
+            if not passed:
+                if not has_3d:
+                    self.report["errors"].append("Gate 7 Failed: No foreground 3D mesh (.mesh/.glb/.ply) found in bundle")
+                if is_bg_only:
+                    self.report["errors"].append("Gate 7 Failed: Filter detected as flat 2D background replacement only")
+                if not judge_passed:
+                    self.report["errors"].append(f"Gate 7 Failed: Gemini Vision Judge score {score}/100 below 85 threshold")
+
+            return passed
+        except Exception as e:
+            self.report["gates"]["gate7_visual_simulation"] = {"passed": False, "error": str(e)}
+            self.report["errors"].append(f"Gate 7 Failed: Simulation exception: {e}")
+            return False
 
     def export_report(self, filepath: str = "verification_report.json"):
         with open(filepath, "w") as f:

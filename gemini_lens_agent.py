@@ -25,39 +25,39 @@ def get_gemini_api_keys():
 
 ACCOUNT_PERSONAS = {
     "1": {
-        "channel": "TitanForge_AR",
-        "genre": "Mythic 3D Beasts & Familiars",
-        "theme_focus": "3D photorealistic perched dragons, wyverns, or cyber beasts with ray-traced contact shadows and volumetric breath weapons on mouth open.",
-        "primary_trigger": "MouthOpen (Breath weapon / roar / attack)",
-        "tag_pool": ["dragon", "3d", "creature", "fantasy", "pbr", "beast"]
+        "channel": "MythicBeasts_AR",
+        "genre": "3D Mythic Headpiece & Elemental Breath",
+        "theme_focus": "3D dragon horned crown sculpted securely onto head with anisotropic obsidian scales and gold filigree. Opening mouth unleashes animated emerald fire particle stream with flying embers. Glowing runic eyes on smile.",
+        "primary_trigger": "MouthOpen (Emerald dragon flame particles) / Smile (Glowing runic eyes)",
+        "tag_pool": ["dragon", "3d", "headpiece", "horns", "fantasy", "pbr"]
     },
     "2": {
         "channel": "RaveMotion_Studio",
-        "genre": "Full-Body Dance & Audio-Reactive Stage",
-        "theme_focus": "Full-body tracking with twin holographic dancing clones, audio-reactive floor laser rings, futuristic club visualizer.",
-        "primary_trigger": "FullBody Movement / HeadTilt (Audio waveform visor)",
-        "tag_pool": ["dance", "fullbody", "rave", "music", "audioreactive", "neon"]
+        "genre": "Cyberpunk Audio-Reactive Visor & Beat FX",
+        "theme_focus": "3D holographic cyberpunk visor fitted over user's eyes with floating audio visualizer spectrum bars around head. Opening mouth unleashes glowing neon laser particle shockwaves with chromatic aberration.",
+        "primary_trigger": "MouthOpen (Laser particle blast) / Smile (Neon spectrum flare)",
+        "tag_pool": ["cyberpunk", "visor", "rave", "music", "audioreactive", "neon"]
     },
     "3": {
         "channel": "WarpShock_Comedy",
-        "genre": "Viral Meme & Cognitive Dissonance",
-        "theme_focus": "Hyper-expressive melodrama morph (crying/grief dissonance), fluid 3D tears geyser on mouth open, comic raincloud.",
-        "primary_trigger": "MouthOpen (Gushing cartoon tears) / Smile (Dramatic lightning zoom)",
-        "tag_pool": ["meme", "crying", "funny", "drama", "morph", "prank"]
+        "genre": "Viral Meme & Exaggerated Face AR",
+        "theme_focus": "3D comedic stormcloud hovering directly above user's head with rain particles. Opening mouth erupts an exaggerated voluminous geyser of liquid mercury tears and gold coins. Smiling triggers a dramatic cartoon lightning flash.",
+        "primary_trigger": "MouthOpen (Geyser of liquid tears & coins) / Smile (Lightning flash)",
+        "tag_pool": ["meme", "crying", "funny", "cloud", "cartoon", "morph"]
     },
     "4": {
         "channel": "Lumiere_Atelier",
-        "genre": "35mm Analog Luxury & High-Fashion",
-        "theme_focus": "Kodak Portra 400 35mm film aesthetic, authentic red halation, 24k sculpted gold leaf headprop, warm golden hour sun flare.",
-        "primary_trigger": "Smile (Prism caustic light burst across cheekbones)",
-        "tag_pool": ["film", "35mm", "portra400", "beauty", "luxury", "aesthetic"]
+        "genre": "35mm Analog Luxury & Haute Couture",
+        "theme_focus": "Sculpted 24k gold leaf baroque crown attached firmly to forehead and temples with caustic crystal prisms. Subtle Kodak 35mm film halation with caustic sparkle dust particles bursting across cheekbones on smile.",
+        "primary_trigger": "Smile (Prism caustic sparkle dust) / BrowRaise (Golden shimmer)",
+        "tag_pool": ["film", "35mm", "crown", "gold", "luxury", "aesthetic"]
     },
     "5": {
         "channel": "Chrono_Mirage",
         "genre": "Surrealism & Zero-G Liquid Chrome",
-        "theme_focus": "Avant-garde liquid mercury halo crown morphing in zero gravity, ray-traced chrome reflections, infinite mirror portal background.",
-        "primary_trigger": "Smile (Infinite kaleidoscopic mirror portal) / BrowRaise (Orbiting chrome spheres)",
-        "tag_pool": ["surreal", "chrome", "optical", "cyber", "art", "mirage"]
+        "theme_focus": "3D floating liquid mercury halo crown morphing directly above user's head with chrome facial plates. Opening mouth emits orbiting liquid chrome spheres with refractive rippling reflections.",
+        "primary_trigger": "MouthOpen (Orbiting liquid chrome spheres) / Smile (Mirror ripple distortion)",
+        "tag_pool": ["surreal", "chrome", "halo", "optical", "cyber", "mirage"]
     }
 }
 
@@ -103,8 +103,8 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
         "1. BANNED: Generic purple gradients, floating disembodied blobs, rubbery plastic textures, and jittery motion.\n"
         "2. MANDATORY: Physically Based Rendering (PBR) materials (anisotropic metal, porous basalt, liquid mercury, 24k gold, subsurface scattering).\n"
         "3. MANDATORY: 3-point contrast lighting (key light + contrasting 6500K/2800K directional rim lighting + ray-traced contact shadows).\n"
-        "4. MANDATORY: Exact physical anchoring (perched securely on outer shoulder, wrapped around collarbone, or fitted crown headprop).\n"
-        "5. MANDATORY: Explicit face triggers (opening mouth triggers breath/vfx; smiling triggers bloom/flare; raising eyebrows charges aura).\n"
+        "4. MANDATORY FRONT-CAMERA SELFIE ANCHORING: Primary 3D object MUST be anchored directly to HEAD or FACE (e.g., fitted crown, sculpted horns, cyberpunk visor, face armor, floating halo). NEVER attach to shoulders or full-body tracking.\n"
+        "5. MANDATORY ANIMATION & INTERACTIVE PARTICLES: Must describe animated particle effects or glowing mesh reactions explicitly triggered by opening mouth or smiling (e.g., opening mouth emits glowing particle flame/laser beam/coins; smiling triggers eye flare).\n"
         "6. COMPLIANCE & SAFETY:\n"
         "   - Under 480 characters for the prompt string to prevent AILC backend truncation.\n"
         "   - Zero trademarked/copyrighted names (NO Marvel, Goku, Pokemon, Nike, etc. Use generic archetype nouns).\n"
