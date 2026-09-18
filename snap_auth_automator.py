@@ -477,6 +477,31 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                             print(f"[AUTH SUCCESS] Redirected to session URL: {curr_url}")
                             break
 
+                        # Handle Snapchat TIV (Two-step Identity Verification - Email Approval)
+                        if "/v2/tiv" in curr_url or "tiv" in curr_url.lower():
+                            print("\n" + "=" * 65)
+                            print("[TIV VERIFICATION DETECTED] Snapchat sent login confirmation email!")
+                            print("Target Email: gurination1@gmail.com")
+                            print("ACTION REQUIRED: Open your Gmail and tap 'Confirm Login' / 'Yes, this was me'.")
+                            print("The browser is keeping a live session with GetTivStatus polling every 3s.")
+                            print("Holding live session for up to 360 seconds (6 minutes)...")
+                            print("=" * 65 + "\n")
+                            await page.screenshot(path="login_step3_tiv_pending.png")
+
+                            for tiv_s in range(360):
+                                await page.wait_for_timeout(1000)
+                                curr_url = page.url
+                                if captured_ticket or "easylens" in curr_url or "accounts/sso" in curr_url:
+                                    print(f"\n[TIV APPROVED] Email approval confirmed! Redirecting to: {curr_url}")
+                                    break
+                                if tiv_s % 15 == 0:
+                                    print(f"[TIV WAITING {tiv_s}s/360s] Awaiting user confirmation click... URL: {curr_url[:80]}")
+                                    await page.screenshot(path="login_step3_tiv_waiting.png")
+
+                            if captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
+                                print("[TIV SUCCESS] Challenge approved successfully!")
+                                break
+
                         # Handle security verification / captcha challenges
                         if "captcha" in curr_url.lower():
                             if wait_i % 5 == 0:
@@ -510,6 +535,21 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                                 break
 
                     await page.screenshot(path=f"login_step3_attempt_{attempt_idx}.png")
+
+                    # Check page body in case accounts/sso returned ticket directly
+                    if not captured_ticket and ("accounts/sso" in page.url or "easylens" in page.url):
+                        try:
+                            b_text = (await page.inner_text("body")).strip()
+                            try:
+                                dec_b = base64.b64decode(b_text).decode("utf-8").strip()
+                            except Exception:
+                                dec_b = b_text
+                            if dec_b.startswith("hCgw"):
+                                captured_ticket = dec_b
+                                print(f"[PAGE BODY TICKET] Captured ticket directly from page text: {dec_b[:16]}...")
+                        except Exception:
+                            pass
+
                     if captured_ticket:
                         print("[STEP 3 SUCCESS] Authenticated successfully!")
                         break
@@ -529,8 +569,16 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
         captured_cookies = await context.cookies()
         await browser.close()
 
-    # Format cookie header
-    cookie_str = "; ".join([f"{c['name']}={c['value']}" for c in captured_cookies if "snapchat.com" in c.get("domain", "") or c.get("name", "").startswith("__Host-")])
+        # Format cookie header
+        cookie_str = "; ".join([f"{c['name']}={c['value']}" for c in captured_cookies if "snapchat.com" in c.get("domain", "") or c.get("name", "").startswith("__Host-")])
+
+        # If ticket was not intercepted from network event, attempt minting using fresh cookies
+        if not captured_ticket and cookie_str:
+            print("[POST-BROWSER SSO MINT] Attempting /accounts/sso ticket minting using captured session cookies...")
+            minted = mint_sso_ticket_from_cookies(cookie_str)
+            if minted:
+                captured_ticket = minted
+                print(f"[POST-BROWSER SSO SUCCESS] Minted ticket: {minted[:16]}...")
 
     return {
         "ticket": captured_ticket,
