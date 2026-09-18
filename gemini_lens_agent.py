@@ -128,6 +128,25 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
         f"Primary Trigger Mechanism: {persona['primary_trigger']}\n"
         f"Recommended Tag Pool: {', '.join(persona['tag_pool'])}\n"
     )
+
+    # Deduplication memory from published history
+    if os.path.exists("published_lenses.json"):
+        try:
+            with open("published_lenses.json", "r") as f:
+                history = json.load(f)
+            if history:
+                recent_lines = [
+                    f"- '{item.get('lens_name')}' (Acc #{item.get('account_id')}): {item.get('visual_hook', '')}"
+                    for item in history[-15:]
+                ]
+                user_prompt += (
+                    "\nPREVIOUSLY CREATED LENSES IN FLEET (CRITICAL ANTI-DUPLICATION RULE: DO NOT DUPLICATE OR RECYCLE THESE):\n"
+                    + "\n".join(recent_lines)
+                    + "\nMake this new concept fresh, distinctive, and completely novel!\n"
+                )
+        except Exception:
+            pass
+
     if custom_instructions:
         user_prompt += f"Special User Direction: {custom_instructions}\n"
 

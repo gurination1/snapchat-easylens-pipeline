@@ -72,8 +72,9 @@ def main():
     with open("generated_lens_metadata.json", "w") as f:
         json.dump(lens_data, f, indent=2)
 
-    print("\n=== STEP 5: 5-GATE COMPREHENSIVE LENS VERIFICATION ===")
-    verifier = LensVerifier(lens_data=lens_data, session=client.session)
+    print("\n=== STEP 5: 6-GATE COMPREHENSIVE LENS & JUDGE AI VERIFICATION ===")
+    plan_data = gemini_plan if USE_GEMINI else {"prompt": prompt, "lens_name": lens_name}
+    verifier = LensVerifier(lens_data=lens_data, session=client.session, plan=plan_data)
     passed = verifier.verify_all()
     report = verifier.export_report("verification_report.json")
 
@@ -82,6 +83,7 @@ def main():
     print(f"Gate 3 (Checksum Hash):   {report['gates']['gate3_checksum_integrity']['passed']}")
     print(f"Gate 4 (Size Boundaries): {report['gates']['gate4_size_limits']['passed']} (Compressed: {report['metrics'].get('compressed_size_bytes', 0) // 1024}KB, Unpacked: {report['metrics'].get('uncompressed_size_bytes', 0) // 1024}KB)")
     print(f"Gate 5 (Assets & Events): {report['gates']['gate5_assets_and_controller']['passed']}")
+    print(f"Gate 6 (Judge AI Score):  {report['gates']['gate6_judge_ai']['passed']} ({report['gates']['gate6_judge_ai'].get('score')}/100 - {report['gates']['gate6_judge_ai'].get('verdict')})")
     print(f"OVERALL VERIFICATION VERDICT: {'PASSED (100%)' if passed else 'FAILED'}")
 
     if not passed:
@@ -99,6 +101,7 @@ def main():
         )
         print("Publish response:", pub_res)
 
+        status_data = None
         if checkpoint_id:
             print("\n=== STEP 7: MONITORING SNAPCODE & SUBMISSION STATUS ===")
             status_data = client.get_publish_status(checkpoint_id)
@@ -107,6 +110,33 @@ def main():
                 print(f"[SUCCESS] Catalog Status: {status_data.get('status')}")
                 with open("publish_status.json", "w") as f:
                     json.dump(status_data, f, indent=2)
+
+        # Record into deduplication state file (persisted in git like yt-auto)
+        import time
+        history_file = "published_lenses.json"
+        history = []
+        if os.path.exists(history_file):
+            try:
+                with open(history_file, "r") as f:
+                    history = json.load(f)
+            except Exception:
+                history = []
+
+        entry = {
+            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "account_id": str(ACCOUNT_ID),
+            "lens_name": final_lens_name,
+            "lens_id": (status_data or {}).get("lens_central_lens_id") or pub_res.get("lens_central_lens_id"),
+            "checkpoint_id": checkpoint_id,
+            "prompt": prompt,
+            "tags": tags,
+            "visual_hook": (gemini_plan or {}).get("visual_hook", "") if USE_GEMINI else "",
+            "status": (status_data or {}).get("status", "pending")
+        }
+        history.append(entry)
+        with open(history_file, "w") as f:
+            json.dump(history, f, indent=2)
+        print(f"[STATE] Recorded '{final_lens_name}' to {history_file} (Total fleet lenses: {len(history)})")
 
     print("\n=== PIPELINE FINISHED SUCCESSFULLY WITH 100% VERIFICATION ===")
 

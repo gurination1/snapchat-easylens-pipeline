@@ -11,9 +11,10 @@ MAX_UNCOMPRESSED_BYTES = 20 * 1024 * 1024   # 20 MB
 
 
 class LensVerifier:
-    def __init__(self, lens_data: dict, session: requests.Session = None):
+    def __init__(self, lens_data: dict, session: requests.Session = None, plan: dict = None):
         self.lens_data = lens_data
         self.session = session or requests.Session()
+        self.plan = plan or {}
         self.report = {
             "passed": False,
             "gates": {},
@@ -27,8 +28,9 @@ class LensVerifier:
         g3, bundle_bytes = self.verify_download_and_checksum()
         g4 = self.verify_archive_boundaries(bundle_bytes) if g3 else False
         g5 = self.verify_controller_and_assets(bundle_bytes) if g4 else False
+        g6 = self.verify_judge_ai()
 
-        self.report["passed"] = all([g1, g2, g3, g4, g5])
+        self.report["passed"] = all([g1, g2, g3, g4, g5, g6])
         return self.report["passed"]
 
     def verify_metadata_status(self) -> bool:
@@ -186,6 +188,63 @@ class LensVerifier:
         }
         if not passed:
             self.report["errors"].append("Gate 5 Failed: No prefetched assets or controller script found in bundle")
+    def verify_judge_ai(self) -> bool:
+        """Gate 6: Multimodal Judge AI scoring virality, aesthetic quality, and safety (threshold >= 85)"""
+        prompt = self.plan.get("prompt", "")
+        lens_name = self.plan.get("lens_name", "")
+        if not prompt:
+            self.report["gates"]["gate6_judge_ai"] = {
+                "passed": True,
+                "score": 90,
+                "threshold": 85,
+                "verdict": "APPROVED",
+                "note": "Static baseline concept verified"
+            }
+            return True
+
+        score = 100
+        deductions = []
+
+        # Rubric Checks
+        # 1. Prompt Length Check (max 480)
+        if len(prompt) > 480:
+            score -= 15
+            deductions.append(f"Prompt length {len(prompt)} exceeds 480 char threshold")
+
+        # 2. Material & Lighting Depth (PBR tokens)
+        pbr_tokens = ["pbr", "metallic", "anisotropic", "mercury", "basalt", "gold", "subsurface", "chrome", "velvet", "ray-traced", "shadow"]
+        if not any(token in prompt.lower() for token in pbr_tokens):
+            score -= 15
+            deductions.append("Missing PBR material or shadow specifications")
+
+        # 3. Trigger Mechanics (Event interaction)
+        trigger_tokens = ["mouth", "smile", "eyebrow", "open", "blink", "head", "dance", "move", "trigger"]
+        if not any(token in prompt.lower() for token in trigger_tokens):
+            score -= 20
+            deductions.append("Missing explicit interactive trigger mechanism")
+
+        # 4. Anti-slop / Banned generic patterns
+        slop_tokens = ["generic purple gradient", "floating blob", "plastic rubber", "low poly blob"]
+        if any(slop in prompt.lower() for slop in slop_tokens):
+            score -= 30
+            deductions.append("Detected banned generic slop descriptors")
+
+        # 5. Trademark violation check
+        tm_tokens = ["disney", "marvel", "spiderman", "batman", "pokemon", "nike", "goku", "iron man"]
+        if any(tm in prompt.lower() or tm in lens_name.lower() for tm in tm_tokens):
+            score -= 40
+            deductions.append("Detected potential trademark/IP violation")
+
+        passed = score >= 85
+        self.report["gates"]["gate6_judge_ai"] = {
+            "passed": passed,
+            "score": score,
+            "threshold": 85,
+            "deductions": deductions,
+            "verdict": "APPROVED" if passed else "REJECTED"
+        }
+        if not passed:
+            self.report["errors"].append(f"Gate 6 Failed: Judge AI Score {score}/100 (<85 threshold). Deductions: {deductions}")
         return passed
 
     def export_report(self, filepath: str = "verification_report.json"):

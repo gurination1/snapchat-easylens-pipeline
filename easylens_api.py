@@ -16,6 +16,9 @@ SNAPML_BASE = "https://gcp.api.snapchat.com/lens-studio-web-snapml"
 ACCOUNTS_BASE = "https://accounts.snapchat.com"
 
 
+RETRIABLE_STATUS_CODES = {408, 429, 500, 502, 503, 504}
+
+
 class EasyLensClient:
     def __init__(self, sso_token: str = "", cookie_header: str = "", accounts_cookie: str = ""):
         self.sso_token = sso_token
@@ -36,6 +39,33 @@ class EasyLensClient:
         })
         if cookie_header:
             self.session.headers["Cookie"] = cookie_header
+
+    def _request_with_retry(self, method: str, url: str, max_retries: int = 4, backoff_base: float = 2.0, **kwargs) -> requests.Response:
+        """Robust request wrapper with exponential backoff and automatic 401 SSO ticket refresh"""
+        last_exception = None
+        res = None
+        for attempt in range(max_retries):
+            try:
+                res = self.session.request(method, url, **kwargs)
+                if res.status_code == 401:
+                    print(f"[AUTH 401] {url} returned 401. Triggering self-healing SSO refresh (attempt {attempt+1}/{max_retries})...")
+                    new_ticket = self.refresh_sso_ticket()
+                    if new_ticket:
+                        continue
+                if res.status_code in RETRIABLE_STATUS_CODES:
+                    wait_time = backoff_base ** attempt
+                    print(f"[HTTP {res.status_code}] Retrying {method} {url} in {wait_time:.1f}s (attempt {attempt+1}/{max_retries})...")
+                    time.sleep(wait_time)
+                    continue
+                return res
+            except (requests.RequestException, ConnectionError, TimeoutError) as e:
+                last_exception = e
+                wait_time = backoff_base ** attempt
+                print(f"[NET ERROR] {e}. Retrying {method} {url} in {wait_time:.1f}s (attempt {attempt+1}/{max_retries})...")
+                time.sleep(wait_time)
+        if last_exception:
+            raise last_exception
+        return res
 
     def refresh_sso_ticket(self) -> str:
         """Calls accounts.snapchat.com/accounts/sso with persistent session cookies to mint a new Bearer ticket"""
@@ -67,25 +97,14 @@ class EasyLensClient:
 
     def verify_auth(self):
         url = f"{SNAPML_BASE}/api/me"
-        # If no token provided initially, try refreshing from accounts cookie
         if not self.sso_token and self.accounts_cookie:
             self.refresh_sso_ticket()
 
-        res = self.session.get(url, timeout=15)
+        res = self._request_with_retry("GET", url, timeout=15)
         if res.status_code == 200:
             user_data = res.json()
             print(f"[AUTH OK] User: {user_data.get('displayName')} (@{user_data.get('username')})")
             return user_data
-
-        if res.status_code == 401:
-            print("[AUTH 401] Bearer ticket expired. Triggering self-healing SSO refresh...")
-            new_ticket = self.refresh_sso_ticket()
-            if new_ticket:
-                res2 = self.session.get(url, timeout=15)
-                if res2.status_code == 200:
-                    user_data = res2.json()
-                    print(f"[AUTH REFRESHED OK] User: {user_data.get('displayName')} (@{user_data.get('username')})")
-                    return user_data
 
         raise RuntimeError(f"Auth failed ({res.status_code}): {res.text}")
 
@@ -101,7 +120,7 @@ class EasyLensClient:
             "supports_reasoning_summaries": True,
             "supports_tool_calls": False
         }
-        res = self.session.post(url, json=payload, timeout=20)
+        res = self._request_with_retry("POST", url, json=payload, timeout=20)
         res.raise_for_status()
         data = res.json()
         cid = data.get("conversation_id")
@@ -119,7 +138,7 @@ class EasyLensClient:
                 "attachments": []
             }
         }
-        res = self.session.post(url, json=payload, timeout=20)
+        res = self._request_with_retry("POST", url, json=payload, timeout=20)
         res.raise_for_status()
         print(f"[PROMPT SENT] Action submitted successfully: {prompt}")
         return res.json()
@@ -129,7 +148,7 @@ class EasyLensClient:
         start_time = time.time()
         print(f"[POLLING] Waiting for lens generation (timeout: {max_wait_sec}s)...")
         while time.time() - start_time < max_wait_sec:
-            res = self.session.get(url, timeout=15)
+            res = self._request_with_retry("GET", url, timeout=15)
             if res.status_code == 200:
                 lens = res.json()
                 archive_url = lens.get("download_url") or (lens.get("lens_bundle_data") or {}).get("lens_archive_url")
@@ -159,7 +178,7 @@ class EasyLensClient:
         if icon_url:
             payload["lens_icon_url"] = icon_url
 
-        res = self.session.post(url, json=payload, timeout=25)
+        res = self._request_with_retry("POST", url, json=payload, timeout=25)
         res.raise_for_status()
         data = res.json()
         print(f"[PUBLISH SUBMITTED] Response: {json.dumps(data)}")
@@ -169,7 +188,7 @@ class EasyLensClient:
         url = f"{AILC_BASE}/assistant/me/lenses?page_number=1&page_size=20&filter_by=submitted"
         start = time.time()
         while time.time() - start < max_wait_sec:
-            res = self.session.get(url, timeout=15)
+            res = self._request_with_retry("GET", url, timeout=15)
             if res.status_code == 200:
                 data = res.json()
                 for item in data.get("items", []):
