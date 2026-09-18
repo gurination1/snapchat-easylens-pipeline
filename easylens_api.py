@@ -3,9 +3,11 @@ Snapchat EasyLens (LensStudioWeb) Automation Client
 Implements reverse-engineered API flow extracted from easylens HAR and chunk bundles.
 """
 
+import os
 import json
 import time
 import uuid
+import subprocess
 import requests
 
 AILC_BASE = "https://gcp.api.snapchat.com/lens-studio-web-ailc"
@@ -14,6 +16,27 @@ SNAPML_BASE = "https://gcp.api.snapchat.com/lens-studio-web-snapml"
 
 
 ACCOUNTS_BASE = "https://accounts.snapchat.com"
+REPO = "gurination1/snapchat-easylens-pipeline"
+
+
+def update_github_secret(secret_name: str, secret_value: str, repo: str = REPO):
+    """Safely updates a GitHub repository secret using gh CLI if available."""
+    if not secret_value:
+        return
+    token = os.getenv("GH_TOKEN") or os.getenv("GITHUB_TOKEN")
+    if not token:
+        return
+    try:
+        subprocess.run(
+            ["gh", "secret", "set", secret_name, "--repo", repo],
+            input=secret_value.encode("utf-8"),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=True
+        )
+        print(f"[GITHUB SECRET] Persisted {secret_name} successfully")
+    except Exception as e:
+        print(f"[GITHUB SECRET WARN] {secret_name}: {e}")
 
 
 RETRIABLE_STATUS_CODES = {408, 429, 500, 502, 503, 504}
@@ -89,6 +112,7 @@ class EasyLensClient:
                     print(f"[SSO SUCCESS] Minted fresh Bearer ticket: {ticket[:16]}...")
                     self.sso_token = ticket
                     self.session.headers["Authorization"] = f"Bearer {ticket}"
+                    update_github_secret("SNAP_SSO_TOKEN", ticket)
                     return ticket
             print(f"[SSO WARN] Refresh response status {res.status_code} (body starts: {res.text[:60]})")
         except Exception as e:
