@@ -6,10 +6,8 @@ import requests
 
 CANDIDATE_MODELS = [
     "gemini-2.5-flash",
-    "gemini-3.5-flash",
-    "gemini-2.5-flash-lite",
-    "gemini-flash-latest",
-    "gemini-2.5-pro"
+    "gemini-3.1-pro-preview",
+    "gemini-3.5-flash"
 ]
 
 
@@ -64,6 +62,27 @@ ACCOUNT_PERSONAS = {
 }
 
 
+def extract_json(text: str) -> dict:
+    text = text.strip()
+    # Strip markdown fences if present
+    if text.startswith("```"):
+        lines = text.split("\n")
+        if lines[0].startswith("```"):
+            lines = lines[1:]
+        if lines and lines[-1].strip().startswith("```"):
+            lines = lines[:-1]
+        text = "\n".join(lines).strip()
+
+    try:
+        return json.loads(text)
+    except Exception:
+        import re
+        match = re.search(r"\{.*\}", text, re.DOTALL)
+        if match:
+            return json.loads(match.group(0))
+        raise
+
+
 def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -> dict:
     api_keys = get_gemini_api_keys()
     if not api_keys:
@@ -113,21 +132,21 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
         "generationConfig": {
             "responseMimeType": "application/json",
             "temperature": 0.7,
-            "maxOutputTokens": 1000
+            "maxOutputTokens": 2048
         }
     }
 
     last_err = None
     for model_name in CANDIDATE_MODELS:
-        for key in api_keys[:5]:
+        for key in api_keys[:3]:
             url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={key}"
             try:
-                print(f"[GEMINI] Trying model {model_name} with key {key[:6]}... for Account #{account_id}")
+                print(f"[GEMINI] Trying model {model_name} with key {key[:8]}... for Account #{account_id}")
                 res = requests.post(url, json=payload, timeout=25)
                 if res.status_code == 200:
                     data = res.json()
                     raw_text = data["candidates"][0]["content"]["parts"][0]["text"]
-                    result = json.loads(raw_text)
+                    result = extract_json(raw_text)
 
                     # Post-validation of length
                     if len(result.get("prompt", "")) > 480:
