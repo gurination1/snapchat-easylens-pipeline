@@ -85,7 +85,8 @@ jobs:
 
           echo "Testing DNS and HTTP reachability to Snapchat accounts:"
           getent hosts accounts.snapchat.com || true
-          curl -sI --max-time 10 https://accounts.snapchat.com/v2/login | head -n 5 || true
+          curl -sI --max-time 10 https://accounts.snapchat.com/v2/login > /tmp/snap_headers.txt 2>&1 || true
+          head -n 5 /tmp/snap_headers.txt || true
 
       - name: Execute Autonomous Lens Pipeline & Verifier
         env:
