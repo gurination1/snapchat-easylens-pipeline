@@ -494,8 +494,44 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                                 if captured_ticket or "easylens" in curr_url or "accounts/sso" in curr_url:
                                     print(f"\n[TIV APPROVED] Email approval confirmed! Redirecting to: {curr_url}")
                                     break
+
+                                # Check for Google OAuth / SecProxy redirection
+                                if "accounts.google.com" in curr_url or "secproxy" in curr_url:
+                                    if tiv_s % 5 == 0:
+                                        print(f"\n[GOOGLE SECPROXY] Detected Google Sign-in redirection (URL: {curr_url[:80]})!")
+                                    try:
+                                        # Fill Google Email if present
+                                        g_email_el = await page.query_selector("input[type='email'], input#identifierId, input[name='identifier']")
+                                        if g_email_el and await g_email_el.is_visible():
+                                            g_email = "gurination1@gmail.com"
+                                            print(f"[GOOGLE SECPROXY] Filling Google email ({g_email})...")
+                                            await human_type(page, g_email_el, g_email)
+                                            await page.wait_for_timeout(500)
+                                            g_next_btn = await page.query_selector("#identifierNext, button:has-text('Next')")
+                                            if g_next_btn and await g_next_btn.is_visible():
+                                                print("[GOOGLE SECPROXY] Clicking Google email 'Next'...")
+                                                await human_click(page, g_next_btn)
+                                                await page.wait_for_timeout(3000)
+                                                await page.screenshot(path="login_step4_google_email_submitted.png")
+
+                                        # Fill Google Password if present
+                                        g_pwd_el = await page.query_selector("input[type='password'], input[name='Passwd'], input[name='password']")
+                                        if g_pwd_el and await g_pwd_el.is_visible():
+                                            g_pwd = passwords[0] if passwords else "DM id wale1"
+                                            print(f"[GOOGLE SECPROXY] Filling Google password...")
+                                            await human_type(page, g_pwd_el, g_pwd)
+                                            await page.wait_for_timeout(500)
+                                            g_pwd_next = await page.query_selector("#passwordNext, button:has-text('Next')")
+                                            if g_pwd_next and await g_pwd_next.is_visible():
+                                                print("[GOOGLE SECPROXY] Clicking Google password 'Next'...")
+                                                await human_click(page, g_pwd_next)
+                                                await page.wait_for_timeout(4000)
+                                                await page.screenshot(path="login_step5_google_pwd_submitted.png")
+                                    except Exception as g_err:
+                                        print(f"[GOOGLE SECPROXY WARN] {g_err}")
+
                                 if tiv_s % 15 == 0:
-                                    print(f"[TIV WAITING {tiv_s}s/360s] Awaiting user confirmation click... URL: {curr_url[:80]}")
+                                    print(f"[TIV WAITING {tiv_s}s/360s] Awaiting verification flow... URL: {curr_url[:80]}")
                                     await page.screenshot(path="login_step3_tiv_waiting.png")
 
                             if captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
