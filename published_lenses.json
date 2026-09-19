@@ -50,5 +50,22 @@
     ],
     "visual_hook": "Instant appearance of gleaming obsidian and gold dragon horns fitted to the user's head with hyper-realistic reflections.",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-19T03:00:01Z",
+    "account_id": "4",
+    "lens_name": "Haute Baroque Gold",
+    "lens_id": "a5710040-c03f-4fb8-b3fe-dc2862109b76",
+    "checkpoint_id": "06aadfa7-f756-7bc3-8000-7ac8dbafd75b",
+    "prompt": "Sculpted 24k gold leaf baroque crown fitted firmly to forehead and temples with embedded caustic crystal prisms, rendering with anisotropic metal PBR materials and 3-point contrast lighting with ray-traced contact shadows. Subtle Kodak 35mm film halation with caustic sparkle dust particles bursting across cheekbones on smile. Photosensitive safe, zero strobing, locked strictly to head tracking.",
+    "tags": [
+      "film",
+      "35mm",
+      "crown",
+      "gold",
+      "luxury"
+    ],
+    "visual_hook": "Instantaneous flash of opulent 24k gold leaf and caustic crystal light refraction framing the user's upper face with timeless analog warmth.",
+    "status": "pending"
   }
 ]
