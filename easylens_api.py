@@ -107,7 +107,12 @@ class EasyLensClient:
             print("[SSO] Requesting fresh Bearer ticket from accounts.snapchat.com/accounts/sso...")
             res = requests.post(url, headers=headers, data=data, timeout=15)
             if res.status_code == 200 and not res.text.strip().startswith("<"):
-                ticket = base64.b64decode(res.text).decode("utf-8").strip()
+                raw = res.text.strip()
+                try:
+                    padded = raw + "=" * (-len(raw) % 4)
+                    ticket = base64.b64decode(padded).decode("utf-8", errors="ignore").strip()
+                except Exception:
+                    ticket = raw
                 if ticket.startswith("hCgw"):
                     print(f"[SSO SUCCESS] Minted fresh Bearer ticket: {ticket[:16]}...")
                     self.sso_token = ticket

@@ -15,14 +15,14 @@ from gemini_lens_agent import generate_lens_prompt
 SSO_TOKEN = os.getenv("SNAP_SSO_TOKEN")
 COOKIE_HEADER = os.getenv("SNAP_COOKIE_HEADER", "")
 ACCOUNT_ID = os.getenv("ACCOUNT_ID", "1")
-USE_GEMINI = (os.getenv("USE_GEMINI") or "false").lower() == "true"
+USE_GEMINI = os.getenv("USE_GEMINI", "true").lower() not in ("false", "0", "no")
 CUSTOM_INSTRUCTIONS = os.getenv("CUSTOM_INSTRUCTIONS", "")
 
-# Fallbacks if Gemini is not used
-STATIC_PROMPT = os.getenv("LENS_PROMPT") or "Photorealistic 3D miniature obsidian wyvern perched securely on user's right shoulder with ray-traced contact shadows. Opening mouth unleashes synchronized volumetric fire breath with flying embers and heat distortion. Dark volcanic caldera background with warm rim lighting."
-STATIC_LENS_NAME = os.getenv("LENS_NAME") or "Obsidian Pyrodrake 3D"
-STATIC_TAGS = [t.strip() for t in (os.getenv("LENS_TAGS") or "dragon,3d,creature,fantasy,pbr").split(",")]
-AUTO_PUBLISH = (os.getenv("AUTO_PUBLISH") or "true").lower() == "true"
+# Proven PBR head-anchored fallback if Gemini is not used
+STATIC_PROMPT = os.getenv("LENS_PROMPT") or "Fitted mythic 3D dragon horn headpiece anchored strictly to head, crafted from anisotropic obsidian scales and liquid 24k gold filigree. 3-point contrast lighting with warm key light, cool 6500K rim light, and ray-traced contact shadows. Opening mouth triggers flowing emerald flame particles and rising embers. Smiling activates bright golden runic eye flares. PBR materials, no strobing, ultra-realistic."
+STATIC_LENS_NAME = os.getenv("LENS_NAME") or "Aether Dragon Crown"
+STATIC_TAGS = [t.strip() for t in (os.getenv("LENS_TAGS") or "dragon,3d,headpiece,horns,fantasy,pbr").split(",")]
+AUTO_PUBLISH = os.getenv("AUTO_PUBLISH", "true").lower() not in ("false", "0", "no")
 
 
 def main():

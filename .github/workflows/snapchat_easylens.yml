@@ -101,9 +101,9 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_API_KEYS: ${{ secrets.GEMINI_API_KEYS }}
           TARGET_ACC: ${{ inputs.account_id }}
-          USE_GEMINI: ${{ inputs.use_gemini != false }}
+          USE_GEMINI: ${{ github.event_name == 'schedule' || inputs.use_gemini != false }}
           CUSTOM_INSTRUCTIONS: ${{ inputs.custom_instructions || '' }}
-          AUTO_PUBLISH: ${{ inputs.auto_publish != false }}
+          AUTO_PUBLISH: ${{ github.event_name == 'schedule' || inputs.auto_publish != false }}
           PYTHONUNBUFFERED: "1"
         run: |
           if [ -n "$TARGET_ACC" ]; then
