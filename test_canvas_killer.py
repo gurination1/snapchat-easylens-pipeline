@@ -11,17 +11,23 @@ import pipeline_runner
 
 def test_ion_pulse_velo_rejection():
     print("=== TEST 1: Ion Pulse Velo Rejection by Gate 5 ===")
-    meta_path = "/root/snapchat-lens/artifacts/run_35434894216/snapchat-lens-verified-data/generated_lens_metadata.json"
-    pub_path = "/root/snapchat-lens/artifacts/run_35434894216/snapchat-lens-verified-data/publish_status.json"
-    
-    with open(meta_path) as f:
-        lens_data = json.load(f)
-    with open(pub_path) as f:
-        pub_status = json.load(f)
-
-    # Merge blocks and controller code to simulate raw AILC payload
-    lens_data["blocks"] = pub_status.get("blocks", [])
-    lens_data["controller_code"] = pub_status.get("controller_code", "")
+    lens_data = {
+        "lens_name": "Ion Pulse Velo",
+        "blocks": [
+            {
+                "id": "block_canvas_1",
+                "name": "Canvas API",
+                "key": "crown_bars_canvas",
+                "description": "Audio-reactive crown bars"
+            }
+        ],
+        "controller_code": "CanvasAPI.createOnScreenCanvas();",
+        "asset_statuses": {
+            "prefetched_assets": {
+                "mesh": {}
+            }
+        }
+    }
 
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w") as z:

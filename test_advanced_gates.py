@@ -72,7 +72,7 @@ def test_video_audit_black_screen():
 
 def test_video_audit_motion_portrait():
     print("=== TEST 5: Real Motion Portrait Acceptance & Variance ===")
-    portrait_vid = "/root/snapchat-lens/assets/test_portrait.mp4"
+    portrait_vid = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "test_portrait.mp4")
     assert os.path.exists(portrait_vid)
     
     audit = LensSimulator.audit_preview_video(portrait_vid)

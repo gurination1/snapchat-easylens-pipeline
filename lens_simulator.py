@@ -496,7 +496,6 @@ class LensSimulator:
         cand_dirs = [
             os.path.join(self.portrait_dir, "audio"),
             os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "audio"),
-            "/root/snapchat-lens/assets/audio",
             os.path.join(os.getcwd(), "assets", "audio"),
             "assets/audio"
         ]
@@ -747,15 +746,16 @@ class LensSimulator:
                 audio_file = self.resolve_audio_track(account_id=account_id)
                 if audio_file and os.path.exists(audio_file) and os.path.getsize(audio_file) > 1000:
                     print(f"[SIMULATOR] Muxing production audio track ({os.path.basename(audio_file)}) into motion preview video...")
+                    vid_dur = round(float(num_frames / max(1.0, fps)), 3)
                     mux_cmd = [
                         "ffmpeg", "-y",
                         "-i", temp_video,
                         "-stream_loop", "-1",
                         "-i", audio_file,
+                        "-t", str(vid_dur),
                         "-c:v", "copy",
                         "-c:a", "aac",
                         "-b:a", "128k",
-                        "-shortest",
                         "-movflags", "+faststart",
                         out_path
                     ]
@@ -808,10 +808,10 @@ class LensSimulator:
                     "-i", temp_video,
                     "-stream_loop", "-1",
                     "-i", audio_file,
+                    "-t", "3.6",
                     "-c:v", "copy",
                     "-c:a", "aac",
                     "-b:a", "128k",
-                    "-shortest",
                     "-movflags", "+faststart",
                     out_path
                 ]
