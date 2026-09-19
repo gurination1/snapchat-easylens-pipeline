@@ -161,6 +161,7 @@
     "visual_hook": "The instant, seamless snap of high-fidelity titanium and glass onto the user's face creates an immediate 'future-tech' transformation.",
     "has_preview_video": true,
     "preview_url": "https://cf-st.sc-cdn.net/d/6USHfihJjWzQTf7IQJ8B9?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "status": "pending"
+    "status": "rejected_technical_error",
+    "rejection_reason": "Technical error in Snap automated test: Undeclared TWEEN.Easing in LensController.js caused runtime ReferenceError"
   }
 ]

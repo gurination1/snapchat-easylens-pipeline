@@ -26,7 +26,7 @@ STATIC_FALLBACKS = {
         "tags": ["dragon", "3d", "headpiece", "horns", "fantasy", "pbr"]
     },
     "2": {
-        "prompt": "Sleek ergonomic 3D cyberpunk HUD glasses and holographic visor resting strictly across eyes, leaving cheeks and mouth completely uncovered for clean tracking. Brushed titanium frame with pulsing cyan neon edge emission and refractive glass. Orbiting audio-reactive equalizer bars halo head. 3-point contrast lighting with ray-traced shadows. Opening mouth triggers radial laser shockwave; smiling flashes neon visor HUD readout. Zero strobing.",
+        "prompt": "Sleek ergonomic 3D cyberpunk HUD glasses and holographic visor resting strictly across eyes, leaving cheeks and mouth completely uncovered for clean tracking. Brushed titanium frame with pulsing cyan neon edge emission and refractive glass. Orbiting audio-reactive equalizer bars halo head. 3-point contrast lighting with ray-traced shadows. Opening mouth triggers radial laser shockwave; smiling activates bright neon visor HUD readout. Zero strobing, zero easing curves.",
         "lens_name": "Chrono Echo Visor",
         "tags": ["cyberpunk", "visor", "rave", "music", "audioreactive", "neon"]
     },
@@ -141,67 +141,99 @@ def main():
     static_lens_name = os.getenv("LENS_NAME") or active_fallback["lens_name"]
     static_tags = [t.strip() for t in (os.getenv("LENS_TAGS") or ",".join(active_fallback["tags"])).split(",")]
 
-    # Step 0: Determine Prompt, Lens Name, and Tags
+    # Multi-attempt Generation & 7-Gate Verification Loop
+    MAX_ATTEMPTS = 2
+    passed = False
+    report = {}
     gemini_plan = None
-    if USE_GEMINI:
-        print(f"\n=== STEP 0: AUTONOMOUS GEMINI PROMPT ARCHITECT (ACCOUNT #{ACCOUNT_ID}) ===")
-        try:
-            gemini_plan = generate_lens_prompt(account_id=ACCOUNT_ID, custom_instructions=CUSTOM_INSTRUCTIONS)
-            prompt = gemini_plan["prompt"]
-            lens_name = gemini_plan["lens_name"]
-            tags = gemini_plan.get("tags", static_tags)
-            with open("gemini_generation_plan.json", "w") as f:
-                json.dump(gemini_plan, f, indent=2)
-            print(f"[GEMINI SUCCESS] Lens: {lens_name}")
-            print(f"[GEMINI SUCCESS] Hook: {gemini_plan.get('visual_hook')}")
-        except Exception as e:
-            print(f"[GEMINI WARN] Gemini synthesis failed ({e}), falling back to persona #{ACCOUNT_ID} static prompt...")
+    lens_data = None
+    checkpoint_id = None
+    prompt = None
+    lens_name = None
+    tags = None
+    cid = None
+
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        print(f"\n{'='*60}")
+        print(f"=== PIPELINE GENERATION ATTEMPT {attempt}/{MAX_ATTEMPTS} (ACCOUNT #{ACCOUNT_ID}) ===")
+        print(f"{'='*60}")
+
+        current_instructions = CUSTOM_INSTRUCTIONS
+        if attempt > 1:
+            err_summary = "; ".join(report.get("errors", []))
+            current_instructions = (
+                f"{CUSTOM_INSTRUCTIONS} [STRICT RETRY]: Previous attempt failed verification with errors: {err_summary}. "
+                "CRITICAL: Zero easing curves, zero TWEEN references, zero UI sliders, pure native triggers only!"
+            ).strip()
+
+        # Step 0: Determine Prompt, Lens Name, and Tags
+        if USE_GEMINI:
+            print(f"\n=== STEP 0: AUTONOMOUS GEMINI PROMPT ARCHITECT (ACCOUNT #{ACCOUNT_ID}, ATTEMPT {attempt}) ===")
+            try:
+                gemini_plan = generate_lens_prompt(account_id=ACCOUNT_ID, custom_instructions=current_instructions)
+                prompt = gemini_plan["prompt"]
+                lens_name = gemini_plan["lens_name"]
+                tags = gemini_plan.get("tags", static_tags)
+                with open("gemini_generation_plan.json", "w") as f:
+                    json.dump(gemini_plan, f, indent=2)
+                print(f"[GEMINI SUCCESS] Lens: {lens_name}")
+                print(f"[GEMINI SUCCESS] Hook: {gemini_plan.get('visual_hook')}")
+            except Exception as e:
+                print(f"[GEMINI WARN] Gemini synthesis failed ({e}), falling back to persona #{ACCOUNT_ID} static prompt...")
+                prompt = static_prompt
+                lens_name = static_lens_name
+                tags = static_tags
+        else:
             prompt = static_prompt
             lens_name = static_lens_name
             tags = static_tags
-    else:
-        prompt = static_prompt
-        lens_name = static_lens_name
-        tags = static_tags
 
-    print("\n=== STEP 2: CREATING LENS CONVERSATION ===")
-    cid = client.create_conversation()
+        print(f"\n=== STEP 2: CREATING LENS CONVERSATION (ATTEMPT {attempt}) ===")
+        cid = client.create_conversation()
 
-    print("\n=== STEP 3: SUBMITTING PROMPT TO SNAPCHAT AILC ===")
-    print(f"Prompt: {prompt}")
-    client.send_prompt(cid, prompt)
+        print(f"\n=== STEP 3: SUBMITTING PROMPT TO SNAPCHAT AILC (ATTEMPT {attempt}) ===")
+        print(f"Prompt: {prompt}")
+        client.send_prompt(cid, prompt)
 
-    print("\n=== STEP 4: POLLING FOR LENS GENERATION ===")
-    lens_data = client.poll_lens(cid, max_wait_sec=200)
+        print(f"\n=== STEP 4: POLLING FOR LENS GENERATION (ATTEMPT {attempt}) ===")
+        lens_data = client.poll_lens(cid, max_wait_sec=200)
 
-    checkpoint_id = lens_data.get("checkpoint_id")
-    archive_url = lens_data.get("download_url") or (lens_data.get("lens_bundle_data") or {}).get("lens_archive_url")
-    checksum = lens_data.get("checksum") or (lens_data.get("lens_bundle_data") or {}).get("checksum")
-    icon_url = lens_data.get("lens_icon_download_url")
+        checkpoint_id = lens_data.get("checkpoint_id")
+        archive_url = lens_data.get("download_url") or (lens_data.get("lens_bundle_data") or {}).get("lens_archive_url")
+        checksum = lens_data.get("checksum") or (lens_data.get("lens_bundle_data") or {}).get("checksum")
+        icon_url = lens_data.get("lens_icon_download_url")
 
-    # Save metadata
-    with open("generated_lens_metadata.json", "w") as f:
-        json.dump(lens_data, f, indent=2)
+        # Save metadata
+        with open("generated_lens_metadata.json", "w") as f:
+            json.dump(lens_data, f, indent=2)
 
-    print("\n=== STEP 5: 7-GATE COMPREHENSIVE LENS & JUDGE AI VERIFICATION ===")
-    plan_data = gemini_plan if USE_GEMINI else {"prompt": prompt, "lens_name": lens_name}
-    verifier = LensVerifier(lens_data=lens_data, session=client.session, plan=plan_data)
-    passed = verifier.verify_all()
-    report = verifier.export_report("verification_report.json")
+        print(f"\n=== STEP 5: 7-GATE COMPREHENSIVE LENS & JUDGE AI VERIFICATION (ATTEMPT {attempt}) ===")
+        plan_data = gemini_plan if USE_GEMINI else {"prompt": prompt, "lens_name": lens_name}
+        verifier = LensVerifier(lens_data=lens_data, session=client.session, plan=plan_data)
+        passed = verifier.verify_all()
+        report = verifier.export_report("verification_report.json")
 
-    print(f"Gate 1 (Metadata Status): {report['gates'].get('gate1_metadata_status', {}).get('passed')}")
-    print(f"Gate 2 (Icon Health):     {report['gates'].get('gate2_icon_health', {}).get('passed')}")
-    print(f"Gate 3 (Checksum Hash):   {report['gates'].get('gate3_checksum_integrity', {}).get('passed')}")
-    print(f"Gate 4 (Size Boundaries): {report['gates'].get('gate4_size_limits', {}).get('passed')} (Compressed: {report['metrics'].get('compressed_size_bytes', 0) // 1024}KB, Unpacked: {report['metrics'].get('uncompressed_size_bytes', 0) // 1024}KB)")
-    print(f"Gate 5 (Assets & Events): {report['gates'].get('gate5_assets_and_controller', {}).get('passed')}")
-    print(f"Gate 6 (Judge AI Score):  {report['gates'].get('gate6_judge_ai', {}).get('passed')} ({report['gates'].get('gate6_judge_ai', {}).get('score')}/100 - {report['gates'].get('gate6_judge_ai', {}).get('verdict')})")
-    g7 = report['gates'].get('gate7_visual_simulation', {})
-    print(f"Gate 7 (Vision Simulation): {g7.get('passed')} (Score: {g7.get('score')}/100, 3D Mesh: {g7.get('has_3d_mesh')}, BG Only: {g7.get('is_background_only')})")
-    print(f"OVERALL VERIFICATION VERDICT: {'PASSED (100%)' if passed else 'FAILED'}")
+        print(f"Gate 1 (Metadata Status): {report['gates'].get('gate1_metadata_status', {}).get('passed')}")
+        print(f"Gate 2 (Icon Health):     {report['gates'].get('gate2_icon_health', {}).get('passed')}")
+        print(f"Gate 3 (Checksum Hash):   {report['gates'].get('gate3_checksum_integrity', {}).get('passed')}")
+        print(f"Gate 4 (Size Boundaries): {report['gates'].get('gate4_size_limits', {}).get('passed')} (Compressed: {report['metrics'].get('compressed_size_bytes', 0) // 1024}KB, Unpacked: {report['metrics'].get('uncompressed_size_bytes', 0) // 1024}KB)")
+        print(f"Gate 5 (Assets & Events): {report['gates'].get('gate5_assets_and_controller', {}).get('passed')}")
+        print(f"Gate 6 (Judge AI Score):  {report['gates'].get('gate6_judge_ai', {}).get('passed')} ({report['gates'].get('gate6_judge_ai', {}).get('score')}/100 - {report['gates'].get('gate6_judge_ai', {}).get('verdict')})")
+        g7 = report['gates'].get('gate7_visual_simulation', {})
+        print(f"Gate 7 (Vision Simulation): {g7.get('passed')} (Score: {g7.get('score')}/100, 3D Mesh: {g7.get('has_3d_mesh')}, BG Only: {g7.get('is_background_only')})")
+        print(f"OVERALL VERIFICATION VERDICT: {'PASSED (100%)' if passed else 'FAILED'}")
+
+        if passed:
+            print(f"\n[VERIFICATION OK] Attempt {attempt} passed all 7 quality & compliance gates!")
+            break
+        else:
+            print(f"\n[VERIFICATION WARNING] Attempt {attempt} failed verification: {report.get('errors')}")
+            if attempt < MAX_ATTEMPTS:
+                print(f"[AUTO-HEAL] Re-attempting generation with strict corrective anti-TWEEN instructions...")
 
     if not passed:
-        print("\n[FATAL ERROR] Lens verification failed! Aborting publish to protect account catalog.")
-        print(f"Errors: {json.dumps(report['errors'], indent=2)}")
+        print("\n[FATAL ERROR] All generation attempts failed verification! Aborting publish to protect account catalog.")
+        print(f"Final Errors: {json.dumps(report.get('errors', []), indent=2)}")
         sys.exit(1)
 
     if AUTO_PUBLISH:

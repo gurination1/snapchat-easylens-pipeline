@@ -5,10 +5,11 @@ import time
 import requests
 
 CANDIDATE_MODELS = [
-    "gemini-3.8-flash",
+    "gemini-3.5-flash",
+    "gemini-2.5-flash",
     "gemini-3.1-flash-lite",
-    "gemini-flash-latest",
-    "gemini-3.5-flash"
+    "gemini-3.8-flash",
+    "gemini-flash-latest"
 ]
 
 
@@ -28,14 +29,14 @@ ACCOUNT_PERSONAS = {
     "1": {
         "channel": "MythicBeasts_AR",
         "genre": "3D Mythic Headpiece & Elemental Breath",
-        "theme_focus": "Sculpted obsidian dragon horn crown anchored to temples with liquid 24k gold filigree and caustic ruby gems, PBR anisotropic metallic reflections, 3-point contrast 6500K/2800K lighting with ray-traced contact shadows. Mouth open erupts turbulent emerald flame torrent with floating amber sparks; smiling ignites alpha-fading golden runic eye halos. Depth occlusion enabled, zero strobing.",
-        "primary_trigger": "MouthOpen (Turbulent emerald dragon flame torrent & embers) / Smile (Smooth alpha-fading golden runic eye halos)",
+        "theme_focus": "Sculpted obsidian dragon horn crown anchored to temples with liquid 24k gold filigree and caustic ruby gems, PBR anisotropic metallic reflections, 3-point contrast 6500K/2800K lighting with ray-traced contact shadows. Mouth open erupts turbulent emerald flame torrent with floating amber sparks; smiling ignites bright golden runic eye halos. Depth occlusion enabled, zero strobing.",
+        "primary_trigger": "MouthOpen (Turbulent emerald dragon flame torrent & embers) / Smile (Bright golden runic eye halos)",
         "tag_pool": ["dragon", "3d", "headpiece", "horns", "fantasy", "pbr"]
     },
     "2": {
         "channel": "RaveMotion_Studio",
         "genre": "Cyberpunk Audio-Reactive Visor & Beat FX",
-        "theme_focus": "Sleek ergonomic 3D cyberpunk HUD glasses and holographic visor resting across eyes, leaving cheeks and mouth uncovered for clean facial tracking. Brushed titanium frame with pulsing cyan neon edge emission and refractive glass. Orbiting audio-reactive equalizer bars halo head. 3-point contrast lighting with ray-traced shadows. Opening mouth triggers radial laser shockwave; smiling flashes neon visor HUD readout. Zero strobing.",
+        "theme_focus": "Sleek ergonomic 3D cyberpunk HUD glasses and holographic visor resting across eyes, leaving cheeks and mouth uncovered for clean facial tracking. Brushed titanium frame with pulsing cyan neon edge emission and refractive glass. Orbiting audio-reactive equalizer bars halo head. 3-point contrast lighting with ray-traced shadows. Opening mouth triggers radial laser shockwave; smiling activates bright neon visor HUD readout. Zero strobing, zero easing curves.",
         "primary_trigger": "MouthOpen (Laser particle shockwave) / Smile (Neon visor HUD flare)",
         "tag_pool": ["cyberpunk", "visor", "rave", "music", "audioreactive", "neon"]
     },
@@ -63,10 +64,11 @@ ACCOUNT_PERSONAS = {
 }
 
 
-def extract_json(text: str) -> dict:
-    text = text.strip()
-    # Strip markdown fences if present
-    if text.startswith("```"):
+def extract_json(raw_text: str) -> dict:
+    text = raw_text.strip()
+    if "```json" in text:
+        text = text.split("```json")[1].split("```")[0].strip()
+    elif "```" in text:
         lines = text.split("\n")
         if lines[0].startswith("```"):
             lines = lines[1:]
@@ -113,7 +115,12 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
         "   - Zero trademarked/copyrighted names (NO Marvel, Goku, Pokemon, Nike, etc. Use generic archetype nouns).\n"
         "   - Zero race/skin tone alterations. Non-human fantasy surfaces (chrome, gold leaf, stone) only.\n"
         "   - No rapid white flashing/strobe (photosensitive safety compliance).\n"
-        "   - No weapons pointed directly at camera/face.\n\n"
+        "   - No weapons pointed directly at camera/face.\n"
+        "9. STRICT JAVASCRIPT ENGINE COMPATIBILITY (ZERO TWEEN / ZERO EASING CURVES):\n"
+        "   - Lens Studio Web script runtime crashes with fatal ReferenceError on undeclared TWEEN references.\n"
+        "   - NEVER use the words 'smooth tween', 'bezier curve', 'ease-in', 'ease-out', or 'custom easing curve' in the prompt, as this causes the AILC code generator to hallucinate undeclared `TWEEN.Easing` references that crash the Lens.\n"
+        "   - Describe transitions using discrete visual triggers or particle streams: 'Opening mouth triggers instant radial cyan laser shockwave; smiling triggers radiant neon HUD flare with soft golden bloom'.\n"
+        "   - Mandate zero external TWEEN dependencies; use native Lens Studio component triggers only.\n\n"
         "Return ONLY a JSON object with this exact schema:\n"
         "{\n"
         '  "lens_name": "Catchy 2-4 word Title without trademarked terms",\n'
@@ -130,7 +137,7 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
         f"Core Theme: {persona['theme_focus']}\n"
         f"Primary Trigger Mechanism: {persona['primary_trigger']}\n"
         f"Recommended Tag Pool: {', '.join(persona['tag_pool'])}\n"
-        "CRITICAL: Full-screen camera effect only. ZERO developer UI sliders, ZERO on-screen text, ZERO floating buttons.\n"
+        "CRITICAL: Full-screen camera effect only. ZERO developer UI sliders, ZERO on-screen text, ZERO floating buttons. ZERO custom easing/TWEEN curves.\n"
     )
 
     # Deduplication memory from published history

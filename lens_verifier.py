@@ -160,35 +160,66 @@ class LensVerifier:
             return False
 
     def verify_controller_and_assets(self, bundle_bytes: bytes) -> bool:
-        """Gate 5: Verify 3D/particle prefetched assets and face event bindings"""
+        """Gate 5: Verify 3D/particle prefetched assets, face event bindings, and AST linting for fatal runtime errors (e.g. undeclared TWEEN)"""
+        import re
         prefetched = self.lens_data.get("asset_statuses", {}).get("prefetched_assets", {})
         has_assets = len(prefetched) > 0
 
         # Check for controller script inside archive
         controller_found = False
         event_bindings = []
+        fatal_script_errors = []
+        scanned_scripts = []
+
         try:
             with zipfile.ZipFile(io.BytesIO(bundle_bytes), "r") as z:
                 for name in z.namelist():
                     if name.endswith(".js") or "controller" in name.lower():
                         content = z.read(name).decode("utf-8", errors="ignore")
-                        controller_found = True
+                        scanned_scripts.append(name)
+                        if "controller" in name.lower():
+                            controller_found = True
                         for trigger in ["MouthOpenedEvent", "SmileStartedEvent", "BrowsRaisedEvent", "FaceFoundEvent", "createEvent"]:
-                            if trigger in content:
+                            if trigger in content and trigger not in event_bindings:
                                 event_bindings.append(trigger)
-        except Exception:
-            pass
 
-        passed = has_assets or controller_found
+                        # Static JS Linter: Catch undeclared TWEEN references that crash Snapchat Lens Studio Web runtime
+                        # Exclude Tween.js and TweenManager.js which are library files defining global.TWEEN
+                        if not ("Tween.js" in name or "TweenManager.js" in name):
+                            if re.search(r'(?<![a-zA-Z0-9_.])TWEEN\.', content):
+                                if not re.search(r'\b(var|let|const|function)\s+TWEEN\b', content) and "global.TWEEN" not in content[:content.find("TWEEN.")]:
+                                    fatal_script_errors.append(
+                                        f"Fatal: Undeclared TWEEN reference in {name} (causes Snapchat runtime ReferenceError: TWEEN is not defined)"
+                                    )
+        except Exception as e:
+            fatal_script_errors.append(f"Zip extraction error in Gate 5: {e}")
+
+        # Also check controller_code in lens_data blocks if present
+        for b in self.lens_data.get("blocks", []):
+            code = b.get("controller_code", "")
+            if code:
+                if re.search(r'(?<![a-zA-Z0-9_.])TWEEN\.', code):
+                    if not re.search(r'\b(var|let|const|function)\s+TWEEN\b', code) and "global.TWEEN" not in code[:code.find("TWEEN.")]:
+                        fatal_script_errors.append(
+                            f"Fatal: Undeclared TWEEN reference in block '{b.get('description', 'controller')}' controller_code"
+                        )
+
+        passed = (has_assets or controller_found) and (len(fatal_script_errors) == 0)
         self.report["gates"]["gate5_assets_and_controller"] = {
             "passed": passed,
             "prefetched_assets_count": len(prefetched),
             "prefetched_keys": list(prefetched.keys()),
             "controller_found": controller_found,
-            "detected_event_bindings": event_bindings
+            "detected_event_bindings": event_bindings,
+            "scanned_scripts_count": len(scanned_scripts),
+            "fatal_script_errors": fatal_script_errors
         }
-        if not passed:
+        if not (has_assets or controller_found):
             self.report["errors"].append("Gate 5 Failed: No prefetched assets or controller script found in bundle")
+        if fatal_script_errors:
+            for err in fatal_script_errors:
+                self.report["errors"].append(f"Gate 5 Failed: {err}")
+
         return passed
 
     def verify_judge_ai(self) -> bool:
