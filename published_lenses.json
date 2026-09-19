@@ -124,5 +124,24 @@
     "has_preview_video": true,
     "preview_url": "https://cf-st.sc-cdn.net/d/jn7LlkiIodSO7yvLq2hqo?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-19T06:17:55Z",
+    "account_id": "2",
+    "lens_name": "Kinetic Apex Visor",
+    "lens_id": "35d048bf-9434-4807-b3cf-68579a7f8a31",
+    "checkpoint_id": "06aae28c-87fc-7d37-8000-d55001625f54",
+    "prompt": "An ergonomic cyberpunk holographic face visor fitted tightly across eyes, made of brushed anisotropic titanium with pulsing cyan neon edge emission and refractive glass. Orbiting audio-reactive equalizer rings halo the head. Illuminated by 3-point contrast lighting with ray-traced contact shadows. Opening mouth emits a radial laser shockwave with smooth chromatic aberration. Smiling activates a brilliant neon visor HUD flare without strobing.",
+    "tags": [
+      "cyberpunk",
+      "visor",
+      "rave",
+      "music",
+      "audioreactive"
+    ],
+    "visual_hook": "Instant 0.2s snap of anisotropic brushed titanium and refractive glass catching live environment reflections.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/mgeNqd5O1pSP3y9PYu85m?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
