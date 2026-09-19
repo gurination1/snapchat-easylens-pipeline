@@ -767,37 +767,28 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                                             await approval_page.wait_for_timeout(2000)
                                             await approval_page.screenshot(path="login_step3_tiv_landing.png")
 
-                                            # Try clicking the Approve button
-                                            approve_btn = await approval_page.query_selector(
-                                                "button:has-text('Approve'), #tiv-landing-approve-form button, .tiv-button"
-                                            )
-                                            if approve_btn and await approve_btn.is_visible():
-                                                print("[AUTONOMOUS TIV] Clicking 'Approve' button...")
-                                                await human_click(approval_page, approve_btn)
-                                                await approval_page.wait_for_timeout(2000)
-                                            else:
-                                                print("[AUTONOMOUS TIV] Triggering form submit via JavaScript...")
-                                                await approval_page.evaluate("""() => {
-                                                    const f = document.getElementById('tiv-landing-approve-form');
-                                                    if (f) { f.submit(); return true; }
-                                                    return false;
-                                                }""")
-                                                await approval_page.wait_for_timeout(2000)
-
-                                            # Also direct fetch fallback within landing page context
-                                            await approval_page.evaluate("""() => {
+                                            # Direct automated submission via API within landing page context
+                                            post_res = await approval_page.evaluate("""async () => {
                                                 const root = document.getElementById('tiv-landing-root');
-                                                if (root) {
-                                                    const xsrf = root.getAttribute('data-xsrf') || '';
-                                                    const nonce = root.getAttribute('data-nonce') || '';
-                                                    fetch('/accounts/tiv/landing' + window.location.search, {
+                                                if (!root) return { ok: false, err: 'no_root' };
+                                                const xsrf = root.getAttribute('data-xsrf') || '';
+                                                const nonce = root.getAttribute('data-nonce') || '';
+                                                try {
+                                                    const r = await fetch('/accounts/tiv/landing' + window.location.search, {
                                                         method: 'POST',
-                                                        headers: {'Content-Type': 'application/x-www-form-urlencoded', 'X-XSRF-TOKEN': xsrf},
+                                                        headers: {
+                                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                                            'X-XSRF-TOKEN': xsrf
+                                                        },
                                                         body: new URLSearchParams({'xsrf_token': xsrf, 'n': nonce, 's': '1'})
-                                                    }).catch(() => {});
+                                                    });
+                                                    return { ok: r.ok || r.status === 302 || r.status === 200, status: r.status };
+                                                } catch (e) {
+                                                    return { ok: false, err: String(e) };
                                                 }
                                             }""")
-                                            await approval_page.wait_for_timeout(2000)
+                                            print(f"[AUTONOMOUS TIV] Direct landing API approval result: {post_res}")
+                                            await approval_page.wait_for_timeout(2500)
                                             await approval_page.screenshot(path="login_step3_tiv_approved.png")
                                             print("[AUTONOMOUS TIV] Approval dispatched successfully! Waiting for main session redirect...")
                                         except Exception as app_err:
