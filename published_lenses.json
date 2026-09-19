@@ -86,5 +86,24 @@
     "has_preview_video": true,
     "preview_url": "https://cf-st.sc-cdn.net/d/CFYn6K6HBZwRiEgdPt56I?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-19T03:58:27Z",
+    "account_id": "2",
+    "lens_name": "CyberPulse Holographic Visor",
+    "lens_id": "e94942b5-3a72-471e-81d7-186151cf74fe",
+    "checkpoint_id": "06aae080-2392-74d9-8000-40e09c5590d6",
+    "prompt": "Ergonomic 3D cyberpunk holographic visor fitted tightly across eyes, brushed titanium frame with pulsing cyan neon edge emission and refractive glass. Orbiting audio-reactive equalizer bars halo head. 3-point contrast lighting with ray-traced shadows. Opening mouth triggers radial laser shockwave with split-screen chromatic aberration; smiling flashes neon visor HUD readout.",
+    "tags": [
+      "cyberpunk",
+      "visor",
+      "rave",
+      "music",
+      "audioreactive"
+    ],
+    "visual_hook": "Instantaneous snap of a sleek brushed-titanium visor reflecting live environment lights with glowing cyan neon edges.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/X5JXdXiPD2cIr5tfmr5I5?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
