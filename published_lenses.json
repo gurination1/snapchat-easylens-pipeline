@@ -105,5 +105,24 @@
     "has_preview_video": true,
     "preview_url": "https://cf-st.sc-cdn.net/d/X5JXdXiPD2cIr5tfmr5I5?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-19T04:03:30Z",
+    "account_id": "5",
+    "lens_name": "Liquid Mirage Halo",
+    "lens_id": "3be35fa6-204c-4964-8f46-f52f481d70b8",
+    "checkpoint_id": "06aae094-e4dc-7487-8000-69aa96e593cb",
+    "prompt": "Ancillary surreal halo crown floating above user head, sculpted from highly-reflective liquid mercury and anisotropic polished chrome. Features sculpted chrome cheek plates with realistic surface tension and ray-traced contact shadows. Illuminated by a crisp 3-point contrast lighting rig with warm 2800K and cool 6500K rim lights. Opening mouth emits orbiting refractive chrome spheres; smiling triggers fluid surface ripples across the chrome armor.",
+    "tags": [
+      "surreal",
+      "chrome",
+      "halo",
+      "optical",
+      "cyber"
+    ],
+    "visual_hook": "Instantaneous appearance of a mesmerizing zero-g liquid mercury halo crown reflecting warped environment light in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/jn7LlkiIodSO7yvLq2hqo?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
