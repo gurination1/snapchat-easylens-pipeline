@@ -600,7 +600,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
         page.on("response", on_response)
 
         login_start_time = time.time() - 30
-        target_url = "https://accounts.snapchat.com/v2/login?continue=%2Faccounts%2Fsso%3Fclient_id%3Dweb-ar-applier"
+        target_url = "https://accounts.snapchat.com/v2/login?continue=https%3A%2F%2Feasylens.snapchat.com%2F"
         print(f"[NAVIGATING] {target_url}")
         await page.goto(target_url, wait_until="domcontentloaded", timeout=45000)
         await page.wait_for_timeout(3000)
@@ -904,7 +904,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                                     g_ok = await handle_google_secproxy_flow(page, gmail_addr, passwords, max_seconds=120)
                                     if g_ok or captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
                                         print("[TIV/GOOGLE SUCCESS] Authentication completed via Google SecProxy flow!", flush=True)
-                                        break
+                                    break
 
                                 if tiv_s % 15 == 0:
                                     print(f"[TIV WAITING {tiv_s}s/120s] Awaiting verification flow... URL: {curr_url[:80]}", flush=True)
@@ -916,6 +916,9 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
 
                             if captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
                                 print("[TIV SUCCESS] Challenge approved successfully!", flush=True)
+                                if "easylens" in page.url:
+                                    print("[EASYLENS ARRIVED] Session established on EasyLens! Waiting for hydration...")
+                                    await page.wait_for_timeout(4000)
                                 break
                             # Finish TIV step
                             break
