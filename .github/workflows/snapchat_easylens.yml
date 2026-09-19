@@ -163,6 +163,7 @@ jobs:
       - name: Commit Pipeline State (Deduplication History)
         if: always()
         run: |
+          export GIT_TERMINAL_PROMPT=0
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add published_lenses.json 2>/dev/null || true
