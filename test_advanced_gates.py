@@ -67,7 +67,8 @@ def test_video_audit_black_screen():
     if os.path.exists(black_vid):
         os.remove(black_vid)
     assert audit["passed"] is False
-    assert any(w in audit["error"].lower() for w in ["black", "small", "motion"])
+    err_str = " ".join(audit.get("errors", [])) + " " + str(audit.get("error", ""))
+    assert any(w in err_str.lower() for w in ["black", "small", "motion"])
     print(">>> TEST 4 PASSED!\n")
 
 def test_video_audit_motion_portrait():

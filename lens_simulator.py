@@ -539,7 +539,7 @@ class LensSimulator:
             self.render_simulation_screenshots(out_neutral=out_neutral, out_trigger=out_trigger)
 
         video_src = motion_video or os.path.join(self.portrait_dir, "test_portrait.mp4")
-        temp_video = "temp_preview_video.mp4"
+        temp_video = f"/tmp/temp_preview_{os.getpid()}_{int(time.time() * 1000)}.mp4"
 
         # ---------------- 1. REAL PORTRAIT MOTION ENGINE WITH LANDMARK TRACKING ----------------
         if cv2 is not None and np is not None and os.path.exists(video_src):
