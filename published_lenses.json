@@ -182,5 +182,27 @@
     "has_preview_video": true,
     "preview_url": "https://cf-st.sc-cdn.net/d/xNc2lJpQhhrdrSNxZnftt?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-19T10:43:54Z",
+    "account_id": "2",
+    "lens_name": "Cybernetic Ocular Scanner",
+    "lens_id": "fa4db348-6c69-4c65-a995-721c2d292530",
+    "checkpoint_id": "06aae671-f27d-70ae-8000-02edf1daf849",
+    "prompt": "Asymmetrical carbon fiber and tungsten ocular scanner anchored firmly over left orbital bone, leaving other eye and mouth unobstructed. Multi-layered refractive cyan targeting lenses with micro-servo details. Opening mouth projects floating 3D tactical holographic wireframe mesh; smiling cycles high-speed green diagnostic data stream through ocular optics. PBR materials, ray-traced shadows.",
+    "tags": [
+      "cyberpunk",
+      "visor",
+      "optics",
+      "hud",
+      "scifi",
+      "tech",
+      "pbr",
+      "audioreactive"
+    ],
+    "visual_hook": "Elite cyberpunk tactical scanner locks onto eye with animated focal reticles and sharp volumetric telemetry.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/X80MdZZje9NGAWso7kY95?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
