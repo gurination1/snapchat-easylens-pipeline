@@ -45,6 +45,12 @@ class LensSimulator:
         self.orb_texture = None
         self.asset_scale_info = {}
 
+    @staticmethod
+    def audit_preview_video(video_path: str, require_audio: bool = False) -> dict:
+        """Audits preview video quality, resolution, black frames, freezes, and motion variance."""
+        from lens_verifier import audit_preview_video as _audit
+        return _audit(video_path, require_audio=require_audio)
+
     def inspect_bundle(self) -> dict:
         """Deep inspects scene.scn and archive to detect 3D meshes, bindings, and slop"""
         try:
