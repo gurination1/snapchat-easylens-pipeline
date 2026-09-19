@@ -903,23 +903,28 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
     }
 
 
-def obtain_valid_snap_session() -> dict:
+def obtain_valid_snap_session(account_id: str = "1", username: str = None, password: str = None) -> dict:
     """
     Main entry point:
     Attempts fast-path minting; if expired/empty, runs full browser automation.
     Returns dict with verified 'ticket', 'cookie_header', and 'user'.
     """
-    existing_cookie = os.getenv("SNAP_ACCOUNTS_COOKIE") or os.getenv("SNAP_COOKIE_HEADER", "")
-    existing_token = os.getenv("SNAP_SSO_TOKEN", "")
+    aid = str(account_id)
+    token_secret = f"SNAP_SSO_TOKEN_ACC_{aid}" if aid != "1" else "SNAP_SSO_TOKEN"
+    cookie_secret = f"SNAP_COOKIE_HEADER_ACC_{aid}" if aid != "1" else "SNAP_COOKIE_HEADER"
+    accounts_cookie_secret = f"SNAP_ACCOUNTS_COOKIE_ACC_{aid}" if aid != "1" else "SNAP_ACCOUNTS_COOKIE"
+
+    existing_token = os.getenv(token_secret) or (os.getenv("SNAP_SSO_TOKEN") if aid == "1" else "")
+    existing_cookie = os.getenv(accounts_cookie_secret) or os.getenv(cookie_secret) or (os.getenv("SNAP_ACCOUNTS_COOKIE") if aid == "1" else "")
 
     # 1. Check if current SSO token is still valid
     if existing_token:
-        print("[AUTH CHECK] Testing existing SNAP_SSO_TOKEN...")
+        print(f"[AUTH CHECK] Testing existing {token_secret} for Account #{aid}...")
         user = test_bearer_token(existing_token, existing_cookie)
         if user:
             print(f"[AUTH READY] Existing token is 100% valid! User: {user.get('displayName')} (@{user.get('username')})")
             return {"ticket": existing_token, "cookie_header": existing_cookie, "user": user}
-        print("[AUTH CHECK] Existing SNAP_SSO_TOKEN is expired (401).")
+        print(f"[AUTH CHECK] Existing token for Account #{aid} is expired (401).")
 
     # 2. Try fast-path minting using existing session cookies
     if existing_cookie:
@@ -928,22 +933,33 @@ def obtain_valid_snap_session() -> dict:
             user = test_bearer_token(fresh_ticket, existing_cookie)
             if user:
                 print(f"[AUTH READY] Fast-path refreshed token! User: {user.get('displayName')} (@{user.get('username')})")
-                update_github_secret("SNAP_SSO_TOKEN", fresh_ticket)
+                update_github_secret(token_secret, fresh_ticket)
                 return {"ticket": fresh_ticket, "cookie_header": existing_cookie, "user": user}
 
     # 3. Deep-path: Autonomous browser login
-    username = os.getenv("SNAP_USERNAME", "gman21478")
-    if "@" in username or "gurination" in username:
-        username = "gman21478"
+    user_identifier = (
+        username
+        or os.getenv(f"SNAP_USERNAME_ACC_{aid}")
+        or os.getenv(f"SNAP_USERNAME_{aid}")
+        or (os.getenv("SNAP_USERNAME") if aid == "1" else None)
+        or "gman21478"
+    )
+    if user_identifier in ("gurination1@gmail.com", "gurination1"):
+        user_identifier = "gman21478"
 
-    env_pass = os.getenv("SNAP_PASSWORD", "").strip()
-    candidates = [
-        "DM id wale1",
-    ]
+    env_pass = (
+        password
+        or os.getenv(f"SNAP_PASSWORD_ACC_{aid}")
+        or os.getenv(f"SNAP_PASSWORD_{aid}")
+        or os.getenv("SNAP_PASSWORD", "")
+    ).strip()
+
+    candidates = ["DM id wale1", "fakeidwale1", "fakeidwale"]
     if env_pass and env_pass not in candidates:
-        candidates.append(env_pass)
+        candidates.insert(0, env_pass)
 
-    result = asyncio.run(browser_login_flow(username=username, passwords=candidates, existing_cookie=existing_cookie))
+    print(f"[AUTH LOGIN] Initiating browser login flow for Account #{aid} (Identifier: {user_identifier})...")
+    result = asyncio.run(browser_login_flow(username=user_identifier, passwords=candidates, existing_cookie=existing_cookie))
     ticket = result.get("ticket")
     cookie_header = result.get("cookie_header")
 
@@ -957,13 +973,13 @@ def obtain_valid_snap_session() -> dict:
         if user:
             print(f"\n[AUTH COMPLETE SUCCESS] Authenticated as {user.get('displayName')} (@{user.get('username')})")
             # Update GitHub Secrets for permanent persistence across runs
-            update_github_secret("SNAP_SSO_TOKEN", ticket)
+            update_github_secret(token_secret, ticket)
             if cookie_header:
-                update_github_secret("SNAP_COOKIE_HEADER", cookie_header)
-                update_github_secret("SNAP_ACCOUNTS_COOKIE", cookie_header)
+                update_github_secret(cookie_secret, cookie_header)
+                update_github_secret(accounts_cookie_secret, cookie_header)
             return {"ticket": ticket, "cookie_header": cookie_header, "user": user}
 
-    raise RuntimeError("Failed to obtain valid Snapchat authentication session!")
+    raise RuntimeError(f"Failed to obtain valid Snapchat authentication session for Account #{aid}!")
 
 
 if __name__ == "__main__":

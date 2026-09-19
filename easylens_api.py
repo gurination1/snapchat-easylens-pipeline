@@ -43,7 +43,8 @@ RETRIABLE_STATUS_CODES = {408, 429, 500, 502, 503, 504}
 
 
 class EasyLensClient:
-    def __init__(self, sso_token: str = "", cookie_header: str = "", accounts_cookie: str = ""):
+    def __init__(self, sso_token: str = "", cookie_header: str = "", accounts_cookie: str = "", account_id: str = "1"):
+        self.account_id = str(account_id)
         self.sso_token = sso_token
         self.accounts_cookie = accounts_cookie or cookie_header
         self.session = requests.Session()
@@ -117,7 +118,8 @@ class EasyLensClient:
                     print(f"[SSO SUCCESS] Minted fresh Bearer ticket: {ticket[:16]}...")
                     self.sso_token = ticket
                     self.session.headers["Authorization"] = f"Bearer {ticket}"
-                    update_github_secret("SNAP_SSO_TOKEN", ticket)
+                    secret_name = f"SNAP_SSO_TOKEN_ACC_{self.account_id}" if self.account_id != "1" else "SNAP_SSO_TOKEN"
+                    update_github_secret(secret_name, ticket)
                     return ticket
             print(f"[SSO WARN] Refresh response status {res.status_code} (body starts: {res.text[:60]})")
         except Exception as e:

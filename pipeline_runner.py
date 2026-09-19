@@ -25,29 +25,69 @@ STATIC_TAGS = [t.strip() for t in (os.getenv("LENS_TAGS") or "dragon,3d,headpiec
 AUTO_PUBLISH = os.getenv("AUTO_PUBLISH", "true").lower() not in ("false", "0", "no")
 
 
-def main():
-    accounts_cookie = os.getenv("SNAP_ACCOUNTS_COOKIE") or COOKIE_HEADER
-    client = EasyLensClient(sso_token=SSO_TOKEN, cookie_header=COOKIE_HEADER, accounts_cookie=accounts_cookie)
+def resolve_account_auth(account_id: str):
+    aid = str(account_id)
+    sso_token = (
+        os.getenv(f"SNAP_SSO_TOKEN_ACC_{aid}")
+        or os.getenv(f"SNAP_SSO_TOKEN_{aid}")
+        or (os.getenv("SNAP_SSO_TOKEN") if aid == "1" else None)
+    )
+    cookie_header = (
+        os.getenv(f"SNAP_COOKIE_HEADER_ACC_{aid}")
+        or os.getenv(f"SNAP_COOKIE_HEADER_{aid}")
+        or (os.getenv("SNAP_COOKIE_HEADER") if aid == "1" else "")
+    )
+    accounts_cookie = (
+        os.getenv(f"SNAP_ACCOUNTS_COOKIE_ACC_{aid}")
+        or os.getenv(f"SNAP_ACCOUNTS_COOKIE_{aid}")
+        or (os.getenv("SNAP_ACCOUNTS_COOKIE") if aid == "1" else cookie_header)
+    )
+    username = (
+        os.getenv(f"SNAP_USERNAME_ACC_{aid}")
+        or os.getenv(f"SNAP_USERNAME_{aid}")
+        or (os.getenv("SNAP_USERNAME") if aid == "1" else None)
+    )
+    password = (
+        os.getenv(f"SNAP_PASSWORD_ACC_{aid}")
+        or os.getenv(f"SNAP_PASSWORD_{aid}")
+        or (os.getenv("SNAP_PASSWORD") if aid == "1" else None)
+    )
+    return sso_token, cookie_header, accounts_cookie, username, password
 
-    print("\n=== STEP 1: VERIFYING SNAPCHAT AUTHENTICATION ===")
+
+def main():
+    sso_token, cookie_header, accounts_cookie, username, password = resolve_account_auth(ACCOUNT_ID)
+    client = EasyLensClient(
+        sso_token=sso_token,
+        cookie_header=cookie_header,
+        accounts_cookie=accounts_cookie,
+        account_id=ACCOUNT_ID
+    )
+
+    print(f"\n=== STEP 1: VERIFYING SNAPCHAT AUTHENTICATION (ACCOUNT #{ACCOUNT_ID}) ===")
     user = None
     try:
-        if SSO_TOKEN or accounts_cookie:
+        if sso_token or accounts_cookie:
             user = client.verify_auth()
     except Exception as e:
         print(f"[AUTH EXPIRED / 401] Initial auth check failed ({e}). Triggering autonomous recovery...")
 
     if not user:
-        print("[AUTO-AUTH] Calling Autonomous Snapchat Auth Automator behind Cloudflare WARP...")
+        print(f"[AUTO-AUTH] Calling Autonomous Snapchat Auth Automator for Account #{ACCOUNT_ID}...")
         try:
             from snap_auth_automator import obtain_valid_snap_session
-            fresh_session = obtain_valid_snap_session()
+            fresh_session = obtain_valid_snap_session(
+                account_id=ACCOUNT_ID,
+                username=username,
+                password=password
+            )
             client = EasyLensClient(
                 sso_token=fresh_session["ticket"],
                 cookie_header=fresh_session.get("cookie_header", ""),
-                accounts_cookie=fresh_session.get("cookie_header", "")
+                accounts_cookie=fresh_session.get("cookie_header", ""),
+                account_id=ACCOUNT_ID
             )
-            user = fresh_session["user"]
+            user = fresh_session.get("user") or client.verify_auth()
         except Exception as auth_err:
             print(f"[FATAL AUTH ERROR] Autonomous auth failed: {auth_err}")
             sys.exit(1)
