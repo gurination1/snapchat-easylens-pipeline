@@ -28,10 +28,19 @@ class LensSimulator:
             "has_head_binding": False,
             "has_shoulder_binding": False,
             "has_face_mesh": False,
+            "has_canvas_api": False,
             "is_background_only": False,
             "texture_files": [],
             "mesh_files": []
         }
+        self.dominant_texture = None
+        self.bg_texture = None
+        self.sw_texture = None
+        self.flare_texture = None
+        self.eq_texture = None
+        self.star_texture = None
+        self.orb_texture = None
+        self.asset_scale_info = {}
 
     def inspect_bundle(self) -> dict:
         """Deep inspects scene.scn and archive to detect 3D meshes, bindings, and slop"""
@@ -40,6 +49,8 @@ class LensSimulator:
                 names = z.namelist()
                 for name in names:
                     lower = name.lower()
+                    if "canvasapi" in lower or lower.endswith("canvasapi.js"):
+                        self.analysis["has_canvas_api"] = True
                     if lower.endswith(".mesh") or lower.endswith(".glb") or lower.endswith(".ply"):
                         info = z.getinfo(name)
                         self.analysis["mesh_file_count"] += 1
@@ -63,6 +74,8 @@ class LensSimulator:
                         self.analysis["has_face_mesh"] = True
                     if "3D Object Upper Body" in scn_content or "right shoulder" in scn_content or "left shoulder" in scn_content:
                         self.analysis["has_shoulder_binding"] = True
+                    if "CanvasAPI" in scn_content or "crown_bars_canvas" in scn_content:
+                        self.analysis["has_canvas_api"] = True
 
             # If mesh file size > 50KB or render mesh visual detected
             if self.analysis["total_mesh_bytes"] > 50000:
@@ -251,6 +264,26 @@ class LensSimulator:
             pos = (360 - target_w // 2, pos_y)
             ev_y = 495
 
+        # Store for motion video synthesis
+        self.dominant_texture = dominant_texture
+        self.bg_texture = bg_texture
+        self.sw_texture = sw_texture
+        self.flare_texture = flare_texture
+        self.eq_texture = eq_texture
+        self.star_texture = star_texture
+        self.orb_texture = orb_texture
+        self.asset_scale_info = {
+            "target_w": target_w,
+            "target_h": target_h,
+            "pos": pos,
+            "ev_y": ev_y,
+            "is_full_helmet": is_full_helmet,
+            "is_visor": any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "nodes", "lenses", "specs", "monocle", "eyewear", "cybernetic", "orbital", "temple", "brow"]),
+            "is_crown": any(w in p_text for w in ["crown", "horns", "tiara", "headpiece", "diadem", "horn", "antlers"]),
+            "is_halo": any(w in p_text for w in ["cloud", "halo", "floating", "above", "sky", "mercury halo"]),
+            "p_text": p_text
+        }
+
         # 1. Background replacement if present
         if bg_texture:
             bg_resized = bg_texture.resize((720, 1280))
@@ -382,18 +415,269 @@ class LensSimulator:
         print(f"[SIMULATOR] Rendered production simulation screenshots: {out_neutral} & {out_trigger}")
         return out_neutral, out_trigger
 
-    def render_simulation_video(self, out_path: str = "preview_video.mp4", out_neutral: str = "preview_neutral_simulated.png", out_trigger: str = "preview_mouth_open_simulated.png") -> str:
+    def render_simulation_video(self, out_path: str = "preview_video.mp4", out_neutral: str = "preview_neutral_simulated.png", out_trigger: str = "preview_mouth_open_simulated.png", motion_video: str = None) -> str:
         """
-        Renders an authentic, seamless 9:16 vertical 720x1280 30fps preview video with audio muxing
-        for Snapchat Lens Explorer & Web Unfurl using FFmpeg.
-        Transitions smoothly: Neutral -> Trigger action -> Neutral (seamless infinite loop).
+        Renders an authentic, dynamic 9:16 vertical 720x1280 30fps preview video with real portrait motion,
+        optical flow facial landmark tracking, dynamic reactive asset transformation, and audio muxing.
+        Seamlessly falls back to 2-frame crossfade if motion video is unavailable.
         """
         import subprocess
+        import time
+        import shutil
+        from PIL import ImageEnhance
+
+        try:
+            import cv2
+            import numpy as np
+        except ImportError:
+            cv2 = None
+            np = None
+
+        # Ensure assets are loaded
+        if self.dominant_texture is None:
+            self.render_simulation_screenshots(out_neutral=out_neutral, out_trigger=out_trigger)
+
+        video_src = motion_video or os.path.join(self.portrait_dir, "test_portrait.mp4")
+        temp_video = "temp_preview_video.mp4"
+
+        # ---------------- 1. REAL PORTRAIT MOTION ENGINE WITH LANDMARK TRACKING ----------------
+        if cv2 is not None and np is not None and os.path.exists(video_src):
+            try:
+                cap = cv2.VideoCapture(video_src)
+                fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+                src_w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+                src_h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+                
+                ret, first_frame = cap.read()
+                if not ret:
+                    raise ValueError(f"Unable to read frames from {video_src}")
+
+                # Initial canonical landmark anchor points for 720x1280 portrait
+                # [0: left eye, 1: right eye, 2: nose tip, 3: forehead hairline, 4: mouth center]
+                pts0 = np.array([
+                    [240.0, 395.0],  # left eye pupil
+                    [520.0, 400.0],  # right eye pupil
+                    [365.0, 510.0],  # nose bridge
+                    [365.0, 260.0],  # forehead hairline
+                    [365.0, 660.0],  # mouth center
+                ], dtype=np.float32).reshape(-1, 1, 2)
+
+                lk_params = dict(winSize=(31, 31), maxLevel=3,
+                                 criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 20, 0.03))
+
+                all_frames = [first_frame]
+                trajectory = [pts0.reshape(-1, 2)]
+                prev_gray = cv2.cvtColor(first_frame, cv2.COLOR_BGR2GRAY)
+                curr_pts = pts0.copy()
+
+                while True:
+                    ret, f_cur = cap.read()
+                    if not ret:
+                        break
+                    gray = cv2.cvtColor(f_cur, cv2.COLOR_BGR2GRAY)
+                    next_pts, status, err = cv2.calcOpticalFlowPyrLK(prev_gray, gray, curr_pts, None, **lk_params)
+                    # Check validity of tracked points
+                    if status is not None and np.sum(status) >= 3:
+                        trajectory.append(next_pts.reshape(-1, 2))
+                        curr_pts = next_pts
+                    else:
+                        trajectory.append(trajectory[-1])
+                    all_frames.append(f_cur)
+                    prev_gray = gray
+                cap.release()
+
+                num_frames = len(all_frames)
+                print(f"[SIMULATOR] Loaded {num_frames} frames from portrait motion video ({src_w}x{src_h} @ {fps:.1f}fps)")
+
+                # Asset geometry configs
+                target_w = self.asset_scale_info.get("target_w", 480)
+                target_h = self.asset_scale_info.get("target_h", 190)
+                is_full_helmet = self.asset_scale_info.get("is_full_helmet", False)
+                is_visor = self.asset_scale_info.get("is_visor", False)
+                is_crown = self.asset_scale_info.get("is_crown", False)
+                is_halo = self.asset_scale_info.get("is_halo", False)
+                p_text = self.asset_scale_info.get("p_text", "")
+                base_eye_dist = 280.0
+
+                # Pre-generate optimized contact shadow sprite
+                sh_w = max(20, int(target_w * 0.85))
+                sh_h = max(20, int(target_h * 0.45))
+                shadow_sprite = Image.new("RGBA", (sh_w, sh_h), (0, 0, 0, 0))
+                s_draw = ImageDraw.Draw(shadow_sprite)
+                s_draw.ellipse([8, 8, sh_w - 8, sh_h - 8], fill=(0, 0, 0, 85))
+                shadow_sprite = shadow_sprite.filter(ImageFilter.GaussianBlur(8))
+
+                # Pre-generate bloom flare sprite for visors / crowns
+                fl_size = 220
+                flare_sprite = Image.new("RGBA", (fl_size, fl_size), (0, 0, 0, 0))
+                f_draw = ImageDraw.Draw(flare_sprite)
+                flare_rgb = (0, 245, 255) if is_visor else (255, 215, 80)
+                for r in [25, 50, 85, 105]:
+                    f_draw.ellipse([fl_size//2 - r, fl_size//2 - int(r*0.55), fl_size//2 + r, fl_size//2 + int(r*0.55)],
+                                   fill=(*flare_rgb, int(110 * (1.0 - r/120.0))))
+                flare_sprite = flare_sprite.filter(ImageFilter.GaussianBlur(8))
+
+                temp_frames_dir = f"/tmp/lens_sim_frames_{os.getpid()}_{int(time.time())}"
+                os.makedirs(temp_frames_dir, exist_ok=True)
+
+                for idx, (frame_bgr, landmarks) in enumerate(zip(all_frames, trajectory)):
+                    le, re, nose, fh, mouth = landmarks
+                    eye_cx = float((le[0] + re[0]) / 2.0)
+                    eye_cy = float((le[1] + re[1]) / 2.0)
+                    eye_dist = float(np.linalg.norm(re - le))
+                    scale = float(eye_dist / max(1.0, base_eye_dist))
+                    roll_angle = float(np.degrees(np.arctan2(re[1] - le[1], re[0] - le[0])))
+
+                    # Anchor point determination - use nose bridge as true midline axis
+                    face_midline_x = float(nose[0])
+                    if is_full_helmet:
+                        anc_x, anc_y = face_midline_x, eye_cy
+                    elif is_visor:
+                        anc_x, anc_y = face_midline_x, eye_cy
+                    elif is_crown:
+                        anc_x = face_midline_x
+                        anc_y = float(fh[1] - (target_h // 2 - 15) * scale)
+                    elif is_halo:
+                        anc_x = face_midline_x
+                        anc_y = float(fh[1] - (target_h // 2 + 55) * scale)
+                    else:
+                        anc_x = face_midline_x
+                        anc_y = float(fh[1] - (target_h // 2) * scale)
+
+                    # Dynamic trigger progression curve (mouth open / smile transition)
+                    # Peak trigger between 35% and 75% of clip duration
+                    frame_ratio = idx / max(1, num_frames - 1)
+                    if 0.30 <= frame_ratio <= 0.45:
+                        t_prog = (frame_ratio - 0.30) / 0.15
+                    elif 0.45 < frame_ratio <= 0.75:
+                        t_prog = 1.0
+                    elif 0.75 < frame_ratio <= 0.90:
+                        t_prog = 1.0 - (frame_ratio - 0.75) / 0.15
+                    else:
+                        t_prog = 0.0
+
+                    # Convert frame to PIL RGBA
+                    rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
+                    pil_frame = Image.fromarray(rgb).convert("RGBA")
+
+                    # Dynamic lighting enhancement during trigger
+                    if t_prog > 0.0:
+                        enh = ImageEnhance.Contrast(pil_frame)
+                        pil_frame = enh.enhance(1.0 + 0.14 * t_prog)
+
+                    # Contact shadow composite
+                    cur_sw = max(10, int(sh_w * scale))
+                    cur_sh = max(10, int(sh_h * scale))
+                    rot_shadow = shadow_sprite.resize((cur_sw, cur_sh), Image.Resampling.BILINEAR).rotate(
+                        -roll_angle, resample=Image.Resampling.BILINEAR, expand=True
+                    )
+                    sh_dest = (int(anc_x - rot_shadow.width // 2), int(anc_y - rot_shadow.height // 2 + cur_sh * 0.35))
+                    pil_frame.alpha_composite(rot_shadow, dest=sh_dest)
+
+                    # 3D Asset scaling, rotation, and compositing
+                    if self.dominant_texture:
+                        cur_w = max(10, int(target_w * scale))
+                        cur_h = max(10, int(target_h * scale))
+                        scaled_asset = self.dominant_texture.resize((cur_w, cur_h), Image.Resampling.LANCZOS)
+                        rot_asset = scaled_asset.rotate(-roll_angle, resample=Image.Resampling.BICUBIC, expand=True)
+                        dest_pos = (int(anc_x - rot_asset.width // 2), int(anc_y - rot_asset.height // 2))
+                        pil_frame.alpha_composite(rot_asset, dest=dest_pos)
+
+                    # Reactive particles & optical flares on trigger
+                    if t_prog > 0.05:
+                        # Bloom flare
+                        cur_fl = max(10, int(fl_size * scale * (0.85 + 0.35 * t_prog)))
+                        scaled_flare = flare_sprite.resize((cur_fl, cur_fl), Image.Resampling.BILINEAR)
+                        pil_frame.alpha_composite(scaled_flare, dest=(int(anc_x - cur_fl // 2), int(anc_y - cur_fl // 2)))
+
+                        # Bundle optical flare sprite if present
+                        if self.flare_texture:
+                            fl_w = max(10, int(cur_w * 1.3))
+                            fl_h = max(10, int(cur_h * 1.3))
+                            scaled_f = self.flare_texture.resize((fl_w, fl_h), Image.Resampling.BILINEAR)
+                            rot_f = scaled_f.rotate(-roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
+                            pil_frame.alpha_composite(rot_f, dest=(int(anc_x - rot_f.width // 2), int(anc_y - rot_f.height // 2)))
+
+                        # Volumetric mouth shockwave or energy flame burst
+                        if not is_full_helmet:
+                            mouth_x, mouth_y = int(mouth[0]), int(mouth[1])
+                            if self.sw_texture:
+                                sw_sz = max(10, int((350 + 150 * t_prog) * scale))
+                                scaled_sw = self.sw_texture.resize((sw_sz, sw_sz), Image.Resampling.LANCZOS)
+                                pil_frame.alpha_composite(scaled_sw, dest=(mouth_x - sw_sz // 2, mouth_y - sw_sz // 2))
+                            elif any(k in p_text for k in ["flame", "fire", "breath", "dragon", "amber"]):
+                                f_box_w, f_box_h = 320, 500
+                                flame_patch = Image.new("RGBA", (f_box_w, f_box_h), (0, 0, 0, 0))
+                                f_draw = ImageDraw.Draw(flame_patch)
+                                fx0, fy0 = f_box_w // 2, 20
+                                for c_w, c_l, col in [(int(240*t_prog), int(420*t_prog), (0, 180, 90, 80)),
+                                                      (int(160*t_prog), int(310*t_prog), (20, 230, 120, 140)),
+                                                      (int(90*t_prog), int(200*t_prog), (80, 255, 180, 200))]:
+                                    if c_w > 5 and c_l > 5:
+                                        f_draw.polygon([(fx0, fy0),
+                                                        (fx0 - c_w // 2, fy0 + c_l),
+                                                        (fx0 + c_w // 2, fy0 + c_l)], fill=col)
+                                flame_patch = flame_patch.filter(ImageFilter.GaussianBlur(10))
+                                pil_frame.alpha_composite(flame_patch, dest=(mouth_x - fx0, mouth_y - fy0))
+
+                    # Write frame to temporary JPEG
+                    frame_path = os.path.join(temp_frames_dir, f"{idx:04d}.jpg")
+                    cv2.imwrite(frame_path, cv2.cvtColor(np.array(pil_frame), cv2.COLOR_RGBA2BGR), [cv2.IMWRITE_JPEG_QUALITY, 93])
+
+                # Encode frame sequence with FFmpeg
+                enc_cmd = [
+                    "ffmpeg", "-y",
+                    "-framerate", str(int(round(fps))),
+                    "-i", os.path.join(temp_frames_dir, "%04d.jpg"),
+                    "-c:v", "libx264",
+                    "-preset", "fast",
+                    "-crf", "20",
+                    "-pix_fmt", "yuv420p",
+                    "-movflags", "+faststart",
+                    temp_video
+                ]
+                subprocess.run(enc_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+
+                # Cleanup temp frames
+                shutil.rmtree(temp_frames_dir, ignore_errors=True)
+
+                # Mux production audio if present
+                audio_file = "preview_audio.mp3"
+                if os.path.exists(audio_file) and os.path.getsize(audio_file) > 1000:
+                    print(f"[SIMULATOR] Muxing production audio track into motion preview video...")
+                    mux_cmd = [
+                        "ffmpeg", "-y",
+                        "-i", temp_video,
+                        "-stream_loop", "-1",
+                        "-i", audio_file,
+                        "-c:v", "copy",
+                        "-c:a", "aac",
+                        "-b:a", "128k",
+                        "-shortest",
+                        "-movflags", "+faststart",
+                        out_path
+                    ]
+                    subprocess.run(mux_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+                    if os.path.exists(temp_video):
+                        os.remove(temp_video)
+                else:
+                    if os.path.exists(temp_video):
+                        os.replace(temp_video, out_path)
+
+                if os.path.exists(out_path) and os.path.getsize(out_path) > 1000:
+                    print(f"[SIMULATOR] Successfully synthesized dynamic portrait motion preview video ({os.path.getsize(out_path)} bytes): {out_path}")
+                    return out_path
+
+            except Exception as e:
+                print(f"[SIMULATOR WARN] Motion video synthesis encountered error ({e}), falling back to crossfade.")
+                if os.path.exists(temp_video):
+                    os.remove(temp_video)
+
+        # ---------------- 2. FALLBACK: 2-FRAME SEAMLESS CROSS-FADE ----------------
         if not os.path.exists(out_neutral) or not os.path.exists(out_trigger):
             print(f"[SIMULATOR WARN] Screenshots missing for video synthesis ({out_neutral}, {out_trigger})")
             return None
 
-        temp_video = "temp_preview_video.mp4"
         cmd = [
             "ffmpeg", "-y",
             "-loop", "1", "-t", "1.6", "-i", out_neutral,
@@ -414,7 +698,6 @@ class LensSimulator:
         try:
             subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
 
-            # Mux real audio track if available
             audio_file = "preview_audio.mp3"
             if os.path.exists(audio_file) and os.path.getsize(audio_file) > 1000:
                 print(f"[SIMULATOR] Muxing production audio track ({os.path.getsize(audio_file)} bytes) into preview video...")
@@ -438,11 +721,12 @@ class LensSimulator:
                     os.replace(temp_video, out_path)
 
             if os.path.exists(out_path) and os.path.getsize(out_path) > 1000:
-                print(f"[SIMULATOR] Rendered 9:16 preview video ({os.path.getsize(out_path)} bytes): {out_path}")
+                print(f"[SIMULATOR] Rendered fallback 9:16 preview video ({os.path.getsize(out_path)} bytes): {out_path}")
                 return out_path
         except Exception as e:
-            print(f"[SIMULATOR WARN] FFmpeg video render failed ({e}). Proceeding without preview video.")
+            print(f"[SIMULATOR WARN] Fallback FFmpeg video render failed ({e}).")
         return None
+
 
     def judge_visuals_with_gemini_vision(self, trigger_screenshot: str, neutral_screenshot: str = "preview_neutral_simulated.png") -> dict:
         """Gate 7: Dual-frame forensic visual evaluation via Gemini Multimodal Vision AI (Strict Threshold >= 75)"""
@@ -464,7 +748,7 @@ class LensSimulator:
             "Evaluate against these production gates:\n"
             "1. FOREGROUND 3D ASSET: Is there a legitimate 3D wearable asset (visor, helmet, crown, halo, glasses) anchored to the head/face?\n"
             "2. ANATOMICAL PROPORTIONS: Does it fit human head/face proportions naturally (not tiny doll size, not misaligned)?\n"
-            "3. ANTI-CRINGE & ANTI-SLOP: ZERO weird on-screen text, ZERO developer UI sliders, ZERO awkward circular badge cutouts, ZERO cheesy clipart.\n"
+            "3. ANTI-CRINGE & ANTI-SLOP: ZERO weird on-screen text, ZERO developer UI sliders, ZERO awkward circular badge cutouts, ZERO cheesy clipart, ZERO 2D canvas loading wheels or equalizer bars.\n"
             "4. ACTIVE TRIGGER: Does the trigger frame show an active visual reaction (visor overdrive bloom, particle burst, flame, or optical flare)?\n\n"
             "Return ONLY a JSON object with this exact schema:\n"
             "{\n"

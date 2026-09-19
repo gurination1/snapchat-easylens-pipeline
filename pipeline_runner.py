@@ -26,7 +26,7 @@ STATIC_FALLBACKS = {
         "tags": ["dragon", "3d", "headpiece", "horns", "fantasy", "pbr"]
     },
     "2": {
-        "prompt": "Sleek ergonomic 3D cyberpunk HUD glasses and holographic visor resting strictly across eyes, leaving cheeks and mouth completely uncovered for clean tracking. Brushed titanium frame with pulsing cyan neon edge emission and refractive glass. Orbiting audio-reactive equalizer bars halo head. 3-point contrast lighting with ray-traced shadows. Opening mouth triggers radial laser shockwave; smiling activates bright neon visor HUD readout. Zero strobing, zero easing curves.",
+        "prompt": "Sleek ergonomic 3D cyberpunk HUD glasses and holographic visor resting strictly across eyes, leaving cheeks and mouth completely uncovered for clean tracking. Brushed titanium frame with pulsing cyan neon edge emission and refractive optical glass. Floating volumetric cyan neon particle embers drift around temples. 3-point contrast lighting with ray-traced shadows. Opening mouth triggers radial laser particle shockwave; smiling activates bright neon visor HUD readout. Zero strobing, zero easing curves, zero 2D canvas spinners, pure 3D assets only.",
         "lens_name": "Chrono Echo Visor",
         "tags": ["cyberpunk", "visor", "rave", "music", "audioreactive", "neon"]
     },
@@ -163,7 +163,7 @@ def main():
             err_summary = "; ".join(report.get("errors", []))
             current_instructions = (
                 f"{CUSTOM_INSTRUCTIONS} [STRICT RETRY]: Previous attempt failed verification with errors: {err_summary}. "
-                "CRITICAL: Zero easing curves, zero TWEEN references, zero UI sliders, pure native triggers only!"
+                "CRITICAL: Zero easing curves, zero TWEEN references, zero CanvasAPI / 2D canvas loading wheels, zero UI sliders, pure native 3D mesh and particles only!"
             ).strip()
 
         # Step 0: Determine Prompt, Lens Name, and Tags

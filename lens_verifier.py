@@ -160,7 +160,7 @@ class LensVerifier:
             return False
 
     def verify_controller_and_assets(self, bundle_bytes: bytes) -> bool:
-        """Gate 5: Verify 3D/particle prefetched assets, face event bindings, and AST linting for fatal runtime errors (e.g. undeclared TWEEN)"""
+        """Gate 5: Verify 3D/particle prefetched assets, face event bindings, and AST linting for fatal runtime errors (e.g. undeclared TWEEN, CanvasAPI 2D spinners)"""
         import re
         prefetched = self.lens_data.get("asset_statuses", {}).get("prefetched_assets", {})
         has_assets = len(prefetched) > 0
@@ -169,21 +169,58 @@ class LensVerifier:
         controller_found = False
         event_bindings = []
         fatal_script_errors = []
+        canvas_violations = []
         scanned_scripts = []
+
+        # 1. Pre-flight check: Inspect lens_data blocks for Canvas API modules
+        for b in self.lens_data.get("blocks", []):
+            b_name = str(b.get("name", "")).strip()
+            b_key = str(b.get("key", "")).strip()
+            b_desc = str(b.get("description", "")).strip()
+            if "canvas" in b_name.lower() or "canvas" in b_key.lower() or b_name == "Canvas API":
+                canvas_violations.append(
+                    f"Fatal Gate 5 Violation: Block '{b_name}' (key='{b_key}', desc='{b_desc}') uses 2D CanvasAPI. "
+                    "2D canvas drawing is strictly banned; all visual elements must be pure 3D Gaussian splat/mesh, 3D particles, or screen LUTs."
+                )
+
+        canvas_patterns = [
+            (r'\bcreateOnScreenCanvas\s*\(', "calls createOnScreenCanvas()"),
+            (r'\bcreateOffScreenCanvas\s*\(', "calls createOffScreenCanvas()"),
+            (r'\bCanvasAPI\b', "references CanvasAPI"),
+            (r'\bdraw[a-zA-Z0-9_]*Halo[a-zA-Z0-9_]*\s*\(', "implements 2D halo spinner routine"),
+            (r'\bdraw[a-zA-Z0-9_]*Bars[a-zA-Z0-9_]*\s*\(', "implements 2D equalizer bars spinner routine"),
+            (r'canvas\.(line|circle|stroke|strokeWeight|strokeCap|strokeJoin|background)\s*\(', "executes 2D canvas drawing methods")
+        ]
 
         try:
             with zipfile.ZipFile(io.BytesIO(bundle_bytes), "r") as z:
                 for name in z.namelist():
-                    if name.endswith(".js") or "controller" in name.lower():
+                    lower_name = name.lower()
+                    # Pre-flight check: Detect CanvasAPI script files in bundle
+                    if "canvasapi" in lower_name or lower_name.endswith("/canvasapi.js") or lower_name == "canvasapi.js":
+                        canvas_violations.append(
+                            f"Fatal Gate 5 Violation: Archive contains CanvasAPI script '{name}'. "
+                            "2D canvas procedural drawing is strictly banned."
+                        )
+
+                    if name.endswith(".js") or "controller" in lower_name:
                         content = z.read(name).decode("utf-8", errors="ignore")
                         scanned_scripts.append(name)
-                        if "controller" in name.lower():
+                        if "controller" in lower_name:
                             controller_found = True
                         for trigger in ["MouthOpenedEvent", "SmileStartedEvent", "BrowsRaisedEvent", "FaceFoundEvent", "createEvent"]:
                             if trigger in content and trigger not in event_bindings:
                                 event_bindings.append(trigger)
 
-                        # Static JS Linter: Catch undeclared TWEEN references that crash Snapchat Lens Studio Web runtime
+                        # Static JS Linter 1: Catch CanvasAPI & 2D canvas drawing scripts (disco loading wheels)
+                        for pat, reason in canvas_patterns:
+                            if re.search(pat, content):
+                                violation_msg = f"Fatal Gate 5 Violation: Script '{name}' {reason} (causes 2D disco loading spinner on user face)"
+                                if violation_msg not in canvas_violations:
+                                    canvas_violations.append(violation_msg)
+                                break
+
+                        # Static JS Linter 2: Catch undeclared TWEEN references that crash Snapchat Lens Studio Web runtime
                         # Exclude Tween.js and TweenManager.js which are library files defining global.TWEEN
                         if not ("Tween.js" in name or "TweenManager.js" in name):
                             if re.search(r'(?<![a-zA-Z0-9_.])TWEEN\.', content):
@@ -194,17 +231,32 @@ class LensVerifier:
         except Exception as e:
             fatal_script_errors.append(f"Zip extraction error in Gate 5: {e}")
 
-        # Also check controller_code in lens_data blocks if present
+        # Check controller_code in lens_data blocks or top-level if present
+        all_codes = []
+        if self.lens_data.get("controller_code"):
+            all_codes.append(("lens_data.controller_code", self.lens_data.get("controller_code")))
         for b in self.lens_data.get("blocks", []):
             code = b.get("controller_code", "")
             if code:
-                if re.search(r'(?<![a-zA-Z0-9_.])TWEEN\.', code):
-                    if not re.search(r'\b(var|let|const|function)\s+TWEEN\b', code) and "global.TWEEN" not in code[:code.find("TWEEN.")]:
-                        fatal_script_errors.append(
-                            f"Fatal: Undeclared TWEEN reference in block '{b.get('description', 'controller')}' controller_code"
-                        )
+                all_codes.append((f"block '{b.get('description', 'controller')}' controller_code", code))
 
-        passed = (has_assets or controller_found) and (len(fatal_script_errors) == 0)
+        for code_source, code in all_codes:
+            if re.search(r'(?<![a-zA-Z0-9_.])TWEEN\.', code):
+                if not re.search(r'\b(var|let|const|function)\s+TWEEN\b', code) and "global.TWEEN" not in code[:code.find("TWEEN.")]:
+                    fatal_script_errors.append(
+                        f"Fatal: Undeclared TWEEN reference in {code_source}"
+                    )
+            for pat, reason in canvas_patterns:
+                if re.search(pat, code):
+                    violation_msg = f"Fatal Gate 5 Violation: {code_source} {reason} (causes 2D disco loading spinner)"
+                    if violation_msg not in canvas_violations:
+                        canvas_violations.append(violation_msg)
+                    break
+
+        has_fatal_errors = len(fatal_script_errors) > 0
+        has_canvas_violations = len(canvas_violations) > 0
+
+        passed = (has_assets or controller_found) and (not has_fatal_errors) and (not has_canvas_violations)
         self.report["gates"]["gate5_assets_and_controller"] = {
             "passed": passed,
             "prefetched_assets_count": len(prefetched),
@@ -212,13 +264,18 @@ class LensVerifier:
             "controller_found": controller_found,
             "detected_event_bindings": event_bindings,
             "scanned_scripts_count": len(scanned_scripts),
-            "fatal_script_errors": fatal_script_errors
+            "fatal_script_errors": fatal_script_errors,
+            "canvas_violations": canvas_violations,
+            "canvas_api_detected": has_canvas_violations
         }
         if not (has_assets or controller_found):
             self.report["errors"].append("Gate 5 Failed: No prefetched assets or controller script found in bundle")
         if fatal_script_errors:
             for err in fatal_script_errors:
                 self.report["errors"].append(f"Gate 5 Failed: {err}")
+        if canvas_violations:
+            for viol in canvas_violations:
+                self.report["errors"].append(f"Gate 5 Failed: {viol}")
 
         return passed
 
@@ -268,6 +325,17 @@ class LensVerifier:
         if any(tm in prompt.lower() or tm in lens_name.lower() for tm in tm_tokens):
             score -= 40
             deductions.append("Detected potential trademark/IP violation")
+
+        # 6. Banned CanvasAPI / 2D Spinner phrases
+        banned_spinner_tokens = [
+            "orbiting bars", "frequency bars", "equalizer crown", "spectrum rings",
+            "equalizer bars", "audio-reactive bars", "sound visualizer rings",
+            "rotating bars", "spinning bars", "equalizer halo", "frequency halo",
+            "canvasapi", "canvas api"
+        ]
+        if any(tok in prompt.lower() for tok in banned_spinner_tokens):
+            score -= 40
+            deductions.append("Detected banned 2D canvas spinner / equalizer bar phrase in prompt")
 
         passed = score >= 85
         self.report["gates"]["gate6_judge_ai"] = {
