@@ -426,7 +426,7 @@ async def handle_google_secproxy_flow(page, gmail_addr: str, passwords: list, ma
     return False
 
 
-async def browser_login_flow(username: str, passwords: list, existing_cookie: str = "") -> dict:
+async def browser_login_flow(username: str, passwords: list, existing_cookie: str = "", account_id: str = "1") -> dict:
     """
     Stealth Playwright automation flow:
     - Clean browser context (no poisoned stale session cookies)
@@ -716,8 +716,17 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
 
                         # Handle Snapchat TIV (Two-step Identity Verification - Email Approval)
                         if "/v2/tiv" in curr_url or "tiv" in curr_url.lower():
-                            gmail_addr = os.getenv("GMAIL_ADDRESS", "gurination1@gmail.com").strip()
-                            gmail_pwd = os.getenv("GMAIL_APP_PASSWORD", "").strip()
+                            gmail_addr = (
+                                os.getenv(f"GMAIL_ADDRESS_ACC_{account_id}")
+                                or os.getenv(f"GMAIL_ADDRESS_{account_id}")
+                                or (username if "@" in username else None)
+                                or os.getenv("GMAIL_ADDRESS", "gurination1@gmail.com")
+                            ).strip()
+                            gmail_pwd = (
+                                os.getenv(f"GMAIL_APP_PASSWORD_ACC_{account_id}")
+                                or os.getenv(f"GMAIL_APP_PASSWORD_{account_id}")
+                                or os.getenv("GMAIL_APP_PASSWORD", "")
+                            ).strip()
                             print("\n" + "=" * 65)
                             print("[TIV VERIFICATION DETECTED] Snapchat sent login confirmation email!")
                             print(f"Target Email: {gmail_addr}")
@@ -959,7 +968,7 @@ def obtain_valid_snap_session(account_id: str = "1", username: str = None, passw
         candidates.insert(0, env_pass)
 
     print(f"[AUTH LOGIN] Initiating browser login flow for Account #{aid} (Identifier: {user_identifier})...")
-    result = asyncio.run(browser_login_flow(username=user_identifier, passwords=candidates, existing_cookie=existing_cookie))
+    result = asyncio.run(browser_login_flow(username=user_identifier, passwords=candidates, existing_cookie=existing_cookie, account_id=aid))
     ticket = result.get("ticket")
     cookie_header = result.get("cookie_header")
 
