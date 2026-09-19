@@ -84,7 +84,10 @@ class LensSimulator:
 
     def render_simulation_screenshots(self, out_neutral: str = "preview_neutral_simulated.png", out_trigger: str = "preview_mouth_open_simulated.png") -> tuple:
         """Composites extracted 3D/particle/background assets onto standard test portrait frames with anatomical anchoring"""
-        import numpy as np
+        try:
+            import numpy as np
+        except ImportError:
+            np = None
         from collections import deque
 
         neutral_path = os.path.join(self.portrait_dir, "portrait_neutral.png")
@@ -128,32 +131,52 @@ class LensSimulator:
                 # 2. Extract 3D asset from icon.png with 4-corner flood-fill
                 if "icon.png" in z.namelist():
                     raw_icon = Image.open(io.BytesIO(z.read("icon.png"))).convert("RGBA")
-                    arr = np.array(raw_icon)
-                    ih, iw = arr.shape[:2]
-                    icy, icx = ih / 2.0, iw / 2.0
-                    y_idx, x_idx = np.ogrid[:ih, :iw]
-                    dist = np.sqrt((x_idx - icx) ** 2 + (y_idx - icy) ** 2)
+                    iw, ih = raw_icon.size
+                    icx, icy = iw / 2.0, ih / 2.0
 
-                    # Mask out outer badge ring (radius > 138)
-                    arr[dist > 138] = [0, 0, 0, 0]
+                    if np is not None:
+                        arr = np.array(raw_icon)
+                        y_idx, x_idx = np.ogrid[:ih, :iw]
+                        dist = np.sqrt((x_idx - icx) ** 2 + (y_idx - icy) ** 2)
 
-                    # Flood fill from corners inward to clear outer black background
-                    is_black = (arr[:, :, 0] < 16) & (arr[:, :, 1] < 16) & (arr[:, :, 2] < 18)
-                    visited = np.zeros((ih, iw), dtype=bool)
-                    q = deque([(0, 0), (0, iw - 1), (ih - 1, 0), (ih - 1, iw - 1)])
-                    for r, c in list(q):
-                        visited[r, c] = True
-                    while q:
-                        r, c = q.popleft()
-                        arr[r, c] = [0, 0, 0, 0]
-                        for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-                            nr, nc = r + dr, c + dc
-                            if 0 <= nr < ih and 0 <= nc < iw and not visited[nr, nc]:
-                                if dist[nr, nc] > 132 or is_black[nr, nc]:
-                                    visited[nr, nc] = True
-                                    q.append((nr, nc))
+                        # Mask out outer badge ring (radius > 138)
+                        arr[dist > 138] = [0, 0, 0, 0]
 
-                    clean_icon = Image.fromarray(arr)
+                        # Flood fill from corners inward to clear outer black background
+                        is_black = (arr[:, :, 0] < 16) & (arr[:, :, 1] < 16) & (arr[:, :, 2] < 18)
+                        visited = np.zeros((ih, iw), dtype=bool)
+                        q = deque([(0, 0), (0, iw - 1), (ih - 1, 0), (ih - 1, iw - 1)])
+                        for r, c in list(q):
+                            visited[r, c] = True
+                        while q:
+                            r, c = q.popleft()
+                            arr[r, c] = [0, 0, 0, 0]
+                            for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                                nr, nc = r + dr, c + dc
+                                if 0 <= nr < ih and 0 <= nc < iw and not visited[nr, nc]:
+                                    if dist[nr, nc] > 132 or is_black[nr, nc]:
+                                        visited[nr, nc] = True
+                                        q.append((nr, nc))
+
+                        clean_icon = Image.fromarray(arr)
+                    else:
+                        pix = raw_icon.load()
+                        visited = set()
+                        q = deque([(0, 0), (0, ih - 1), (iw - 1, 0), (iw - 1, ih - 1)])
+                        for pt in list(q): visited.add(pt)
+                        while q:
+                            x, y = q.popleft()
+                            pix[x, y] = (0, 0, 0, 0)
+                            for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                                nx, ny = x + dx, y + dy
+                                if 0 <= nx < iw and 0 <= ny < ih and (nx, ny) not in visited:
+                                    d = ((nx - icx)**2 + (ny - icy)**2)**0.5
+                                    r, g, b, a = pix[nx, ny]
+                                    if d > 132 or (r < 16 and g < 16 and b < 18):
+                                        visited.add((nx, ny))
+                                        q.append((nx, ny))
+                        clean_icon = raw_icon
+
                     bbox = clean_icon.split()[-1].getbbox()
                     if bbox:
                         dominant_texture = clean_icon.crop(bbox)
