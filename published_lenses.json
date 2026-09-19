@@ -242,5 +242,24 @@
     "has_preview_video": true,
     "preview_url": "https://cf-st.sc-cdn.net/d/ZwS3norWXST2A6m0RkUVL?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-19T12:35:10Z",
+    "account_id": "4",
+    "lens_name": "Pearl Celestial Diadem",
+    "lens_id": "cd5936f2-ae32-4ef8-9f99-8f0a1b8537c5",
+    "checkpoint_id": "06aae810-f1d5-7c3a-8000-1a597bbddd24",
+    "prompt": "Floating halo diadem of baroque freshwater pearls and hand-twisted 18k champagne gold wire resting above hairline. Subtle Portra 400 golden-hour film bloom with warm 2800K key light. Opening mouth summons gentle floating champagne light motes around face; smiling illuminates an ethereal high-fashion skin sheen and caustic crystal ear shimmer. Ultra-luxury vanity aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "pearl",
+      "diadem",
+      "luxury",
+      "film",
+      "35mm"
+    ],
+    "visual_hook": "Instantaneous flash of iridescent freshwater pearls and radiant 2800K sunlit film bloom crowning the brow in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/EuqNJBlSBksNv0xc1OV14?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
