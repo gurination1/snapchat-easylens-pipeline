@@ -5,9 +5,9 @@ import time
 import requests
 
 CANDIDATE_MODELS = [
+    "gemini-2.5-flash",
     "gemini-flash-latest",
-    "gemini-flash-lite-latest",
-    "gemini-2.5-flash"
+    "gemini-flash-lite-latest"
 ]
 
 
@@ -170,7 +170,7 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
             url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={key}"
             try:
                 print(f"[GEMINI] Trying model {model_name} with key {key[:8]}... for Account #{account_id}")
-                res = requests.post(url, json=payload, timeout=25)
+                res = requests.post(url, json=payload, timeout=45)
                 if res.status_code == 200:
                     data = res.json()
                     raw_text = data["candidates"][0]["content"]["parts"][0]["text"]

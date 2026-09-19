@@ -155,8 +155,7 @@ class LensSimulator:
                         dist = np.sqrt((x - icx)**2 + (y - icy)**2)
 
                         mask = np.zeros((ih, iw), np.uint8)
-                        mask[dist <= 85] = cv2.GC_FGD
-                        mask[(dist > 85) & (dist <= 135)] = cv2.GC_PR_FGD
+                        mask[dist <= 135] = cv2.GC_PR_FGD
                         mask[dist > 136] = cv2.GC_BGD
 
                         bgdModel = np.zeros((1, 65), np.float64)
@@ -216,28 +215,34 @@ class LensSimulator:
             pos = (360 - target_w // 2, 795 - target_h)
             ev_y = pos[1] + int(target_h * 0.628)
         elif any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades"]):
-            target_w = 490
+            target_w = 480
             aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 0.5
             target_h = int(target_w * aspect)
             pos = (360 - target_w // 2, 495 - target_h // 2)
             ev_y = 495
         elif any(w in p_text for w in ["crown", "horns", "tiara", "headpiece", "diadem", "horn", "antlers"]):
-            target_w = 520
             aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 0.6
+            max_h = 360
+            target_w = min(440, int(max_h / max(0.01, aspect)))
             target_h = int(target_w * aspect)
-            pos = (360 - target_w // 2, 300 - target_h // 2)
+            base_y = 390
+            pos_y = max(10, base_y - target_h)
+            pos = (360 - target_w // 2, pos_y)
             ev_y = 495
         elif any(w in p_text for w in ["cloud", "halo", "floating", "above", "sky", "mercury halo"]):
-            target_w = 460
             aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 0.5
+            target_w = 440
             target_h = int(target_w * aspect)
-            pos = (360 - target_w // 2, 210 - target_h // 2)
+            pos = (360 - target_w // 2, 230 - target_h // 2)
             ev_y = 495
         else:
-            target_w = 500
             aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 0.6
+            max_h = 350
+            target_w = min(440, int(max_h / max(0.01, aspect)))
             target_h = int(target_w * aspect)
-            pos = (360 - target_w // 2, 360 - target_h // 2)
+            base_y = 390
+            pos_y = max(10, base_y - target_h)
+            pos = (360 - target_w // 2, pos_y)
             ev_y = 495
 
         # 1. Background replacement if present
@@ -256,11 +261,24 @@ class LensSimulator:
         enh_n = ImageEnhance.Contrast(img_n)
         comp_n = enh_n.enhance(1.12)
 
-        # Soft contact shadow
+        # Realistic contact shadow
         shadow = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
         s_draw = ImageDraw.Draw(shadow)
-        s_draw.ellipse([pos[0] - 15, pos[1] - 15, pos[0] + target_w + 15, pos[1] + target_h + 15], fill=(0, 0, 0, 150))
-        shadow = shadow.filter(ImageFilter.GaussianBlur(25))
+        if any(w in p_text for w in ["crown", "horns", "tiara", "headpiece", "diadem", "horn", "antlers"]):
+            # Base rim contact shadow on forehead/hairline
+            s_draw.ellipse([pos[0] + 50, pos[1] + target_h - 15, pos[0] + target_w - 50, pos[1] + target_h + 25], fill=(0, 0, 0, 90))
+            shadow = shadow.filter(ImageFilter.GaussianBlur(15))
+        elif any(w in p_text for w in ["visor", "glasses", "goggles", "hud"]):
+            # Temple and nose bridge contact occlusion
+            s_draw.ellipse([pos[0] + 30, pos[1] + int(target_h * 0.7), pos[0] + target_w - 30, pos[1] + target_h + 15], fill=(0, 0, 0, 80))
+            shadow = shadow.filter(ImageFilter.GaussianBlur(12))
+        elif any(w in p_text for w in ["cloud", "halo", "floating"]):
+            # Downward ambient occlusion cast onto skull
+            s_draw.ellipse([260, 310, 460, 360], fill=(0, 0, 0, 75))
+            shadow = shadow.filter(ImageFilter.GaussianBlur(18))
+        else:
+            s_draw.ellipse([pos[0] + 40, pos[1] + target_h - 15, pos[0] + target_w - 40, pos[1] + target_h + 25], fill=(0, 0, 0, 80))
+            shadow = shadow.filter(ImageFilter.GaussianBlur(15))
         comp_n = Image.alpha_composite(comp_n, shadow)
 
         # Idle Equalizer Bars if present
@@ -307,18 +325,37 @@ class LensSimulator:
         # 4. Visor / Crown Overdrive Core Bloom & Anamorphic Flares
         bloom = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
         b_draw = ImageDraw.Draw(bloom)
-        for r, a in [(35, 255), (80, 230), (150, 160), (250, 90), (380, 35)]:
-            b_draw.ellipse([360-r, ev_y-int(r*0.55), 360+r, ev_y+int(r*0.55)], fill=(0, 245, 255, a))
-        bloom = bloom.filter(ImageFilter.GaussianBlur(15))
-        comp_t = Image.alpha_composite(comp_t, bloom)
 
-        # Horizontal Anamorphic Laser Flare
-        flare = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
-        f_draw = ImageDraw.Draw(flare)
-        f_draw.line([(0, ev_y), (720, ev_y)], fill=(0, 240, 255, 220), width=6)
-        f_draw.line([(80, ev_y), (640, ev_y)], fill=(220, 255, 255, 255), width=3)
-        flare = flare.filter(ImageFilter.GaussianBlur(3))
-        comp_t = Image.alpha_composite(comp_t, flare)
+        is_visor = any(w in p_text for w in ["visor", "glasses", "hud", "cyberpunk"])
+        if is_visor:
+            for r, a in [(35, 255), (80, 230), (150, 160), (250, 90), (380, 35)]:
+                b_draw.ellipse([360-r, ev_y-int(r*0.55), 360+r, ev_y+int(r*0.55)], fill=(0, 245, 255, a))
+            bloom = bloom.filter(ImageFilter.GaussianBlur(15))
+            comp_t = Image.alpha_composite(comp_t, bloom)
+
+            flare = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+            f_draw = ImageDraw.Draw(flare)
+            f_draw.line([(0, ev_y), (720, ev_y)], fill=(0, 240, 255, 220), width=6)
+            f_draw.line([(80, ev_y), (640, ev_y)], fill=(220, 255, 255, 255), width=3)
+            flare = flare.filter(ImageFilter.GaussianBlur(3))
+            comp_t = Image.alpha_composite(comp_t, flare)
+        else:
+            # Warm gold/amber radiant bloom for crowns/headpieces/halos
+            glow_y = pos[1] + target_h // 2
+            for r, a in [(25, 220), (60, 170), (120, 110), (200, 50), (300, 20)]:
+                b_draw.ellipse([360-r, glow_y-r, 360+r, glow_y+r], fill=(255, 215, 80, a))
+            bloom = bloom.filter(ImageFilter.GaussianBlur(18))
+            comp_t = Image.alpha_composite(comp_t, bloom)
+
+            # Subtle eye runic sparkles at eye level
+            eye_sparkle = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+            e_draw = ImageDraw.Draw(eye_sparkle)
+            for ex in [280, 440]:
+                e_draw.ellipse([ex - 25, ev_y - 25, ex + 25, ev_y + 25], fill=(255, 225, 120, 180))
+                e_draw.line([(ex - 45, ev_y), (ex + 45, ev_y)], fill=(255, 245, 180, 220), width=2)
+                e_draw.line([(ex, ev_y - 45), (ex, ev_y + 45)], fill=(255, 245, 180, 220), width=2)
+            eye_sparkle = eye_sparkle.filter(ImageFilter.GaussianBlur(5))
+            comp_t = Image.alpha_composite(comp_t, eye_sparkle)
 
         img_n = comp_n
         img_t = comp_t
@@ -445,7 +482,7 @@ class LensSimulator:
             for key in api_keys:
                 url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
                 try:
-                    res = requests.post(url, json=payload, timeout=25)
+                    res = requests.post(url, json=payload, timeout=45)
                     if res.status_code == 200:
                         data = res.json()
                         raw_text = data["candidates"][0]["content"]["parts"][0]["text"]

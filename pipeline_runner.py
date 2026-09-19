@@ -18,10 +18,34 @@ ACCOUNT_ID = os.getenv("ACCOUNT_ID", "1")
 USE_GEMINI = os.getenv("USE_GEMINI", "true").lower() not in ("false", "0", "no")
 CUSTOM_INSTRUCTIONS = os.getenv("CUSTOM_INSTRUCTIONS", "")
 
-# Proven PBR head-anchored fallback if Gemini is not used
-STATIC_PROMPT = os.getenv("LENS_PROMPT") or "Fitted mythic 3D dragon horn headpiece anchored strictly to head, crafted from anisotropic obsidian scales and liquid 24k gold filigree. 3-point contrast lighting with warm key light, cool 6500K rim light, and ray-traced contact shadows. Opening mouth triggers flowing emerald flame particles and rising embers. Smiling activates bright golden runic eye flares. PBR materials, no strobing, ultra-realistic."
-STATIC_LENS_NAME = os.getenv("LENS_NAME") or "Aether Dragon Crown"
-STATIC_TAGS = [t.strip() for t in (os.getenv("LENS_TAGS") or "dragon,3d,headpiece,horns,fantasy,pbr").split(",")]
+# Proven PBR fallbacks per account persona if Gemini is not used
+STATIC_FALLBACKS = {
+    "1": {
+        "prompt": "Sculpted obsidian dragon horn crown anchored strictly to hairline and temples with liquid 24k gold filigree and caustic ruby gems, PBR anisotropic metallic reflections, 3-point contrast 6500K/2800K lighting with ray-traced contact shadows. Mouth open erupts turbulent emerald flame torrent with floating amber sparks; smiling ignites alpha-fading golden runic eye halos. Depth occlusion enabled, zero strobing.",
+        "lens_name": "Aether Dragon Crown",
+        "tags": ["dragon", "3d", "headpiece", "horns", "fantasy", "pbr"]
+    },
+    "2": {
+        "prompt": "Sleek ergonomic 3D cyberpunk HUD glasses and holographic visor resting strictly across eyes, leaving cheeks and mouth completely uncovered for clean tracking. Brushed titanium frame with pulsing cyan neon edge emission and refractive glass. Orbiting audio-reactive equalizer bars halo head. 3-point contrast lighting with ray-traced shadows. Opening mouth triggers radial laser shockwave; smiling flashes neon visor HUD readout. Zero strobing.",
+        "lens_name": "Chrono Echo Visor",
+        "tags": ["cyberpunk", "visor", "rave", "music", "audioreactive", "neon"]
+    },
+    "3": {
+        "prompt": "Fluffy 3D cartoon stormcloud hovering directly above head with gentle glowing rain droplets and soft ambient thunder light. PBR volumetric stylization, 3-point contrast lighting. Opening mouth erupts an exaggerated geyser of liquid mercury tears and spinning 24k gold coins bouncing off screen frame; smiling triggers a dramatic cartoon lightning rim flash. Physics-driven, zero strobe.",
+        "lens_name": "Stormcloud Tears",
+        "tags": ["meme", "crying", "funny", "cloud", "cartoon", "morph"]
+    },
+    "4": {
+        "prompt": "Sculpted 24k gold leaf baroque crown fitted strictly to hairline and temples with pale champagne crystal halo and caustic crystal prisms. Warm Kodak Portra 35mm film halation with colorCorrection 10 Golden Glow and grain. Anisotropic PBR reflections, ray-traced shadows. Smiling unleashes rich golden sparkle dust cascading across cheekbones. Photosensitive safe, zero strobing.",
+        "lens_name": "Haute Baroque Gold",
+        "tags": ["film", "35mm", "crown", "gold", "luxury", "aesthetic"]
+    },
+    "5": {
+        "prompt": "Zero-G floating liquid mercury halo crown morphing above head with sculpted chrome cheek plates. Anisotropic mirror PBR reflections with fluid surface tension, 3-point contrast lighting and ray-traced contact shadows. Opening mouth releases orbiting liquid chrome spheres with refractive rippling reflections; smiling ripples the ambient background. Seamless physics, zero strobing.",
+        "lens_name": "Liquid Chrome Mirage",
+        "tags": ["surreal", "chrome", "halo", "optical", "cyber", "mirage"]
+    }
+}
 AUTO_PUBLISH = os.getenv("AUTO_PUBLISH", "true").lower() not in ("false", "0", "no")
 
 
@@ -111,6 +135,12 @@ def main():
 
     print(f"Logged in as: {user.get('displayName')} (@{user.get('username')})")
 
+    # Determine per-account static fallback defaults
+    active_fallback = STATIC_FALLBACKS.get(str(ACCOUNT_ID), STATIC_FALLBACKS["1"])
+    static_prompt = os.getenv("LENS_PROMPT") or active_fallback["prompt"]
+    static_lens_name = os.getenv("LENS_NAME") or active_fallback["lens_name"]
+    static_tags = [t.strip() for t in (os.getenv("LENS_TAGS") or ",".join(active_fallback["tags"])).split(",")]
+
     # Step 0: Determine Prompt, Lens Name, and Tags
     gemini_plan = None
     if USE_GEMINI:
@@ -119,20 +149,20 @@ def main():
             gemini_plan = generate_lens_prompt(account_id=ACCOUNT_ID, custom_instructions=CUSTOM_INSTRUCTIONS)
             prompt = gemini_plan["prompt"]
             lens_name = gemini_plan["lens_name"]
-            tags = gemini_plan.get("tags", STATIC_TAGS)
+            tags = gemini_plan.get("tags", static_tags)
             with open("gemini_generation_plan.json", "w") as f:
                 json.dump(gemini_plan, f, indent=2)
             print(f"[GEMINI SUCCESS] Lens: {lens_name}")
             print(f"[GEMINI SUCCESS] Hook: {gemini_plan.get('visual_hook')}")
         except Exception as e:
-            print(f"[GEMINI WARN] Gemini synthesis failed ({e}), falling back to static prompt...")
-            prompt = STATIC_PROMPT
-            lens_name = STATIC_LENS_NAME
-            tags = STATIC_TAGS
+            print(f"[GEMINI WARN] Gemini synthesis failed ({e}), falling back to persona #{ACCOUNT_ID} static prompt...")
+            prompt = static_prompt
+            lens_name = static_lens_name
+            tags = static_tags
     else:
-        prompt = STATIC_PROMPT
-        lens_name = STATIC_LENS_NAME
-        tags = STATIC_TAGS
+        prompt = static_prompt
+        lens_name = static_lens_name
+        tags = static_tags
 
     print("\n=== STEP 2: CREATING LENS CONVERSATION ===")
     cid = client.create_conversation()
