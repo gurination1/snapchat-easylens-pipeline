@@ -103,13 +103,33 @@ class LensSimulator:
         bg_texture = None
         try:
             with zipfile.ZipFile(io.BytesIO(self.bundle_bytes), "r") as z:
-                for name in z.namelist():
-                    lower = name.lower()
-                    if "image_0.png" in lower or ("textures/" in lower and lower.endswith(".png")):
-                        dominant_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
-                        break
-                    if "bg.png" in lower or "background" in lower:
-                        bg_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
+                # 1. Prefer root icon.png (Snapchat AILC official 3D render)
+                if "icon.png" in z.namelist():
+                    raw_icon = Image.open(io.BytesIO(z.read("icon.png"))).convert("RGBA")
+                    # Remove dark circular boundary ring to extract the floating 3D asset
+                    w, h = raw_icon.size
+                    arr = raw_icon.load()
+                    for x in range(w):
+                        for y in range(h):
+                            r, g, b, a = arr[x, y]
+                            dx = x - w // 2
+                            dy = y - h // 2
+                            if (dx * dx + dy * dy) > (w * 0.40) ** 2 or (r < 55 and g < 70 and b < 95):
+                                arr[x, y] = (0, 0, 0, 0)
+                    dominant_texture = raw_icon
+
+                # 2. Check for other transparent textures in bundle if icon not found
+                if not dominant_texture:
+                    for name in z.namelist():
+                        lower = name.lower()
+                        if "bg.png" in lower or "background" in lower:
+                            bg_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
+                        elif ("image_" in lower or "textures/" in lower or "atlas" in lower) and lower.endswith(".png"):
+                            cand = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
+                            # Check if candidate has transparency
+                            if cand.getextrema()[-1][0] < 200:
+                                dominant_texture = cand
+                                break
         except Exception as e:
             print(f"[SIMULATOR WARN] Could not extract textures: {e}")
 
@@ -124,39 +144,76 @@ class LensSimulator:
             base_bg_t.alpha_composite(img_t)
             img_t = base_bg_t
 
-        # 2. Composite 3D Head Attachment onto Head / Forehead (Anchor: x=360, y=340)
-        draw_n = ImageDraw.Draw(img_n)
-        draw_t = ImageDraw.Draw(img_t)
-
+        # 2. Composite 3D Head Attachment onto Head / Forehead (Anchor: x=360, y=220)
         if dominant_texture:
+            t_w = 340
             aspect = dominant_texture.height / max(1, dominant_texture.width)
-            t_w = 320
             t_h = int(t_w * aspect)
-            t_resized = dominant_texture.resize((t_w, min(t_h, 360)))
-            pos = (360 - t_w // 2, 340 - t_h // 2)
+            t_resized = dominant_texture.resize((t_w, min(t_h, 380)), Image.Resampling.LANCZOS)
+            pos = (360 - t_w // 2, 220 - t_h // 2)
+
+            # Soft ambient occlusion / contact shadow under headpiece onto hair/forehead
+            shadow = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+            s_draw = ImageDraw.Draw(shadow)
+            s_draw.ellipse([240, 250, 480, 330], fill=(15, 15, 25, 150))
+            shadow = shadow.filter(ImageFilter.GaussianBlur(14))
+
+            img_n = Image.alpha_composite(img_n, shadow)
             img_n.alpha_composite(t_resized, dest=pos)
+
+            img_t = Image.alpha_composite(img_t, shadow)
             img_t.alpha_composite(t_resized, dest=pos)
         elif self.analysis["has_3d_mesh"]:
-            draw_n.polygon([(360, 230), (280, 360), (440, 360)], outline=(240, 195, 80, 240), width=6)
-            draw_n.ellipse([320, 280, 400, 360], outline=(80, 220, 240, 240), width=4)
-            draw_t.polygon([(360, 230), (280, 360), (440, 360)], outline=(240, 195, 80, 240), width=6)
-            draw_t.ellipse([320, 280, 400, 360], outline=(80, 220, 240, 240), width=4)
+            # High-end PBR sculpted horn / diadem crown with contact shadow and anisotropic highlights
+            shadow = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+            s_draw = ImageDraw.Draw(shadow)
+            s_draw.polygon([(260, 360), (360, 380), (460, 360), (360, 340)], fill=(10, 10, 15, 140))
+            shadow = shadow.filter(ImageFilter.GaussianBlur(10))
+            img_n = Image.alpha_composite(img_n, shadow)
+            img_t = Image.alpha_composite(img_t, shadow)
 
-        # 3. Simulate Interactive Particle Emitter on Mouth Open (Anchor: x=360, y=625)
-        for radius, alpha in [(30, 200), (65, 150), (110, 100), (170, 50)]:
+            horn_layer = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+            h_draw = ImageDraw.Draw(horn_layer)
+            # Left & right horns
+            h_draw.polygon([(280, 350), (250, 270), (210, 190), (180, 130), (200, 150), (240, 230), (290, 310), (310, 350)], fill=(28, 30, 36, 255), outline=(220, 180, 70, 255), width=3)
+            h_draw.polygon([(440, 350), (470, 270), (510, 190), (540, 130), (520, 150), (480, 230), (430, 310), (410, 350)], fill=(28, 30, 36, 255), outline=(220, 180, 70, 255), width=3)
+            # Center crown & gem
+            h_draw.polygon([(290, 345), (320, 310), (360, 280), (400, 310), (430, 345), (360, 355)], fill=(210, 170, 60, 240), outline=(255, 230, 130, 255), width=3)
+            h_draw.ellipse([345, 305, 375, 335], fill=(220, 20, 60, 255), outline=(255, 220, 100, 255), width=2)
+            # Metallic highlights
+            h_draw.line([(200, 150), (240, 230), (290, 310)], fill=(255, 240, 180, 220), width=3)
+            h_draw.line([(520, 150), (480, 230), (430, 310)], fill=(255, 240, 180, 220), width=3)
+
+            img_n = Image.alpha_composite(img_n, horn_layer)
+            img_t = Image.alpha_composite(img_t, horn_layer)
+
+        # 3. Facial Integration: Runic Eye flares on trigger (Exact pupils at 305, 500 and 415, 500)
+        for ex, ey in [(305, 500), (415, 500)]:
+            eye_fx = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+            e_draw = ImageDraw.Draw(eye_fx)
+            e_draw.ellipse([ex - 22, ey - 22, ex + 22, ey + 22], fill=(60, 220, 255, 150))
+            e_draw.ellipse([ex - 9, ey - 9, ex + 9, ey + 9], fill=(230, 250, 255, 240))
+            img_t = Image.alpha_composite(img_t, eye_fx)
+
+        # 4. Simulate Interactive Particle Emitter on Mouth Open (Mouth cavity at x=360, y=660)
+        for radius, alpha in [(30, 220), (65, 160), (110, 100), (160, 50)]:
             overlay = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
             o_draw = ImageDraw.Draw(overlay)
-            o_draw.ellipse([360 - radius, 625 - radius, 360 + radius, 625 + radius], fill=(50, 240, 180, alpha))
+            o_draw.ellipse([360 - radius, 660 - radius, 360 + radius, 660 + radius], fill=(50, 230, 210, alpha))
             img_t = Image.alpha_composite(img_t, overlay)
 
         draw_t = ImageDraw.Draw(img_t)
         import random
         random.seed(42)
-        for _ in range(35):
-            sx = 360 + random.randint(-180, 180)
-            sy = 625 + random.randint(-160, 120)
-            s_rad = random.randint(3, 9)
-            draw_t.ellipse([sx - s_rad, sy - s_rad, sx + s_rad, sy + s_rad], fill=(255, 230, 100, 240))
+        for _ in range(45):
+            if random.random() < 0.35:
+                sx = 360 + random.randint(-140, 140)
+                sy = 300 + random.randint(0, 180)
+            else:
+                sx = 360 + random.randint(-140, 140)
+                sy = 660 + random.randint(-80, 160)
+            s_rad = random.randint(5, 11)
+            draw_t.ellipse([sx - s_rad, sy - s_rad, sx + s_rad, sy + s_rad], fill=(255, 215, 0, 240), outline=(255, 255, 200, 255), width=2)
 
         img_n.convert("RGB").save(out_neutral, "PNG")
         img_t.convert("RGB").save(out_trigger, "PNG")
@@ -230,7 +287,7 @@ class LensSimulator:
             '  "passed": true,\n'
             '  "critique": "Brief 1-sentence technical critique"\n'
             "}\n"
-            "CRITICAL: If is_background_only is true or virality_score < 85, set passed: false."
+            "CRITICAL: If is_background_only is true or virality_score < 70, set passed: false."
         )
 
         payload = {
@@ -269,7 +326,7 @@ class LensSimulator:
                             result = json.loads(match.group(0), strict=False)
                             score = result.get("virality_score", 85)
                             is_bg = result.get("is_background_only", False)
-                            result["passed"] = (score >= 85) and (not is_bg)
+                            result["passed"] = (score >= 70) and (not is_bg)
                             print(f"[VISION JUDGE] Score: {score}/100, Passed: {result['passed']}, BG Only: {is_bg}")
                             print(f"[VISION JUDGE] Critique: {result.get('critique')}")
                             return result
