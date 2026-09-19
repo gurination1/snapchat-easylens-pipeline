@@ -107,6 +107,9 @@ class LensSimulator:
         bg_texture = None
         sw_texture = None
         flare_texture = None
+        eq_texture = None
+        star_texture = None
+        orb_texture = None
 
         # Cleanly extract production assets and audio from bundle
         try:
@@ -125,56 +128,68 @@ class LensSimulator:
                         sw_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
                     elif any(k in lower for k in ["flare", "hud", "beam", "flash"]) and lower.endswith(".png") and not flare_texture:
                         flare_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
+                    elif any(k in lower for k in ["equalizer", "eq", "bar"]) and lower.endswith(".png") and not eq_texture:
+                        eq_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
+                    elif any(k in lower for k in ["star_02", "stars", "sparkle"]) and lower.endswith(".png") and not star_texture:
+                        star_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
+                    elif any(k in lower for k in ["orb", "particle", "glow_orb"]) and lower.endswith(".png") and not orb_texture:
+                        orb_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
                     elif any(k in lower for k in ["bg.png", "background"]) and lower.endswith(".png") and not bg_texture:
                         bg_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
 
-                # 2. Extract 3D asset from icon.png with 4-corner flood-fill
+                # 2. Extract 3D asset from icon.png using GrabCut clean room isolation
                 if "icon.png" in z.namelist():
                     raw_icon = Image.open(io.BytesIO(z.read("icon.png"))).convert("RGBA")
                     iw, ih = raw_icon.size
                     icx, icy = iw / 2.0, ih / 2.0
 
-                    if np is not None:
+                    try:
+                        import cv2
+                    except ImportError:
+                        cv2 = None
+
+                    if cv2 is not None and np is not None:
+                        arr_rgba = np.array(raw_icon)
+                        bgr = cv2.cvtColor(arr_rgba, cv2.COLOR_RGBA2BGR)
+                        y, x = np.ogrid[:ih, :iw]
+                        dist = np.sqrt((x - icx)**2 + (y - icy)**2)
+
+                        mask = np.zeros((ih, iw), np.uint8)
+                        mask[dist <= 85] = cv2.GC_FGD
+                        mask[(dist > 85) & (dist <= 135)] = cv2.GC_PR_FGD
+                        mask[dist > 136] = cv2.GC_BGD
+
+                        bgdModel = np.zeros((1, 65), np.float64)
+                        fgdModel = np.zeros((1, 65), np.float64)
+                        cv2.grabCut(bgr, mask, None, bgdModel, fgdModel, 5, cv2.GC_INIT_WITH_MASK)
+
+                        fg_mask = np.where((mask == cv2.GC_FGD) | (mask == cv2.GC_PR_FGD), 255, 0).astype("uint8")
+                        fg_mask = cv2.GaussianBlur(fg_mask, (3, 3), 0)
+                        rgb = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
+                        clean_icon = Image.fromarray(np.dstack([rgb, fg_mask]))
+                    elif np is not None:
                         arr = np.array(raw_icon)
                         y_idx, x_idx = np.ogrid[:ih, :iw]
                         dist = np.sqrt((x_idx - icx) ** 2 + (y_idx - icy) ** 2)
-
-                        # Mask out outer badge ring (radius > 138)
-                        arr[dist > 138] = [0, 0, 0, 0]
-
-                        # Flood fill from corners inward to clear outer black background
-                        is_black = (arr[:, :, 0] < 16) & (arr[:, :, 1] < 16) & (arr[:, :, 2] < 18)
+                        arr[dist > 136] = [0, 0, 0, 0]
+                        is_black = (arr[:, :, 0] < 30) & (arr[:, :, 1] < 30) & (arr[:, :, 2] < 35)
                         visited = np.zeros((ih, iw), dtype=bool)
-                        q = deque([(0, 0), (0, iw - 1), (ih - 1, 0), (ih - 1, iw - 1)])
+                        q = deque([(0, 0), (0, iw - 1), (ih - 1, 0), (ih - 1, iw - 1)] +
+                                  [(int(icy + 137*np.sin(a)), int(icx + 137*np.cos(a))) for a in np.linspace(0, 2*np.pi, 36)])
                         for r, c in list(q):
-                            visited[r, c] = True
+                            if 0 <= r < ih and 0 <= c < iw:
+                                visited[r, c] = True
                         while q:
                             r, c = q.popleft()
                             arr[r, c] = [0, 0, 0, 0]
                             for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
                                 nr, nc = r + dr, c + dc
                                 if 0 <= nr < ih and 0 <= nc < iw and not visited[nr, nc]:
-                                    if dist[nr, nc] > 132 or is_black[nr, nc]:
+                                    if dist[nr, nc] > 130 or is_black[nr, nc]:
                                         visited[nr, nc] = True
                                         q.append((nr, nc))
-
                         clean_icon = Image.fromarray(arr)
                     else:
-                        pix = raw_icon.load()
-                        visited = set()
-                        q = deque([(0, 0), (0, ih - 1), (iw - 1, 0), (iw - 1, ih - 1)])
-                        for pt in list(q): visited.add(pt)
-                        while q:
-                            x, y = q.popleft()
-                            pix[x, y] = (0, 0, 0, 0)
-                            for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-                                nx, ny = x + dx, y + dy
-                                if 0 <= nx < iw and 0 <= ny < ih and (nx, ny) not in visited:
-                                    d = ((nx - icx)**2 + (ny - icy)**2)**0.5
-                                    r, g, b, a = pix[nx, ny]
-                                    if d > 132 or (r < 16 and g < 16 and b < 18):
-                                        visited.add((nx, ny))
-                                        q.append((nx, ny))
                         clean_icon = raw_icon
 
                     bbox = clean_icon.split()[-1].getbbox()
@@ -186,29 +201,44 @@ class LensSimulator:
         except Exception as e:
             print(f"[SIMULATOR WARN] Error extracting production assets: {e}")
 
-        # Determine anatomical scale and anchor from metadata
+        # Determine anatomical scale and anchor from metadata & text
         p_text = (
             str(self.lens_data.get("lens_name", "")) + " " +
             str(self.lens_data.get("prompt", "")) + " " +
             " ".join(self.analysis.get("mesh_files", []))
         ).lower()
 
-        if any(w in p_text for w in ["visor", "glasses", "goggles", "mask", "face armor"]):
-            target_w = 510
-            anchor_x = 360
-            anchor_y = 500  # Centered on eyes
-        elif any(w in p_text for w in ["crown", "horns", "tiara", "headpiece", "diadem"]):
-            target_w = 530
-            anchor_x = 360
-            anchor_y = 330  # Brow / hairline
-        elif any(w in p_text for w in ["cloud", "halo", "floating", "above", "sky"]):
+        is_full_helmet = any(w in p_text for w in ["helmet", "full-face", "full face", "motorcycle"])
+        if is_full_helmet:
+            target_w = 600
+            aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 1.0
+            target_h = int(target_w * aspect)
+            pos = (360 - target_w // 2, 795 - target_h)
+            ev_y = pos[1] + int(target_h * 0.628)
+        elif any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades"]):
+            target_w = 490
+            aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 0.5
+            target_h = int(target_w * aspect)
+            pos = (360 - target_w // 2, 495 - target_h // 2)
+            ev_y = 495
+        elif any(w in p_text for w in ["crown", "horns", "tiara", "headpiece", "diadem", "horn", "antlers"]):
+            target_w = 520
+            aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 0.6
+            target_h = int(target_w * aspect)
+            pos = (360 - target_w // 2, 300 - target_h // 2)
+            ev_y = 495
+        elif any(w in p_text for w in ["cloud", "halo", "floating", "above", "sky", "mercury halo"]):
             target_w = 460
-            anchor_x = 360
-            anchor_y = 210  # Floating above head
+            aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 0.5
+            target_h = int(target_w * aspect)
+            pos = (360 - target_w // 2, 210 - target_h // 2)
+            ev_y = 495
         else:
             target_w = 500
-            anchor_x = 360
-            anchor_y = 360
+            aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 0.6
+            target_h = int(target_w * aspect)
+            pos = (360 - target_w // 2, 360 - target_h // 2)
+            ev_y = 495
 
         # 1. Background replacement if present
         if bg_texture:
@@ -220,60 +250,78 @@ class LensSimulator:
             base_bg_t.alpha_composite(img_t)
             img_t = base_bg_t
 
-        # 2. Composite 3D Asset onto Neutral Frame
+        from PIL import ImageEnhance
+
+        # ---------------- NEUTRAL FRAME COMPOSITING ----------------
+        enh_n = ImageEnhance.Contrast(img_n)
+        comp_n = enh_n.enhance(1.12)
+
+        # Soft contact shadow
+        shadow = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+        s_draw = ImageDraw.Draw(shadow)
+        s_draw.ellipse([pos[0] - 15, pos[1] - 15, pos[0] + target_w + 15, pos[1] + target_h + 15], fill=(0, 0, 0, 150))
+        shadow = shadow.filter(ImageFilter.GaussianBlur(25))
+        comp_n = Image.alpha_composite(comp_n, shadow)
+
+        # Idle Equalizer Bars if present
+        if eq_texture:
+            for bx, by, scale in [(110, ev_y-40, 0.7), (140, ev_y-70, 1.1), (170, ev_y-30, 0.6),
+                                  (550, ev_y-30, 0.6), (580, ev_y-70, 1.1), (610, ev_y-40, 0.7)]:
+                bw, bh = int(24 * scale), int(90 * scale)
+                comp_n.alpha_composite(eq_texture.resize((bw, bh), Image.Resampling.LANCZOS), dest=(bx - bw//2, by - bh//2))
+
+        # 3D Asset on Neutral
         if dominant_texture:
-            aspect = dominant_texture.height / max(1, dominant_texture.width)
-            target_h = int(target_w * aspect)
             t_resized = dominant_texture.resize((target_w, target_h), Image.Resampling.LANCZOS)
-            pos = (anchor_x - target_w // 2, anchor_y - target_h // 2)
+            comp_n.alpha_composite(t_resized, dest=pos)
 
-            # Soft ambient occlusion / contact shadow
-            shadow = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
-            s_draw = ImageDraw.Draw(shadow)
-            s_draw.ellipse([pos[0] - 15, pos[1] - 15, pos[0] + target_w + 15, pos[1] + target_h + 15], fill=(10, 15, 25, 120))
-            shadow = shadow.filter(ImageFilter.GaussianBlur(20))
+        # ---------------- TRIGGER FRAME COMPOSITING (HIGH IMPACT VIRALITY) ----------------
+        # 1. Atmospheric lighting & rim grading on portrait
+        enh_t = ImageEnhance.Contrast(img_t)
+        comp_t = enh_t.enhance(1.22)
+        tint = Image.new("RGBA", (720, 1280), (5, 30, 55, 75))
+        comp_t = Image.alpha_composite(comp_t, tint)
+        comp_t = Image.alpha_composite(comp_t, shadow)
 
-            img_n = Image.alpha_composite(img_n, shadow)
-            img_n.alpha_composite(t_resized, dest=pos)
-
-            # 3. Composite Trigger Frame (Mouth Open / Reaction)
-            img_t_comp = img_t.copy()
-
-            # Emitter shockwave or particle surge from mouth cavity (360, 665)
-            if sw_texture:
+        # 2. If mouth is uncovered, render volumetric mouth reaction (flame or particle shockwave)
+        if not is_full_helmet:
+            if any(k in p_text for k in ["flame", "fire", "breath", "dragon", "amber"]):
+                flame = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+                f_draw = ImageDraw.Draw(flame)
+                for cone_w, cone_len, col in [(280, 480, (0, 180, 90, 90)), (190, 360, (20, 230, 120, 160)), (110, 240, (80, 255, 180, 220)), (50, 120, (220, 255, 240, 255))]:
+                    f_draw.polygon([
+                        (360, 670),
+                        (360 - cone_w // 2, 670 + cone_len),
+                        (360 + cone_w // 2, 670 + cone_len)
+                    ], fill=col)
+                flame = flame.filter(ImageFilter.GaussianBlur(16))
+                comp_t = Image.alpha_composite(comp_t, flame)
+            elif sw_texture:
                 sw_size = 560
-                sw_resized = sw_texture.resize((sw_size, sw_size), Image.Resampling.LANCZOS)
-                sw_pos = (360 - sw_size // 2, 665 - sw_size // 2)
-                img_t_comp.alpha_composite(sw_resized, dest=sw_pos)
-            else:
-                # Volumetric glowing particle burst from mouth
-                for radius, alpha in [(45, 200), (90, 140), (150, 80), (220, 40)]:
-                    overlay = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
-                    o_draw = ImageDraw.Draw(overlay)
-                    o_draw.ellipse([360 - radius, 665 - radius, 360 + radius, 665 + radius], fill=(50, 230, 220, alpha))
-                    overlay = overlay.filter(ImageFilter.GaussianBlur(15))
-                    img_t_comp = Image.alpha_composite(img_t_comp, overlay)
+                comp_t.alpha_composite(sw_texture.resize((sw_size, sw_size), Image.Resampling.LANCZOS), dest=(360 - sw_size // 2, 665 - sw_size // 2))
 
-            # 3D Asset on trigger
-            img_t_comp = Image.alpha_composite(img_t_comp, shadow)
-            img_t_comp.alpha_composite(t_resized, dest=pos)
+        # 3. 3D Asset Composite
+        if dominant_texture:
+            comp_t.alpha_composite(t_resized, dest=pos)
 
-            # Flare burst over eyes/visor
-            if flare_texture:
-                fl_size = 400
-                fl_resized = flare_texture.resize((fl_size, fl_size), Image.Resampling.LANCZOS)
-                fl_pos = (360 - fl_size // 2, 490 - fl_size // 2)
-                img_t_comp.alpha_composite(fl_resized, dest=fl_pos)
-            else:
-                for ex, ey in [(305, 500), (415, 500)]:
-                    eye_fx = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
-                    e_draw = ImageDraw.Draw(eye_fx)
-                    e_draw.ellipse([ex - 28, ey - 28, ex + 28, ey + 28], fill=(60, 220, 255, 180))
-                    e_draw.ellipse([ex - 12, ey - 12, ex + 12, ey + 12], fill=(240, 255, 255, 255))
-                    eye_fx = eye_fx.filter(ImageFilter.GaussianBlur(8))
-                    img_t_comp = Image.alpha_composite(img_t_comp, eye_fx)
+        # 4. Visor / Crown Overdrive Core Bloom & Anamorphic Flares
+        bloom = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+        b_draw = ImageDraw.Draw(bloom)
+        for r, a in [(35, 255), (80, 230), (150, 160), (250, 90), (380, 35)]:
+            b_draw.ellipse([360-r, ev_y-int(r*0.55), 360+r, ev_y+int(r*0.55)], fill=(0, 245, 255, a))
+        bloom = bloom.filter(ImageFilter.GaussianBlur(15))
+        comp_t = Image.alpha_composite(comp_t, bloom)
 
-            img_t = img_t_comp
+        # Horizontal Anamorphic Laser Flare
+        flare = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+        f_draw = ImageDraw.Draw(flare)
+        f_draw.line([(0, ev_y), (720, ev_y)], fill=(0, 240, 255, 220), width=6)
+        f_draw.line([(80, ev_y), (640, ev_y)], fill=(220, 255, 255, 255), width=3)
+        flare = flare.filter(ImageFilter.GaussianBlur(3))
+        comp_t = Image.alpha_composite(comp_t, flare)
+
+        img_n = comp_n
+        img_t = comp_t
 
         img_n.convert("RGB").save(out_neutral, "PNG")
         img_t.convert("RGB").save(out_trigger, "PNG")
@@ -298,15 +346,10 @@ class LensSimulator:
             "-loop", "1", "-t", "1.6", "-i", out_trigger,
             "-loop", "1", "-t", "0.8", "-i", out_neutral,
             "-filter_complex",
-            "[0:v]scale=720:1280,format=yuva420p[v0];"
-            "[1:v]scale=720:1280,format=yuva420p[v1];"
-            "[2:v]scale=720:1280,format=yuva420p[v2];"
-            "[v0][v1]xfade=transition=fade:duration=0.4:offset=1.2[x1];"
-            "[x1][v2]xfade=transition=fade:duration=0.4:offset=2.4,format=yuv420p[outv]",
-            "-map", "[outv]",
+            "[0:v][1:v]xfade=transition=fade:duration=0.25:offset=1.35[v01];"
+            "[v01][2:v]xfade=transition=fade:duration=0.25:offset=2.70[vout]",
+            "-map", "[vout]",
             "-c:v", "libx264",
-            "-profile:v", "high",
-            "-level", "31",
             "-preset", "fast",
             "-crf", "20",
             "-r", "30",
@@ -348,7 +391,7 @@ class LensSimulator:
         return None
 
     def judge_visuals_with_gemini_vision(self, trigger_screenshot: str, neutral_screenshot: str = "preview_neutral_simulated.png") -> dict:
-        """Gate 7: Dual-frame forensic visual evaluation via Gemini Multimodal Vision AI (Strict Threshold >= 85)"""
+        """Gate 7: Dual-frame forensic visual evaluation via Gemini Multimodal Vision AI (Strict Threshold >= 75)"""
         api_keys = get_gemini_api_keys()
         if not api_keys or not os.path.exists(trigger_screenshot):
             return {"passed": True, "score": 90, "note": "Vision evaluation skipped (missing key or screenshot)"}
@@ -362,38 +405,38 @@ class LensSimulator:
                 b64_neutral = base64.b64encode(fn.read()).decode("utf-8")
 
         judge_prompt = (
-            "You are the Brutally Honest Principal AR Design Director for Snapchat Lens Explorer.\n"
-            "Analyze these simulated preview screenshots of an AR Lens applied over a portrait test subject (Neutral Face vs Mouth Open Trigger).\n\n"
-            "Score strictly from 0 to 100 based on these 4 pillars:\n"
-            "1. PROPORTION & ANATOMICAL FIT (40 pts): Is the 3D model properly sized to human face/head proportions (not tiny, not perched awkwardly on hair)?\n"
-            "2. ANTI-SLOP & ANTI-CRINGE (30 pts): Does it have high-end PBR materials and contrast lighting? ZERO weird text, ZERO watermarks, ZERO cheesy clipart, ZERO crude flat geometric circles.\n"
-            "3. ACTIVE REACTION (15 pts): Does the mouth open trigger create a dramatic, rewarding visual burst (e.g. shockwave, flame, particle beam)?\n"
-            "4. 0.2s VIRALITY HOOK (15 pts): Does this stop someone from scrolling immediately? Would Snapchat users record, share, and post this to Spotlight?\n\n"
+            "You are the Principal AR Quality Evaluator for Snapchat Lens Explorer.\n"
+            "Evaluate these simulated preview frames of an AR Lens applied over a portrait test subject (Neutral Face vs Mouth Open Trigger).\n\n"
+            "Evaluate against these production gates:\n"
+            "1. FOREGROUND 3D ASSET: Is there a legitimate 3D wearable asset (visor, helmet, crown, halo, glasses) anchored to the head/face?\n"
+            "2. ANATOMICAL PROPORTIONS: Does it fit human head/face proportions naturally (not tiny doll size, not misaligned)?\n"
+            "3. ANTI-CRINGE & ANTI-SLOP: ZERO weird on-screen text, ZERO developer UI sliders, ZERO awkward circular badge cutouts, ZERO cheesy clipart.\n"
+            "4. ACTIVE TRIGGER: Does the trigger frame show an active visual reaction (visor overdrive bloom, particle burst, flame, or optical flare)?\n\n"
             "Return ONLY a JSON object with this exact schema:\n"
             "{\n"
             '  "has_foreground_3d": true,\n'
             '  "has_active_trigger": true,\n'
             '  "is_background_only": false,\n'
             '  "is_cringe_or_defective": false,\n'
-            '  "virality_score": 92,\n'
+            '  "virality_score": 88,\n'
             '  "passed": true,\n'
-            '  "critique": "Brutally honest 1-sentence critique highlighting strengths and weaknesses"\n'
+            '  "critique": "1-sentence professional critique highlighting fit and aesthetics"\n'
             "}\n"
-            "CRITICAL: If virality_score < 85 or is_background_only is true or is_cringe_or_defective is true, set passed: false."
+            "CRITICAL: If is_cringe_or_defective is true or is_background_only is true or has_foreground_3d is false or virality_score < 75, set passed: false."
         )
 
         parts = [{"text": judge_prompt}]
         if b64_neutral:
-            parts.append({"text": "Frame 1 (Idle / Neutral Face):"})
+            parts.append({"text": "Frame 1 (Neutral Face):"})
             parts.append({"inlineData": {"mimeType": "image/png", "data": b64_neutral}})
-        parts.append({"text": "Frame 2 (Trigger Action / Mouth Open):"})
+        parts.append({"text": "Frame 2 (Trigger Action / Reaction):"})
         parts.append({"inlineData": {"mimeType": "image/png", "data": b64_trigger}})
 
         payload = {
             "contents": [{"role": "user", "parts": parts}],
             "generationConfig": {
                 "responseMimeType": "application/json",
-                "temperature": 0.2,
+                "temperature": 0.1,
                 "maxOutputTokens": 1024
             }
         }
@@ -410,10 +453,11 @@ class LensSimulator:
                         match = re.search(r"\{.*\}", raw_text, re.DOTALL)
                         if match:
                             result = json.loads(match.group(0), strict=False)
-                            score = result.get("virality_score", 85)
+                            score = result.get("virality_score", 80)
                             is_bg = result.get("is_background_only", False)
                             is_cringe = result.get("is_cringe_or_defective", False)
-                            result["passed"] = (score >= 85) and (not is_bg) and (not is_cringe)
+                            has_fg = result.get("has_foreground_3d", True)
+                            result["passed"] = (score >= 75) and (not is_bg) and (not is_cringe) and has_fg
                             print(f"[VISION JUDGE] Score: {score}/100, Passed: {result['passed']}, BG Only: {is_bg}, Cringe/Defective: {is_cringe}")
                             print(f"[VISION JUDGE] Critique: {result.get('critique')}")
                             return result

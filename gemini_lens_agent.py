@@ -34,8 +34,8 @@ ACCOUNT_PERSONAS = {
     "2": {
         "channel": "RaveMotion_Studio",
         "genre": "Cyberpunk Audio-Reactive Visor & Beat FX",
-        "theme_focus": "Ergonomic 3D cyberpunk holographic visor fitted tightly across eyes, brushed titanium frame with pulsing cyan neon edge emission and refractive glass. Orbiting audio-reactive equalizer bars halo head. 3-point contrast lighting with ray-traced shadows. Opening mouth triggers radial laser shockwave with split-screen chromatic aberration; smiling flashes neon visor HUD readout. Zero strobing.",
-        "primary_trigger": "MouthOpen (Laser particle shockwave with chromatic aberration) / Smile (Neon visor HUD flare)",
+        "theme_focus": "Sleek ergonomic 3D cyberpunk HUD glasses and holographic visor resting across eyes, leaving cheeks and mouth uncovered for clean facial tracking. Brushed titanium frame with pulsing cyan neon edge emission and refractive glass. Orbiting audio-reactive equalizer bars halo head. 3-point contrast lighting with ray-traced shadows. Opening mouth triggers radial laser shockwave; smiling flashes neon visor HUD readout. Zero strobing.",
+        "primary_trigger": "MouthOpen (Laser particle shockwave) / Smile (Neon visor HUD flare)",
         "tag_pool": ["cyberpunk", "visor", "rave", "music", "audioreactive", "neon"]
     },
     "3": {
@@ -105,7 +105,7 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
         "3. BANNED SLOP: Generic purple gradients, floating disembodied blobs, rubbery plastic textures, cheesy clipart, and jittery motion.\n"
         "4. MANDATORY PBR CRAFT: Physically Based Rendering materials (anisotropic brushed titanium, liquid mercury, 24k gold filigree, refractive optical glass, subsurface scattering).\n"
         "5. MANDATORY 3-POINT CONTRAST LIGHTING: Key light + contrasting 6500K/2800K directional rim lighting + baked ray-traced contact shadows.\n"
-        "6. MANDATORY FRONT-CAMERA SELFIE ANCHORING: Primary 3D object MUST be anchored directly to HEAD or FACE (e.g. fitted titanium visor tightly over eyes, sculpted crown on forehead, zero-G halo above head). NEVER attach to shoulders or full-body tracking.\n"
+        "6. MANDATORY FRONT-CAMERA SELFIE ANCHORING: Primary 3D object MUST be anchored directly to HEAD or FACE (e.g. fitted titanium visor across eyes leaving mouth exposed, sculpted crown on forehead, zero-G halo above head). NEVER attach to shoulders or full-body tracking. NEVER generate opaque full-face motorcycle helmets that occlude the mouth on mouth-trigger lenses.\n"
         "7. MANDATORY ANIMATION & DYNAMIC FACE TRIGGERS: Must describe animated reactive responses on Face Events: opening mouth triggers high-energy volumetric reaction (particle shockwave, emerald flame torrent, liquid tears geyser); smiling triggers radiant bloom, eye flares, or holographic HUD flare. Seamless, photosensitive-safe, zero strobe.\n"
         "8. COMPLIANCE & SAFETY:\n"
         "   - Under 480 characters for the prompt string to prevent AILC backend truncation.\n"

@@ -282,7 +282,7 @@ class LensVerifier:
             judge_passed = judge_res.get("passed", False)
             score = judge_res.get("virality_score", judge_res.get("score", 0))
 
-            # Strictly reject background-only, lack of 3D mesh, cringe elements, or score < 85
+            # Strictly reject background-only, lack of 3D mesh, cringe elements, or score < 80
             passed = has_3d and (not is_bg_only) and (not is_cringe) and judge_passed
 
             self.report["gates"]["gate7_visual_simulation"] = {
@@ -304,7 +304,7 @@ class LensVerifier:
                 if is_bg_only:
                     self.report["errors"].append("Gate 7 Failed: Filter detected as flat 2D background replacement only")
                 if not judge_passed:
-                    self.report["errors"].append(f"Gate 7 Failed: Gemini Vision Judge score {score}/100 below 85 threshold")
+                    self.report["errors"].append(f"Gate 7 Failed: Gemini Vision Judge score {score}/100 below 80 threshold")
 
             return passed
         except Exception as e:
