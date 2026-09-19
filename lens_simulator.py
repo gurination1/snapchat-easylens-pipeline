@@ -13,8 +13,38 @@ import subprocess
 import shutil
 import time
 import requests
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 from gemini_lens_agent import get_gemini_api_keys, CANDIDATE_MODELS
+
+
+def get_bold_font(size: int):
+    candidates = [
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf",
+    ]
+    for c in candidates:
+        if os.path.exists(c):
+            try:
+                return ImageFont.truetype(c, size)
+            except Exception:
+                pass
+    return ImageFont.load_default()
+
+
+def get_regular_font(size: int):
+    candidates = [
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/truetype/freefont/FreeSans.ttf",
+    ]
+    for c in candidates:
+        if os.path.exists(c):
+            try:
+                return ImageFont.truetype(c, size)
+            except Exception:
+                pass
+    return ImageFont.load_default()
 
 
 class LensSimulator:
@@ -544,6 +574,8 @@ class LensSimulator:
         """
         Generates a high-CTR, viral 320x320 PNG Lens Icon ("The Pick")
         specifically designed to maximize clicks and plays on the Snapchat Camera Carousel and Lens Explorer.
+        Features a stylized vector avatar bust, volumetric backlight, anatomical asset overlay,
+        Apple-style glassmorphic crescent arc, dual-tone neon rim, and niche action hook pill.
         """
         if self.dominant_texture is None:
             self.render_simulation_screenshots()
@@ -555,27 +587,32 @@ class LensSimulator:
         p_text = self.asset_scale_info.get("p_text", "").lower()
         aid = str(account_id or self.lens_data.get("account_id", "2"))
 
-        # Determine niche palette
+        # Determine niche palette & micro-badge hook text
         if aid == "1" or any(w in p_text for w in ["dragon", "phoenix", "valkyrie", "anubis", "mythic"]):
             c_bg, e_bg = (38, 14, 8), (8, 6, 8)
             rim_rgb = (255, 140, 30)
             acc_rgb = (255, 215, 80)
+            badge_text = "👑 3D HELM"
         elif aid == "2" or any(w in p_text for w in ["cyber", "visor", "hud", "scanner", "titanium", "optic"]):
             c_bg, e_bg = (12, 26, 46), (5, 8, 16)
             rim_rgb = (0, 245, 255)
             acc_rgb = (100, 255, 255)
+            badge_text = "⚡ CYBER HUD"
         elif aid == "3" or any(w in p_text for w in ["comedy", "crying", "meme", "waterfall", "confetti"]):
             c_bg, e_bg = (38, 12, 42), (14, 6, 18)
             rim_rgb = (60, 255, 120)
             acc_rgb = (255, 40, 160)
+            badge_text = "😭 VIRAL MEME"
         elif aid == "4" or any(w in p_text for w in ["luxury", "haute", "baroque", "pearl", "portra", "gold"]):
             c_bg, e_bg = (36, 28, 16), (12, 10, 8)
             rim_rgb = (255, 215, 60)
             acc_rgb = (255, 245, 180)
+            badge_text = "✨ 35MM LUXE"
         else:
             c_bg, e_bg = (24, 22, 38), (8, 7, 14)
             rim_rgb = (210, 230, 255)
             acc_rgb = (150, 120, 255)
+            badge_text = "🌀 CHROME Y3K"
 
         # 1. Base image with radial background gradient
         import numpy as np
@@ -589,42 +626,120 @@ class LensSimulator:
         bg_arr = np.dstack([r_ch, g_ch, b_ch, a_ch])
         icon = Image.fromarray(bg_arr, mode="RGBA")
 
-        # 2. Outer glowing rim ring
-        glow = Image.new("RGBA", (size, size), (0, 0, 0, 0))
-        g_draw = ImageDraw.Draw(glow)
-        g_draw.ellipse([cx - r, cy - r, cx + r, cy + r], outline=(*rim_rgb, 255), width=4)
-        glow_blur = glow.filter(ImageFilter.GaussianBlur(8))
-        icon.alpha_composite(glow_blur)
-        icon.alpha_composite(glow)
+        # 2. Volumetric Ambient Backlight Bloom behind hero asset
+        bloom = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+        b_draw = ImageDraw.Draw(bloom)
+        b_draw.ellipse([cx - 85, cy - 85, cx + 85, cy + 85], fill=(*acc_rgb, 70))
+        bloom = bloom.filter(ImageFilter.GaussianBlur(30))
+        icon.alpha_composite(bloom)
 
-        # 3. Ground contact shadow
-        sh_w, sh_h = 160, 40
-        shadow = Image.new("RGBA", (sh_w, sh_h), (0, 0, 0, 0))
-        s_draw = ImageDraw.Draw(shadow)
-        s_draw.ellipse([5, 5, sh_w - 5, sh_h - 5], fill=(0, 0, 0, 120))
-        shadow = shadow.filter(ImageFilter.GaussianBlur(8))
-        icon.alpha_composite(shadow, dest=(cx - sh_w // 2, cy + 50))
+        # 3. Stylized Vector Avatar Bust Silhouette (anatomical context for carousel users)
+        avatar = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+        av_draw = ImageDraw.Draw(avatar)
+        # Neck and shoulders polygon
+        neck_pts = [
+            (cx - 28, cy + 45),
+            (cx - 78, cy + 130),
+            (cx + 78, cy + 130),
+            (cx + 28, cy + 45)
+        ]
+        av_draw.polygon(neck_pts, fill=(20, 24, 34, 235))
+        # Head / face oval
+        head_bbox = [cx - 58, cy - 74, cx + 58, cy + 48]
+        av_draw.ellipse(head_bbox, fill=(28, 34, 48, 245))
+        # Subtle jawline / cheekbone contour curves
+        av_draw.arc([cx - 48, cy - 48, cx + 48, cy + 42], start=25, end=155, fill=(*rim_rgb, 60), width=2)
+        av_draw.line([(cx - 72, cy + 125), (cx - 26, cy + 48)], fill=(*rim_rgb, 45), width=2)
+        av_draw.line([(cx + 72, cy + 125), (cx + 26, cy + 48)], fill=(*rim_rgb, 45), width=2)
+        icon.alpha_composite(avatar)
 
-        # 4. Hero 3D asset overlay
+        # 4. Hero 3D asset overlay (anatomically placed on avatar)
         if self.dominant_texture:
-            max_w, max_h = 230, 185
+            is_full_helmet = self.asset_scale_info.get("is_full_helmet", False)
+            is_visor = self.asset_scale_info.get("is_visor", False)
+            is_crown = self.asset_scale_info.get("is_crown", False)
+            is_halo = self.asset_scale_info.get("is_halo", False)
+            is_crying = any(w in p_text for w in ["crying", "tear", "sobbing", "teardrop", "stormcloud"])
+
+            if is_full_helmet:
+                max_w, max_h = 175, 185
+                dest_y = cy - 18
+            elif is_visor:
+                max_w, max_h = 170, 85
+                dest_y = cy - 14
+            elif is_crown:
+                max_w, max_h = 160, 95
+                dest_y = cy - 58
+            elif is_halo:
+                max_w, max_h = 185, 185
+                dest_y = cy - 25
+            elif is_crying:
+                max_w, max_h = 150, 110
+                dest_y = cy + 12
+            else:
+                max_w, max_h = 180, 140
+                dest_y = cy - 15
+
             tex_w, tex_h = self.dominant_texture.size
             scale = min(max_w / max(1, tex_w), max_h / max(1, tex_h))
             cur_w = max(10, int(tex_w * scale))
             cur_h = max(10, int(tex_h * scale))
             r_tex = self.dominant_texture.resize((cur_w, cur_h), Image.Resampling.BILINEAR)
-            icon.alpha_composite(r_tex, dest=(cx - cur_w // 2, cy - cur_h // 2 - 5))
 
-        # 5. Specular highlight star glints
+            # Contact shadow under 3D asset
+            sh_w = max(10, int(cur_w * 0.8))
+            sh_h = max(8, int(cur_h * 0.35))
+            shadow = Image.new("RGBA", (sh_w, sh_h), (0, 0, 0, 0))
+            s_draw = ImageDraw.Draw(shadow)
+            s_draw.ellipse([2, 2, sh_w - 2, sh_h - 2], fill=(0, 0, 0, 110))
+            shadow = shadow.filter(ImageFilter.GaussianBlur(5))
+            icon.alpha_composite(shadow, dest=(cx - sh_w // 2, dest_y + cur_h // 2 - 4))
+
+            # Overlay asset
+            icon.alpha_composite(r_tex, dest=(cx - cur_w // 2, dest_y - cur_h // 2))
+
+        # 5. Specular highlight diamond star glints
         star = Image.new("RGBA", (size, size), (0, 0, 0, 0))
         st_draw = ImageDraw.Draw(star)
-        for sx, sy, s_rad in [(cx - 55, cy - 35, 12), (cx + 65, cy - 25, 9)]:
-            st_draw.line([(sx - s_rad, sy), (sx + s_rad, sy)], fill=(*acc_rgb, 230), width=2)
-            st_draw.line([(sx, sy - s_rad), (sx, sy + s_rad)], fill=(*acc_rgb, 230), width=2)
+        for sx, sy, s_rad in [(cx - 45, cy - 30, 13), (cx + 55, cy - 20, 10), (cx + 10, cy - 55, 8)]:
+            st_draw.line([(sx - s_rad, sy), (sx + s_rad, sy)], fill=(*acc_rgb, 240), width=2)
+            st_draw.line([(sx, sy - s_rad), (sx, sy + s_rad)], fill=(*acc_rgb, 240), width=2)
             st_draw.ellipse([sx - 2, sy - 2, sx + 2, sy + 2], fill=(255, 255, 255, 255))
-        star_blur = star.filter(ImageFilter.GaussianBlur(2))
+        star_blur = star.filter(ImageFilter.GaussianBlur(3))
         icon.alpha_composite(star_blur)
         icon.alpha_composite(star)
+
+        # 6. Apple-style Glassmorphic Highlight Crescent ("Gloss Arc")
+        gloss = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+        gl_draw = ImageDraw.Draw(gloss)
+        gl_draw.ellipse([cx - r + 10, cy - r + 6, cx + r - 10, cy - 8], fill=(255, 255, 255, 42))
+        gloss = gloss.filter(ImageFilter.GaussianBlur(12))
+        gloss_np = np.array(gloss)
+        gloss_np[dist > r - 4, 3] = 0
+        icon.alpha_composite(Image.fromarray(gloss_np))
+
+        # 7. Dual-Tone Outer Glowing Rim Ring
+        glow = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+        g_draw = ImageDraw.Draw(glow)
+        g_draw.ellipse([cx - r, cy - r, cx + r, cy + r], outline=(*rim_rgb, 255), width=3)
+        glow_blur = glow.filter(ImageFilter.GaussianBlur(8))
+        icon.alpha_composite(glow_blur)
+        icon.alpha_composite(glow)
+
+        # 8. Action Micro-Badge Pill ("The Hook Pill")
+        font_badge = get_bold_font(12)
+        badge = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+        bd_draw = ImageDraw.Draw(badge)
+        bw, bh = 114, 26
+        bx0, by0 = cx - bw // 2, cy + 96
+        bd_draw.rounded_rectangle([bx0, by0, bx0 + bw, by0 + bh], radius=13, fill=(10, 14, 22, 235), outline=(*rim_rgb, 240), width=2)
+        try:
+            bbox = bd_draw.textbbox((0, 0), badge_text, font=font_badge)
+            tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+        except Exception:
+            tw, th = 70, 14
+        bd_draw.text((cx - tw // 2, by0 + (bh - th) // 2 - 1), badge_text, fill=(255, 255, 255, 255), font=font_badge)
+        icon.alpha_composite(badge)
 
         icon.save(out_path, format="PNG")
         print(f"[SIMULATOR] Generated viral 320x320 lens icon ({os.path.getsize(out_path)} bytes): {out_path}")
@@ -632,10 +747,11 @@ class LensSimulator:
 
     def render_split_comparison(self, out_path: str = "preview_split_comparison.png", account_id: str = None) -> str:
         """
-        Renders a high-converting Before/After Split Comparison photo (720x1280).
-        Left half: Clean studio natural portrait.
-        Right half: Full 3D AR transformation with glowing assets, particles, and bloom.
-        Center: Luminous laser divider line with soft neon glow.
+        Renders an ultra-high-converting Before/After Split Comparison photo (720x1280).
+        Left half: Clean studio natural portrait with frosted 'RAW STUDIO' glass badge.
+        Right half: Full 3D AR transformation with frosted '3D AR TRANSFORMATION' neon badge.
+        Center: Luminous laser divider line with interactive draggable slider handle icon (◄ ● ►).
+        Bottom: Minimalist editorial title bar with lens details.
         """
         if self.dominant_texture is None:
             self.render_simulation_screenshots()
@@ -671,16 +787,50 @@ class LensSimulator:
         # Glowing vertical dividing laser beam
         beam = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
         b_draw = ImageDraw.Draw(beam)
-        b_draw.line([(360, 40), (360, 1240)], fill=(*rim_rgb, 255), width=3)
+        b_draw.line([(360, 30), (360, 1250)], fill=(*rim_rgb, 255), width=3)
+        b_draw.line([(360, 30), (360, 1250)], fill=(255, 255, 255, 255), width=1)
         beam_blur = beam.filter(ImageFilter.GaussianBlur(6))
         split_img.alpha_composite(beam_blur)
         split_img.alpha_composite(beam)
 
-        # Subtle BEFORE / AFTER pill badges
+        # Interactive Slider Handle Icon (◄ ● ►)
+        slider_layer = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+        sl_draw = ImageDraw.Draw(slider_layer)
+        # Handle outer ring
+        sl_draw.ellipse([360 - 24, 640 - 24, 360 + 24, 640 + 24], fill=(12, 16, 24, 240), outline=(*rim_rgb, 255), width=3)
+        # Left arrow
+        sl_draw.polygon([(360 - 14, 640), (360 - 7, 640 - 7), (360 - 7, 640 + 7)], fill=(255, 255, 255, 255))
+        # Right arrow
+        sl_draw.polygon([(360 + 14, 640), (360 + 7, 640 - 7), (360 + 7, 640 + 7)], fill=(255, 255, 255, 255))
+        sl_blur = slider_layer.filter(ImageFilter.GaussianBlur(4))
+        split_img.alpha_composite(sl_blur)
+        split_img.alpha_composite(slider_layer)
+
+        # Frosted Glass Badges: BEFORE (Raw) vs AFTER (3D AR)
+        font_badge = get_bold_font(14)
+        font_sub = get_regular_font(12)
         badge_layer = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
         bd_draw = ImageDraw.Draw(badge_layer)
-        bd_draw.rounded_rectangle([40, 50, 150, 90], radius=15, fill=(0, 0, 0, 150), outline=(255, 255, 255, 180), width=1)
-        bd_draw.rounded_rectangle([570, 50, 680, 90], radius=15, fill=(*rim_rgb, 120), outline=(*rim_rgb, 255), width=2)
+
+        # Left: RAW STUDIO
+        bd_draw.rounded_rectangle([32, 44, 210, 88], radius=22, fill=(12, 16, 24, 210), outline=(255, 255, 255, 140), width=2)
+        bd_draw.text((54, 58), "📷 RAW STUDIO", fill=(255, 255, 255, 255), font=font_badge)
+
+        # Right: 3D AR CINEMATIC
+        bd_draw.rounded_rectangle([510, 44, 688, 88], radius=22, fill=(12, 16, 24, 220), outline=(*rim_rgb, 255), width=2)
+        bd_draw.text((530, 58), "⚡ 3D AR FILTER", fill=(*rim_rgb, 255), font=font_badge)
+
+        # Bottom Editorial Info Bar
+        lens_name = self.lens_data.get("lens_name", "Snapchat AR Experience")
+        bd_draw.rounded_rectangle([120, 1205, 600, 1255], radius=25, fill=(10, 14, 22, 220), outline=(*rim_rgb, 180), width=1)
+        b_text = f"✦ {lens_name} • 60 FPS AR ✦"
+        try:
+            bbox = bd_draw.textbbox((0, 0), b_text, font=font_sub)
+            bw, bh = bbox[2] - bbox[0], bbox[3] - bbox[1]
+        except Exception:
+            bw, bh = 220, 14
+        bd_draw.text((360 - bw // 2, 1222), b_text, fill=(255, 255, 255, 230), font=font_sub)
+
         split_img.alpha_composite(badge_layer)
 
         split_img.save(out_path, format="PNG")
@@ -792,6 +942,25 @@ class LensSimulator:
 
                 temp_frames_dir = f"/tmp/lens_sim_frames_{os.getpid()}_{int(time.time())}"
                 os.makedirs(temp_frames_dir, exist_ok=True)
+
+                aid = str(account_id or self.lens_data.get("account_id", "2"))
+                font_top = get_bold_font(13)
+                font_prompt = get_bold_font(12)
+                font_watermark = get_regular_font(11)
+                lens_name_display = self.lens_data.get("lens_name", "Snapchat AR")
+                if len(lens_name_display) > 18:
+                    lens_name_display = lens_name_display[:16] + "..."
+
+                if aid == "1":
+                    prompt_text = "👑 TILT HEAD • 3D DRAGON HELM"
+                elif aid == "2":
+                    prompt_text = "⚡ OPEN MOUTH • HUD SCAN"
+                elif aid == "3":
+                    prompt_text = "😭 OPEN MOUTH • CRYING MEME"
+                elif aid == "4":
+                    prompt_text = "✨ SMILE • 35MM GOLD GLOW"
+                else:
+                    prompt_text = "🌀 MOVE HEAD • LIQUID CHROME"
 
                 for idx, (frame_bgr, landmarks) in enumerate(zip(all_frames, trajectory)):
                     le, re, nose, fh, mouth = landmarks
@@ -906,15 +1075,71 @@ class LensSimulator:
                         ar_layer = Image.fromarray(ar_np)
                         pil_frame.alpha_composite(ar_layer)
 
-                        # Draw horizontal holographic laser scanline
+                        # Draw horizontal holographic laser scanline with bright white core & sparks
                         scan_line_img = Image.new("RGBA", (src_w, src_h), (0, 0, 0, 0))
                         sl_draw = ImageDraw.Draw(scan_line_img)
-                        sl_draw.line([(int(anc_x - 220 * scale), scan_y), (int(anc_x + 220 * scale), scan_y)], fill=(*flare_rgb, 250), width=4)
+                        x_min = int(anc_x - 240 * scale)
+                        x_max = int(anc_x + 240 * scale)
+                        sl_draw.line([(x_min, scan_y), (x_max, scan_y)], fill=(*flare_rgb, 250), width=5)
+                        sl_draw.line([(x_min, scan_y), (x_max, scan_y)], fill=(255, 255, 255, 255), width=2)
+                        # Sparkling particle sparks along scanline
+                        import math
+                        for sp_i, sp_x_off in enumerate([-180, -120, -60, 0, 60, 120, 180]):
+                            sp_x = int(anc_x + sp_x_off * scale)
+                            sp_y = scan_y + int(math.sin(idx * 0.8 + sp_i) * 5)
+                            sl_draw.line([(sp_x - 4, sp_y), (sp_x + 4, sp_y)], fill=(255, 255, 255, 240), width=2)
+                            sl_draw.line([(sp_x, sp_y - 4), (sp_x, sp_y + 4)], fill=(255, 255, 255, 240), width=2)
+
                         sl_blur = scan_line_img.filter(ImageFilter.GaussianBlur(6))
                         pil_frame.alpha_composite(sl_blur)
                         pil_frame.alpha_composite(scan_line_img)
                     elif is_post_wipe:
                         pil_frame.alpha_composite(ar_layer)
+
+                    # Dynamic Climax Shockwave Ring Pulse (Peak Trigger)
+                    if 0.38 <= frame_ratio <= 0.65:
+                        sw_ratio = (frame_ratio - 0.38) / 0.27
+                        sw_radius = int(35 + sw_ratio * 160)
+                        sw_alpha = int(180 * (1.0 - sw_ratio))
+                        if sw_alpha > 10:
+                            shock_img = Image.new("RGBA", (src_w, src_h), (0, 0, 0, 0))
+                            sk_draw = ImageDraw.Draw(shock_img)
+                            sk_draw.ellipse(
+                                [anc_x - sw_radius, anc_y - sw_radius, anc_x + sw_radius, anc_y + sw_radius],
+                                outline=(*flare_rgb, sw_alpha), width=3
+                            )
+                            sk_blur = shock_img.filter(ImageFilter.GaussianBlur(5))
+                            pil_frame.alpha_composite(sk_blur)
+
+                    # Native UGC UI Badges Overlay
+                    ui_layer = Image.new("RGBA", (src_w, src_h), (0, 0, 0, 0))
+                    ui_draw = ImageDraw.Draw(ui_layer)
+
+                    # 1. Top-Left Lens Badge Pill
+                    ui_draw.rounded_rectangle([32, 44, 275, 86], radius=21, fill=(12, 16, 24, 185), outline=(255, 255, 255, 110), width=1)
+                    ui_draw.ellipse([46, 57, 58, 69], fill=(*flare_rgb, 255))
+                    ui_draw.text((66, 54), lens_name_display, fill=(255, 255, 255, 255), font=font_top)
+                    ui_draw.ellipse([240, 54, 258, 72], fill=(0, 200, 255, 255))
+                    ui_draw.text((245, 54), "✓", fill=(255, 255, 255, 255), font=font_top)
+
+                    # 2. Center-Top Action Callout during Trigger
+                    if t_prog > 0.15:
+                        p_alpha = int(225 * min(1.0, t_prog * 1.5))
+                        pw, ph = 260, 36
+                        px0, py0 = src_w // 2 - pw // 2, 102
+                        ui_draw.rounded_rectangle([px0, py0, px0 + pw, py0 + ph], radius=18, fill=(12, 16, 24, p_alpha), outline=(*flare_rgb, p_alpha), width=2)
+                        try:
+                            p_bbox = ui_draw.textbbox((0, 0), prompt_text, font=font_prompt)
+                            ptw, pth = p_bbox[2] - p_bbox[0], p_bbox[3] - p_bbox[1]
+                        except Exception:
+                            ptw, pth = 190, 14
+                        ui_draw.text((src_w // 2 - ptw // 2, py0 + (ph - pth) // 2 - 1), prompt_text, fill=(255, 255, 255, p_alpha), font=font_prompt)
+
+                    # 3. Bottom-Right Subtle Watermark
+                    ui_draw.rounded_rectangle([src_w - 180, src_h - 48, src_w - 32, src_h - 22], radius=13, fill=(10, 14, 20, 170), outline=(255, 255, 255, 50), width=1)
+                    ui_draw.text((src_w - 168, src_h - 44), "✦ SNAP AR • 60 FPS", fill=(255, 255, 255, 200), font=font_watermark)
+
+                    pil_frame.alpha_composite(ui_layer)
 
                     # Write frame to temporary JPEG
                     frame_path = os.path.join(temp_frames_dir, f"{idx:04d}.jpg")

@@ -366,6 +366,8 @@ def main():
 
         # Pre-flight sanitation guarantee: zero canvas/spinner/TWEEN tokens
         prompt = sanitize_lens_prompt(prompt)
+        if "no tween" not in prompt.lower() and "zero tween" not in prompt.lower():
+            prompt = prompt.rstrip(" .") + ". Zero easing curves, no tweening, no UI sliders, pure 3D mesh only."
 
         print(f"\n=== STEP 2: CREATING LENS CONVERSATION (ATTEMPT {attempt}) ===")
         cid = client.create_conversation()
