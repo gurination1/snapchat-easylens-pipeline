@@ -97,9 +97,49 @@ CHANNEL_PROMPT_MATRICES = {
                 "id": "anubis_eclipse",
                 "name": "Anubis Jackal Coronet & Swirling Sandstorm Vortex",
                 "signature_tokens": ["anubis", "jackal coronet", "sandstorm vortex", "hieroglyphic"],
-                "focus": "Matte black basalt and electrum jackal coronet fitted securely to crown and temples with glowing lapis lazuli inlays. 3-point contrast 2800K desert key light with ray-traced contact shadows. Opening mouth triggers swirling golden sandstorm vortex and ancient hieroglyphic embers; smiling aligns a glowing solar eclipse halo behind crown. Zero strobing, zero easing.",
+                "focus": "Anubis matte black basalt and electrum jackal coronet fitted securely to crown and temples with glowing lapis lazuli inlays. 3-point contrast 2800K desert key light with ray-traced contact shadows. Opening mouth triggers swirling golden sandstorm vortex and ancient hieroglyphic embers; smiling aligns a glowing solar eclipse halo behind crown. Zero strobing, zero UI.",
                 "primary_trigger": "MouthOpen (Swirling golden sandstorm vortex & embers) / Smile (Radiant solar eclipse halo)",
                 "visual_hook": "Imposing ancient Egyptian jackal coronet rises with dark basalt geometry and swirling golden sandstorm vortex."
+            },
+            {
+                "id": "leviathan_frost",
+                "name": "Leviathan Abyssal Coronet & Glacial Geyser",
+                "signature_tokens": ["leviathan", "abyssal coronet", "frost serpent", "cryo-crystals"],
+                "focus": "Deep ocean Leviathan serpent horns sculpted from anisotropic sapphire ice and electrum filigree anchored to brow. PBR metallic reflections with ray-traced contact shadows. Opening mouth unleashes pressurized sub-zero frost geyser with floating cryo-crystals; smiling ignites piercing runic blue gaze flares. Depth occlusion enabled, zero UI.",
+                "primary_trigger": "MouthOpen (Pressurized sub-zero frost geyser & cryo-crystals) / Smile (Piercing runic blue gaze flares)",
+                "visual_hook": "Majestic abyssal sapphire horns grip the brow, unleashing an explosive sub-zero cryo-crystal geyser on mouth open."
+            },
+            {
+                "id": "ouroboros_solar",
+                "name": "Gilded Ouroboros Serpent Circlet & Solar Flare",
+                "signature_tokens": ["ouroboros", "serpent circlet", "solar plasma flare", "coiled serpent"],
+                "focus": "Interlocking 24k gold ouroboros serpent circlet coiled snugly around hairline with radiant ruby eyes. PBR metallic reflections and 3-point contrast 2800K lighting. Opening mouth triggers concentric solar plasma flare rings radiating outward; smiling ignites glittering molten gold embers cascading down cheeks. Seamless head tracking, zero strobing.",
+                "primary_trigger": "MouthOpen (Concentric solar plasma flare rings) / Smile (Glittering molten gold cheek embers)",
+                "visual_hook": "Ancient golden serpent coils around hairline with glowing ruby eyes, bursting with radiant solar flares."
+            },
+            {
+                "id": "gorgon_aegis",
+                "name": "Obsidian Gorgon Viper Crest & Petrifying Gaze",
+                "signature_tokens": ["gorgon", "viper crest", "petrifying mist", "bronze serpents"],
+                "focus": "Regal basalt and bronze Gorgon viper tiara fitted across forehead, micro-scaled serpents undulating with ray-traced shadows. PBR metallic luster and warm rim light. Opening mouth summons swirling emerald petrification mist with floating basalt dust; smiling flashes brilliant golden serpentine eye glints. Seamless head tracking, zero strobing.",
+                "primary_trigger": "MouthOpen (Swirling emerald petrification mist & basalt dust) / Smile (Serpentine golden eye flares)",
+                "visual_hook": "Dark mythical Gorgon vipers crown the brow in polished basalt and bronze, summoning swirling emerald petrification mist."
+            },
+            {
+                "id": "chimera_infernal",
+                "name": "Infernal Chimera Horned Helm & Magma Sparks",
+                "signature_tokens": ["chimera", "infernal helm", "magma sparks", "meteoric iron"],
+                "focus": "Polished meteoric iron and electrum Chimera horned circlet fitted to head and temples with smoldering obsidian plates. 3-point contrast lighting with ray-traced shadows. Opening mouth erupts volcanic magma sparks and billowing crimson embers; smiling awakens radiant molten gold fissure lines running along cheekbones. Pure PBR fantasy craft, zero UI.",
+                "primary_trigger": "MouthOpen (Volcanic magma sparks & crimson embers) / Smile (Molten gold cheek fissure lines)",
+                "visual_hook": "Meteoric iron horned helm smolders against the temples, erupting with volcanic magma embers and golden cheek runes."
+            },
+            {
+                "id": "garuda_celestial",
+                "name": "Celestial Garuda Feathered Crown & Divine Gale",
+                "signature_tokens": ["garuda", "feathered crown", "divine gale", "sacred lotus"],
+                "focus": "Sculpted 24k beaten gold Garuda crest with iridescent feathered plumes contouring brow and temples. Soft celestial rim lighting and subsurface scattering. Opening mouth unleashes swirling divine gale vortex with floating golden sacred lotus petals; smiling triggers blinding golden solar beam flares from brow. Zero strobing, zero UI.",
+                "primary_trigger": "MouthOpen (Swirling divine gale vortex & golden lotus petals) / Smile (Blinding golden solar beam flares)",
+                "visual_hook": "Opulent feathered Garuda crest sweeps across brow in 24k gold, commanding a vortex of glowing golden lotus petals."
             }
         ]
     },
@@ -121,7 +161,7 @@ CHANNEL_PROMPT_MATRICES = {
                 "id": "titanium_holo_visor",
                 "name": "Brushed Titanium Holo-Visor & Radial Shockwave",
                 "signature_tokens": ["visor", "holo-visor", "laser shockwave"],
-                "focus": "Ergonomic cyberpunk HUD visor resting strictly across eyes leaving cheeks and mouth completely uncovered for clean tracking. Brushed titanium frame with pulsing cyan neon edge emission and refractive optical glass. Floating volumetric cyan neon particle embers drift around temples. Opening mouth triggers radial laser particle shockwave; smiling activates bright neon visor HUD telemetry readout. Zero strobing, zero easing, zero 2D canvas spinners, pure 3D assets only.",
+                "focus": "Ergonomic cyberpunk HUD visor resting strictly across eyes leaving cheeks and mouth clear for tracking. Brushed titanium frame with pulsing cyan neon edge emission, PBR anisotropic reflections, and ray-traced shadows. Opening mouth triggers radial laser particle shockwave; smiling activates bright neon visor HUD telemetry readout. Zero strobing, zero UI sliders, pure 3D assets only.",
                 "primary_trigger": "MouthOpen (Radial cyan laser particle shockwave) / Smile (Neon visor HUD telemetry flare)",
                 "visual_hook": "Instantaneous snap of high-fidelity brushed titanium and refractive glass catching live reflections in 0.2s."
             },
@@ -129,7 +169,7 @@ CHANNEL_PROMPT_MATRICES = {
                 "id": "cybernetic_ocular_scanner",
                 "name": "Cybernetic Ocular Scanner & Retinal Data Stream",
                 "signature_tokens": ["ocular scanner", "retinal scanner", "cybernetic monocle", "targeting reticle", "ocular"],
-                "focus": "Asymmetrical carbon fiber and tungsten ocular scanner anchored firmly over left orbital bone, leaving other eye and mouth unobstructed. Multi-layered refractive cyan targeting lenses with micro-servo details. Opening mouth projects floating 3D tactical holographic wireframe mesh; smiling cycles high-speed green diagnostic data stream through ocular optics. PBR materials, ray-traced shadows.",
+                "focus": "Asymmetrical carbon fiber and tungsten ocular scanner anchored firmly over left eye orbital bone and brow, leaving face and mouth unobstructed. Multi-layered refractive cyan targeting lenses with micro-servo details. Opening mouth projects floating 3D tactical holographic wireframe mesh; smiling cycles high-speed green diagnostic data stream through ocular optics. PBR materials, ray-traced shadows.",
                 "primary_trigger": "MouthOpen (3D tactical holographic wireframe projection) / Smile (High-speed green data stream pulse)",
                 "visual_hook": "Elite cyberpunk tactical scanner locks onto eye with animated focal reticles and sharp volumetric telemetry."
             },
@@ -137,7 +177,7 @@ CHANNEL_PROMPT_MATRICES = {
                 "id": "neon_speed_goggles",
                 "name": "Neon Speed-Optic Goggles & Chromatic Hyperdrive",
                 "signature_tokens": ["goggles", "speed-optic", "hyperdrive", "racer"],
-                "focus": "Ultra-lightweight matte-black alloy speed-optic goggles fitted across brow and nose bridge. Features illuminated amber and electric blue neon optical rings with internal refractive glass prism elements. Opening mouth triggers hyperdrive chromatic warp streak particle bursts across peripheral vision; smiling flashes dual-frequency optic diagnostic glow. Zero strobing, zero UI.",
+                "focus": "Ultra-lightweight matte-black alloy speed-optic goggles fitted across brow and nose bridge. Features illuminated amber and electric blue neon optical rings with internal refractive glass prism elements. PBR metallic shaders with ray-traced contact shadows. Opening mouth triggers hyperdrive chromatic warp streak particle bursts across peripheral vision; smiling flashes dual-frequency optic diagnostic glow. Zero strobing, zero UI.",
                 "primary_trigger": "MouthOpen (Hyperdrive chromatic warp particle streaks) / Smile (Dual-frequency optic diagnostic flash)",
                 "visual_hook": "Aerodynamic racing goggles snap onto face with glowing neon optical rings catching cinematic light."
             },
@@ -145,7 +185,7 @@ CHANNEL_PROMPT_MATRICES = {
                 "id": "mech_pilot_telemetry",
                 "name": "Mech Pilot HUD Frame & Telemetry EMP Ring",
                 "signature_tokens": ["mech pilot", "telemetry glyphs", "emp ring", "target-lock"],
-                "focus": "Anodized cobalt-titanium open-frame pilot HUD glasses fitted securely along upper cheekbones and temples. Floating volumetric amber flight telemetry glyphs orbiting brow. Opening mouth discharges sonic cyan EMP wave particle ring expanding outward; smiling activates high-precision tactical target-lock bracket flash across lenses. Fully 3D face anchored, zero UI sliders.",
+                "focus": "Anodized cobalt-titanium open-frame pilot HUD glasses fitted securely along upper cheekbones and temples. PBR metallic frame with floating volumetric amber flight telemetry glyphs orbiting brow. Opening mouth discharges sonic cyan EMP wave particle ring expanding outward; smiling activates high-precision tactical target-lock bracket flash across lenses. Fully 3D face anchored, zero UI sliders.",
                 "primary_trigger": "MouthOpen (Cyan sonic EMP particle ring expansion) / Smile (Tactical target-lock bracket flash)",
                 "visual_hook": "Military-grade mech pilot telemetry frame materializes with crisp floating HUD glyphs and dynamic EMP pulse."
             },
@@ -153,9 +193,49 @@ CHANNEL_PROMPT_MATRICES = {
                 "id": "quantum_neural_monocular",
                 "name": "Quantum Neural Monocular & Volumetric Hologram",
                 "signature_tokens": ["quantum", "neural monocle", "monocular", "planetary hologram"],
-                "focus": "Sleek chrome-plated neural monocular optic docked along right temple and cheek with floating quantum focal rings. Anisotropic PBR reflections with deep purple laser prism optics. Opening mouth projects spinning volumetric miniature planetary hologram between eyebrows; smiling triggers high-energy neural pulse wave radiating through chrome temple connector. No text, zero easing.",
+                "focus": "Sleek chrome-plated neural monocular optic docked along right temple and cheek with floating quantum focal rings. Anisotropic PBR reflections with deep purple laser prism optics. Opening mouth projects spinning volumetric miniature planetary hologram between eyebrows; smiling triggers high-energy neural pulse wave radiating through chrome temple connector. No text, zero UI.",
                 "primary_trigger": "MouthOpen (Volumetric planetary hologram projection) / Smile (High-energy neural pulse wave flare)",
                 "visual_hook": "Futuristic neural optic locks into temple with floating holographic focal rings and planetary projection."
+            },
+            {
+                "id": "tactical_orbital_reticle",
+                "name": "Tactical Orbital Targeting Monocle & Laser Lock",
+                "signature_tokens": ["orbital reticle", "targeting monocle", "laser lock", "ballistic monocle"],
+                "focus": "Matte carbon-fiber ballistic monocle anchored over right eye and brow with micro-aperture ring. Anisotropic PBR reflections, ray-traced shadows. Opening mouth projects 3D floating volumetric targeting reticle grid expanding into space; smiling locks glowing red orbital telemetry beam flare across lens. Pure 3D assets, native mobile AR.",
+                "primary_trigger": "MouthOpen (3D volumetric targeting reticle grid) / Smile (Red orbital telemetry beam lock flare)",
+                "visual_hook": "Carbon-fiber ballistic monocle locks over eye, projecting a crisp volumetric 3D orbital targeting grid in 0.2s."
+            },
+            {
+                "id": "apex_spectre_visor",
+                "name": "Stealth Spectre Prismatic Visor & Sonic Burst",
+                "signature_tokens": ["spectre visor", "stealth visor", "prismatic glass", "biometric lock"],
+                "focus": "Faceted obsidian and dichroic glass stealth visor contoured across brow and temples. 3-point contrast lighting with violet rim. Opening mouth emits radial sonic particle shockwave with refractive edge displacement; smiling flashes crisp cyan biometric lock indicators across prismatic glass face. Zero strobing, pure 3D mesh and volumetric particles only.",
+                "primary_trigger": "MouthOpen (Radial sonic particle shockwave) / Smile (Cyan biometric lock indicators on glass)",
+                "visual_hook": "Angular dichroic glass stealth visor reflects dark violet rim lighting, discharging a sonic particle wave on mouth open."
+            },
+            {
+                "id": "neural_synapse_cortex",
+                "name": "Cybernetic Synapse Brow Frame & Kinetic EMP",
+                "signature_tokens": ["synapse frame", "brow frame", "optical conduits", "kinetic emp"],
+                "focus": "Brushed aerospace aluminum neural bracket fitted firmly to brow with glowing micro-fiber optical conduits. Anisotropic PBR reflections and baked contact shadows. Opening mouth releases kinetic EMP spark wave surging across temples; smiling surges electric blue volumetric particle pulses through optical conduits. PBR metallic shaders, zero UI sliders.",
+                "primary_trigger": "MouthOpen (Kinetic EMP spark wave surge across temples) / Smile (Electric blue volumetric particle conduit pulse)",
+                "visual_hook": "High-tech aluminum neural bracket clamps to brow, pulsing electric blue light through fiber optic channels."
+            },
+            {
+                "id": "subzero_cryo_optics",
+                "name": "Cryo-Tactical Ballistic Visor & Frost Vent",
+                "signature_tokens": ["cryo optics", "ballistic visor", "subzero vent", "frost jet"],
+                "focus": "Cryogenic frosted polymer and tungsten tactical visor resting across eyes leaving mouth clear. Subsurface refraction with cool 6500K rim light. Opening mouth vents pressurized volumetric sub-zero cryo particle jets sideways from temple mounts; smiling activates laser diagnostic telemetry reticle glow. Pure 3D native AR.",
+                "primary_trigger": "MouthOpen (Volumetric cryo particle jets from temples) / Smile (Laser diagnostic telemetry reticle glow)",
+                "visual_hook": "Frosted tactical visor clamps over eyes, blasting pressurized sub-zero cryo vapor from temples on mouth open."
+            },
+            {
+                "id": "matrix_overdrive_hud",
+                "name": "Overdrive Telemetry Spectacles & Data Cascade",
+                "signature_tokens": ["overdrive spectacles", "smart spectacles", "wireframe cubes", "telemetry cascade"],
+                "focus": "Precision titanium wireframe smart spectacles docked to face, nose and brow with transparent optical prisms. Anisotropic reflections and ray-traced shadows. Opening mouth discharges floating 3D volumetric wireframe cubes expanding forward; smiling pulses high-speed emerald telemetry photon glints through glass lenses. Pure 3D AR, zero UI sliders.",
+                "primary_trigger": "MouthOpen (3D volumetric wireframe cubes expanding forward) / Smile (High-speed emerald telemetry photon glints)",
+                "visual_hook": "Ultra-thin titanium smart spectacles project floating 3D holographic wireframe geometry directly in front of the eyes."
             }
         ]
     },
@@ -185,7 +265,7 @@ CHANNEL_PROMPT_MATRICES = {
                 "id": "soap_opera_melodrama",
                 "name": "Soap-Opera Melodramatic Waterfall Tears & Glitter Confetti",
                 "signature_tokens": ["soap-opera", "melodrama", "waterfall tears", "broken-heart"],
-                "focus": "Vintage melodramatic soap-opera vignette with physical 3D crystalline tear waterfalls cascading comically from both eye corners. PBR water caustics with soft romantic halo lighting. Opening mouth erupts torrential twin weeping fountains and floating comedy broken-heart shards; smiling instantly shatters the drama into a cheerful explosion of rainbow glitter confetti. Pure comedy AR.",
+                "focus": "Vintage melodramatic soap-opera vignette with physical 3D crystalline tear waterfalls cascading comically from eyes across face. PBR water caustics with soft romantic halo lighting. Opening mouth erupts torrential twin weeping fountains and floating comedy broken-heart shards; smiling instantly shatters the drama into a cheerful explosion of rainbow glitter confetti. Pure comedy AR.",
                 "primary_trigger": "MouthOpen (Torrential twin weeping waterfalls & broken hearts) / Smile (Explosive cheerful rainbow confetti burst)",
                 "visual_hook": "Instant soap-opera drama: hyperbolic 3D waterfall tears cascade from eyes with hilarious melodrama, instantly clearing into confetti on smile."
             },
@@ -209,9 +289,49 @@ CHANNEL_PROMPT_MATRICES = {
                 "id": "hypno_spiral_shockwave",
                 "name": "Pop-Out Spiral Hypno-Goggles & Cartoon Exclamation Sparks",
                 "signature_tokens": ["spiral hypno", "hypno-goggles", "pop-out", "exclamation marks"],
-                "focus": "Exaggerated 3D glowing cartoon spiral hypno-goggles anchored over eyes that comical stretch and pop forward 10cm on face trigger. Opening mouth triggers shockwave rings with floating animated comic exclamation marks and bouncing question mark stars; smiling snaps goggles back with hilarious kaleidoscope optic swirl. Physics-driven, zero strobing.",
+                "focus": "Exaggerated 3D glowing cartoon spiral hypno-goggles anchored over eyes that comical stretch and pop forward 10cm on face trigger. PBR stylized materials with ray-traced contact shadows. Opening mouth triggers shockwave rings with floating animated comic exclamation marks and bouncing question mark stars; smiling snaps goggles back with hilarious kaleidoscope optic swirl. Physics-driven, zero strobing.",
                 "primary_trigger": "MouthOpen (Pop-out goggle stretch & exclamation shockwave) / Smile (Kaleidoscopic optic swirl snap-back)",
                 "visual_hook": "Cartoon bug-eyed shock: giant spiral hypno-goggles spring forward comically from face with floating question marks."
+            },
+            {
+                "id": "jawdrop_coin_cascade",
+                "name": "Cartoon Jaw-Drop Spring & Gold Coin Cascade",
+                "signature_tokens": ["jaw-drop", "spring chin", "coin cascade", "bulging eyes"],
+                "focus": "Exaggerated 3D mechanical cartoon spring chin and bulging cartoon eyes anchored to face. 3-point comic lighting with ray-traced shadows. Opening mouth triggers hilarious jaw-drop extension unleashing cascading fountain of spinning 24k gold coins and comic exclamation sparks; smiling pops eyes back with comical starburst glints. Pure viral comedy AR.",
+                "primary_trigger": "MouthOpen (Hilarious jaw-drop spring extension & gold coin fountain) / Smile (Comical starburst eye pop-back)",
+                "visual_hook": "Cartoon jaw drops 2 feet down on a bouncing spring, spraying thousands of spinning gold coins off screen."
+            },
+            {
+                "id": "dramatic_anime_tears",
+                "name": "Anime Torrential Weeping Jets & Rainbow Arc",
+                "signature_tokens": ["anime tears", "weeping jets", "water torrents", "rainbow arc"],
+                "focus": "Stylized oversized crystalline anime tear jets anchored to lower eye contours. PBR liquid reflections and ambient room lighting. Opening mouth unleashes twin high-pressure horizontal water torrents blasting outward with floating broken comic hearts; smiling instantly clears tears into an arching 3D rainbow halo over head. Physics-driven, zero strobing.",
+                "primary_trigger": "MouthOpen (Twin horizontal cartoon water torrents & broken hearts) / Smile (Arching 3D rainbow halo over head)",
+                "visual_hook": "Hyperbolic anime tears shoot out sideways like water cannons, clearing into an instant radiant rainbow halo on smile."
+            },
+            {
+                "id": "mindblown_cosmic_pop",
+                "name": "Mind-Blown Pop-Top Head & Galaxy Fireworks",
+                "signature_tokens": ["mind-blown", "pop-top", "cosmic fireworks", "lightbulb crown"],
+                "focus": "Stylized cartoon skull top-hatch fitted to hairline with bouncing miniature antenna. Anisotropic metallic reflections and baked shadows. Opening mouth pops hatch open with dramatic cartoon mushroom cloud of glowing rainbow star particles and floating comic UFOs; smiling triggers comical golden lightbulb illumination above crown with star glints. Pure comedy AR.",
+                "primary_trigger": "MouthOpen (Pop-top hatch opens with rainbow cosmic mushroom cloud) / Smile (Glowing golden idea lightbulb illumination)",
+                "visual_hook": "Top of the head pops open like a cartoon tin lid, erupting with a colorful mushroom cloud of cosmic stars and UFOs."
+            },
+            {
+                "id": "pepper_fire_breath",
+                "name": "Flaming Red Hot Pepper Crown & Comic Fire Jet",
+                "signature_tokens": ["hot pepper", "fire breath", "chili horns", "cartoon flame"],
+                "focus": "Cartoony glowing red chili pepper horns mounted to temples with sizzling PBR smoke embers. 3-point contrast lighting. Opening mouth blasts giant comic cartoon flame geyser forward with bouncing sweating teardrops; smiling cools face into icy cartoon frost with soothing blue halo sparkles. High-impact viral reaction AR.",
+                "primary_trigger": "MouthOpen (Giant cartoon fire geyser & sweating teardrops) / Smile (Soothing icy frost & blue halo sparkles)",
+                "visual_hook": "Glowing red chili horns sizzle at temples, blasting a hilarious comic fire jet forward when user opens mouth."
+            },
+            {
+                "id": "dizzy_star_whirl",
+                "name": "Comic Dizzy Bird Whirl & Feather Burst",
+                "signature_tokens": ["dizzy stars", "chirping birds", "feather burst", "question marks"],
+                "focus": "Stylized golden cartoon stars and miniature chirping canary models orbiting brow in zero-g. 3-point contrast lighting with soft shadows. Opening mouth scatters comical flurry of yellow feathers and floating giant comic question marks; smiling snaps stars into a sparkling celebratory crown above forehead. Zero UI sliders, pure meme fun.",
+                "primary_trigger": "MouthOpen (Flurry of yellow feathers & comic question marks) / Smile (Sparkling celebratory star crown alignment)",
+                "visual_hook": "Classic cartoon knock-out: animated yellow birds and dizzy stars spin around brow, erupting feathers on mouth open."
             }
         ]
     },
@@ -268,6 +388,46 @@ CHANNEL_PROMPT_MATRICES = {
                 "focus": "Hand-hammered 24k gold Florentine laurel leaf wreath contoured to head with miniature carved marble jasmine blossoms. 3-point contrast lighting with soft golden volumetric god-rays framing silhouette. Opening mouth triggers gentle cascade of golden falling laurel petals; smiling illuminates soft golden-hour cheek glints and radiant warm skin bloom. Timeless luxury.",
                 "primary_trigger": "MouthOpen (Gentle cascade of golden falling laurel petals) / Smile (Volumetric golden-hour cheek glints & warm skin bloom)",
                 "visual_hook": "Majestic golden laurel wreath crowns the brow with delicate marble flowers and warm cinematic sunbeams."
+            },
+            {
+                "id": "venetian_gold_filigree",
+                "name": "Hand-Crafted Venetian 24k Gold Filigree Mask & Amber Glow",
+                "signature_tokens": ["venetian mask", "gold filigree", "amber glow", "diamond prism"],
+                "focus": "Hand-crafted Venetian 24k gold filigree half-mask contouring upper brow and cheekbones, leaving mouth completely free. Kodak Portra 400 film grain and warm 2800K halation. Opening mouth releases drifting amber gossamer specks; smiling triggers brilliant caustic diamond prism glints across cheekbones. High fashion luxury AR.",
+                "primary_trigger": "MouthOpen (Drifting amber gossamer specks) / Smile (Caustic diamond prism cheek glints)",
+                "visual_hook": "Exquisite Venetian lace hammered from 24k gold rests weightlessly across temples with rich analog film warmth."
+            },
+            {
+                "id": "celestial_moonstone_halo",
+                "name": "Iridescent Moonstone Platinum Circlet & Portra 400 Halation",
+                "signature_tokens": ["moonstone circlet", "platinum circlet", "pearl dust", "dewy skin"],
+                "focus": "Delicate platinum circlet set with shimmering rainbow moonstone cabochons resting at hairline. Subtle 35mm analog lens flare with golden-hour warmth and ray-traced shadows. Opening mouth summons ethereal floating celestial pearl dust around face; smiling illuminates radiant dewy skin sheen with caustic moonstone flares. Timeless couture.",
+                "primary_trigger": "MouthOpen (Floating celestial pearl dust motes) / Smile (Dewy skin sheen & caustic moonstone flares)",
+                "visual_hook": "Shimmering rainbow moonstones and pure platinum form a delicate celestial halo with dreamy 35mm film halation."
+            },
+            {
+                "id": "gilded_butterfly_coronet",
+                "name": "Gilded Gold Leaf Butterfly Coronet & Sunlit Petals",
+                "signature_tokens": ["butterfly coronet", "gold leaf butterflies", "sunlit petals", "wing flutter"],
+                "focus": "Sculpted 24k beaten gold filigree butterflies resting lightly across forehead and hair. Ray-traced contact shadows and warm golden lighting. Opening mouth awakens gentle wing flutter releasing drifting golden shimmer motes; smiling illuminates sparkling sunlight glints on cheekbone peaks. Elegant fine-art AR.",
+                "primary_trigger": "MouthOpen (Gentle butterfly wing flutter & golden shimmer motes) / Smile (Sunlight sparkle glints on cheekbones)",
+                "visual_hook": "Sculpted gold-leaf butterflies flutter softly at the hairline, showering the cheeks with warm sunlight sparkles."
+            },
+            {
+                "id": "rose_gold_astral_tiara",
+                "name": "Rose Gold Astral Starburst Tiara & Starlight Glints",
+                "signature_tokens": ["rose gold tiara", "astral starburst", "morganite", "starlight veil"],
+                "focus": "Hand-forged 18k rose gold astral starburst tiara anchored along brow with inset morganite gemstones. Portra film warmth with soft halation. Opening mouth releases cascading micro-glitter starlight veil; smiling triggers dazzling rose-gold starburst flares across eyes and cheekbones. Pure vanity elegance, zero UI.",
+                "primary_trigger": "MouthOpen (Cascading micro-glitter starlight veil) / Smile (Dazzling rose-gold starburst eye flares)",
+                "visual_hook": "Blushing 18k rose gold astral starburst tiara catches the golden-hour light with radiant morganite starlight glints."
+            },
+            {
+                "id": "opal_sunburst_diadem",
+                "name": "Australian Opal Sunburst Diadem & Golden Shimmer",
+                "signature_tokens": ["opal diadem", "sunburst crown", "fire opal", "chromatic shimmer"],
+                "focus": "Radiant sunburst diadem of fiery Australian opals and twisted yellow gold wire fitted securely above forehead. 3-point lighting with cinematic analog bloom. Opening mouth floats warm golden sun-dust motes across temples; smiling creates an exquisite chromatic rainbow shimmer across cheekbone highlights. Editorial beauty.",
+                "primary_trigger": "MouthOpen (Warm golden sun-dust motes) / Smile (Chromatic rainbow shimmer on cheekbones)",
+                "visual_hook": "Fiery Australian opals radiate in a golden sunburst halo above the brow, scattering vivid chromatic light across the face."
             }
         ]
     },
@@ -313,7 +473,7 @@ CHANNEL_PROMPT_MATRICES = {
                 "id": "liquid_platinum_tears",
                 "name": "Mirrored Liquid Platinum Tear-Tracks & Surreal Toroidal Halo",
                 "signature_tokens": ["liquid platinum tear", "toroid halo", "molten mirrors"],
-                "focus": "Mirrored liquid platinum teardrop sculptures frozen weightlessly along cheekbones with a floating surreal chrome toroid halo above head. Anisotropic fluid reflections with ray-traced shadows. Opening mouth releases liquid metal ripple shockwave radiating across cheek plates; smiling inverts chrome surface reflections with chromatic prism sheen. Photosensitive safe, zero strobing.",
+                "focus": "Mirrored liquid platinum teardrop sculptures frozen weightlessly along cheekbones with a floating surreal chrome toroid halo above head. Anisotropic fluid reflections with ray-traced shadows. Opening mouth releases liquid metal ripple shockwave radiating across cheek sculptures; smiling inverts chrome surface reflections with chromatic prism sheen. Photosensitive safe, zero strobing.",
                 "primary_trigger": "MouthOpen (Liquid metal ripple shockwave across cheek sculptures) / Smile (Chromatic prism inversion on chrome surfaces)",
                 "visual_hook": "High-concept surrealism: liquid platinum sculptures cling to cheekbones like molten mirrors beneath a weightless chrome toroid."
             },
@@ -324,6 +484,46 @@ CHANNEL_PROMPT_MATRICES = {
                 "focus": "Ultra-reflective liquid bismuth and molten chrome chrysalis crest morphing over forehead with fluid tendrils framing temples. Shimmering prismatic surface iridescence with HDR environment reflections. Opening mouth expands an expanding liquid chrome bubble ring floating forward; smiling triggers fluid chromatic surface dispersion waves across face. Seamless zero-g AR.",
                 "primary_trigger": "MouthOpen (Expanding liquid chrome bubble ring forward expansion) / Smile (Fluid chromatic dispersion waves across chrysalis)",
                 "visual_hook": "Mesmerizing Y3K aesthetic: liquid bismuth and chrome crown undulates with iridescent rainbow reflections above the brow."
+            },
+            {
+                "id": "hypercube_tesseract_halo",
+                "name": "Zero-G Chrome Tesseract Halo & Gravitational Ripples",
+                "signature_tokens": ["tesseract", "hypercube halo", "gravitational ripple", "liquid chrome vertices"],
+                "focus": "Weightless 4D liquid chrome tesseract frame rotating smoothly above head with mirrored vertices. Anisotropic reflections, ray-traced contact shadows. Opening mouth triggers gravitational shockwave ripple warping ambient reflections; smiling flashes prismatic chromatic aberration rings along cheek contours. Y3K surrealism, zero strobing.",
+                "primary_trigger": "MouthOpen (Gravitational shockwave ripple warping reflections) / Smile (Prismatic chromatic aberration cheek rings)",
+                "visual_hook": "Weightless 4D liquid chrome tesseract rotates hypnotic above head, warping ambient light in real-time."
+            },
+            {
+                "id": "liquid_titanium_spikes",
+                "name": "Liquid Titanium Spire Horns & Molten Droplets",
+                "signature_tokens": ["titanium spires", "molten droplets", "surface tension", "liquid horns"],
+                "focus": "Sculpted liquid titanium spires rising weightlessly from head and temples, undulating with fluid surface tension. PBR metallic reflections with 3-point contrast 6500K rim lighting. Opening mouth releases floating orbit of reflective molten titanium spheres; smiling pulses fluid magnetic ripple waves through horn geometry. Pure zero-G aesthetics, zero strobing.",
+                "primary_trigger": "MouthOpen (Floating orbit of reflective molten titanium spheres) / Smile (Fluid magnetic ripple wave through spires)",
+                "visual_hook": "Molten titanium spires rise from temples with undulating surface tension, releasing floating chrome spheres on mouth open."
+            },
+            {
+                "id": "cyber_chitin_exoshell",
+                "name": "Iridescent Chrome Chitin Brow & Prismatic Sheen",
+                "signature_tokens": ["chitin brow", "exoshell", "toroidal ring", "beetle-wing"],
+                "focus": "Organic bio-surreal polished chrome brow shell with fluid beetle-wing iridescence fitted to forehead. PBR ray-traced shadows. Opening mouth releases expanding toroidal liquid mercury ring surging forward; smiling triggers radiant rainbow chromatic dispersion wave across face contours. High-concept Y3K.",
+                "primary_trigger": "MouthOpen (Expanding toroidal liquid mercury ring surge) / Smile (Rainbow chromatic dispersion wave across face)",
+                "visual_hook": "Surreal iridescent chrome chitin plating contours the brow, firing an expanding liquid mercury toroidal ring on mouth open."
+            },
+            {
+                "id": "vortex_singularity_halo",
+                "name": "Liquid Platinum Vortex Halo & Event Horizon Sheen",
+                "signature_tokens": ["vortex halo", "singularity halo", "platinum accretion", "event horizon"],
+                "focus": "Swirling zero-G liquid platinum accretion disc floating above hairline with dark mirrored core. Anisotropic mirror shaders catching studio lighting. Opening mouth emits miniature orbiting mercury droplets spiraling inward; smiling triggers fluid chrome surface wave expanding outward across cheeks. Surreal kinetic art.",
+                "primary_trigger": "MouthOpen (Miniature mercury droplets spiraling inward to vortex) / Smile (Fluid chrome surface wave expanding across cheeks)",
+                "visual_hook": "Mesmerizing zero-G liquid platinum vortex floats over hairline, pulling shimmering mercury droplets inward."
+            },
+            {
+                "id": "quantum_mercury_droplets",
+                "name": "Floating Zero-G Mercury Orb Field & Chrome Spikes",
+                "signature_tokens": ["quantum mercury", "orb field", "droplet field", "mercury constellation"],
+                "focus": "Suspended constellation of zero-G liquid mercury droplets hovering around temples and brow with fluid surface tension. Opening mouth surges droplets together into an undulating chrome headpiece; smiling shatters geometry into a shimmering cloud of mirror-finish micro-spheres. Seamless physics AR, zero strobing.",
+                "primary_trigger": "MouthOpen (Zero-G droplets merge into undulating chrome headpiece) / Smile (Geometry shatters into shimmering micro-spheres)",
+                "visual_hook": "Dozens of weightless liquid mercury droplets hover around temples, snapping into a sculpted chrome crown on mouth open."
             }
         ]
     }
@@ -406,15 +606,85 @@ def compute_token_jaccard(text1: str, text2: str) -> float:
     return len(t1 & t2) / len(t1 | t2)
 
 
+def sanitize_lens_prompt(prompt: str) -> str:
+    """
+    Pre-flight Prompt Sanitizer:
+    Scrubs forbidden tokens (e.g. 'frequency bars', 'orbiting bars', 'equalizer crown',
+    'spectrum rings', 'canvas', 'tween', 'easing') and replaces them with pure 3D mesh / particle equivalents.
+    Guarantees zero-slop, compliance-safe prompt within character boundaries.
+    """
+    if not prompt:
+        return prompt
+
+    sanitized = prompt
+
+    # Ordered mapping: specific compound patterns first, then generic tokens
+    replacements = [
+        # Compound spinner and bar patterns -> 3D particles and volumetric mesh
+        (r'\b(?:orbiting|spinning|rotating)\s+(?:audio-reactive\s+|frequency\s+|sound\s+|spectrum\s+)?(?:bars?|rings?)\b', 'floating 3D volumetric particle rings'),
+        (r'\b(?:equalizer|frequency|audio-reactive|sound\s+visualizer)\s+bars?\b', 'kinetic 3D particle filaments'),
+        (r'\b(?:equalizer|frequency)\s+(?:crown|tiara|diadem)\b', 'sculpted 3D geometric crystal crown'),
+        (r'\b(?:spectrum|sound\s+visualizer)\s+rings?\b', 'chromatic 3D particle halo'),
+        (r'\b(?:equalizer|frequency)\s+halos?\b', 'pulsing 3D particle halo'),
+        (r'\bequalizer\b', 'kinetic resonance'),
+        (r'\bfrequency\s+bars?\b', 'volumetric 3D light pulse rings'),
+        (r'\borbiting\s+bars?\b', 'floating 3D volumetric particle rings'),
+
+        # Canvas API and 2D elements -> 3D mesh / viewport equivalents
+        (r'\bcanvas\s*api\b', '3D mesh engine'),
+        (r'\b(?:2d\s+)?canvas\s+spinners?\b', '3D particle shockwaves'),
+        (r'\b2d\s+spinners?\b', '3D particle bursts'),
+        (r'\b2d\s+canvas\b', '3D viewport'),
+        (r'\bcanvas\b', '3D viewport'),
+
+        # Runtime crashers: TWEEN and Easing curves -> instant / discrete triggers
+        (r'\b(?:smooth\s+)?tween(?:ing)?\b', 'instant transition'),
+        (r'\b(?:easing|bezier)\s+curves?\b', 'discrete particle bursts'),
+        (r'\b(?:ease-in|ease-out)\b', 'linear trigger'),
+
+        # Slop & UI keywords
+        (r'\bgeneric\s+purple\s+gradient\b', 'rich anisotropic metallic sheen'),
+        (r'\bfloating\s+(?:disembodied\s+)?blobs?\b', 'sculpted 3D geometry'),
+        (r'\brubbery\s+plastic\b', 'anisotropic brushed titanium'),
+        (r'\b(?:developer\s+)?ui\s+sliders?\b', 'face event triggers'),
+        (r'\btap\s+to\s+start\b', 'automatic face detection'),
+    ]
+
+    for pattern, subst in replacements:
+        sanitized = re.sub(pattern, subst, sanitized, flags=re.IGNORECASE)
+
+    # Normalize whitespace and clean up double punctuation
+    sanitized = re.sub(r'\s+', ' ', sanitized).strip()
+    sanitized = re.sub(r'\s+([,.;])', r'\1', sanitized)
+    sanitized = re.sub(r',+', ',', sanitized)
+    sanitized = re.sub(r'\.+', '.', sanitized)
+
+    # Boundary enforcement: ensure under 460 chars
+    if len(sanitized) > 460:
+        cutoff = sanitized[:455].rfind('.')
+        if cutoff > 280:
+            sanitized = sanitized[:cutoff + 1]
+        else:
+            cutoff_space = sanitized[:455].rfind(' ')
+            if cutoff_space > 280:
+                sanitized = sanitized[:cutoff_space].rstrip(',;.') + '.'
+            else:
+                sanitized = sanitized[:457] + '...'
+
+    return sanitized
+
+
 def validate_candidate_concept(candidate: dict, account_id: str, history: list, banned_nouns: list) -> tuple:
     """
-    Validates candidate lens concept against 6 strict quality and anti-repetition rules.
+    Validates candidate lens concept against 7 strict quality and anti-repetition rules.
     Returns: (is_valid: bool, reason: str)
     """
+    # Pre-flight sanitization before validation
+    candidate["prompt"] = sanitize_lens_prompt(candidate.get("prompt", ""))
     prompt = candidate.get("prompt", "")
     lens_name = candidate.get("lens_name", "")
 
-    # Rule 1: Length boundaries (200 - 480)
+    # Rule 1: Length boundaries (150 - 480)
     if len(prompt) > 480:
         return False, f"Prompt length {len(prompt)} exceeds 480 chars"
     if len(prompt) < 150:
@@ -450,6 +720,16 @@ def validate_candidate_concept(candidate: dict, account_id: str, history: list, 
         sim = compute_token_jaccard(prompt, prev.get("prompt", ""))
         if sim > 0.48:
             return False, f"Prompt has {sim:.0%} similarity with recent lens '{prev.get('lens_name')}'"
+
+    # Rule 7: Zero 2D Canvas / Spinner phrases
+    banned_spinner_tokens = [
+        "orbiting bars", "frequency bars", "equalizer crown", "spectrum rings",
+        "equalizer bars", "audio-reactive bars", "sound visualizer rings",
+        "rotating bars", "spinning bars", "equalizer halo", "frequency halo",
+        "canvasapi", "canvas api"
+    ]
+    if any(tok in prompt.lower() for tok in banned_spinner_tokens):
+        return False, "Contains banned 2D canvas spinner or frequency bar keywords"
 
     return True, "Valid"
 
@@ -583,7 +863,7 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
     # Static fallback prepared in case of complete API failure
     static_fallback = {
         "lens_name": selected_archetype["name"].split("&")[0].strip(),
-        "prompt": selected_archetype["focus"],
+        "prompt": sanitize_lens_prompt(selected_archetype["focus"]),
         "tags": spec["tag_pool"],
         "visual_hook": selected_archetype["visual_hook"],
         "trigger_sequence": selected_archetype["primary_trigger"],
@@ -617,6 +897,7 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
                     data = res.json()
                     raw_text = data["candidates"][0]["content"]["parts"][0]["text"]
                     result = extract_json(raw_text)
+                    result["prompt"] = sanitize_lens_prompt(result.get("prompt", ""))
 
                     # Post-validation
                     valid, reason = validate_candidate_concept(result, aid, history, banned_nouns)
@@ -629,6 +910,7 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
                                 result["prompt"] = p[:cutoff + 1]
                             else:
                                 result["prompt"] = p[:457] + "..."
+                            result["prompt"] = sanitize_lens_prompt(result["prompt"])
                             valid, reason = validate_candidate_concept(result, aid, history, banned_nouns)
 
                     if valid:

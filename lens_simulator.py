@@ -9,6 +9,9 @@ import io
 import json
 import base64
 import zipfile
+import subprocess
+import shutil
+import time
 import requests
 from PIL import Image, ImageDraw, ImageFilter
 from gemini_lens_agent import get_gemini_api_keys, CANDIDATE_MODELS
@@ -415,7 +418,106 @@ class LensSimulator:
         print(f"[SIMULATOR] Rendered production simulation screenshots: {out_neutral} & {out_trigger}")
         return out_neutral, out_trigger
 
-    def render_simulation_video(self, out_path: str = "preview_video.mp4", out_neutral: str = "preview_neutral_simulated.png", out_trigger: str = "preview_mouth_open_simulated.png", motion_video: str = None) -> str:
+    def resolve_audio_track(self, account_id: str = None) -> str:
+        """Dynamically resolve royalty-free audio stem matching account persona or prompt archetype"""
+        aid = str(
+            account_id
+            or self.lens_data.get("account_id")
+            or os.getenv("ACCOUNT_ID", "1")
+        ).lower()
+
+        p_text = (
+            str(self.asset_scale_info.get("p_text", "")) + " " +
+            str(self.lens_data.get("prompt", "")) + " " +
+            str(self.lens_data.get("lens_name", "")) + " " +
+            str(self.lens_data.get("theme_focus", "")) + " " +
+            " ".join(str(t) for t in self.lens_data.get("tags", []))
+        ).lower()
+
+        acc_map = {
+            "1": "mythic_roar.mp3",
+            "mythicbeasts": "mythic_roar.mp3",
+            "mythicbeasts_ar": "mythic_roar.mp3",
+            "2": "cyber_pulse.mp3",
+            "scifi_optics": "cyber_pulse.mp3",
+            "scifi": "cyber_pulse.mp3",
+            "3": "comedy_pop.mp3",
+            "warpshock_comedy": "comedy_pop.mp3",
+            "warpshock": "comedy_pop.mp3",
+            "comedy": "comedy_pop.mp3",
+            "4": "luxury_shimmer.mp3",
+            "lumiere_atelier": "luxury_shimmer.mp3",
+            "lumiere": "luxury_shimmer.mp3",
+            "5": "mercury_drift.mp3",
+            "chrono_mirage": "mercury_drift.mp3",
+            "chrono": "mercury_drift.mp3"
+        }
+
+        # 1. If explicit account_id passed, honor it
+        chosen = None
+        if account_id is not None and str(account_id).lower() in acc_map:
+            chosen = acc_map[str(account_id).lower()]
+
+        # 2. Check prompt archetype keyword semantics with scoring
+        if not chosen:
+            niche_scores = {
+                "mythic_roar.mp3": sum(1 for w in [
+                    "dragon", "wyvern", "pyrodrake", "phoenix", "firebird", "valkyrie",
+                    "kitsune", "foxfire", "anubis", "jackal", "mythic", "mythology", "beast", "roar"
+                ] if w in p_text),
+                "cyber_pulse.mp3": sum(1 for w in [
+                    "cyber", "cyberpunk", "visor", "hud", "scanner", "retinal", "ocular",
+                    "monocular", "titanium", "optic", "telemetry", "goggles", "hyperdrive", "targeting"
+                ] if w in p_text),
+                "comedy_pop.mp3": sum(1 for w in [
+                    "comedy", "meme", "crying", "stormcloud", "teardrop", "soap-opera",
+                    "melodrama", "steam-whistle", "boiler valve", "laughing skull", "confetti",
+                    "hypno", "cartoon", "bouncy", "spring", "pop-out", "whistle", "splat"
+                ] if w in p_text),
+                "luxury_shimmer.mp3": sum(1 for w in [
+                    "luxury", "couture", "haute", "baroque", "pearl", "art nouveau", "tiara",
+                    "champagne", "diamond", "florentine", "laurel", "35mm", "portra",
+                    "analog", "shimmer", "chime", "glissando", "harp", "atelier"
+                ] if w in p_text),
+                "mercury_drift.mp3": sum(1 for w in [
+                    "mercury", "chrome", "surreal", "zero-g", "mobius", "ferrofluid",
+                    "liquid platinum", "bismuth", "chrysalis", "toroid", "toroidal",
+                    "hypnotic", "y3k", "chrono", "mirage", "fluid drop"
+                ] if w in p_text)
+            }
+            best_stem, best_score = max(niche_scores.items(), key=lambda x: x[1])
+            if best_score > 0:
+                chosen = best_stem
+
+        # 3. Fall back to account_id from lens_data or env
+        if not chosen:
+            chosen = acc_map.get(aid, "cyber_pulse.mp3")
+
+        cand_dirs = [
+            os.path.join(self.portrait_dir, "audio"),
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "audio"),
+            "/root/snapchat-lens/assets/audio",
+            os.path.join(os.getcwd(), "assets", "audio"),
+            "assets/audio"
+        ]
+
+        for audio_dir in cand_dirs:
+            cand_path = os.path.join(audio_dir, chosen)
+            if os.path.exists(cand_path) and os.path.getsize(cand_path) > 1000:
+                return cand_path
+
+        if os.path.exists("preview_audio.mp3") and os.path.getsize("preview_audio.mp3") > 1000:
+            return "preview_audio.mp3"
+
+        return None
+
+    @staticmethod
+    def audit_preview_video(video_path: str, require_audio: bool = False) -> dict:
+        """Strict mathematical quality, black-screen, freeze, motion variance, and audio audit"""
+        from lens_verifier import audit_preview_video
+        return audit_preview_video(video_path, require_audio=require_audio)
+
+    def render_simulation_video(self, out_path: str = "preview_video.mp4", out_neutral: str = "preview_neutral_simulated.png", out_trigger: str = "preview_mouth_open_simulated.png", motion_video: str = None, account_id: str = None) -> str:
         """
         Renders an authentic, dynamic 9:16 vertical 720x1280 30fps preview video with real portrait motion,
         optical flow facial landmark tracking, dynamic reactive asset transformation, and audio muxing.
@@ -642,9 +744,9 @@ class LensSimulator:
                 shutil.rmtree(temp_frames_dir, ignore_errors=True)
 
                 # Mux production audio if present
-                audio_file = "preview_audio.mp3"
-                if os.path.exists(audio_file) and os.path.getsize(audio_file) > 1000:
-                    print(f"[SIMULATOR] Muxing production audio track into motion preview video...")
+                audio_file = self.resolve_audio_track(account_id=account_id)
+                if audio_file and os.path.exists(audio_file) and os.path.getsize(audio_file) > 1000:
+                    print(f"[SIMULATOR] Muxing production audio track ({os.path.basename(audio_file)}) into motion preview video...")
                     mux_cmd = [
                         "ffmpeg", "-y",
                         "-i", temp_video,
@@ -698,9 +800,9 @@ class LensSimulator:
         try:
             subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
 
-            audio_file = "preview_audio.mp3"
-            if os.path.exists(audio_file) and os.path.getsize(audio_file) > 1000:
-                print(f"[SIMULATOR] Muxing production audio track ({os.path.getsize(audio_file)} bytes) into preview video...")
+            audio_file = self.resolve_audio_track(account_id=account_id)
+            if audio_file and os.path.exists(audio_file) and os.path.getsize(audio_file) > 1000:
+                print(f"[SIMULATOR] Muxing production audio track ({os.path.basename(audio_file)}) into fallback preview video...")
                 mux_cmd = [
                     "ffmpeg", "-y",
                     "-i", temp_video,

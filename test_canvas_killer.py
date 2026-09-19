@@ -23,10 +23,11 @@ def test_ion_pulse_velo_rejection():
     lens_data["blocks"] = pub_status.get("blocks", [])
     lens_data["controller_code"] = pub_status.get("controller_code", "")
 
-    url = lens_data["download_url"]
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req) as resp:
-        bundle_bytes = resp.read()
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as z:
+        z.writestr("CanvasAPI.js", "function drawCyanHaloBars() { canvas.line(0,0,10,10); }")
+        z.writestr("scripts/LensController.js", "CanvasAPI.createOnScreenCanvas();")
+    bundle_bytes = buf.getvalue()
 
     verifier = LensVerifier(lens_data=lens_data, plan={"prompt": "test", "lens_name": "Ion Pulse Velo"})
     g5 = verifier.verify_controller_and_assets(bundle_bytes)

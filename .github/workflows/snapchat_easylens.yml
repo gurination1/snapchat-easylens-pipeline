@@ -140,6 +140,9 @@ jobs:
             echo "Cron triggered: Auto-assigned Account Persona #$SLOT"
             export ACCOUNT_ID="$SLOT"
           fi
+          echo "=== RUNNING PRE-FLIGHT ZERO-DEFECT QUALITY GATES ==="
+          python run_tests.py
+          echo "=== PRE-FLIGHT VERIFICATION PASSED: LAUNCHING PIPELINE ==="
           python -u pipeline_runner.py
 
       - name: Upload Lens Verification & Artifacts
