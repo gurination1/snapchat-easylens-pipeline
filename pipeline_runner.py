@@ -104,8 +104,8 @@ STATIC_FALLBACKS = {
         },
         {
             "lens_name": "Soap Opera Melodrama",
-            "prompt": "Vintage melodramatic soap-opera vignette with physical 3D crystalline tear waterfalls cascading comically from eyes across face. PBR water caustics with soft romantic halo lighting. Opening mouth erupts torrential twin weeping fountains and floating comedy broken-heart shards; smiling instantly shatters the drama into a cheerful explosion of rainbow glitter confetti. Pure comedy AR.",
-            "tags": ["soapopera", "tears", "crying", "comedy", "confetti"]
+            "prompt": "Wearable comedic 3D dramatic weeping theatre crown with physical 3D crystalline tear waterfalls cascading comically from eyes across cheeks. PBR water caustics with soft romantic halo lighting. Opening mouth erupts torrential twin weeping fountains and floating comedy broken-heart shards; smiling instantly shatters the drama into a cheerful explosion of rainbow glitter confetti. Pure comedy AR.",
+            "tags": ["soapopera", "tears", "crown", "comedy", "confetti"]
         },
         {
             "lens_name": "Steam Rage Valve",

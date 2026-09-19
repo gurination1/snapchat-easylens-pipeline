@@ -278,6 +278,12 @@ class LensSimulator:
             pos_y = max(10, base_y - target_h)
             pos = (360 - target_w // 2, pos_y)
             ev_y = 495
+        elif any(w in p_text for w in ["tear", "crying", "weep", "waterfall", "melodrama", "cheek", "face", "makeup", "blush", "sparkle"]):
+            aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 0.8
+            target_w = 420
+            target_h = min(360, int(target_w * aspect))
+            pos = (360 - target_w // 2, 510 - target_h // 2)
+            ev_y = 495
         elif any(w in p_text for w in ["cloud", "halo", "floating", "above", "sky", "mercury halo"]):
             aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 0.5
             target_w = 440
@@ -286,12 +292,9 @@ class LensSimulator:
             ev_y = 495
         else:
             aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 0.6
-            max_h = 350
-            target_w = min(440, int(max_h / max(0.01, aspect)))
-            target_h = int(target_w * aspect)
-            base_y = 390
-            pos_y = max(10, base_y - target_h)
-            pos = (360 - target_w // 2, pos_y)
+            target_w = 440
+            target_h = min(280, int(target_w * aspect))
+            pos = (360 - target_w // 2, 380 - target_h // 2)
             ev_y = 495
 
         # Store for motion video synthesis

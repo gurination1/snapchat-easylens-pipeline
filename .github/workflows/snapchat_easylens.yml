@@ -145,6 +145,11 @@ jobs:
           echo "=== PRE-FLIGHT VERIFICATION PASSED: LAUNCHING PIPELINE ==="
           python -u pipeline_runner.py
 
+      - name: Disconnect WARP Tunnel
+        if: always()
+        run: |
+          sudo warp-cli --accept-tos disconnect 2>/dev/null || sudo wg-quick down wg0 2>/dev/null || true
+
       - name: Upload Lens Verification & Artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -157,11 +162,6 @@ jobs:
             publish_status.json
             *.png
             *.mp4
-
-      - name: Disconnect WARP Tunnel
-        if: always()
-        run: |
-          sudo warp-cli --accept-tos disconnect 2>/dev/null || sudo wg-quick down wg0 2>/dev/null || true
 
       - name: Commit Pipeline State (Deduplication History)
         if: always()

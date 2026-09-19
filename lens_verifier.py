@@ -482,30 +482,38 @@ class LensVerifier:
                             f"Fatal: Prohibited browser DOM global '{dom_name}' referenced in '{name}' (Snapchat Lens Studio has no browser DOM)"
                         )
 
-        # 3. Node globals: process.env, require (unless bundled)
+        # 3. Node globals & require checks
+        is_library_file = is_library_file or any(lib in name.lower() for lib in ["module", "helper", "utils", "hintevents", "preset", "gizmo"]) or ("@author Snap" in code) or ("Snap inc." in code)
         if not is_library_file:
             if re.search(r'\bprocess\.env\b', clean_code) or re.search(r'\bprocess\.(?:exit|cwd|argv|versions)\b', clean_code):
                 errors.append(
                     f"Fatal: Prohibited Node global 'process.env' referenced in '{name}' (Snapchat Lens Studio has no Node environment)"
                 )
 
-        require_matches = re.findall(r'\brequire\s*\(\s*["\']([^"\']+)["\']\s*\)', code)
+        banned_node_modules = {"fs", "child_process", "cluster", "dgram", "dns", "http", "https", "net", "os", "path", "readline", "stream", "tls", "v8", "vm", "worker_threads", "zlib"}
+        code_no_comments = re.sub(r'(\/\/[^\n]*|\/\*[\s\S]*?\*\/)', '', code)
+        require_matches = re.findall(r'\brequire\s*\(\s*["\']([^"\']+)["\']\s*\)', code_no_comments)
         for req_mod in require_matches:
-            base_mod = os.path.basename(req_mod)
-            norm_mod = req_mod.lower().replace('\\', '/').lstrip('./')
-            base_norm = base_mod.lower()
-            is_bundled_mod = (
-                req_mod in bundled_modules or
-                norm_mod in bundled_modules or
-                base_mod in bundled_modules or
-                base_norm in bundled_modules or
-                (base_norm + ".js") in bundled_modules or
-                any(b.endswith(norm_mod) or b.endswith(norm_mod + ".js") for b in bundled_modules)
-            )
-            if not is_bundled_mod and not re.search(r'\b(var|let|const|function)\s+require\b', clean_code):
+            if req_mod in banned_node_modules:
                 errors.append(
-                    f"Fatal: Unbundled require('{req_mod}') in '{name}' (module not bundled in .lns package)"
+                    f"Fatal: Unbundled require('{req_mod}') in '{name}' (prohibited Node built-in module in Snapchat Lens Studio)"
                 )
+            elif not is_library_file and not req_mod.startswith(".") and not req_mod.startswith("LensStudio:") and req_mod != "EventModule":
+                base_mod = os.path.basename(req_mod)
+                norm_mod = req_mod.lower().replace('\\', '/').lstrip('./')
+                base_norm = base_mod.lower()
+                is_bundled_mod = (
+                    req_mod in bundled_modules or
+                    norm_mod in bundled_modules or
+                    base_mod in bundled_modules or
+                    base_norm in bundled_modules or
+                    (base_norm + ".js") in bundled_modules or
+                    any(b.endswith(norm_mod) or b.endswith(norm_mod + ".js") for b in bundled_modules)
+                )
+                if not is_bundled_mod and not re.search(r'\b(var|let|const|function)\s+require\b', clean_code):
+                    errors.append(
+                        f"Fatal: Unbundled require('{req_mod}') in '{name}' (module not bundled in .lns package)"
+                    )
 
         return errors
 

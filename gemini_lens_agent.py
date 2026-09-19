@@ -264,8 +264,8 @@ CHANNEL_PROMPT_MATRICES = {
             {
                 "id": "soap_opera_melodrama",
                 "name": "Soap-Opera Melodramatic Waterfall Tears & Glitter Confetti",
-                "signature_tokens": ["soap-opera", "melodrama", "waterfall tears", "broken-heart"],
-                "focus": "Vintage melodramatic soap-opera vignette with physical 3D crystalline tear waterfalls cascading comically from eyes across face. PBR water caustics with soft romantic halo lighting. Opening mouth erupts torrential twin weeping fountains and floating comedy broken-heart shards; smiling instantly shatters the drama into a cheerful explosion of rainbow glitter confetti. Pure comedy AR.",
+                "signature_tokens": ["soap-opera", "melodrama", "waterfall tears", "broken-heart", "theatre crown"],
+                "focus": "Wearable comedic 3D dramatic weeping theatre crown with physical 3D crystalline tear waterfalls cascading comically from eyes across cheeks. PBR water caustics with soft romantic halo lighting. Opening mouth erupts torrential twin weeping fountains and floating comedy broken-heart shards; smiling instantly shatters the drama into a cheerful explosion of rainbow glitter confetti. Pure comedy AR.",
                 "primary_trigger": "MouthOpen (Torrential twin weeping waterfalls & broken hearts) / Smile (Explosive cheerful rainbow confetti burst)",
                 "visual_hook": "Instant soap-opera drama: hyperbolic 3D waterfall tears cascade from eyes with hilarious melodrama, instantly clearing into confetti on smile."
             },
