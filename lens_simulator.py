@@ -201,9 +201,15 @@ class LensSimulator:
             print(f"[SIMULATOR WARN] Error extracting production assets: {e}")
 
         # Determine anatomical scale and anchor from metadata & text
+        labels = []
+        for a_data in self.lens_data.get("asset_statuses", {}).get("prefetched_assets", {}).values():
+            if isinstance(a_data, dict) and a_data.get("label"):
+                labels.append(a_data["label"])
+
         p_text = (
             str(self.lens_data.get("lens_name", "")) + " " +
             str(self.lens_data.get("prompt", "")) + " " +
+            " ".join(labels) + " " +
             " ".join(self.analysis.get("mesh_files", []))
         ).lower()
 
@@ -214,10 +220,10 @@ class LensSimulator:
             target_h = int(target_w * aspect)
             pos = (360 - target_w // 2, 795 - target_h)
             ev_y = pos[1] + int(target_h * 0.628)
-        elif any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades"]):
+        elif any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "nodes", "lenses", "specs", "monocle", "eyewear", "cybernetic", "orbital", "temple", "brow"]):
             target_w = 480
-            aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 0.5
-            target_h = int(target_w * aspect)
+            aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 0.4
+            target_h = min(190, int(target_w * aspect))
             pos = (360 - target_w // 2, 495 - target_h // 2)
             ev_y = 495
         elif any(w in p_text for w in ["crown", "horns", "tiara", "headpiece", "diadem", "horn", "antlers"]):
@@ -317,6 +323,17 @@ class LensSimulator:
             elif sw_texture:
                 sw_size = 560
                 comp_t.alpha_composite(sw_texture.resize((sw_size, sw_size), Image.Resampling.LANCZOS), dest=(360 - sw_size // 2, 665 - sw_size // 2))
+            else:
+                energy = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+                e_draw = ImageDraw.Draw(energy)
+                for cone_w, cone_len, col in [(260, 400, (0, 220, 180, 100)), (170, 270, (0, 245, 210, 150)), (90, 150, (180, 255, 235, 210))]:
+                    e_draw.polygon([
+                        (360, 670),
+                        (360 - cone_w // 2, 670 + cone_len),
+                        (360 + cone_w // 2, 670 + cone_len)
+                    ], fill=col)
+                energy = energy.filter(ImageFilter.GaussianBlur(14))
+                comp_t = Image.alpha_composite(comp_t, energy)
 
         # 3. 3D Asset Composite
         if dominant_texture:
