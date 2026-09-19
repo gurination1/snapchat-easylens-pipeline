@@ -223,5 +223,24 @@
     "has_preview_video": true,
     "preview_url": "https://cf-st.sc-cdn.net/d/fPj5Vl66O4ohPbfYRnhIX?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-19T12:18:53Z",
+    "account_id": "1",
+    "lens_name": "Phoenix Solar Diadem",
+    "lens_id": "bb2f7b67-d8e4-4318-91bd-75639d9d7ad1",
+    "checkpoint_id": "06aae7d5-fcb5-72ea-8000-bf1911a0cd6d",
+    "prompt": "Sculpted molten 24k rose-gold phoenix diadem fitted to hairline with radiant solar ember crest. PBR feathered iridescent wings contouring temples with subsurface scattering and 3-point contrast rim lighting. Opening mouth unleashes blinding solar plasma plumage burst and rising golden ash particles; smiling triggers brilliant sun-flare corona around brow. Depth occlusion, zero UI.",
+    "tags": [
+      "phoenix",
+      "firebird",
+      "diadem",
+      "fantasy",
+      "pbr"
+    ],
+    "visual_hook": "Instantaneous flash of a molten rose-gold diadem and blinding solar flare corona around the brow.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/ZwS3norWXST2A6m0RkUVL?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
