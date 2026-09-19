@@ -113,12 +113,12 @@ def audit_preview_video(video_path: str, require_audio: bool = False) -> dict:
     # 3. FFmpeg blackdetect=d=0.1:pix_th=0.10 and freezedetect=n=0.003:d=0.4
     filter_chain = "blackdetect=d=0.1:pix_th=0.10,freezedetect=n=0.003:d=0.4"
     chk_cmd = [
-        "ffmpeg", "-v", "info",
+        "ffmpeg", "-nostdin", "-v", "info",
         "-i", video_path,
         "-vf", filter_chain,
         "-f", "null", "-"
     ]
-    c_res = subprocess.run(chk_cmd, capture_output=True, text=True)
+    c_res = subprocess.run(chk_cmd, stdin=subprocess.DEVNULL, capture_output=True, text=True)
     c_out = (c_res.stderr or "") + "\n" + (c_res.stdout or "")
 
     # Black frame detection: reject if any black frame sequence detected
@@ -845,6 +845,18 @@ class LensVerifier:
                 account_id=sim_lens_data.get("account_id")
             )
 
+            # Render high-CTR viral 320x320 lens icon ("The Pick")
+            lens_icon_path = simulator.generate_viral_lens_icon(
+                out_path="lens_icon.png",
+                account_id=sim_lens_data.get("account_id")
+            )
+
+            # Render high-converting Before/After Split Comparison photo
+            split_photo_path = simulator.render_split_comparison(
+                out_path="preview_split_comparison.png",
+                account_id=sim_lens_data.get("account_id")
+            )
+
             # Evaluate with Gemini Multimodal Vision AI (Dual-Frame: Neutral + Trigger)
             judge_res = simulator.judge_visuals_with_gemini_vision(
                 trigger_screenshot=out_trigger,
@@ -884,6 +896,8 @@ class LensVerifier:
                 "neutral_preview": out_neutral,
                 "trigger_preview": out_trigger,
                 "preview_video": preview_video,
+                "lens_icon": lens_icon_path,
+                "split_comparison": split_photo_path,
                 "video_audit": video_audit
             }
 

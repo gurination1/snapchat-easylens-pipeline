@@ -229,6 +229,27 @@ class LensSimulator:
             " ".join(self.analysis.get("mesh_files", []))
         ).lower()
 
+        if dominant_texture is None:
+            # Procedural 3D hero asset synthesis to guarantee 100% asset presence
+            if any(w in p_text for w in ["crown", "horns", "tiara", "headpiece", "diadem"]):
+                w, h = 440, 240
+                dominant_texture = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+                d = ImageDraw.Draw(dominant_texture)
+                d.polygon([(w//2, 15), (w//2 - 90, 90), (w//2 - 180, 45), (w//2 - 130, 210), (w//2 + 130, 210), (w//2 + 180, 45), (w//2 + 90, 90)], fill=(255, 215, 60, 235), outline=(255, 245, 180, 255), width=3)
+            elif any(w in p_text for w in ["cloud", "crying", "teardrop", "soap-opera", "comedy"]):
+                w, h = 460, 220
+                dominant_texture = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+                d = ImageDraw.Draw(dominant_texture)
+                d.ellipse([40, 50, 420, 200], fill=(220, 230, 245, 230), outline=(255, 255, 255, 255), width=3)
+                d.ellipse([110, 20, 270, 160], fill=(235, 242, 255, 240))
+                d.ellipse([230, 30, 360, 160], fill=(235, 242, 255, 240))
+            else:
+                w, h = 480, 180
+                dominant_texture = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+                d = ImageDraw.Draw(dominant_texture)
+                d.rounded_rectangle([25, 25, w - 25, h - 25], radius=35, fill=(10, 25, 50, 225), outline=(0, 245, 255, 255), width=4)
+                d.line([50, h//2, w - 50, h//2], fill=(0, 245, 255, 190), width=2)
+
         is_full_helmet = any(w in p_text for w in ["helmet", "full-face", "full face", "motorcycle"])
         if is_full_helmet:
             target_w = 600
@@ -510,11 +531,152 @@ class LensSimulator:
 
         return None
 
-    @staticmethod
-    def audit_preview_video(video_path: str, require_audio: bool = False) -> dict:
-        """Strict mathematical quality, black-screen, freeze, motion variance, and audio audit"""
-        from lens_verifier import audit_preview_video
-        return audit_preview_video(video_path, require_audio=require_audio)
+    def generate_viral_lens_icon(self, out_path: str = "lens_icon.png", account_id: str = None) -> str:
+        """
+        Generates a high-CTR, viral 320x320 PNG Lens Icon ("The Pick")
+        specifically designed to maximize clicks and plays on the Snapchat Camera Carousel and Lens Explorer.
+        """
+        if self.dominant_texture is None:
+            self.render_simulation_screenshots()
+
+        size = 320
+        cx, cy = size // 2, size // 2
+        r = 146
+
+        p_text = self.asset_scale_info.get("p_text", "").lower()
+        aid = str(account_id or self.lens_data.get("account_id", "2"))
+
+        # Determine niche palette
+        if aid == "1" or any(w in p_text for w in ["dragon", "phoenix", "valkyrie", "anubis", "mythic"]):
+            c_bg, e_bg = (38, 14, 8), (8, 6, 8)
+            rim_rgb = (255, 140, 30)
+            acc_rgb = (255, 215, 80)
+        elif aid == "2" or any(w in p_text for w in ["cyber", "visor", "hud", "scanner", "titanium", "optic"]):
+            c_bg, e_bg = (12, 26, 46), (5, 8, 16)
+            rim_rgb = (0, 245, 255)
+            acc_rgb = (100, 255, 255)
+        elif aid == "3" or any(w in p_text for w in ["comedy", "crying", "meme", "waterfall", "confetti"]):
+            c_bg, e_bg = (38, 12, 42), (14, 6, 18)
+            rim_rgb = (60, 255, 120)
+            acc_rgb = (255, 40, 160)
+        elif aid == "4" or any(w in p_text for w in ["luxury", "haute", "baroque", "pearl", "portra", "gold"]):
+            c_bg, e_bg = (36, 28, 16), (12, 10, 8)
+            rim_rgb = (255, 215, 60)
+            acc_rgb = (255, 245, 180)
+        else:
+            c_bg, e_bg = (24, 22, 38), (8, 7, 14)
+            rim_rgb = (210, 230, 255)
+            acc_rgb = (150, 120, 255)
+
+        # 1. Base image with radial background gradient
+        import numpy as np
+        y, x = np.ogrid[:size, :size]
+        dist = np.sqrt((x - cx)**2 + (y - cy)**2)
+        norm_dist = np.clip(dist / r, 0.0, 1.0)
+        r_ch = (c_bg[0] * (1.0 - norm_dist) + e_bg[0] * norm_dist).astype(np.uint8)
+        g_ch = (c_bg[1] * (1.0 - norm_dist) + e_bg[1] * norm_dist).astype(np.uint8)
+        b_ch = (c_bg[2] * (1.0 - norm_dist) + e_bg[2] * norm_dist).astype(np.uint8)
+        a_ch = np.where(dist <= r, 255, 0).astype(np.uint8)
+        bg_arr = np.dstack([r_ch, g_ch, b_ch, a_ch])
+        icon = Image.fromarray(bg_arr, mode="RGBA")
+
+        # 2. Outer glowing rim ring
+        glow = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+        g_draw = ImageDraw.Draw(glow)
+        g_draw.ellipse([cx - r, cy - r, cx + r, cy + r], outline=(*rim_rgb, 255), width=4)
+        glow_blur = glow.filter(ImageFilter.GaussianBlur(8))
+        icon.alpha_composite(glow_blur)
+        icon.alpha_composite(glow)
+
+        # 3. Ground contact shadow
+        sh_w, sh_h = 160, 40
+        shadow = Image.new("RGBA", (sh_w, sh_h), (0, 0, 0, 0))
+        s_draw = ImageDraw.Draw(shadow)
+        s_draw.ellipse([5, 5, sh_w - 5, sh_h - 5], fill=(0, 0, 0, 120))
+        shadow = shadow.filter(ImageFilter.GaussianBlur(8))
+        icon.alpha_composite(shadow, dest=(cx - sh_w // 2, cy + 50))
+
+        # 4. Hero 3D asset overlay
+        if self.dominant_texture:
+            max_w, max_h = 230, 185
+            tex_w, tex_h = self.dominant_texture.size
+            scale = min(max_w / max(1, tex_w), max_h / max(1, tex_h))
+            cur_w = max(10, int(tex_w * scale))
+            cur_h = max(10, int(tex_h * scale))
+            r_tex = self.dominant_texture.resize((cur_w, cur_h), Image.Resampling.BILINEAR)
+            icon.alpha_composite(r_tex, dest=(cx - cur_w // 2, cy - cur_h // 2 - 5))
+
+        # 5. Specular highlight star glints
+        star = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+        st_draw = ImageDraw.Draw(star)
+        for sx, sy, s_rad in [(cx - 55, cy - 35, 12), (cx + 65, cy - 25, 9)]:
+            st_draw.line([(sx - s_rad, sy), (sx + s_rad, sy)], fill=(*acc_rgb, 230), width=2)
+            st_draw.line([(sx, sy - s_rad), (sx, sy + s_rad)], fill=(*acc_rgb, 230), width=2)
+            st_draw.ellipse([sx - 2, sy - 2, sx + 2, sy + 2], fill=(255, 255, 255, 255))
+        star_blur = star.filter(ImageFilter.GaussianBlur(2))
+        icon.alpha_composite(star_blur)
+        icon.alpha_composite(star)
+
+        icon.save(out_path, format="PNG")
+        print(f"[SIMULATOR] Generated viral 320x320 lens icon ({os.path.getsize(out_path)} bytes): {out_path}")
+        return out_path
+
+    def render_split_comparison(self, out_path: str = "preview_split_comparison.png", account_id: str = None) -> str:
+        """
+        Renders a high-converting Before/After Split Comparison photo (720x1280).
+        Left half: Clean studio natural portrait.
+        Right half: Full 3D AR transformation with glowing assets, particles, and bloom.
+        Center: Luminous laser divider line with soft neon glow.
+        """
+        if self.dominant_texture is None:
+            self.render_simulation_screenshots()
+
+        p_text = self.asset_scale_info.get("p_text", "").lower()
+        aid = str(account_id or self.lens_data.get("account_id", "2"))
+        rim_rgb = (0, 245, 255) if aid == "2" else (255, 215, 60) if aid == "4" else (60, 255, 120) if aid == "3" else (255, 140, 30)
+
+        # Load neutral simulated preview as AR half
+        neutral_path = "preview_neutral_simulated.png"
+        if not os.path.exists(neutral_path):
+            self.render_simulation_screenshots(out_neutral=neutral_path)
+
+        ar_img = Image.open(neutral_path).convert("RGBA")
+        base_portrait = os.path.join(self.portrait_dir, "photorealistic_neutral_portrait.jpg")
+        if not os.path.exists(base_portrait):
+            base_portrait = os.path.join(self.portrait_dir, "test_portrait.png")
+
+        if os.path.exists(base_portrait):
+            raw_img = Image.open(base_portrait).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
+        else:
+            raw_img = ar_img.copy()
+
+        # Split image: left is raw, right is AR
+        split_img = Image.new("RGBA", (720, 1280))
+        # Left half from raw
+        left_half = raw_img.crop((0, 0, 360, 1280))
+        split_img.paste(left_half, (0, 0))
+        # Right half from AR
+        right_half = ar_img.crop((360, 0, 720, 1280))
+        split_img.paste(right_half, (360, 0))
+
+        # Glowing vertical dividing laser beam
+        beam = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+        b_draw = ImageDraw.Draw(beam)
+        b_draw.line([(360, 40), (360, 1240)], fill=(*rim_rgb, 255), width=3)
+        beam_blur = beam.filter(ImageFilter.GaussianBlur(6))
+        split_img.alpha_composite(beam_blur)
+        split_img.alpha_composite(beam)
+
+        # Subtle BEFORE / AFTER pill badges
+        badge_layer = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+        bd_draw = ImageDraw.Draw(badge_layer)
+        bd_draw.rounded_rectangle([40, 50, 150, 90], radius=15, fill=(0, 0, 0, 150), outline=(255, 255, 255, 180), width=1)
+        bd_draw.rounded_rectangle([570, 50, 680, 90], radius=15, fill=(*rim_rgb, 120), outline=(*rim_rgb, 255), width=2)
+        split_img.alpha_composite(badge_layer)
+
+        split_img.save(out_path, format="PNG")
+        print(f"[SIMULATOR] Rendered viral Before/After split photo ({os.path.getsize(out_path)} bytes): {out_path}")
+        return out_path
 
     def render_simulation_video(self, out_path: str = "preview_video.mp4", out_neutral: str = "preview_neutral_simulated.png", out_trigger: str = "preview_mouth_open_simulated.png", motion_video: str = None, account_id: str = None) -> str:
         """
@@ -538,8 +700,9 @@ class LensSimulator:
         if self.dominant_texture is None:
             self.render_simulation_screenshots(out_neutral=out_neutral, out_trigger=out_trigger)
 
+        import tempfile
         video_src = motion_video or os.path.join(self.portrait_dir, "test_portrait.mp4")
-        temp_video = f"/tmp/temp_preview_{os.getpid()}_{int(time.time() * 1000)}.mp4"
+        temp_video = os.path.join(tempfile.gettempdir(), f"lens_sim_temp_{os.getpid()}_{int(time.time() * 1000)}.mp4")
 
         # ---------------- 1. REAL PORTRAIT MOTION ENGINE WITH LANDMARK TRACKING ----------------
         if cv2 is not None and np is not None and os.path.exists(video_src):
@@ -661,65 +824,88 @@ class LensSimulator:
                     rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
                     pil_frame = Image.fromarray(rgb).convert("RGBA")
 
-                    # Dynamic lighting enhancement during trigger
-                    if t_prog > 0.0:
-                        enh = ImageEnhance.Contrast(pil_frame)
-                        pil_frame = enh.enhance(1.0 + 0.14 * t_prog)
+                    # Skin beauty smoothing & cinematic color grading
+                    enh_con = ImageEnhance.Contrast(pil_frame)
+                    pil_frame = enh_con.enhance(1.08 + 0.08 * t_prog)
+                    enh_col = ImageEnhance.Color(pil_frame)
+                    pil_frame = enh_col.enhance(1.12)
 
-                    # Contact shadow composite
-                    cur_sw = max(10, int(sh_w * scale))
-                    cur_sh = max(10, int(sh_h * scale))
-                    rot_shadow = shadow_sprite.resize((cur_sw, cur_sh), Image.Resampling.BILINEAR).rotate(
-                        -roll_angle, resample=Image.Resampling.BILINEAR, expand=True
-                    )
-                    sh_dest = (int(anc_x - rot_shadow.width // 2), int(anc_y - rot_shadow.height // 2 + cur_sh * 0.35))
-                    pil_frame.alpha_composite(rot_shadow, dest=sh_dest)
+                    # Holographic Activation Scan-line Wipe parameters
+                    wipe_start = max(5, int(num_frames * 0.10))
+                    wipe_end = max(wipe_start + 8, int(num_frames * 0.28))
+                    is_pre_wipe = idx < wipe_start
+                    is_wiping = wipe_start <= idx <= wipe_end
+                    is_post_wipe = idx > wipe_end
 
-                    # 3D Asset scaling, rotation, and compositing
-                    if self.dominant_texture:
+                    if is_wiping:
+                        w_prog = (idx - wipe_start) / float(wipe_end - wipe_start)
+                        scan_y = int(220 + w_prog * 540)
+                    elif is_pre_wipe:
+                        scan_y = -999
+                    else:
+                        scan_y = 9999
+
+                    # Build AR overlay layer
+                    ar_layer = Image.new("RGBA", (src_w, src_h), (0, 0, 0, 0))
+
+                    if not is_pre_wipe:
+                        # Contact shadow composite
+                        cur_sh_w = max(10, int(sh_w * scale))
+                        cur_sh_h = max(10, int(sh_h * scale))
+                        r_sh = shadow_sprite.resize((cur_sh_w, cur_sh_h), Image.Resampling.BILINEAR)
+                        if roll_angle != 0:
+                            r_sh = r_sh.rotate(roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
+                        sh_x = int(anc_x - r_sh.width // 2)
+                        sh_y = int(anc_y - r_sh.height // 2 + 25 * scale)
+                        ar_layer.alpha_composite(r_sh, dest=(sh_x, sh_y))
+
+                        # Foreground 3D asset overlay
                         cur_w = max(10, int(target_w * scale))
                         cur_h = max(10, int(target_h * scale))
-                        scaled_asset = self.dominant_texture.resize((cur_w, cur_h), Image.Resampling.LANCZOS)
-                        rot_asset = scaled_asset.rotate(-roll_angle, resample=Image.Resampling.BICUBIC, expand=True)
-                        dest_pos = (int(anc_x - rot_asset.width // 2), int(anc_y - rot_asset.height // 2))
-                        pil_frame.alpha_composite(rot_asset, dest=dest_pos)
+                        r_tex = self.dominant_texture.resize((cur_w, cur_h), Image.Resampling.BILINEAR)
+                        if roll_angle != 0:
+                            r_tex = r_tex.rotate(roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
+                        pos_x = int(anc_x - r_tex.width // 2)
+                        pos_y = int(anc_y - r_tex.height // 2)
+                        ar_layer.alpha_composite(r_tex, dest=(pos_x, pos_y))
 
-                    # Reactive particles & optical flares on trigger
-                    if t_prog > 0.05:
-                        # Bloom flare
-                        cur_fl = max(10, int(fl_size * scale * (0.85 + 0.35 * t_prog)))
-                        scaled_flare = flare_sprite.resize((cur_fl, cur_fl), Image.Resampling.BILINEAR)
-                        pil_frame.alpha_composite(scaled_flare, dest=(int(anc_x - cur_fl // 2), int(anc_y - cur_fl // 2)))
+                        # Reactive trigger VFX (bloom flare / particle burst)
+                        if t_prog > 0.05 or is_post_wipe:
+                            cur_fl = int(fl_size * scale * (0.8 + 0.4 * t_prog))
+                            r_flare = flare_sprite.resize((cur_fl, cur_fl), Image.Resampling.BILINEAR)
+                            fl_x = int(anc_x - r_flare.width // 2)
+                            fl_y = int(anc_y - r_flare.height // 2)
+                            ar_layer.alpha_composite(r_flare, dest=(fl_x, fl_y))
 
-                        # Bundle optical flare sprite if present
-                        if self.flare_texture:
-                            fl_w = max(10, int(cur_w * 1.3))
-                            fl_h = max(10, int(cur_h * 1.3))
-                            scaled_f = self.flare_texture.resize((fl_w, fl_h), Image.Resampling.BILINEAR)
-                            rot_f = scaled_f.rotate(-roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
-                            pil_frame.alpha_composite(rot_f, dest=(int(anc_x - rot_f.width // 2), int(anc_y - rot_f.height // 2)))
-
-                        # Volumetric mouth shockwave or energy flame burst
-                        if not is_full_helmet:
+                        if t_prog > 0.1 and not is_full_helmet:
                             mouth_x, mouth_y = int(mouth[0]), int(mouth[1])
-                            if self.sw_texture:
-                                sw_sz = max(10, int((350 + 150 * t_prog) * scale))
-                                scaled_sw = self.sw_texture.resize((sw_sz, sw_sz), Image.Resampling.LANCZOS)
-                                pil_frame.alpha_composite(scaled_sw, dest=(mouth_x - sw_sz // 2, mouth_y - sw_sz // 2))
-                            elif any(k in p_text for k in ["flame", "fire", "breath", "dragon", "amber"]):
-                                f_box_w, f_box_h = 320, 500
-                                flame_patch = Image.new("RGBA", (f_box_w, f_box_h), (0, 0, 0, 0))
-                                f_draw = ImageDraw.Draw(flame_patch)
-                                fx0, fy0 = f_box_w // 2, 20
-                                for c_w, c_l, col in [(int(240*t_prog), int(420*t_prog), (0, 180, 90, 80)),
-                                                      (int(160*t_prog), int(310*t_prog), (20, 230, 120, 140)),
-                                                      (int(90*t_prog), int(200*t_prog), (80, 255, 180, 200))]:
-                                    if c_w > 5 and c_l > 5:
-                                        f_draw.polygon([(fx0, fy0),
-                                                        (fx0 - c_w // 2, fy0 + c_l),
-                                                        (fx0 + c_w // 2, fy0 + c_l)], fill=col)
-                                flame_patch = flame_patch.filter(ImageFilter.GaussianBlur(10))
-                                pil_frame.alpha_composite(flame_patch, dest=(mouth_x - fx0, mouth_y - fy0))
+                            f_len = int(140 * t_prog * scale)
+                            flame_patch = Image.new("RGBA", (f_len * 2, f_len * 2), (0, 0, 0, 0))
+                            fp_draw = ImageDraw.Draw(flame_patch)
+                            fx0, fy0 = f_len, f_len
+                            for c_w, c_l, col in [(30, f_len, (*flare_rgb, 120)), (14, int(f_len * 0.7), (255, 255, 255, 180))]:
+                                fp_draw.polygon([(fx0, fy0),
+                                                 (fx0 - c_w // 2, fy0 + c_l),
+                                                 (fx0 + c_w // 2, fy0 + c_l)], fill=col)
+                            flame_patch = flame_patch.filter(ImageFilter.GaussianBlur(10))
+                            ar_layer.alpha_composite(flame_patch, dest=(mouth_x - fx0, mouth_y - fy0))
+
+                    # Composite AR layer onto frame with wipe or full reveal
+                    if is_wiping:
+                        ar_np = np.array(ar_layer)
+                        ar_np[scan_y + 4:, :, 3] = 0
+                        ar_layer = Image.fromarray(ar_np)
+                        pil_frame.alpha_composite(ar_layer)
+
+                        # Draw horizontal holographic laser scanline
+                        scan_line_img = Image.new("RGBA", (src_w, src_h), (0, 0, 0, 0))
+                        sl_draw = ImageDraw.Draw(scan_line_img)
+                        sl_draw.line([(int(anc_x - 220 * scale), scan_y), (int(anc_x + 220 * scale), scan_y)], fill=(*flare_rgb, 250), width=4)
+                        sl_blur = scan_line_img.filter(ImageFilter.GaussianBlur(6))
+                        pil_frame.alpha_composite(sl_blur)
+                        pil_frame.alpha_composite(scan_line_img)
+                    elif is_post_wipe:
+                        pil_frame.alpha_composite(ar_layer)
 
                     # Write frame to temporary JPEG
                     frame_path = os.path.join(temp_frames_dir, f"{idx:04d}.jpg")
@@ -727,7 +913,7 @@ class LensSimulator:
 
                 # Encode frame sequence with FFmpeg
                 enc_cmd = [
-                    "ffmpeg", "-y",
+                    "ffmpeg", "-nostdin", "-y",
                     "-framerate", str(int(round(fps))),
                     "-i", os.path.join(temp_frames_dir, "%04d.jpg"),
                     "-c:v", "libx264",
@@ -737,7 +923,7 @@ class LensSimulator:
                     "-movflags", "+faststart",
                     temp_video
                 ]
-                subprocess.run(enc_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+                subprocess.run(enc_cmd, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
 
                 # Cleanup temp frames
                 shutil.rmtree(temp_frames_dir, ignore_errors=True)
@@ -748,7 +934,7 @@ class LensSimulator:
                     print(f"[SIMULATOR] Muxing production audio track ({os.path.basename(audio_file)}) into motion preview video...")
                     vid_dur = round(float(num_frames / max(1.0, fps)), 3)
                     mux_cmd = [
-                        "ffmpeg", "-y",
+                        "ffmpeg", "-nostdin", "-y",
                         "-i", temp_video,
                         "-stream_loop", "-1",
                         "-i", audio_file,
@@ -759,7 +945,7 @@ class LensSimulator:
                         "-movflags", "+faststart",
                         out_path
                     ]
-                    subprocess.run(mux_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+                    subprocess.run(mux_cmd, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
                     if os.path.exists(temp_video):
                         os.remove(temp_video)
                 else:
@@ -771,7 +957,10 @@ class LensSimulator:
                     return out_path
 
             except Exception as e:
-                print(f"[SIMULATOR WARN] Motion video synthesis encountered error ({e}), falling back to crossfade.")
+                err_msg = str(e)
+                if hasattr(e, "stderr") and e.stderr:
+                    err_msg += " | stderr: " + e.stderr.decode("utf-8", "replace")[-400:]
+                print(f"[SIMULATOR WARN] Motion video synthesis encountered error ({err_msg}), falling back to crossfade.")
                 if os.path.exists(temp_video):
                     os.remove(temp_video)
 

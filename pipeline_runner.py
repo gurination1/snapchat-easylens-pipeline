@@ -434,12 +434,29 @@ def main():
             except Exception as e:
                 print(f"[PREVIEW VIDEO WARN] Bolt upload failed ({e}). Proceeding without preview video.")
 
+        # Check for viral lens icon from Gate 7
+        icon_url = None
+        icon_key = None
+        icon_path = g7.get("lens_icon") or "lens_icon.png"
+        if os.path.exists(icon_path):
+            print("\n=== STEP 5.6: UPLOADING HIGH-CTR VIRAL LENS ICON ('THE PICK') TO BOLT CDN ===")
+            try:
+                with open(icon_path, "rb") as f:
+                    i_bytes = f.read()
+                icon_url, icon_key = client.upload_preview_video(i_bytes)
+                print(f"[VIRAL ICON OK] CDN URL: {icon_url}")
+                print(f"[VIRAL ICON OK] AES Key: {icon_key[:10]}...")
+            except Exception as e:
+                print(f"[VIRAL ICON WARN] Bolt upload failed ({e}). Proceeding with default icon.")
+
         pub_res = client.publish_lens(
             conversation_id=cid,
             lens_name=final_lens_name,
             tags=tags,
             preview_url=preview_url,
-            preview_encryption_key=preview_key
+            preview_encryption_key=preview_key,
+            icon_url=icon_url,
+            icon_encryption_key=icon_key
         )
         print("Publish response:", pub_res)
 

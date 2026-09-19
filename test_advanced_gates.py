@@ -79,8 +79,8 @@ def test_video_audit_motion_portrait():
     audit = LensSimulator.audit_preview_video(portrait_vid)
     print("Motion video audit:", audit)
     assert audit["passed"] is True
-    assert audit["motion_rms_delta"] > 0.8
-    assert audit["width"] == 720 and audit["height"] == 1280
+    assert audit["motion_variance"]["avg_rms"] > 0.8
+    assert audit["resolution"] == [720, 1280]
     print(">>> TEST 5 PASSED!\n")
 
 def test_audio_resolver():
