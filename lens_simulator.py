@@ -426,6 +426,10 @@ class LensSimulator:
             t_resized = dominant_texture.resize((target_w, target_h), Image.Resampling.LANCZOS)
             comp_n.alpha_composite(t_resized, dest=pos)
 
+        # Apply tailored procedural idle niche effects onto neutral frame
+        niche = self.resolve_visual_niche(account_id=self.lens_data.get("account_id"))
+        comp_n = self.render_niche_effects_neutral(comp_n, niche, pos, target_w, target_h, ev_y)
+
         # ---------------- TRIGGER FRAME COMPOSITING (HIGH IMPACT VIRALITY) ----------------
         # 1. Atmospheric lighting & rim grading on portrait
         enh_t = ImageEnhance.Contrast(img_t)
@@ -501,6 +505,9 @@ class LensSimulator:
             eye_sparkle = eye_sparkle.filter(ImageFilter.GaussianBlur(5))
             comp_t = Image.alpha_composite(comp_t, eye_sparkle)
 
+        # Apply tailored procedural climax niche effects onto trigger frame
+        comp_t = self.render_niche_effects_trigger(comp_t, niche, pos, target_w, target_h, ev_y, progression=1.0)
+
         img_n = comp_n
         img_t = comp_t
 
@@ -508,6 +515,268 @@ class LensSimulator:
         img_t.convert("RGB").save(out_trigger, "PNG")
         print(f"[SIMULATOR] Rendered production simulation screenshots: {out_neutral} & {out_trigger}")
         return out_neutral, out_trigger
+
+    def resolve_visual_niche(self, account_id: str = None) -> str:
+        """Determines the visual archetype niche (mythic, cyber, comedy, luxury, chrome) for tailored VFX compositing"""
+        stem = self.resolve_audio_track(account_id)
+        if "mythic" in stem:
+            return "mythic"
+        elif "cyber" in stem:
+            return "cyber"
+        elif "comedy" in stem:
+            return "comedy"
+        elif "luxury" in stem:
+            return "luxury"
+        elif "mercury" in stem or "drift" in stem:
+            return "chrome"
+        return "cyber"
+
+    def render_niche_effects_neutral(self, base_img: Image.Image, niche: str, pos: tuple, target_w: int, target_h: int, ev_y: int = 495) -> Image.Image:
+        """Renders authentic idle ambient effects tailored to the lens niche onto the neutral portrait"""
+        overlay = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+        draw = ImageDraw.Draw(overlay)
+        cx = 360
+        anc_y = pos[1] + target_h // 2
+
+        if niche == "mythic":
+            for ox, oy, rad, col in [
+                (-160, -60, 5, (255, 180, 40, 220)),
+                (-110, -90, 4, (40, 230, 120, 200)),
+                (-60, -110, 6, (255, 215, 60, 240)),
+                (0, -120, 7, (255, 235, 100, 255)),
+                (60, -110, 6, (255, 215, 60, 240)),
+                (110, -90, 4, (40, 230, 120, 200)),
+                (160, -60, 5, (255, 180, 40, 220)),
+                (-130, -20, 3, (255, 140, 30, 180)),
+                (130, -20, 3, (255, 140, 30, 180)),
+                (-80, -40, 4, (40, 220, 140, 190)),
+                (80, -40, 4, (40, 220, 140, 190)),
+            ]:
+                px, py = cx + ox, anc_y + oy
+                draw.ellipse([px - rad, py - rad, px + rad, py + rad], fill=col)
+            draw.ellipse([cx - 180, anc_y - 40, cx + 180, anc_y + 40], fill=(255, 180, 40, 45))
+
+        elif niche == "cyber":
+            rx, ry = 475, ev_y
+            draw.ellipse([rx - 28, ry - 28, rx + 28, ry + 28], outline=(0, 245, 255, 200), width=2)
+            draw.line([(rx - 36, ry), (rx - 12, ry)], fill=(0, 245, 255, 220), width=2)
+            draw.line([(rx + 12, ry), (rx + 36, ry)], fill=(0, 245, 255, 220), width=2)
+            draw.line([(rx, ry - 36), (rx, ry - 12)], fill=(0, 245, 255, 220), width=2)
+            draw.line([(rx, ry + 12), (rx, ry + 36)], fill=(0, 245, 255, 220), width=2)
+            lx, ly = 245, ev_y
+            draw.arc([lx - 25, ly - 25, lx + 25, ly + 25], start=45, end=135, fill=(255, 0, 140, 180), width=2)
+            draw.arc([lx - 25, ly - 25, lx + 25, ly + 25], start=225, end=315, fill=(255, 0, 140, 180), width=2)
+            draw.arc([pos[0] + 20, pos[1] + 10, pos[0] + target_w - 20, pos[1] + 45], start=10, end=170, fill=(200, 250, 255, 120), width=2)
+
+        elif niche == "comedy":
+            cloud_y = pos[1] - 40
+            for cox, coy, crad in [(-60, 0, 45), (-25, -20, 55), (25, -15, 50), (60, 5, 40)]:
+                draw.ellipse([cx + cox - crad, cloud_y + coy - crad, cx + cox + crad, cloud_y + coy + crad], fill=(220, 235, 250, 180))
+            for ex in [250, 470]:
+                draw.ellipse([ex - 15, ev_y + 12, ex + 15, ev_y + 24], fill=(120, 210, 255, 220))
+                draw.ellipse([ex - 6, ev_y + 15, ex + 6, ev_y + 21], fill=(255, 255, 255, 255))
+            draw.ellipse([180, ev_y - 45, 196, ev_y - 25], fill=(140, 220, 255, 200))
+
+        elif niche == "luxury":
+            for px in [-120, -60, 0, 60, 120]:
+                p_x = cx + px
+                p_y = pos[1] + 15
+                draw.ellipse([p_x - 7, p_y - 7, p_x + 7, p_y + 7], fill=(255, 255, 240, 240))
+                draw.ellipse([p_x - 3, p_y - 5, p_x + 1, p_y - 1], fill=(255, 255, 255, 255))
+            draw.ellipse([230, ev_y + 35, 270, ev_y + 65], fill=(255, 215, 120, 60))
+            draw.ellipse([450, ev_y + 35, 490, ev_y + 65], fill=(255, 215, 120, 60))
+
+        elif niche == "chrome":
+            for ox, oy, rad in [(-150, -50, 9), (-90, -80, 13), (0, -95, 16), (90, -75, 12), (150, -45, 8)]:
+                px, py = cx + ox, anc_y + oy
+                draw.ellipse([px - rad, py - rad, px + rad, py + rad], fill=(210, 225, 240, 230))
+                draw.ellipse([px - rad + 3, py - rad + 2, px + rad - 4, py + rad - 6], fill=(255, 255, 255, 255))
+
+        blurred = overlay.filter(ImageFilter.GaussianBlur(3))
+        comp = Image.alpha_composite(base_img, blurred)
+        return Image.alpha_composite(comp, overlay)
+
+    def render_niche_effects_trigger(self, base_img: Image.Image, niche: str, pos: tuple, target_w: int, target_h: int, ev_y: int = 495, progression: float = 1.0) -> Image.Image:
+        """Renders high-impact climax reaction effects tailored to the lens niche on trigger frames"""
+        overlay = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+        draw = ImageDraw.Draw(overlay)
+        cx = 360
+        anc_y = pos[1] + target_h // 2
+        p = max(0.1, min(1.0, progression))
+
+        if niche == "mythic":
+            flame = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            f_draw = ImageDraw.Draw(flame)
+            f_len = int(420 * p)
+            f_w = int(260 * p)
+            for cone_w, cone_len, col in [
+                (f_w, f_len, (40, 220, 100, int(110 * p))),
+                (int(f_w * 0.7), int(f_len * 0.75), (255, 180, 30, int(160 * p))),
+                (int(f_w * 0.4), int(f_len * 0.5), (255, 240, 120, int(220 * p))),
+                (int(f_w * 0.2), int(f_len * 0.25), (255, 255, 255, 255))
+            ]:
+                f_draw.polygon([
+                    (cx, 670),
+                    (cx - cone_w // 2, 670 + cone_len),
+                    (cx + cone_w // 2, 670 + cone_len)
+                ], fill=col)
+            flame = flame.filter(ImageFilter.GaussianBlur(14))
+            overlay.alpha_composite(flame)
+
+            for ex in [250, 470]:
+                draw.ellipse([ex - 22, ev_y - 22, ex + 22, ev_y + 22], fill=(255, 215, 60, int(200 * p)))
+                draw.line([(ex - 40, ev_y), (ex + 40, ev_y)], fill=(255, 255, 200, 255), width=3)
+                draw.line([(ex, ev_y - 40), (ex, ev_y + 40)], fill=(255, 255, 200, 255), width=3)
+
+        elif niche == "cyber":
+            draw.line([(0, ev_y), (720, ev_y)], fill=(0, 245, 255, int(220 * p)), width=6)
+            draw.line([(60, ev_y), (660, ev_y)], fill=(255, 255, 255, 255), width=3)
+            sw_r = int(140 * p)
+            draw.ellipse([cx - sw_r, ev_y - int(sw_r * 0.6), cx + sw_r, ev_y + int(sw_r * 0.6)], outline=(0, 245, 255, int(180 * p)), width=3)
+            font_hud = get_bold_font(13)
+            draw.text((cx - 70, ev_y - 48), "OVERDRIVE // 100%", fill=(0, 245, 255, 240), font=font_hud)
+
+        elif niche == "comedy":
+            t_len = int(320 * p)
+            pts_left = [
+                (250, 435),
+                (246, 435 + int(t_len * 0.3)),
+                (258, 435 + int(t_len * 0.6)),
+                (275, 435 + t_len)
+            ]
+            pts_right = [
+                (470, 435),
+                (474, 435 + int(t_len * 0.3)),
+                (462, 435 + int(t_len * 0.6)),
+                (445, 435 + t_len)
+            ]
+            for pts in [pts_left, pts_right]:
+                for w_outer, col in [(18, (100, 200, 255, 140)), (10, (140, 225, 255, 200)), (4, (255, 255, 255, 240))]:
+                    for i in range(len(pts) - 1):
+                        draw.line([pts[i], pts[i+1]], fill=col, width=w_outer)
+                bx, by = pts[-1]
+                draw.ellipse([bx - 12, by - 12, bx + 12, by + 12], fill=(120, 215, 255, 230))
+                draw.ellipse([bx - 6, by - 8, bx + 2, by - 2], fill=(255, 255, 255, 255))
+            if p > 0.6:
+                for spx, spy in [(280, 780), (440, 780), (360, 810)]:
+                    draw.ellipse([spx - 8, spy - 8, spx + 8, spy + 8], fill=(140, 220, 255, 210))
+
+        elif niche == "luxury":
+            for sx, sy, s_rad in [
+                (225, ev_y + 40, 12), (260, ev_y + 25, 16), (285, ev_y + 55, 10), (245, ev_y + 70, 14),
+                (495, ev_y + 40, 12), (460, ev_y + 25, 16), (435, ev_y + 55, 10), (475, ev_y + 70, 14),
+                (360, pos[1] - 10, 18), (310, pos[1] + 10, 14), (410, pos[1] + 10, 14)
+            ]:
+                s_len = int(s_rad * p)
+                draw.line([(sx - s_len, sy), (sx + s_len, sy)], fill=(255, 240, 180, int(230 * p)), width=3)
+                draw.line([(sx, sy - s_len), (sx, sy + s_len)], fill=(255, 240, 180, int(230 * p)), width=3)
+                draw.ellipse([sx - 3, sy - 3, sx + 3, sy + 3], fill=(255, 255, 255, 255))
+            draw.ellipse([cx - 220, pos[1] - 80, cx + 220, pos[1] + 120], fill=(255, 215, 80, int(75 * p)))
+
+        elif niche == "chrome":
+            for tox, toy, tw, th in [(-120, 0, 35, 110), (120, 0, 35, 110), (0, -40, 50, 80)]:
+                draw.ellipse([cx + tox - tw, anc_y + toy - th, cx + tox + tw, anc_y + toy + th], fill=(225, 235, 245, int(210 * p)))
+                draw.ellipse([cx + tox - tw + 6, anc_y + toy - th + 4, cx + tox + tw - 8, anc_y + toy + th - 12], fill=(255, 255, 255, 255))
+            prism_r = int(160 * p)
+            draw.ellipse([cx - prism_r, anc_y - prism_r, cx + prism_r, anc_y + prism_r], outline=(200, 230, 255, int(150 * p)), width=3)
+
+        blurred = overlay.filter(ImageFilter.GaussianBlur(4))
+        comp = Image.alpha_composite(base_img, blurred)
+        return Image.alpha_composite(comp, overlay)
+
+    def render_niche_video_vfx(self, ar_layer: Image.Image, niche: str, landmarks: list, scale: float, t_prog: float, flare_rgb: tuple, anc_x: float, anc_y: float) -> Image.Image:
+        """Renders dynamic, motion-tracked niche effects on vertical preview video frames"""
+        draw = ImageDraw.Draw(ar_layer)
+        le, re, nose, fh, mouth = landmarks
+        le_x, le_y = float(le[0]), float(le[1])
+        re_x, re_y = float(re[0]), float(re[1])
+        mouth_x, mouth_y = float(mouth[0]), float(mouth[1])
+        nose_x, nose_y = float(nose[0]), float(nose[1])
+
+        if niche == "comedy":
+            if t_prog > 0.08:
+                t_len = int(240 * t_prog * scale)
+                pts_l = [
+                    (int(le_x), int(le_y + 12 * scale)),
+                    (int(le_x - 3 * scale), int(le_y + 12 * scale + t_len * 0.4)),
+                    (int(le_x + 8 * scale), int(le_y + 12 * scale + t_len))
+                ]
+                pts_r = [
+                    (int(re_x), int(re_y + 12 * scale)),
+                    (int(re_x + 3 * scale), int(re_y + 12 * scale + t_len * 0.4)),
+                    (int(re_x - 8 * scale), int(re_y + 12 * scale + t_len))
+                ]
+                for pts in [pts_l, pts_r]:
+                    for w_outer, col in [(int(14 * scale), (100, 200, 255, 140)), (int(7 * scale), (160, 230, 255, 210)), (max(2, int(3 * scale)), (255, 255, 255, 240))]:
+                        for i in range(len(pts) - 1):
+                            draw.line([pts[i], pts[i+1]], fill=col, width=w_outer)
+                    bx, by = pts[-1]
+                    b_rad = max(4, int(9 * scale))
+                    draw.ellipse([bx - b_rad, by - b_rad, bx + b_rad, by + b_rad], fill=(120, 215, 255, 230))
+                    draw.ellipse([bx - 3, by - 4, bx + 2, by + 1], fill=(255, 255, 255, 255))
+                if t_prog > 0.5:
+                    for sp_ox in [-30, 30]:
+                        sp_x = int(mouth_x + sp_ox * scale)
+                        sp_y = int(mouth_y + 70 * scale)
+                        draw.ellipse([sp_x - 5, sp_y - 5, sp_x + 5, sp_y + 5], fill=(140, 220, 255, 200))
+
+        elif niche == "cyber":
+            rx, ry = int(re_x), int(re_y)
+            r_rad = max(10, int(26 * scale))
+            draw.ellipse([rx - r_rad, ry - r_rad, rx + r_rad, ry + r_rad], outline=(0, 245, 255, 210), width=2)
+            draw.line([(rx - r_rad - 6, ry), (rx - r_rad + 6, ry)], fill=(0, 245, 255, 220), width=2)
+            draw.line([(rx + r_rad - 6, ry), (rx + r_rad + 6, ry)], fill=(0, 245, 255, 220), width=2)
+            draw.line([(rx, ry - r_rad - 6), (rx, ry - r_rad + 6)], fill=(0, 245, 255, 220), width=2)
+            draw.line([(rx, ry + r_rad - 6), (rx, ry + r_rad + 6)], fill=(0, 245, 255, 220), width=2)
+            if t_prog > 0.15:
+                draw.line([(int(le_x - 120 * scale), int(re_y)), (int(re_x + 120 * scale), int(re_y))], fill=(0, 245, 255, int(180 * t_prog)), width=3)
+
+        elif niche == "mythic":
+            if t_prog > 0.08:
+                f_len = int(180 * t_prog * scale)
+                f_w = int(120 * t_prog * scale)
+                flame_patch = Image.new("RGBA", (f_len * 2, f_len * 2), (0, 0, 0, 0))
+                fp_draw = ImageDraw.Draw(flame_patch)
+                fx0, fy0 = f_len, f_len
+                for c_w, c_l, col in [
+                    (f_w, f_len, (40, 220, 110, int(130 * t_prog))),
+                    (int(f_w * 0.6), int(f_len * 0.75), (255, 180, 40, int(180 * t_prog))),
+                    (int(f_w * 0.25), int(f_len * 0.4), (255, 255, 255, 240))
+                ]:
+                    fp_draw.polygon([
+                        (fx0, fy0),
+                        (fx0 - c_w // 2, fy0 + c_l),
+                        (fx0 + c_w // 2, fy0 + c_l)
+                    ], fill=col)
+                flame_patch = flame_patch.filter(ImageFilter.GaussianBlur(8))
+                ar_layer.alpha_composite(flame_patch, dest=(int(mouth_x - fx0), int(mouth_y - fy0)))
+
+        elif niche == "luxury":
+            for sx, sy in [
+                (int(le_x - 18 * scale), int(nose_y - 10 * scale)),
+                (int(re_x + 18 * scale), int(nose_y - 10 * scale)),
+                (int(le_x - 32 * scale), int(nose_y + 15 * scale)),
+                (int(re_x + 32 * scale), int(nose_y + 15 * scale)),
+                (int(anc_x), int(anc_y - 45 * scale))
+            ]:
+                s_rad = max(4, int(12 * scale * (0.7 + 0.5 * t_prog)))
+                draw.line([(sx - s_rad, sy), (sx + s_rad, sy)], fill=(255, 240, 180, 230), width=2)
+                draw.line([(sx, sy - s_rad), (sx, sy + s_rad)], fill=(255, 240, 180, 230), width=2)
+                draw.ellipse([sx - 2, sy - 2, sx + 2, sy + 2], fill=(255, 255, 255, 255))
+
+        elif niche == "chrome":
+            import math
+            for orb_i in range(5):
+                angle = orb_i * (2 * math.pi / 5.0) + (t_prog * math.pi)
+                rad_x = int(80 * scale)
+                rad_y = int(35 * scale)
+                ox = int(anc_x + rad_x * math.cos(angle))
+                oy = int(anc_y - 25 * scale + rad_y * math.sin(angle))
+                drop_r = max(3, int(7 * scale))
+                draw.ellipse([ox - drop_r, oy - drop_r, ox + drop_r, oy + drop_r], fill=(220, 235, 245, 220))
+                draw.ellipse([ox - 2, oy - 2, ox + 1, oy + 1], fill=(255, 255, 255, 255))
+
+        return ar_layer
 
     def resolve_audio_track(self, account_id: str = None) -> str:
         """Dynamically resolve royalty-free audio stem matching account persona or prompt archetype"""
@@ -1084,18 +1353,9 @@ class LensSimulator:
                             fl_y = int(anc_y - r_flare.height // 2)
                             ar_layer.alpha_composite(r_flare, dest=(fl_x, fl_y))
 
-                        if t_prog > 0.1 and not is_full_helmet:
-                            mouth_x, mouth_y = int(mouth[0]), int(mouth[1])
-                            f_len = int(140 * t_prog * scale)
-                            flame_patch = Image.new("RGBA", (f_len * 2, f_len * 2), (0, 0, 0, 0))
-                            fp_draw = ImageDraw.Draw(flame_patch)
-                            fx0, fy0 = f_len, f_len
-                            for c_w, c_l, col in [(30, f_len, (*flare_rgb, 120)), (14, int(f_len * 0.7), (255, 255, 255, 180))]:
-                                fp_draw.polygon([(fx0, fy0),
-                                                 (fx0 - c_w // 2, fy0 + c_l),
-                                                 (fx0 + c_w // 2, fy0 + c_l)], fill=col)
-                            flame_patch = flame_patch.filter(ImageFilter.GaussianBlur(10))
-                            ar_layer.alpha_composite(flame_patch, dest=(mouth_x - fx0, mouth_y - fy0))
+                        # Render tailored reactive niche animation anchored to moving face landmarks
+                        niche = self.resolve_visual_niche(account_id=aid)
+                        ar_layer = self.render_niche_video_vfx(ar_layer, niche, landmarks, scale, t_prog, flare_rgb, anc_x, anc_y)
 
                     # Composite AR layer onto frame with wipe or full reveal
                     if is_wiping:

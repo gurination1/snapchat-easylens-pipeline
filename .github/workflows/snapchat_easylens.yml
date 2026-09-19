@@ -133,11 +133,15 @@ jobs:
           if [ -n "$TARGET_ACC" ]; then
             export ACCOUNT_ID="$TARGET_ACC"
           else
-            # Scheduled cron: dynamically cycle across accounts 1 to 5
-            DAY=$(date -u +%j)
+            # Scheduled cron: alternate between Account 1 (Atelier & Mythic) and Account 2 (Cyber & Kinetic)
+            # 08:00 UTC -> Account 1 | 20:00 UTC -> Account 2 (Strict 1 submission / account / 24h)
             HOUR=$(date -u +%H)
-            SLOT=$(( (10#$DAY * 2 + 10#$HOUR / 12) % 5 + 1 ))
-            echo "Cron triggered: Auto-assigned Account Persona #$SLOT"
+            if [ "$HOUR" -lt 14 ]; then
+              SLOT=1
+            else
+              SLOT=2
+            fi
+            echo "Cron triggered: Auto-assigned active Account #$SLOT (Pacing: 1 lens per account per 24h)"
             export ACCOUNT_ID="$SLOT"
           fi
           echo "=== RUNNING PRE-FLIGHT ZERO-DEFECT QUALITY GATES ==="
