@@ -59,10 +59,10 @@ def fetch_latest_snap_tiv_url(gmail_user: str, gmail_app_pwd: str, min_timestamp
             msg = email.message_from_bytes(data[0][1])
             date_tuple = email.utils.parsedate_tz(msg.get("Date"))
             msg_time = email.utils.mktime_tz(date_tuple) if date_tuple else 0
-            if msg_time < min_timestamp:
+            if msg_time < (min_timestamp - 300):
                 continue
             subject = msg.get("Subject", "")
-            if any(w in subject.lower() for w in ["verification", "sign-in", "signin", "security", "snapchat"]):
+            if any(w in subject.lower() for w in ["verification", "sign-in", "signin", "security", "snapchat", "confirm", "login"]):
                 html = ""
                 for part in msg.walk():
                     if part.get_content_type() == "text/html":
@@ -73,8 +73,8 @@ def fetch_latest_snap_tiv_url(gmail_user: str, gmail_app_pwd: str, min_timestamp
                 anchors = re.findall(r"<a[^>]*href=[\"\x27]([^\"]+)[\"\x27][^>]*>(.*?)</a>", html, re.DOTALL)
                 for href, text in anchors:
                     clean_text = re.sub(r"<[^>]+>", "", text).strip()
-                    if "Approve" in clean_text or "tiv/landing" in href:
-                        print(f"[GMAIL IMAP] Found Snapchat Approve link in message #{mid.decode()} ('{clean_text}')")
+                    if "tiv/landing" in href or "tiv" in href.lower() or any(w in clean_text.lower() for w in ["approve", "confirm", "yes, this was me"]):
+                        print(f"[GMAIL IMAP] Found Snapchat Approve link in message #{mid.decode()} ('{clean_text}'): {href[:80]}...")
                         mail.logout()
                         return href
         mail.logout()
@@ -524,8 +524,11 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
         except Exception:
             pass
 
-        # Step 1: Fill Account Identifier (Username)
-        login_user = "gman21478" if ("@" in username or "gurination" in username or not username) else username
+        # Step 1: Fill Account Identifier (Username or Email)
+        if str(account_id) == "1" and ("@" in username or "gurination1" in username or not username):
+            login_user = "gman21478"
+        else:
+            login_user = username
         print(f"[STEP 1] Locating username field (human typing: {login_user})...")
         account_input = await page.wait_for_selector(
             "input[name='accountIdentifier'], input#accountIdentifier, input[type='text']",
