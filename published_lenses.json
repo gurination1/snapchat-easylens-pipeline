@@ -67,5 +67,24 @@
     ],
     "visual_hook": "Instantaneous flash of opulent 24k gold leaf and caustic crystal light refraction framing the user's upper face with timeless analog warmth.",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-19T03:47:51Z",
+    "account_id": "3",
+    "lens_name": "Cloudy Comedy Peak",
+    "lens_id": "4b8fb271-5bf6-4a3d-8a41-014a4d4efe87",
+    "checkpoint_id": "06aae05a-c611-7660-8000-77cae04da056",
+    "prompt": "Fluffy PBR volumetric cartoon stormcloud anchored directly above head, casting ray-traced contact shadows with soft 6500K/2800K directional rim lighting and ambient thunder glow. Opening mouth triggers physics-driven liquid mercury teardrop geyser and spinning 24k gold coins bouncing off screen frame. Smiling triggers warm dramatic rim flash. Zero strobe, safe performance.",
+    "tags": [
+      "meme",
+      "crying",
+      "funny",
+      "cloud",
+      "cartoon"
+    ],
+    "visual_hook": "A fluffy 3D stormcloud instantly hovers above the head with soft glowing rain and gentle internal thunder.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/CFYn6K6HBZwRiEgdPt56I?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
