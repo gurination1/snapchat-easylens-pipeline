@@ -26,7 +26,8 @@ def main():
         "test_canvas_killer.py",
         "test_niche_expansion.py",
         "test_video_quality_audit.py",
-        "test_advanced_gates.py"
+        "test_advanced_gates.py",
+        "test_multi_model_vfx_parity.py"
     ]
     all_passed = True
     for s in scripts:
