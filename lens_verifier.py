@@ -270,16 +270,20 @@ class LensVerifier:
                 out_trigger=out_trigger
             )
 
-            # Evaluate with Gemini Multimodal Vision AI
-            judge_res = simulator.judge_visuals_with_gemini_vision(out_trigger)
+            # Evaluate with Gemini Multimodal Vision AI (Dual-Frame: Neutral + Trigger)
+            judge_res = simulator.judge_visuals_with_gemini_vision(
+                trigger_screenshot=out_trigger,
+                neutral_screenshot=out_neutral
+            )
 
             has_3d = analysis.get("has_3d_mesh", False)
             is_bg_only = analysis.get("is_background_only", False) or judge_res.get("is_background_only", False)
+            is_cringe = judge_res.get("is_cringe_or_defective", False)
             judge_passed = judge_res.get("passed", False)
             score = judge_res.get("virality_score", judge_res.get("score", 0))
 
-            # Strictly reject background-only or lack of 3D mesh
-            passed = has_3d and (not is_bg_only) and judge_passed
+            # Strictly reject background-only, lack of 3D mesh, cringe elements, or score < 85
+            passed = has_3d and (not is_bg_only) and (not is_cringe) and judge_passed
 
             self.report["gates"]["gate7_visual_simulation"] = {
                 "passed": passed,

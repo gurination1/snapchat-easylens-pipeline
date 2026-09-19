@@ -99,13 +99,15 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
     system_prompt = (
         "You are an Elite Snapchat AR Director and Principal Prompt Engineer for Snapchat EasyLens (Lens Studio Web SnapML/AILC).\n"
         "Your task is to engineer an insanely high-quality, anti-slop, compliance-verified Lens prompt that guarantees high virality and engagement.\n\n"
-        "STRICT ANTI-SLOP & PRODUCTION QUALITY RULES:\n"
-        "1. BANNED: Generic purple gradients, floating disembodied blobs, rubbery plastic textures, and jittery motion.\n"
-        "2. MANDATORY: Physically Based Rendering (PBR) materials (anisotropic metal, porous basalt, liquid mercury, 24k gold, subsurface scattering).\n"
-        "3. MANDATORY: 3-point contrast lighting (key light + contrasting 6500K/2800K directional rim lighting + ray-traced contact shadows).\n"
-        "4. MANDATORY FRONT-CAMERA SELFIE ANCHORING: Primary 3D object MUST be anchored directly to HEAD or FACE (e.g., fitted crown, sculpted horns, cyberpunk visor, face armor, floating halo). NEVER attach to shoulders or full-body tracking.\n"
-        "5. MANDATORY ANIMATION & INTERACTIVE PARTICLES: Must describe animated particle effects or glowing mesh reactions explicitly triggered by opening mouth or smiling (e.g., opening mouth emits glowing particle flame/laser beam/coins; smiling triggers eye flare).\n"
-        "6. COMPLIANCE & SAFETY:\n"
+        "STRICT ANTI-SLOP, ANTI-CRINGE & PRODUCTION QUALITY RULES:\n"
+        "1. ZERO ON-SCREEN DEVELOPER UI, SLIDERS, OR BUTTONS: The lens must be 100% immersive full-screen camera AR. STRICTLY FORBID all touch sliders, UI parameter panels, controller widgets, or debug buttons (no 'Rings', 'Wave', 'Flare' sliders).\n"
+        "2. ZERO ON-SCREEN TEXT, LABELS, WATERMARKS, OR GREETINGS: Do NOT generate or render any text, subtitles, greetings, watermarks, or score counters on screen (no 'Thank you', no 'Tap to Start', no UI labels). The lens must be pure visual and auditory AR.\n"
+        "3. BANNED SLOP: Generic purple gradients, floating disembodied blobs, rubbery plastic textures, cheesy clipart, and jittery motion.\n"
+        "4. MANDATORY PBR CRAFT: Physically Based Rendering materials (anisotropic brushed titanium, liquid mercury, 24k gold filigree, refractive optical glass, subsurface scattering).\n"
+        "5. MANDATORY 3-POINT CONTRAST LIGHTING: Key light + contrasting 6500K/2800K directional rim lighting + baked ray-traced contact shadows.\n"
+        "6. MANDATORY FRONT-CAMERA SELFIE ANCHORING: Primary 3D object MUST be anchored directly to HEAD or FACE (e.g. fitted titanium visor tightly over eyes, sculpted crown on forehead, zero-G halo above head). NEVER attach to shoulders or full-body tracking.\n"
+        "7. MANDATORY ANIMATION & DYNAMIC FACE TRIGGERS: Must describe animated reactive responses on Face Events: opening mouth triggers high-energy volumetric reaction (particle shockwave, emerald flame torrent, liquid tears geyser); smiling triggers radiant bloom, eye flares, or holographic HUD flare. Seamless, photosensitive-safe, zero strobe.\n"
+        "8. COMPLIANCE & SAFETY:\n"
         "   - Under 480 characters for the prompt string to prevent AILC backend truncation.\n"
         "   - Zero trademarked/copyrighted names (NO Marvel, Goku, Pokemon, Nike, etc. Use generic archetype nouns).\n"
         "   - Zero race/skin tone alterations. Non-human fantasy surfaces (chrome, gold leaf, stone) only.\n"
@@ -127,6 +129,7 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
         f"Core Theme: {persona['theme_focus']}\n"
         f"Primary Trigger Mechanism: {persona['primary_trigger']}\n"
         f"Recommended Tag Pool: {', '.join(persona['tag_pool'])}\n"
+        "CRITICAL: Full-screen camera effect only. ZERO developer UI sliders, ZERO on-screen text, ZERO floating buttons.\n"
     )
 
     # Deduplication memory from published history

@@ -562,23 +562,72 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
             launch_kwargs["executable_path"] = exec_path
 
         browser = await p.chromium.launch(**launch_kwargs)
+
+        account_fps = {
+            "1": {
+                "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+                "viewport": {"width": 1920, "height": 1080},
+                "device_scale_factor": 1.0,
+                "locale": "en-US",
+                "timezone_id": "America/New_York",
+                "platform": "Win32"
+            },
+            "2": {
+                "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36",
+                "viewport": {"width": 1728, "height": 1117},
+                "device_scale_factor": 2.0,
+                "locale": "en-US",
+                "timezone_id": "America/Los_Angeles",
+                "platform": "MacIntel"
+            },
+            "3": {
+                "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/131.0.2903.86",
+                "viewport": {"width": 1920, "height": 1080},
+                "device_scale_factor": 1.25,
+                "locale": "en-US",
+                "timezone_id": "America/Chicago",
+                "platform": "Win32"
+            },
+            "4": {
+                "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.2 Safari/605.1.15",
+                "viewport": {"width": 1440, "height": 900},
+                "device_scale_factor": 2.0,
+                "locale": "en-GB",
+                "timezone_id": "Europe/London",
+                "platform": "MacIntel"
+            },
+            "5": {
+                "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+                "viewport": {"width": 1920, "height": 1080},
+                "device_scale_factor": 1.0,
+                "locale": "en-US",
+                "timezone_id": "America/Denver",
+                "platform": "Linux x86_64"
+            }
+        }
+        fp = account_fps.get(str(account_id), account_fps["1"])
+        print(f"[BROWSER FINGERPRINT] Emulating profile for Account #{account_id}: {fp['platform']} ({fp['timezone_id']})")
+
         context = await browser.new_context(
-            viewport={"width": 1920, "height": 1080},
-            user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
-            locale="en-US",
-            timezone_id="America/New_York"
+            viewport=fp["viewport"],
+            device_scale_factor=fp["device_scale_factor"],
+            user_agent=fp["user_agent"],
+            locale=fp["locale"],
+            timezone_id=fp["timezone_id"]
         )
 
-        # Inject stealth scripts
-        await context.add_init_script("""
-            Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-            Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });
-            Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3, 4, 5] });
-            window.chrome = { runtime: {}, loadTimes: function() {}, csi: function() {}, app: {} };
+        # Inject stealth scripts with platform spoofing
+        platform_val = fp["platform"]
+        await context.add_init_script(f"""
+            Object.defineProperty(navigator, 'webdriver', {{ get: () => undefined }});
+            Object.defineProperty(navigator, 'platform', {{ get: () => '{platform_val}' }});
+            Object.defineProperty(navigator, 'languages', {{ get: () => ['en-US', 'en'] }});
+            Object.defineProperty(navigator, 'plugins', {{ get: () => [1, 2, 3, 4, 5] }});
+            window.chrome = {{ runtime: {{}}, loadTimes: function() {{}}, csi: function() {{}}, app: {{}} }};
             const originalQuery = window.navigator.permissions.query;
             window.navigator.permissions.query = (parameters) => (
                 parameters.name === 'notifications' ?
-                    Promise.resolve({ state: Notification.permission }) :
+                    Promise.resolve({{ state: Notification.permission }}) :
                     originalQuery(parameters)
             );
         """)

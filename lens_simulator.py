@@ -83,146 +83,183 @@ class LensSimulator:
         return self.analysis
 
     def render_simulation_screenshots(self, out_neutral: str = "preview_neutral_simulated.png", out_trigger: str = "preview_mouth_open_simulated.png") -> tuple:
-        """Composites extracted 3D/particle/background assets onto standard test portrait frames"""
+        """Composites extracted 3D/particle/background assets onto standard test portrait frames with anatomical anchoring"""
+        import numpy as np
+        from collections import deque
+
         neutral_path = os.path.join(self.portrait_dir, "portrait_neutral.png")
         mouth_path = os.path.join(self.portrait_dir, "portrait_mouth_open.png")
 
-        # Fallback if files missing
         if not os.path.exists(neutral_path):
-            img_n = Image.new("RGB", (720, 1280), (45, 48, 56))
+            img_n = Image.new("RGBA", (720, 1280), (45, 48, 56, 255))
         else:
             img_n = Image.open(neutral_path).convert("RGBA")
 
         if not os.path.exists(mouth_path):
-            img_t = Image.new("RGB", (720, 1280), (45, 48, 56))
+            img_t = Image.new("RGBA", (720, 1280), (45, 48, 56, 255))
         else:
             img_t = Image.open(mouth_path).convert("RGBA")
 
-        # Extract dominant 3D texture or sprite from bundle
         dominant_texture = None
         bg_texture = None
+        sw_texture = None
+        flare_texture = None
+
+        # Cleanly extract production assets and audio from bundle
         try:
             with zipfile.ZipFile(io.BytesIO(self.bundle_bytes), "r") as z:
-                # 1. Prefer root icon.png (Snapchat AILC official 3D render)
+                # 1. Extract audio and trigger sprites
+                for name in z.namelist():
+                    lower = name.lower()
+                    if lower.endswith((".mp3", ".wav")) and not os.path.exists("preview_audio.mp3"):
+                        try:
+                            with open("preview_audio.mp3", "wb") as af:
+                                af.write(z.read(name))
+                            print(f"[SIMULATOR] Extracted audio track: {name}")
+                        except Exception:
+                            pass
+                    elif any(k in lower for k in ["shockwave", "wave", "ring"]) and lower.endswith(".png") and not sw_texture:
+                        sw_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
+                    elif any(k in lower for k in ["flare", "hud", "beam", "flash"]) and lower.endswith(".png") and not flare_texture:
+                        flare_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
+                    elif any(k in lower for k in ["bg.png", "background"]) and lower.endswith(".png") and not bg_texture:
+                        bg_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
+
+                # 2. Extract 3D asset from icon.png with 4-corner flood-fill
                 if "icon.png" in z.namelist():
                     raw_icon = Image.open(io.BytesIO(z.read("icon.png"))).convert("RGBA")
-                    # Remove dark circular boundary ring to extract the floating 3D asset
-                    w, h = raw_icon.size
-                    arr = raw_icon.load()
-                    for x in range(w):
-                        for y in range(h):
-                            r, g, b, a = arr[x, y]
-                            dx = x - w // 2
-                            dy = y - h // 2
-                            if (dx * dx + dy * dy) > (w * 0.40) ** 2 or (r < 55 and g < 70 and b < 95):
-                                arr[x, y] = (0, 0, 0, 0)
-                    dominant_texture = raw_icon
+                    arr = np.array(raw_icon)
+                    ih, iw = arr.shape[:2]
+                    icy, icx = ih / 2.0, iw / 2.0
+                    y_idx, x_idx = np.ogrid[:ih, :iw]
+                    dist = np.sqrt((x_idx - icx) ** 2 + (y_idx - icy) ** 2)
 
-                # 2. Check for other transparent textures in bundle if icon not found
-                if not dominant_texture:
-                    for name in z.namelist():
-                        lower = name.lower()
-                        if "bg.png" in lower or "background" in lower:
-                            bg_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
-                        elif ("image_" in lower or "textures/" in lower or "atlas" in lower) and lower.endswith(".png"):
-                            cand = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
-                            # Check if candidate has transparency
-                            if cand.getextrema()[-1][0] < 200:
-                                dominant_texture = cand
-                                break
+                    # Mask out outer badge ring (radius > 138)
+                    arr[dist > 138] = [0, 0, 0, 0]
+
+                    # Flood fill from corners inward to clear outer black background
+                    is_black = (arr[:, :, 0] < 16) & (arr[:, :, 1] < 16) & (arr[:, :, 2] < 18)
+                    visited = np.zeros((ih, iw), dtype=bool)
+                    q = deque([(0, 0), (0, iw - 1), (ih - 1, 0), (ih - 1, iw - 1)])
+                    for r, c in list(q):
+                        visited[r, c] = True
+                    while q:
+                        r, c = q.popleft()
+                        arr[r, c] = [0, 0, 0, 0]
+                        for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                            nr, nc = r + dr, c + dc
+                            if 0 <= nr < ih and 0 <= nc < iw and not visited[nr, nc]:
+                                if dist[nr, nc] > 132 or is_black[nr, nc]:
+                                    visited[nr, nc] = True
+                                    q.append((nr, nc))
+
+                    clean_icon = Image.fromarray(arr)
+                    bbox = clean_icon.split()[-1].getbbox()
+                    if bbox:
+                        dominant_texture = clean_icon.crop(bbox)
+                    else:
+                        dominant_texture = clean_icon
+
         except Exception as e:
-            print(f"[SIMULATOR WARN] Could not extract textures: {e}")
+            print(f"[SIMULATOR WARN] Error extracting production assets: {e}")
 
-        # 1. Simulate Background Replacement if present
+        # Determine anatomical scale and anchor from metadata
+        p_text = (
+            str(self.lens_data.get("lens_name", "")) + " " +
+            str(self.lens_data.get("prompt", "")) + " " +
+            " ".join(self.analysis.get("mesh_files", []))
+        ).lower()
+
+        if any(w in p_text for w in ["visor", "glasses", "goggles", "mask", "face armor"]):
+            target_w = 510
+            anchor_x = 360
+            anchor_y = 500  # Centered on eyes
+        elif any(w in p_text for w in ["crown", "horns", "tiara", "headpiece", "diadem"]):
+            target_w = 530
+            anchor_x = 360
+            anchor_y = 330  # Brow / hairline
+        elif any(w in p_text for w in ["cloud", "halo", "floating", "above", "sky"]):
+            target_w = 460
+            anchor_x = 360
+            anchor_y = 210  # Floating above head
+        else:
+            target_w = 500
+            anchor_x = 360
+            anchor_y = 360
+
+        # 1. Background replacement if present
         if bg_texture:
             bg_resized = bg_texture.resize((720, 1280))
             base_bg_n = bg_resized.copy()
             base_bg_n.alpha_composite(img_n)
             img_n = base_bg_n
-
             base_bg_t = bg_resized.copy()
             base_bg_t.alpha_composite(img_t)
             img_t = base_bg_t
 
-        # 2. Composite 3D Head Attachment onto Head / Forehead (Anchor: x=360, y=220)
+        # 2. Composite 3D Asset onto Neutral Frame
         if dominant_texture:
-            t_w = 340
             aspect = dominant_texture.height / max(1, dominant_texture.width)
-            t_h = int(t_w * aspect)
-            t_resized = dominant_texture.resize((t_w, min(t_h, 380)), Image.Resampling.LANCZOS)
-            pos = (360 - t_w // 2, 220 - t_h // 2)
+            target_h = int(target_w * aspect)
+            t_resized = dominant_texture.resize((target_w, target_h), Image.Resampling.LANCZOS)
+            pos = (anchor_x - target_w // 2, anchor_y - target_h // 2)
 
-            # Soft ambient occlusion / contact shadow under headpiece onto hair/forehead
+            # Soft ambient occlusion / contact shadow
             shadow = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
             s_draw = ImageDraw.Draw(shadow)
-            s_draw.ellipse([240, 250, 480, 330], fill=(15, 15, 25, 150))
-            shadow = shadow.filter(ImageFilter.GaussianBlur(14))
+            s_draw.ellipse([pos[0] - 15, pos[1] - 15, pos[0] + target_w + 15, pos[1] + target_h + 15], fill=(10, 15, 25, 120))
+            shadow = shadow.filter(ImageFilter.GaussianBlur(20))
 
             img_n = Image.alpha_composite(img_n, shadow)
             img_n.alpha_composite(t_resized, dest=pos)
 
-            img_t = Image.alpha_composite(img_t, shadow)
-            img_t.alpha_composite(t_resized, dest=pos)
-        elif self.analysis["has_3d_mesh"]:
-            # High-end PBR sculpted horn / diadem crown with contact shadow and anisotropic highlights
-            shadow = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
-            s_draw = ImageDraw.Draw(shadow)
-            s_draw.polygon([(260, 360), (360, 380), (460, 360), (360, 340)], fill=(10, 10, 15, 140))
-            shadow = shadow.filter(ImageFilter.GaussianBlur(10))
-            img_n = Image.alpha_composite(img_n, shadow)
-            img_t = Image.alpha_composite(img_t, shadow)
+            # 3. Composite Trigger Frame (Mouth Open / Reaction)
+            img_t_comp = img_t.copy()
 
-            horn_layer = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
-            h_draw = ImageDraw.Draw(horn_layer)
-            # Left & right horns
-            h_draw.polygon([(280, 350), (250, 270), (210, 190), (180, 130), (200, 150), (240, 230), (290, 310), (310, 350)], fill=(28, 30, 36, 255), outline=(220, 180, 70, 255), width=3)
-            h_draw.polygon([(440, 350), (470, 270), (510, 190), (540, 130), (520, 150), (480, 230), (430, 310), (410, 350)], fill=(28, 30, 36, 255), outline=(220, 180, 70, 255), width=3)
-            # Center crown & gem
-            h_draw.polygon([(290, 345), (320, 310), (360, 280), (400, 310), (430, 345), (360, 355)], fill=(210, 170, 60, 240), outline=(255, 230, 130, 255), width=3)
-            h_draw.ellipse([345, 305, 375, 335], fill=(220, 20, 60, 255), outline=(255, 220, 100, 255), width=2)
-            # Metallic highlights
-            h_draw.line([(200, 150), (240, 230), (290, 310)], fill=(255, 240, 180, 220), width=3)
-            h_draw.line([(520, 150), (480, 230), (430, 310)], fill=(255, 240, 180, 220), width=3)
-
-            img_n = Image.alpha_composite(img_n, horn_layer)
-            img_t = Image.alpha_composite(img_t, horn_layer)
-
-        # 3. Facial Integration: Runic Eye flares on trigger (Exact pupils at 305, 500 and 415, 500)
-        for ex, ey in [(305, 500), (415, 500)]:
-            eye_fx = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
-            e_draw = ImageDraw.Draw(eye_fx)
-            e_draw.ellipse([ex - 22, ey - 22, ex + 22, ey + 22], fill=(60, 220, 255, 150))
-            e_draw.ellipse([ex - 9, ey - 9, ex + 9, ey + 9], fill=(230, 250, 255, 240))
-            img_t = Image.alpha_composite(img_t, eye_fx)
-
-        # 4. Simulate Interactive Particle Emitter on Mouth Open (Mouth cavity at x=360, y=660)
-        for radius, alpha in [(30, 220), (65, 160), (110, 100), (160, 50)]:
-            overlay = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
-            o_draw = ImageDraw.Draw(overlay)
-            o_draw.ellipse([360 - radius, 660 - radius, 360 + radius, 660 + radius], fill=(50, 230, 210, alpha))
-            img_t = Image.alpha_composite(img_t, overlay)
-
-        draw_t = ImageDraw.Draw(img_t)
-        import random
-        random.seed(42)
-        for _ in range(45):
-            if random.random() < 0.35:
-                sx = 360 + random.randint(-140, 140)
-                sy = 300 + random.randint(0, 180)
+            # Emitter shockwave or particle surge from mouth cavity (360, 665)
+            if sw_texture:
+                sw_size = 560
+                sw_resized = sw_texture.resize((sw_size, sw_size), Image.Resampling.LANCZOS)
+                sw_pos = (360 - sw_size // 2, 665 - sw_size // 2)
+                img_t_comp.alpha_composite(sw_resized, dest=sw_pos)
             else:
-                sx = 360 + random.randint(-140, 140)
-                sy = 660 + random.randint(-80, 160)
-            s_rad = random.randint(5, 11)
-            draw_t.ellipse([sx - s_rad, sy - s_rad, sx + s_rad, sy + s_rad], fill=(255, 215, 0, 240), outline=(255, 255, 200, 255), width=2)
+                # Volumetric glowing particle burst from mouth
+                for radius, alpha in [(45, 200), (90, 140), (150, 80), (220, 40)]:
+                    overlay = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+                    o_draw = ImageDraw.Draw(overlay)
+                    o_draw.ellipse([360 - radius, 665 - radius, 360 + radius, 665 + radius], fill=(50, 230, 220, alpha))
+                    overlay = overlay.filter(ImageFilter.GaussianBlur(15))
+                    img_t_comp = Image.alpha_composite(img_t_comp, overlay)
+
+            # 3D Asset on trigger
+            img_t_comp = Image.alpha_composite(img_t_comp, shadow)
+            img_t_comp.alpha_composite(t_resized, dest=pos)
+
+            # Flare burst over eyes/visor
+            if flare_texture:
+                fl_size = 400
+                fl_resized = flare_texture.resize((fl_size, fl_size), Image.Resampling.LANCZOS)
+                fl_pos = (360 - fl_size // 2, 490 - fl_size // 2)
+                img_t_comp.alpha_composite(fl_resized, dest=fl_pos)
+            else:
+                for ex, ey in [(305, 500), (415, 500)]:
+                    eye_fx = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+                    e_draw = ImageDraw.Draw(eye_fx)
+                    e_draw.ellipse([ex - 28, ey - 28, ex + 28, ey + 28], fill=(60, 220, 255, 180))
+                    e_draw.ellipse([ex - 12, ey - 12, ex + 12, ey + 12], fill=(240, 255, 255, 255))
+                    eye_fx = eye_fx.filter(ImageFilter.GaussianBlur(8))
+                    img_t_comp = Image.alpha_composite(img_t_comp, eye_fx)
+
+            img_t = img_t_comp
 
         img_n.convert("RGB").save(out_neutral, "PNG")
         img_t.convert("RGB").save(out_trigger, "PNG")
-        print(f"[SIMULATOR] Rendered simulation screenshots: {out_neutral} & {out_trigger}")
+        print(f"[SIMULATOR] Rendered production simulation screenshots: {out_neutral} & {out_trigger}")
         return out_neutral, out_trigger
 
     def render_simulation_video(self, out_path: str = "preview_video.mp4", out_neutral: str = "preview_neutral_simulated.png", out_trigger: str = "preview_mouth_open_simulated.png") -> str:
         """
-        Renders an authentic, seamless 9:16 vertical 720x1280 30fps preview video
+        Renders an authentic, seamless 9:16 vertical 720x1280 30fps preview video with audio muxing
         for Snapchat Lens Explorer & Web Unfurl using FFmpeg.
         Transitions smoothly: Neutral -> Trigger action -> Neutral (seamless infinite loop).
         """
@@ -231,6 +268,7 @@ class LensSimulator:
             print(f"[SIMULATOR WARN] Screenshots missing for video synthesis ({out_neutral}, {out_trigger})")
             return None
 
+        temp_video = "temp_preview_video.mp4"
         cmd = [
             "ffmpeg", "-y",
             "-loop", "1", "-t", "1.6", "-i", out_neutral,
@@ -247,14 +285,38 @@ class LensSimulator:
             "-profile:v", "high",
             "-level", "31",
             "-preset", "fast",
-            "-crf", "22",
+            "-crf", "20",
             "-r", "30",
             "-pix_fmt", "yuv420p",
             "-movflags", "+faststart",
-            out_path
+            temp_video
         ]
         try:
-            res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+            subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+
+            # Mux real audio track if available
+            audio_file = "preview_audio.mp3"
+            if os.path.exists(audio_file) and os.path.getsize(audio_file) > 1000:
+                print(f"[SIMULATOR] Muxing production audio track ({os.path.getsize(audio_file)} bytes) into preview video...")
+                mux_cmd = [
+                    "ffmpeg", "-y",
+                    "-i", temp_video,
+                    "-stream_loop", "-1",
+                    "-i", audio_file,
+                    "-c:v", "copy",
+                    "-c:a", "aac",
+                    "-b:a", "128k",
+                    "-shortest",
+                    "-movflags", "+faststart",
+                    out_path
+                ]
+                subprocess.run(mux_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+                if os.path.exists(temp_video):
+                    os.remove(temp_video)
+            else:
+                if os.path.exists(temp_video):
+                    os.replace(temp_video, out_path)
+
             if os.path.exists(out_path) and os.path.getsize(out_path) > 1000:
                 print(f"[SIMULATOR] Rendered 9:16 preview video ({os.path.getsize(out_path)} bytes): {out_path}")
                 return out_path
@@ -262,49 +324,50 @@ class LensSimulator:
             print(f"[SIMULATOR WARN] FFmpeg video render failed ({e}). Proceeding without preview video.")
         return None
 
-    def judge_visuals_with_gemini_vision(self, trigger_screenshot: str) -> dict:
-        """Gate 7: Sends rendered screenshot to Gemini Multimodal Vision API to score AR quality"""
+    def judge_visuals_with_gemini_vision(self, trigger_screenshot: str, neutral_screenshot: str = "preview_neutral_simulated.png") -> dict:
+        """Gate 7: Dual-frame forensic visual evaluation via Gemini Multimodal Vision AI (Strict Threshold >= 85)"""
         api_keys = get_gemini_api_keys()
         if not api_keys or not os.path.exists(trigger_screenshot):
             return {"passed": True, "score": 90, "note": "Vision evaluation skipped (missing key or screenshot)"}
 
         with open(trigger_screenshot, "rb") as f:
-            b64_data = base64.b64encode(f.read()).decode("utf-8")
+            b64_trigger = base64.b64encode(f.read()).decode("utf-8")
+
+        b64_neutral = ""
+        if os.path.exists(neutral_screenshot):
+            with open(neutral_screenshot, "rb") as fn:
+                b64_neutral = base64.b64encode(fn.read()).decode("utf-8")
 
         judge_prompt = (
-            "You are the Principal AR Judge for Snapchat Lenses.\n"
-            "Analyze this simulated preview screenshot of an AR Lens applied over a portrait test subject with their mouth open.\n\n"
-            "Evaluate strictly against these 3 criteria:\n"
-            "1. FOREGROUND 3D ASSETS: Is there an authentic 3D model, head attachment (crown/horns/visor), or face effect visible on the person?\n"
-            "2. INTERACTIVE REACTION: Did the interactive mouth trigger fire (e.g. particle stream, flame, tears, energy burst)?\n"
-            "3. ANTI-SLOP / NOT BACKGROUND-ONLY: Is this an actual rich AR filter, OR is it merely a flat 2D background swap where the person has zero effects?\n\n"
+            "You are the Brutally Honest Principal AR Design Director for Snapchat Lens Explorer.\n"
+            "Analyze these simulated preview screenshots of an AR Lens applied over a portrait test subject (Neutral Face vs Mouth Open Trigger).\n\n"
+            "Score strictly from 0 to 100 based on these 4 pillars:\n"
+            "1. PROPORTION & ANATOMICAL FIT (40 pts): Is the 3D model properly sized to human face/head proportions (not tiny, not perched awkwardly on hair)?\n"
+            "2. ANTI-SLOP & ANTI-CRINGE (30 pts): Does it have high-end PBR materials and contrast lighting? ZERO weird text, ZERO watermarks, ZERO cheesy clipart, ZERO crude flat geometric circles.\n"
+            "3. ACTIVE REACTION (15 pts): Does the mouth open trigger create a dramatic, rewarding visual burst (e.g. shockwave, flame, particle beam)?\n"
+            "4. 0.2s VIRALITY HOOK (15 pts): Does this stop someone from scrolling immediately? Would Snapchat users record, share, and post this to Spotlight?\n\n"
             "Return ONLY a JSON object with this exact schema:\n"
             "{\n"
             '  "has_foreground_3d": true,\n'
             '  "has_active_trigger": true,\n'
             '  "is_background_only": false,\n'
+            '  "is_cringe_or_defective": false,\n'
             '  "virality_score": 92,\n'
             '  "passed": true,\n'
-            '  "critique": "Brief 1-sentence technical critique"\n'
+            '  "critique": "Brutally honest 1-sentence critique highlighting strengths and weaknesses"\n'
             "}\n"
-            "CRITICAL: If is_background_only is true or virality_score < 70, set passed: false."
+            "CRITICAL: If virality_score < 85 or is_background_only is true or is_cringe_or_defective is true, set passed: false."
         )
 
+        parts = [{"text": judge_prompt}]
+        if b64_neutral:
+            parts.append({"text": "Frame 1 (Idle / Neutral Face):"})
+            parts.append({"inlineData": {"mimeType": "image/png", "data": b64_neutral}})
+        parts.append({"text": "Frame 2 (Trigger Action / Mouth Open):"})
+        parts.append({"inlineData": {"mimeType": "image/png", "data": b64_trigger}})
+
         payload = {
-            "contents": [
-                {
-                    "role": "user",
-                    "parts": [
-                        {"text": judge_prompt},
-                        {
-                            "inlineData": {
-                                "mimeType": "image/png",
-                                "data": b64_data
-                            }
-                        }
-                    ]
-                }
-            ],
+            "contents": [{"role": "user", "parts": parts}],
             "generationConfig": {
                 "responseMimeType": "application/json",
                 "temperature": 0.2,
@@ -326,19 +389,20 @@ class LensSimulator:
                             result = json.loads(match.group(0), strict=False)
                             score = result.get("virality_score", 85)
                             is_bg = result.get("is_background_only", False)
-                            result["passed"] = (score >= 70) and (not is_bg)
-                            print(f"[VISION JUDGE] Score: {score}/100, Passed: {result['passed']}, BG Only: {is_bg}")
+                            is_cringe = result.get("is_cringe_or_defective", False)
+                            result["passed"] = (score >= 85) and (not is_bg) and (not is_cringe)
+                            print(f"[VISION JUDGE] Score: {score}/100, Passed: {result['passed']}, BG Only: {is_bg}, Cringe/Defective: {is_cringe}")
                             print(f"[VISION JUDGE] Critique: {result.get('critique')}")
                             return result
                 except Exception as e:
                     print(f"[VISION JUDGE WARN] Key/Model failed ({e}), rotating...")
 
-        # Fallback heuristic if API calls fail
         passed = self.analysis["has_3d_mesh"] and not self.analysis["is_background_only"]
         return {
             "passed": passed,
             "score": 88 if passed else 50,
             "has_foreground_3d": self.analysis["has_3d_mesh"],
             "is_background_only": self.analysis["is_background_only"],
+            "is_cringe_or_defective": False,
             "critique": "Static binary analysis completed"
         }

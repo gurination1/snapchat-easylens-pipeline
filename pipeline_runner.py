@@ -52,6 +52,23 @@ def resolve_account_auth(account_id: str):
         or os.getenv(f"SNAP_PASSWORD_{aid}")
         or (os.getenv("SNAP_PASSWORD") if aid == "1" else None)
     )
+    # Check if credentials exist for the targeted account
+    has_creds = bool(sso_token or username or (aid == "1" and os.getenv("SNAP_SSO_TOKEN")))
+    if not has_creds:
+        # Dynamically discover configured active accounts (1..5)
+        active_accounts = []
+        for cand in ["1", "2", "3", "4", "5"]:
+            c_tok = os.getenv(f"SNAP_SSO_TOKEN_ACC_{cand}") or (os.getenv("SNAP_SSO_TOKEN") if cand == "1" else None)
+            c_usr = os.getenv(f"SNAP_USERNAME_ACC_{cand}") or (os.getenv("SNAP_USERNAME") if cand == "1" else None)
+            if c_tok or c_usr:
+                active_accounts.append(cand)
+
+        if active_accounts:
+            fallback_aid = active_accounts[(int(aid) - 1) % len(active_accounts)]
+            print(f"[ACCOUNT RELIABILITY GUARD] Account #{aid} credentials not yet in secrets.")
+            print(f"[ACCOUNT RELIABILITY GUARD] Auto-routing to active Account #{fallback_aid} (out of active: {active_accounts}) to prevent missed shift!")
+            return resolve_account_auth(fallback_aid)
+
     return sso_token, cookie_header, accounts_cookie, username, password
 
 
