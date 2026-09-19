@@ -143,5 +143,24 @@
     "has_preview_video": true,
     "preview_url": "https://cf-st.sc-cdn.net/d/mgeNqd5O1pSP3y9PYu85m?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-19T08:45:19Z",
+    "account_id": "2",
+    "lens_name": "Neon Synapse Visor",
+    "lens_id": "4e9f7223-a771-4150-a899-ddaac1c898fc",
+    "checkpoint_id": "06aae4b5-e829-7ce0-8000-1812c85e5b61",
+    "prompt": "An ergonomic, brushed titanium cyberpunk visor floating across eyes. Features refractive optical glass lenses with pulsing cyan neon edge emission. Orbiting 3D equalizer bars float around the head, reacting to audio. 3-point contrast lighting with ray-traced shadows. Mouth open triggers a radial, soft-edged cyan laser shockwave. Smiling triggers a smooth, non-strobe holographic HUD flare across the visor. Pure AR, zero UI, photorealistic PBR.",
+    "tags": [
+      "cyberpunk",
+      "visor",
+      "rave",
+      "music",
+      "audioreactive"
+    ],
+    "visual_hook": "The instant, seamless snap of high-fidelity titanium and glass onto the user's face creates an immediate 'future-tech' transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/6USHfihJjWzQTf7IQJ8B9?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
