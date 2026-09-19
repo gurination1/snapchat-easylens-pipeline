@@ -9,7 +9,10 @@ __pycache__/
 !publish_status.json
 !published_lenses.json
 !assets/*.png
+!assets/**/*.png
+!assets/portraits/*.png
 easylens_full.har
 artifacts/
 *.mp4
 !assets/*.mp4
+!assets/**/*.mp4
