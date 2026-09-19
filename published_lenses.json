@@ -261,5 +261,24 @@
     "has_preview_video": true,
     "preview_url": "https://cf-st.sc-cdn.net/d/EuqNJBlSBksNv0xc1OV14?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-19T12:39:26Z",
+    "account_id": "5",
+    "lens_name": "Chrome Vortex Diadem",
+    "lens_id": "6712310e-c636-4c6d-9128-9fa83867de23",
+    "checkpoint_id": "06aae821-ba43-7beb-8000-260cc1781246",
+    "prompt": "Zero-G platinum Mobius ribbon orbits the crown, rendered in anisotropic brushed titanium. Hyper-reflective surfaces cast caustic light, reflecting the scene with high-fidelity ray tracing. Mouth open: metallic tendrils surge forward. Smile: the geometry shatters into a hypnotic, kaleidoscopic mirror prism array. 3-point contrast lighting with 6500K rim highlights. No UI. Head-anchored PBR masterpiece. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "Y3K",
+      "Chrome",
+      "Surreal",
+      "Refraction",
+      "Futuristic"
+    ],
+    "visual_hook": "Instantaneous zero-g metallic orbit capture creates an immediate high-end architectural silhouette.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/DQbpQ3V1kiMDAT4jiUOpN?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
