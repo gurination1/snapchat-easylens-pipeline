@@ -35,6 +35,21 @@ ACCOUNTS_BASE = "https://accounts.snapchat.com"
 REPO = "gurination1/snapchat-easylens-pipeline"
 
 
+def is_authenticated_url(url: str) -> bool:
+    """Returns True if the URL is on easylens.snapchat.com or accounts.snapchat.com/accounts/sso as host/path (ignoring query params)."""
+    if not url:
+        return False
+    try:
+        parsed = urllib.parse.urlparse(url)
+        if parsed.netloc == "easylens.snapchat.com":
+            return True
+        if "accounts.snapchat.com" in parsed.netloc and parsed.path.startswith("/accounts/sso"):
+            return True
+    except Exception:
+        pass
+    return False
+
+
 def fetch_latest_snap_tiv_url(gmail_user: str, gmail_app_pwd: str, min_timestamp: float) -> str:
     """
     Polls Gmail via IMAP for a Snapchat Sign-In Verification email received after min_timestamp.
@@ -375,7 +390,7 @@ async def handle_google_secproxy_flow(page, gmail_addr: str, passwords: list, ma
         curr_url = page.url
 
         # Success condition: redirected to Snapchat SSO or EasyLens
-        if "accounts.snapchat.com" in curr_url or "easylens" in curr_url or "accounts/sso" in curr_url:
+        if "accounts.snapchat.com" in curr_url or is_authenticated_url(curr_url):
             print(f"[GOOGLE SECPROXY SUCCESS] Redirected back to Snapchat session URL: {curr_url[:85]}", flush=True)
             return True
 
@@ -649,7 +664,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
         pwd_visible = False
         for wait_s in range(45):
             await page.wait_for_timeout(1000)
-            if captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
+            if captured_ticket or is_authenticated_url(page.url):
                 break
             try:
                 el = await page.query_selector("input[type='password']")
@@ -804,7 +819,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                     for wait_i in range(40):
                         await page.wait_for_timeout(1000)
                         curr_url = page.url
-                        if captured_ticket or "easylens" in curr_url or "accounts/sso" in curr_url:
+                        if captured_ticket or is_authenticated_url(curr_url):
                             print(f"[AUTH SUCCESS] Redirected to session URL: {curr_url}")
                             break
 
@@ -840,7 +855,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                             for tiv_s in range(120):
                                 await page.wait_for_timeout(1000)
                                 curr_url = page.url
-                                if captured_ticket or "easylens" in curr_url or "accounts/sso" in curr_url:
+                                if captured_ticket or is_authenticated_url(curr_url):
                                     print(f"\n[TIV APPROVED] Email approval confirmed! Redirecting to: {curr_url}")
                                     break
 
@@ -902,7 +917,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                                 if "accounts.google.com" in curr_url or "secproxy" in curr_url:
                                     print(f"\n[GOOGLE SECPROXY] Detected Google Sign-in redirection (URL: {curr_url[:80]})! Launching solver...", flush=True)
                                     g_ok = await handle_google_secproxy_flow(page, gmail_addr, passwords, max_seconds=120)
-                                    if g_ok or captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
+                                    if g_ok or captured_ticket or is_authenticated_url(page.url):
                                         print("[TIV/GOOGLE SUCCESS] Authentication completed via Google SecProxy flow!", flush=True)
                                     break
 
@@ -914,9 +929,9 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                                 print("[TIV REDIRECT] Page transitioned to Google OAuth post-TIV, executing handler...", flush=True)
                                 await handle_google_secproxy_flow(page, gmail_addr, passwords, max_seconds=90)
 
-                            if captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
+                            if captured_ticket or is_authenticated_url(page.url):
                                 print("[TIV SUCCESS] Challenge approved successfully!", flush=True)
-                                if "easylens" in page.url:
+                                if is_authenticated_url(page.url):
                                     print("[EASYLENS ARRIVED] Session established on EasyLens! Waiting for hydration...")
                                     await page.wait_for_timeout(4000)
                                 break
@@ -958,7 +973,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                     await page.screenshot(path=f"login_step3_attempt_{attempt_idx}.png")
 
                     # Check page body in case accounts/sso returned ticket directly
-                    if not captured_ticket and ("accounts/sso" in page.url or "easylens" in page.url):
+                    if not captured_ticket and is_authenticated_url(page.url):
                         try:
                             b_text = (await page.inner_text("body")).strip()
                             try:
@@ -980,7 +995,7 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
                         print(f"[SECURITY CHALLENGE] Still on challenge page ({page.url[:80]}), waiting extra 15s for completion...")
                         for _ in range(15):
                             await page.wait_for_timeout(1000)
-                            if captured_ticket or "easylens" in page.url or "accounts/sso" in page.url:
+                            if captured_ticket or is_authenticated_url(page.url):
                                 print("[AUTH SUCCESS] Challenge resolved successfully!")
                                 break
                         if captured_ticket:
