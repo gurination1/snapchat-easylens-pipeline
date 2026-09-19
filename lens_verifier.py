@@ -833,7 +833,7 @@ class LensVerifier:
             from lens_simulator import LensSimulator
             sim_lens_data = dict(self.lens_data)
             if self.plan:
-                for k in ["prompt", "lens_name", "account_id", "tags", "theme_focus"]:
+                for k in ["prompt", "lens_name", "account_id", "tags", "theme_focus", "archetype", "genre", "niche", "channel_id"]:
                     if k in self.plan and k not in sim_lens_data:
                         sim_lens_data[k] = self.plan[k]
             simulator = LensSimulator(bundle_bytes, lens_data=sim_lens_data, portrait_dir="assets")

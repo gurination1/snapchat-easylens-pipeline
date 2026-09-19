@@ -82,24 +82,23 @@ class LensSimulator:
         return _audit(video_path, require_audio=require_audio)
 
     def resolve_portrait_model(self) -> str:
-        """Dynamically picks distinct portrait model asset based on account ID or archetype"""
+        """Dynamically picks distinct portrait model asset based on resolved visual niche"""
         portraits_dir = os.path.join(self.portrait_dir, "portraits")
-        aid = str(self.lens_data.get("account_id") or "1")
-        prompt_lower = (self.lens_data.get("prompt") or "").lower()
+        niche = self.resolve_visual_niche()
 
-        # Archetype or Account ID mapping:
-        # 1: Classic Mythic / Diadem
-        # 2: Cyber / Tech Optics (East Asian male, neon rim)
-        # 3: Viral Comedy / Meme React (Black male, expressive winking smile)
-        # 4: Luxury Haute Couture / 35mm (South Asian female, radiant golden hour lighting)
-        # 5: Surreal Chrome Y3K (Scandinavian female, platinum silver rim)
-        if aid == "2" or any(w in prompt_lower for w in ["cyber", "visor", "hud", "ocular", "sci-fi", "tactical"]):
+        # Multi-model diverse studio matrix matched to visual niche:
+        # mythic: model_1_classic.png (Studio classic neutral portrait, perfect for crowns/helms)
+        # cyber: model_2_cyber.jpg (East Asian male, neon edge rim, perfect for HUD/visors)
+        # comedy: model_4_meme.jpg (Black male, expressive winking smile, perfect for memes/tears)
+        # luxury: model_3_luxe.jpg (South Asian female, radiant golden hour lighting, couture elegance)
+        # chrome: model_5_chrome.jpg (Scandinavian female, platinum hair, silver rim, surreal Y3K)
+        if niche == "cyber":
             cand = "model_2_cyber.jpg"
-        elif aid == "3" or any(w in prompt_lower for w in ["crying", "tear", "sobbing", "meme", "comedy", "cartoon"]):
+        elif niche == "comedy":
             cand = "model_4_meme.jpg"
-        elif aid == "4" or any(w in prompt_lower for w in ["luxe", "pearl", "gold", "couture", "35mm", "film"]):
+        elif niche == "luxury":
             cand = "model_3_luxe.jpg"
-        elif aid == "5" or any(w in prompt_lower for w in ["chrome", "mercury", "y3k", "mobius", "surreal"]):
+        elif niche == "chrome":
             cand = "model_5_chrome.jpg"
         else:
             cand = "model_1_classic.png"
@@ -518,18 +517,86 @@ class LensSimulator:
 
     def resolve_visual_niche(self, account_id: str = None) -> str:
         """Determines the visual archetype niche (mythic, cyber, comedy, luxury, chrome) for tailored VFX compositing"""
-        stem = self.resolve_audio_track(account_id)
-        if "mythic" in stem:
-            return "mythic"
-        elif "cyber" in stem:
-            return "cyber"
-        elif "comedy" in stem:
-            return "comedy"
-        elif "luxury" in stem:
-            return "luxury"
-        elif "mercury" in stem or "drift" in stem:
-            return "chrome"
-        return "cyber"
+        p_text = (
+            str(self.asset_scale_info.get("p_text", "")) + " " +
+            str(self.lens_data.get("prompt", "")) + " " +
+            str(self.lens_data.get("lens_name", "")) + " " +
+            str(self.lens_data.get("theme_focus", "")) + " " +
+            str(self.lens_data.get("genre", "")) + " " +
+            str(self.lens_data.get("niche", "")) + " " +
+            str(self.lens_data.get("archetype", "")) + " " +
+            " ".join(str(t) for t in self.lens_data.get("tags", []))
+        ).lower()
+
+        # Check explicit channel_id / genre metadata first if present
+        cid = str(self.lens_data.get("channel_id") or "").strip()
+        cid_map = {"1": "mythic", "2": "cyber", "3": "comedy", "4": "luxury", "5": "chrome"}
+        if cid in cid_map:
+            return cid_map[cid]
+
+        # Score each niche based on content keywords
+        niche_scores = {
+            "mythic": sum(1 for w in [
+                "dragon", "wyvern", "pyrodrake", "phoenix", "firebird", "valkyrie",
+                "kitsune", "foxfire", "anubis", "jackal", "leviathan", "ouroboros",
+                "gorgon", "chimera", "garuda", "mythic", "mythology", "breath weapon",
+                "flame torrent", "elemental", "helm"
+            ] if w in p_text),
+            "cyber": sum(1 for w in [
+                "cyber", "cyberpunk", "visor", "hud", "scanner", "retinal", "ocular",
+                "monocular", "titanium", "optic", "telemetry", "goggles", "hyperdrive",
+                "targeting", "reticle", "emp", "spectacles", "overdrive"
+            ] if w in p_text),
+            "comedy": sum(1 for w in [
+                "comedy", "meme", "crying", "stormcloud", "teardrop", "tear", "soap-opera",
+                "melodrama", "steam-whistle", "steam", "boiler valve", "laughing skull",
+                "confetti", "hypno", "cartoon", "bouncy", "spring", "jaw-drop", "jawdrop",
+                "weep", "sobbing", "anime tears"
+            ] if w in p_text),
+            "luxury": sum(1 for w in [
+                "luxury", "couture", "haute", "baroque", "pearl", "art nouveau", "tiara",
+                "champagne", "diamond", "florentine", "laurel", "35mm", "portra",
+                "analog", "shimmer", "filigree", "moonstone", "gold leaf", "vanity",
+                "golden hour", "coronal", "butterfly"
+            ] if w in p_text),
+            "chrome": sum(1 for w in [
+                "mercury", "chrome", "surreal", "zero-g", "mobius", "ferrofluid",
+                "liquid platinum", "bismuth", "chrysalis", "toroid", "toroidal",
+                "hypnotic", "y3k", "chrono", "mirage", "fluid drop", "tesseract",
+                "liquid titanium", "surface tension"
+            ] if w in p_text)
+        }
+
+        best_niche, best_score = max(niche_scores.items(), key=lambda x: x[1])
+        if best_score > 0:
+            return best_niche
+
+        # Fallback to account_id if no keywords matched
+        aid = str(
+            account_id
+            or self.lens_data.get("account_id")
+            or os.getenv("ACCOUNT_ID", "1")
+        ).lower()
+
+        aid_map = {
+            "1": "mythic",
+            "mythicbeasts": "mythic",
+            "mythicbeasts_ar": "mythic",
+            "2": "cyber",
+            "scifi_optics": "cyber",
+            "scifi": "cyber",
+            "3": "comedy",
+            "warpshock_comedy": "comedy",
+            "warpshock": "comedy",
+            "comedy": "comedy",
+            "4": "luxury",
+            "lumiere_atelier": "luxury",
+            "lumiere": "luxury",
+            "5": "chrome",
+            "chrono_mirage": "chrome",
+            "chrono": "chrome"
+        }
+        return aid_map.get(aid, "cyber")
 
     def render_niche_effects_neutral(self, base_img: Image.Image, niche: str, pos: tuple, target_w: int, target_h: int, ev_y: int = 495) -> Image.Image:
         """Renders authentic idle ambient effects tailored to the lens niche onto the neutral portrait"""
@@ -780,78 +847,15 @@ class LensSimulator:
 
     def resolve_audio_track(self, account_id: str = None) -> str:
         """Dynamically resolve royalty-free audio stem matching account persona or prompt archetype"""
-        aid = str(
-            account_id
-            or self.lens_data.get("account_id")
-            or os.getenv("ACCOUNT_ID", "1")
-        ).lower()
-
-        p_text = (
-            str(self.asset_scale_info.get("p_text", "")) + " " +
-            str(self.lens_data.get("prompt", "")) + " " +
-            str(self.lens_data.get("lens_name", "")) + " " +
-            str(self.lens_data.get("theme_focus", "")) + " " +
-            " ".join(str(t) for t in self.lens_data.get("tags", []))
-        ).lower()
-
-        acc_map = {
-            "1": "mythic_roar.mp3",
-            "mythicbeasts": "mythic_roar.mp3",
-            "mythicbeasts_ar": "mythic_roar.mp3",
-            "2": "cyber_pulse.mp3",
-            "scifi_optics": "cyber_pulse.mp3",
-            "scifi": "cyber_pulse.mp3",
-            "3": "comedy_pop.mp3",
-            "warpshock_comedy": "comedy_pop.mp3",
-            "warpshock": "comedy_pop.mp3",
+        niche = self.resolve_visual_niche(account_id=account_id)
+        niche_audio_map = {
+            "mythic": "mythic_roar.mp3",
+            "cyber": "cyber_pulse.mp3",
             "comedy": "comedy_pop.mp3",
-            "4": "luxury_shimmer.mp3",
-            "lumiere_atelier": "luxury_shimmer.mp3",
-            "lumiere": "luxury_shimmer.mp3",
-            "5": "mercury_drift.mp3",
-            "chrono_mirage": "mercury_drift.mp3",
-            "chrono": "mercury_drift.mp3"
+            "luxury": "luxury_shimmer.mp3",
+            "chrome": "mercury_drift.mp3"
         }
-
-        # 1. If explicit account_id passed, honor it
-        chosen = None
-        if account_id is not None and str(account_id).lower() in acc_map:
-            chosen = acc_map[str(account_id).lower()]
-
-        # 2. Check prompt archetype keyword semantics with scoring
-        if not chosen:
-            niche_scores = {
-                "mythic_roar.mp3": sum(1 for w in [
-                    "dragon", "wyvern", "pyrodrake", "phoenix", "firebird", "valkyrie",
-                    "kitsune", "foxfire", "anubis", "jackal", "mythic", "mythology", "beast", "roar"
-                ] if w in p_text),
-                "cyber_pulse.mp3": sum(1 for w in [
-                    "cyber", "cyberpunk", "visor", "hud", "scanner", "retinal", "ocular",
-                    "monocular", "titanium", "optic", "telemetry", "goggles", "hyperdrive", "targeting"
-                ] if w in p_text),
-                "comedy_pop.mp3": sum(1 for w in [
-                    "comedy", "meme", "crying", "stormcloud", "teardrop", "soap-opera",
-                    "melodrama", "steam-whistle", "boiler valve", "laughing skull", "confetti",
-                    "hypno", "cartoon", "bouncy", "spring", "pop-out", "whistle", "splat"
-                ] if w in p_text),
-                "luxury_shimmer.mp3": sum(1 for w in [
-                    "luxury", "couture", "haute", "baroque", "pearl", "art nouveau", "tiara",
-                    "champagne", "diamond", "florentine", "laurel", "35mm", "portra",
-                    "analog", "shimmer", "chime", "glissando", "harp", "atelier"
-                ] if w in p_text),
-                "mercury_drift.mp3": sum(1 for w in [
-                    "mercury", "chrome", "surreal", "zero-g", "mobius", "ferrofluid",
-                    "liquid platinum", "bismuth", "chrysalis", "toroid", "toroidal",
-                    "hypnotic", "y3k", "chrono", "mirage", "fluid drop"
-                ] if w in p_text)
-            }
-            best_stem, best_score = max(niche_scores.items(), key=lambda x: x[1])
-            if best_score > 0:
-                chosen = best_stem
-
-        # 3. Fall back to account_id from lens_data or env
-        if not chosen:
-            chosen = acc_map.get(aid, "cyber_pulse.mp3")
+        chosen = niche_audio_map.get(niche, "cyber_pulse.mp3")
 
         cand_dirs = [
             os.path.join(self.portrait_dir, "audio"),
@@ -883,27 +887,26 @@ class LensSimulator:
         size = 320
         cx, cy = size // 2, size // 2
         r = 146
-
         p_text = self.asset_scale_info.get("p_text", "").lower()
-        aid = str(account_id or self.lens_data.get("account_id", "2"))
+        niche = self.resolve_visual_niche(account_id=account_id)
 
-        # Determine niche palette & micro-badge hook text
-        if aid == "1" or any(w in p_text for w in ["dragon", "phoenix", "valkyrie", "anubis", "mythic"]):
+        # Determine niche palette & micro-badge hook text directly from resolved visual niche
+        if niche == "mythic":
             c_bg, e_bg = (38, 14, 8), (8, 6, 8)
             rim_rgb = (255, 140, 30)
             acc_rgb = (255, 215, 80)
             badge_text = "👑 3D HELM"
-        elif aid == "2" or any(w in p_text for w in ["cyber", "visor", "hud", "scanner", "titanium", "optic"]):
+        elif niche == "cyber":
             c_bg, e_bg = (12, 26, 46), (5, 8, 16)
             rim_rgb = (0, 245, 255)
             acc_rgb = (100, 255, 255)
             badge_text = "⚡ CYBER HUD"
-        elif aid == "3" or any(w in p_text for w in ["comedy", "crying", "meme", "waterfall", "confetti"]):
+        elif niche == "comedy":
             c_bg, e_bg = (38, 12, 42), (14, 6, 18)
             rim_rgb = (60, 255, 120)
             acc_rgb = (255, 40, 160)
             badge_text = "😭 VIRAL MEME"
-        elif aid == "4" or any(w in p_text for w in ["luxury", "haute", "baroque", "pearl", "portra", "gold"]):
+        elif niche == "luxury":
             c_bg, e_bg = (36, 28, 16), (12, 10, 8)
             rim_rgb = (255, 215, 60)
             acc_rgb = (255, 245, 180)
@@ -1056,9 +1059,15 @@ class LensSimulator:
         if self.dominant_texture is None:
             self.render_simulation_screenshots()
 
-        p_text = self.asset_scale_info.get("p_text", "").lower()
-        aid = str(account_id or self.lens_data.get("account_id", "2"))
-        rim_rgb = (0, 245, 255) if aid == "2" else (255, 215, 60) if aid == "4" else (60, 255, 120) if aid == "3" else (255, 140, 30)
+        niche = self.resolve_visual_niche(account_id=account_id)
+        rim_map = {
+            "cyber": (0, 245, 255),
+            "luxury": (255, 215, 60),
+            "comedy": (60, 255, 120),
+            "mythic": (255, 140, 30),
+            "chrome": (210, 230, 255)
+        }
+        rim_rgb = rim_map.get(niche, (0, 245, 255))
 
         # Load neutral simulated preview as AR half
         neutral_path = "preview_neutral_simulated.png"
@@ -1228,11 +1237,20 @@ class LensSimulator:
                 s_draw.ellipse([8, 8, sh_w - 8, sh_h - 8], fill=(0, 0, 0, 85))
                 shadow_sprite = shadow_sprite.filter(ImageFilter.GaussianBlur(8))
 
-                # Pre-generate bloom flare sprite for visors / crowns
+                # Pre-generate bloom flare sprite tailored to resolved visual niche
+                niche = self.resolve_visual_niche(account_id=account_id)
+                flare_colors = {
+                    "mythic": (255, 180, 40),
+                    "cyber": (0, 245, 255),
+                    "comedy": (60, 220, 255),
+                    "luxury": (255, 215, 80),
+                    "chrome": (210, 230, 255)
+                }
+                flare_rgb = flare_colors.get(niche, (0, 245, 255))
+
                 fl_size = 220
                 flare_sprite = Image.new("RGBA", (fl_size, fl_size), (0, 0, 0, 0))
                 f_draw = ImageDraw.Draw(flare_sprite)
-                flare_rgb = (0, 245, 255) if is_visor else (255, 215, 80)
                 for r in [25, 50, 85, 105]:
                     f_draw.ellipse([fl_size//2 - r, fl_size//2 - int(r*0.55), fl_size//2 + r, fl_size//2 + int(r*0.55)],
                                    fill=(*flare_rgb, int(110 * (1.0 - r/120.0))))
@@ -1249,16 +1267,14 @@ class LensSimulator:
                 if len(lens_name_display) > 18:
                     lens_name_display = lens_name_display[:16] + "..."
 
-                if aid == "1":
-                    prompt_text = "👑 TILT HEAD • 3D DRAGON HELM"
-                elif aid == "2":
-                    prompt_text = "⚡ OPEN MOUTH • HUD SCAN"
-                elif aid == "3":
-                    prompt_text = "😭 OPEN MOUTH • CRYING MEME"
-                elif aid == "4":
-                    prompt_text = "✨ SMILE • 35MM GOLD GLOW"
-                else:
-                    prompt_text = "🌀 MOVE HEAD • LIQUID CHROME"
+                prompt_texts = {
+                    "mythic": "👑 TILT HEAD • 3D DRAGON HELM",
+                    "cyber": "⚡ OPEN MOUTH • HUD SCAN",
+                    "comedy": "😭 OPEN MOUTH • CRYING MEME",
+                    "luxury": "✨ SMILE • 35MM GOLD GLOW",
+                    "chrome": "🌀 MOVE HEAD • LIQUID CHROME"
+                }
+                prompt_text = prompt_texts.get(niche, "⚡ OPEN MOUTH • HUD SCAN")
 
                 for idx, (frame_bgr, landmarks) in enumerate(zip(all_frames, trajectory)):
                     le, re, nose, fh, mouth = landmarks

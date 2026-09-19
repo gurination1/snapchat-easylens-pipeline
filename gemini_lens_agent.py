@@ -557,38 +557,87 @@ def load_published_history(history_file="published_lenses.json"):
 
 def select_channel_archetype(account_id: str, history: list) -> tuple:
     """
-    Analyzes publication history for this account and deterministically selects the
-    least-recently-used archetype to guarantee 100% rotating diversity.
+    Analyzes publication history across the entire fleet and deterministically selects
+    the least-recently-used archetype to guarantee 100% rotating diversity across all
+    viral topics without repetition. Accounts 1 & 2 rotate dynamically across all 5 viral genres.
     Returns: (selected_archetype_dict, banned_recent_nouns)
     """
-    spec = CHANNEL_PROMPT_MATRICES.get(str(account_id), CHANNEL_PROMPT_MATRICES["1"])
-    archetypes = spec["archetypes"]
-    acc_lenses = [x for x in history if str(x.get("account_id")) == str(account_id)]
+    aid = str(account_id)
 
-    counts = {a["id"]: 0 for a in archetypes}
-    last_timestamps = {a["id"]: "" for a in archetypes}
+    # Aggregate master pool of all 50 archetypes across all 5 channels
+    all_archetypes = []
+    for cid, spec in CHANNEL_PROMPT_MATRICES.items():
+        for arch in spec["archetypes"]:
+            a = dict(arch)
+            a["channel_id"] = cid
+            a["channel_name"] = spec["channel_name"]
+            a["genre"] = spec["genre"]
+            all_archetypes.append(a)
+
+    acc_lenses = [x for x in history if str(x.get("account_id")) == aid]
+
+    # Track usage counts and timestamps across entire fleet and this account
+    fleet_counts = {a["id"]: 0 for a in all_archetypes}
+    fleet_last_ts = {a["id"]: "" for a in all_archetypes}
+    acc_counts = {a["id"]: 0 for a in all_archetypes}
+
+    for lens in history:
+        full_text = (lens.get("lens_name", "") + " " + lens.get("prompt", "")).lower()
+        ts = lens.get("timestamp", "")
+        for a in all_archetypes:
+            if any(tok in full_text for tok in a["signature_tokens"]):
+                fleet_counts[a["id"]] += 1
+                if ts > fleet_last_ts[a["id"]]:
+                    fleet_last_ts[a["id"]] = ts
 
     for lens in acc_lenses:
         full_text = (lens.get("lens_name", "") + " " + lens.get("prompt", "")).lower()
-        ts = lens.get("timestamp", "")
-        for a in archetypes:
+        for a in all_archetypes:
             if any(tok in full_text for tok in a["signature_tokens"]):
-                counts[a["id"]] += 1
-                if ts > last_timestamps[a["id"]]:
-                    last_timestamps[a["id"]] = ts
+                acc_counts[a["id"]] += 1
 
-    min_count = min(counts.values())
-    tied = [a for a in archetypes if counts[a["id"]] == min_count]
-    # Tie-break by oldest timestamp ('' is oldest)
-    selected = min(tied, key=lambda a: last_timestamps[a["id"]])
+    # Detect channel of the account's most recent published lens to enforce cross-genre alternation
+    last_acc_channel = None
+    if acc_lenses:
+        last_lens_text = (acc_lenses[-1].get("lens_name", "") + " " + acc_lenses[-1].get("prompt", "")).lower()
+        for a in all_archetypes:
+            if any(tok in last_lens_text for tok in a["signature_tokens"]):
+                last_acc_channel = a["channel_id"]
+                break
 
-    # Extract nouns from the most recent 3 lenses of this account to dynamically ban
+    # Accounts 1 & 2 operate in Universal Rotating Fleet mode across all genres
+    if aid in ["1", "2"]:
+        candidates = [a for a in all_archetypes if a["channel_id"] != last_acc_channel]
+        if not candidates:
+            candidates = all_archetypes
+    else:
+        # Accounts 3, 4, 5 anchor to their specific specialized studio
+        candidates = [a for a in all_archetypes if a["channel_id"] == aid]
+        if not candidates:
+            candidates = all_archetypes
+
+    # Deterministic LRU selection:
+    # 1. Least used across fleet
+    # 2. Least used by this account
+    # 3. Oldest timestamp ('' is never used, hence oldest)
+    selected = min(
+        candidates,
+        key=lambda a: (
+            fleet_counts[a["id"]],
+            acc_counts[a["id"]],
+            fleet_last_ts[a["id"]] != "",
+            fleet_last_ts[a["id"]],
+            a["id"]
+        )
+    )
+
+    # Extract nouns from the most recent 6 lenses across the ENTIRE fleet to dynamically ban
     banned_nouns = set()
-    for lens in acc_lenses[-3:]:
+    for lens in history[-6:]:
         title = lens.get("lens_name", "")
         for word in re.findall(r'[A-Za-z]{4,}', title):
             w_lower = word.lower()
-            if w_lower not in ["halo", "lens", "crown", "face"]:
+            if w_lower not in ["halo", "lens", "crown", "face", "gold", "light", "filter", "35mm", "pulse", "echo"]:
                 banned_nouns.add(w_lower)
 
     return selected, list(banned_nouns)
@@ -788,9 +837,10 @@ def extract_json(raw_text: str) -> dict:
 # ==============================================================================
 def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -> dict:
     aid = str(account_id)
-    spec = CHANNEL_PROMPT_MATRICES.get(aid, CHANNEL_PROMPT_MATRICES["1"])
     history = load_published_history("published_lenses.json")
     selected_archetype, banned_nouns = select_channel_archetype(aid, history)
+    arch_channel_id = selected_archetype.get("channel_id", aid)
+    spec = CHANNEL_PROMPT_MATRICES.get(arch_channel_id, CHANNEL_PROMPT_MATRICES.get(aid, CHANNEL_PROMPT_MATRICES["1"]))
 
     api_keys = get_gemini_api_keys()
 
@@ -830,7 +880,7 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
     ]
 
     user_prompt = (
-        f"TARGET ACCOUNT: Account #{aid} ({spec['channel_name']})\n"
+        f"TARGET ACCOUNT: Account #{aid} (Universal Multi-Niche Rotation via {spec['channel_name']})\n"
         f"GENRE: {spec['genre']}\n"
         f"ASSIGNED ROTATING ARCHETYPE: {selected_archetype['name']}\n"
         f"ARCHETYPE PROMPT SEED: {selected_archetype['focus']}\n"
@@ -843,7 +893,7 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
     if banned_nouns:
         user_prompt += (
             f"DYNAMIC ANTI-REPETITION CONSTRAINT: Do NOT use or reuse the words {list(banned_nouns)} "
-            "in the title or prompt, as they were used in recent lenses for this channel. Synthesize fresh nomenclature!\n\n"
+            "in the title or prompt, as they were used in recent lenses across the fleet. Synthesize fresh nomenclature!\n\n"
         )
 
     if recent_fleet_lines:
@@ -868,6 +918,9 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
         "visual_hook": selected_archetype["visual_hook"],
         "trigger_sequence": selected_archetype["primary_trigger"],
         "archetype": selected_archetype["id"],
+        "account_id": aid,
+        "channel_id": arch_channel_id,
+        "genre": spec["genre"],
         "craft_dials": dials
     }
 
@@ -915,10 +968,14 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
 
                     if valid:
                         result["archetype"] = selected_archetype["id"]
+                        result["account_id"] = aid
+                        result["channel_id"] = arch_channel_id
+                        result["genre"] = spec["genre"]
                         result["craft_dials"] = dials
                         print(f"[GEMINI OK] Model: {model_name}")
                         print(f"[GEMINI OK] Generated Lens: {result.get('lens_name')}")
                         print(f"[GEMINI OK] Archetype: {selected_archetype['id']}")
+                        print(f"[GEMINI OK] Genre: {spec['genre']}")
                         print(f"[GEMINI OK] Prompt ({len(result.get('prompt', ''))}c): {result.get('prompt')}")
                         return result
                     else:
