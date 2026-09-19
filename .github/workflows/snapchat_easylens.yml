@@ -54,7 +54,7 @@ jobs:
         run: |
           echo "=== [1/3] INSTALLING PYTHON PACKAGES & PLAYWRIGHT BROWSERS ==="
           python -m pip install --upgrade pip
-          pip install requests pillow playwright playwright-stealth
+          pip install requests pillow playwright playwright-stealth cryptography
           playwright install --with-deps chromium
 
       - name: Setup Cloudflare WARP Tunnel
@@ -129,6 +129,7 @@ jobs:
             generated_lens_metadata.json
             publish_status.json
             *.png
+            *.mp4
 
       - name: Disconnect WARP Tunnel
         if: always()

@@ -27,36 +27,36 @@ ACCOUNT_PERSONAS = {
     "1": {
         "channel": "MythicBeasts_AR",
         "genre": "3D Mythic Headpiece & Elemental Breath",
-        "theme_focus": "3D dragon horned crown sculpted securely onto head with anisotropic obsidian scales and gold filigree. Opening mouth unleashes animated emerald fire particle stream with flying embers. Glowing runic eyes on smile.",
-        "primary_trigger": "MouthOpen (Emerald dragon flame particles) / Smile (Glowing runic eyes)",
+        "theme_focus": "Sculpted obsidian dragon horn crown anchored to temples with liquid 24k gold filigree and caustic ruby gems, PBR anisotropic metallic reflections, 3-point contrast 6500K/2800K lighting with ray-traced contact shadows. Mouth open erupts turbulent emerald flame torrent with floating amber sparks; smiling ignites alpha-fading golden runic eye halos. Depth occlusion enabled, zero strobing.",
+        "primary_trigger": "MouthOpen (Turbulent emerald dragon flame torrent & embers) / Smile (Smooth alpha-fading golden runic eye halos)",
         "tag_pool": ["dragon", "3d", "headpiece", "horns", "fantasy", "pbr"]
     },
     "2": {
         "channel": "RaveMotion_Studio",
         "genre": "Cyberpunk Audio-Reactive Visor & Beat FX",
-        "theme_focus": "3D holographic cyberpunk visor fitted over user's eyes with floating audio visualizer spectrum bars around head. Opening mouth unleashes glowing neon laser particle shockwaves with chromatic aberration.",
-        "primary_trigger": "MouthOpen (Laser particle blast) / Smile (Neon spectrum flare)",
+        "theme_focus": "Ergonomic 3D cyberpunk holographic visor fitted tightly across eyes, brushed titanium frame with pulsing cyan neon edge emission and refractive glass. Orbiting audio-reactive equalizer bars halo head. 3-point contrast lighting with ray-traced shadows. Opening mouth triggers radial laser shockwave with split-screen chromatic aberration; smiling flashes neon visor HUD readout. Zero strobing.",
+        "primary_trigger": "MouthOpen (Laser particle shockwave with chromatic aberration) / Smile (Neon visor HUD flare)",
         "tag_pool": ["cyberpunk", "visor", "rave", "music", "audioreactive", "neon"]
     },
     "3": {
         "channel": "WarpShock_Comedy",
         "genre": "Viral Meme & Exaggerated Face AR",
-        "theme_focus": "3D comedic stormcloud hovering directly above user's head with rain particles. Opening mouth erupts an exaggerated voluminous geyser of liquid mercury tears and gold coins. Smiling triggers a dramatic cartoon lightning flash.",
-        "primary_trigger": "MouthOpen (Geyser of liquid tears & coins) / Smile (Lightning flash)",
+        "theme_focus": "Fluffy 3D cartoon stormcloud hovering directly above head with gentle glowing rain droplets and soft ambient thunder light. PBR volumetric stylization, 3-point contrast lighting. Opening mouth erupts an exaggerated geyser of liquid mercury tears and spinning 24k gold coins bouncing off screen frame; smiling triggers a dramatic cartoon lightning rim flash. Physics-driven, zero strobe.",
+        "primary_trigger": "MouthOpen (Exaggerated geyser of liquid tears & coins) / Smile (Dramatic cartoon lightning rim flash)",
         "tag_pool": ["meme", "crying", "funny", "cloud", "cartoon", "morph"]
     },
     "4": {
         "channel": "Lumiere_Atelier",
         "genre": "35mm Analog Luxury & Haute Couture",
-        "theme_focus": "Sculpted 24k gold leaf baroque crown attached firmly to forehead and temples with caustic crystal prisms. Subtle Kodak 35mm film halation with caustic sparkle dust particles bursting across cheekbones on smile.",
-        "primary_trigger": "Smile (Prism caustic sparkle dust) / BrowRaise (Golden shimmer)",
+        "theme_focus": "Sculpted 24k gold leaf baroque crown fitted to temples with pale champagne crystal halo and caustic crystal prisms. Warm Kodak Portra 35mm film halation with colorCorrection 10 Golden Glow and grain. Anisotropic PBR reflections, ray-traced shadows. Smiling unleashes rich golden sparkle dust cascading across cheekbones. Photosensitive safe, zero strobing.",
+        "primary_trigger": "Smile (Golden sparkle dust caustics across cheekbones) / BrowRaise (Prismatic crystal shimmer)",
         "tag_pool": ["film", "35mm", "crown", "gold", "luxury", "aesthetic"]
     },
     "5": {
         "channel": "Chrono_Mirage",
         "genre": "Surrealism & Zero-G Liquid Chrome",
-        "theme_focus": "3D floating liquid mercury halo crown morphing directly above user's head with chrome facial plates. Opening mouth emits orbiting liquid chrome spheres with refractive rippling reflections.",
-        "primary_trigger": "MouthOpen (Orbiting liquid chrome spheres) / Smile (Mirror ripple distortion)",
+        "theme_focus": "Zero-G floating liquid mercury halo crown morphing above head with sculpted chrome cheek plates. Anisotropic mirror PBR reflections with fluid surface tension, 3-point contrast lighting and ray-traced contact shadows. Opening mouth releases orbiting liquid chrome spheres with refractive rippling reflections; smiling ripples the ambient background. Seamless physics, zero strobing.",
+        "primary_trigger": "MouthOpen (Orbiting liquid chrome spheres around head) / Smile (Fluid ripple normal-map distortion)",
         "tag_pool": ["surreal", "chrome", "halo", "optical", "cyber", "mirage"]
     }
 }

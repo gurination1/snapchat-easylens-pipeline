@@ -192,7 +192,153 @@ class EasyLensClient:
             time.sleep(poll_interval)
         raise TimeoutError("Lens generation polling timed out.")
 
-    def publish_lens(self, conversation_id: str, lens_name: str, tags: list, preview_url: str = None, icon_url: str = None):
+    @staticmethod
+    def encrypt_bolt_asset(data_bytes: bytes) -> tuple[bytes, str]:
+        """
+        Encrypts media asset using AES-128-GCM according to Snapchat Bolt CDN requirements:
+        Payload format: 12-byte IV + ciphertext + 16-byte auth tag.
+        Returns: (payload_bytes, base64_encryption_key)
+        """
+        import base64
+        from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+
+        key = AESGCM.generate_key(bit_length=128)
+        aesgcm = AESGCM(key)
+        iv = os.urandom(12)
+        ciphertext_and_tag = aesgcm.encrypt(iv, data_bytes, None)
+        payload = iv + ciphertext_and_tag
+        b64_key = base64.b64encode(key).decode("utf-8")
+        return payload, b64_key
+
+    def get_bolt_upload_location(self) -> tuple[str, str]:
+        """
+        Calls snapchat.content.v2.MediaDeliveryService/getUploadLocations via gRPC-Web
+        Returns: (upload_url, content_url)
+        """
+        import re
+        url = f"{BOLT_BASE}/snapchat.content.v2.MediaDeliveryService/getUploadLocations"
+        headers = {
+            "Content-Type": "application/grpc-web+proto",
+            "x-grpc-web": "1"
+        }
+        # Protobuf: batchSize: 1 (field 2, varint 1: \x10\x01)
+        # gRPC framing prefix: 1 byte 0x00 flag + 4 bytes big-endian length
+        proto_body = b"\x10\x01"
+        grpc_payload = b"\x00\x00\x00\x00\x02" + proto_body
+
+        res = self._request_with_retry("POST", url, headers=headers, data=grpc_payload, timeout=20)
+        res.raise_for_status()
+
+        # Parse protobuf response
+        raw = res.content
+        upload_url = None
+        content_url = None
+
+        # 1. Wire protobuf parser
+        try:
+            def read_varint(data, offset):
+                res_v = 0
+                shift = 0
+                while offset < len(data):
+                    b = data[offset]
+                    offset += 1
+                    res_v |= (b & 0x7F) << shift
+                    if not (b & 0x80):
+                        break
+                    shift += 7
+                return res_v, offset
+
+            if len(raw) >= 5:
+                msg_len = int.from_bytes(raw[1:5], "big")
+                proto_data = raw[5:5 + msg_len]
+                offset = 0
+                while offset < len(proto_data):
+                    tag, offset = read_varint(proto_data, offset)
+                    wire_type = tag & 0x07
+                    field_num = tag >> 3
+                    if wire_type == 2:
+                        length, offset = read_varint(proto_data, offset)
+                        val = proto_data[offset:offset + length]
+                        offset += length
+                        if field_num == 1:  # uploadLocations
+                            sub_off = 0
+                            while sub_off < len(val):
+                                s_tag, sub_off = read_varint(val, sub_off)
+                                s_wire = s_tag & 0x07
+                                s_field = s_tag >> 3
+                                if s_wire == 2:
+                                    s_len, sub_off = read_varint(val, sub_off)
+                                    s_val = val[sub_off:sub_off + s_len]
+                                    sub_off += s_len
+                                    if s_field == 1 and not upload_url:
+                                        upload_url = s_val.decode("utf-8", errors="ignore")
+                                    elif s_field == 4:  # contentReference
+                                        c_off = 0
+                                        while c_off < len(s_val):
+                                            c_tag, c_off = read_varint(s_val, c_off)
+                                            c_wire = c_tag & 0x07
+                                            c_field = c_tag >> 3
+                                            if c_wire == 2:
+                                                c_len, c_off = read_varint(s_val, c_off)
+                                                c_val = s_val[c_off:c_off + c_len]
+                                                c_off += c_len
+                                                if c_field == 2 and not content_url:
+                                                    content_url = c_val.decode("utf-8", errors="ignore")
+                                            elif c_wire == 0:
+                                                _, c_off = read_varint(s_val, c_off)
+                                            else:
+                                                break
+                                elif s_wire == 0:
+                                    _, sub_off = read_varint(val, sub_off)
+                                else:
+                                    break
+                    elif wire_type == 0:
+                        _, offset = read_varint(proto_data, offset)
+                    else:
+                        break
+        except Exception as e:
+            print(f"[BOLT PROTO WARN] Wire parser error: {e}")
+
+        # 2. Regex fallback if wire parser missed either
+        if not upload_url or not content_url:
+            raw_str = raw.decode("latin-1", errors="ignore")
+            if not upload_url:
+                m_up = re.search(r"https://[^\s\"\'\x00-\x1f]+(?:storage\.googleapis\.com|upload)[^\s\"\'\x00-\x1f]+", raw_str)
+                if m_up:
+                    upload_url = m_up.group(0)
+            if not content_url:
+                m_cdn = re.search(r"https://bolt[^\s\"\'\x00-\x1f]+", raw_str)
+                if m_cdn:
+                    content_url = m_cdn.group(0)
+
+        if not upload_url or not content_url:
+            raise RuntimeError(f"Could not parse upload locations from Bolt response (status {res.status_code})")
+
+        return upload_url, content_url
+
+    def upload_preview_video(self, video_bytes: bytes) -> tuple[str, str]:
+        """
+        Encrypts preview video and uploads to Bolt CDN.
+        Returns: (content_url, b64_encryption_key)
+        """
+        if not self.sso_token and self.accounts_cookie:
+            self.refresh_sso_ticket()
+
+        print(f"[BOLT] Encrypting preview video ({len(video_bytes)} bytes) with AES-128-GCM...")
+        payload, b64_key = self.encrypt_bolt_asset(video_bytes)
+
+        print("[BOLT] Requesting pre-signed upload location from MediaDeliveryService...")
+        upload_url, content_url = self.get_bolt_upload_location()
+
+        print(f"[BOLT] Uploading encrypted payload ({len(payload)} bytes) to Bolt storage...")
+        put_headers = {"Content-Type": "application/octet-stream"}
+        put_res = requests.put(upload_url, headers=put_headers, data=payload, timeout=45)
+        put_res.raise_for_status()
+
+        print(f"[BOLT SUCCESS] Video uploaded successfully to: {content_url}")
+        return content_url, b64_key
+
+    def publish_lens(self, conversation_id: str, lens_name: str, tags: list, preview_url: str = None, preview_encryption_key: str = None, icon_url: str = None, icon_encryption_key: str = None):
         url = f"{AILC_BASE}/assistant/publish"
         payload = {
             "conversation_id": conversation_id,
@@ -204,8 +350,12 @@ class EasyLensClient:
         }
         if preview_url:
             payload["lens_preview_url"] = preview_url
+        if preview_encryption_key:
+            payload["lens_preview_encryption_key"] = preview_encryption_key
         if icon_url:
             payload["lens_icon_url"] = icon_url
+        if icon_encryption_key:
+            payload["lens_icon_encryption_key"] = icon_encryption_key
 
         res = self._request_with_retry("POST", url, json=payload, timeout=25)
         res.raise_for_status()

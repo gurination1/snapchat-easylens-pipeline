@@ -163,6 +163,48 @@ class LensSimulator:
         print(f"[SIMULATOR] Rendered simulation screenshots: {out_neutral} & {out_trigger}")
         return out_neutral, out_trigger
 
+    def render_simulation_video(self, out_path: str = "preview_video.mp4", out_neutral: str = "preview_neutral_simulated.png", out_trigger: str = "preview_mouth_open_simulated.png") -> str:
+        """
+        Renders an authentic, seamless 9:16 vertical 720x1280 30fps preview video
+        for Snapchat Lens Explorer & Web Unfurl using FFmpeg.
+        Transitions smoothly: Neutral -> Trigger action -> Neutral (seamless infinite loop).
+        """
+        import subprocess
+        if not os.path.exists(out_neutral) or not os.path.exists(out_trigger):
+            print(f"[SIMULATOR WARN] Screenshots missing for video synthesis ({out_neutral}, {out_trigger})")
+            return None
+
+        cmd = [
+            "ffmpeg", "-y",
+            "-loop", "1", "-t", "1.6", "-i", out_neutral,
+            "-loop", "1", "-t", "1.6", "-i", out_trigger,
+            "-loop", "1", "-t", "0.8", "-i", out_neutral,
+            "-filter_complex",
+            "[0:v]scale=720:1280,format=yuva420p[v0];"
+            "[1:v]scale=720:1280,format=yuva420p[v1];"
+            "[2:v]scale=720:1280,format=yuva420p[v2];"
+            "[v0][v1]xfade=transition=fade:duration=0.4:offset=1.2[x1];"
+            "[x1][v2]xfade=transition=fade:duration=0.4:offset=2.4,format=yuv420p[outv]",
+            "-map", "[outv]",
+            "-c:v", "libx264",
+            "-profile:v", "high",
+            "-level", "31",
+            "-preset", "fast",
+            "-crf", "22",
+            "-r", "30",
+            "-pix_fmt", "yuv420p",
+            "-movflags", "+faststart",
+            out_path
+        ]
+        try:
+            res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+            if os.path.exists(out_path) and os.path.getsize(out_path) > 1000:
+                print(f"[SIMULATOR] Rendered 9:16 preview video ({os.path.getsize(out_path)} bytes): {out_path}")
+                return out_path
+        except Exception as e:
+            print(f"[SIMULATOR WARN] FFmpeg video render failed ({e}). Proceeding without preview video.")
+        return None
+
     def judge_visuals_with_gemini_vision(self, trigger_screenshot: str) -> dict:
         """Gate 7: Sends rendered screenshot to Gemini Multimodal Vision API to score AR quality"""
         api_keys = get_gemini_api_keys()

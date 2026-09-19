@@ -263,6 +263,13 @@ class LensVerifier:
                 out_trigger="preview_mouth_open_simulated.png"
             )
 
+            # Render authentic 9:16 vertical looping preview video
+            preview_video = simulator.render_simulation_video(
+                out_path="preview_video.mp4",
+                out_neutral=out_neutral,
+                out_trigger=out_trigger
+            )
+
             # Evaluate with Gemini Multimodal Vision AI
             judge_res = simulator.judge_visuals_with_gemini_vision(out_trigger)
 
@@ -283,7 +290,8 @@ class LensVerifier:
                 "has_head_binding": analysis.get("has_head_binding", False),
                 "critique": judge_res.get("critique", ""),
                 "neutral_preview": out_neutral,
-                "trigger_preview": out_trigger
+                "trigger_preview": out_trigger,
+                "preview_video": preview_video
             }
 
             if not passed:

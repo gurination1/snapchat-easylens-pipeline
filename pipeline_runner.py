@@ -120,10 +120,28 @@ def main():
     if AUTO_PUBLISH:
         print("\n=== STEP 6: PUBLISHING VERIFIED LENS TO SNAPCHAT CATALOG ===")
         final_lens_name = lens_name or lens_data.get("lens_name") or "Obsidian Pyrodrake 3D"
+
+        # Check for simulated preview video from Gate 7
+        preview_url = None
+        preview_key = None
+        preview_path = g7.get("preview_video") or "preview_video.mp4"
+        if os.path.exists(preview_path):
+            print("\n=== STEP 5.5: UPLOADING AES-128-GCM PREVIEW VIDEO TO BOLT CDN ===")
+            try:
+                with open(preview_path, "rb") as f:
+                    v_bytes = f.read()
+                preview_url, preview_key = client.upload_preview_video(v_bytes)
+                print(f"[PREVIEW VIDEO OK] CDN URL: {preview_url}")
+                print(f"[PREVIEW VIDEO OK] AES Key: {preview_key[:10]}...")
+            except Exception as e:
+                print(f"[PREVIEW VIDEO WARN] Bolt upload failed ({e}). Proceeding without preview video.")
+
         pub_res = client.publish_lens(
             conversation_id=cid,
             lens_name=final_lens_name,
-            tags=tags
+            tags=tags,
+            preview_url=preview_url,
+            preview_encryption_key=preview_key
         )
         print("Publish response:", pub_res)
 
@@ -157,6 +175,8 @@ def main():
             "prompt": prompt,
             "tags": tags,
             "visual_hook": (gemini_plan or {}).get("visual_hook", "") if USE_GEMINI else "",
+            "has_preview_video": bool(preview_url),
+            "preview_url": preview_url,
             "status": (status_data or {}).get("status", "pending")
         }
         history.append(entry)
