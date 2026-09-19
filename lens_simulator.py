@@ -81,6 +81,37 @@ class LensSimulator:
         from lens_verifier import audit_preview_video as _audit
         return _audit(video_path, require_audio=require_audio)
 
+    def resolve_portrait_model(self) -> str:
+        """Dynamically picks distinct portrait model asset based on account ID or archetype"""
+        portraits_dir = os.path.join(self.portrait_dir, "portraits")
+        aid = str(self.lens_data.get("account_id") or "1")
+        prompt_lower = (self.lens_data.get("prompt") or "").lower()
+
+        # Archetype or Account ID mapping:
+        # 1: Classic Mythic / Diadem
+        # 2: Cyber / Tech Optics (East Asian male, neon rim)
+        # 3: Viral Comedy / Meme React (Black male, expressive winking smile)
+        # 4: Luxury Haute Couture / 35mm (South Asian female, radiant golden hour lighting)
+        # 5: Surreal Chrome Y3K (Scandinavian female, platinum silver rim)
+        if aid == "2" or any(w in prompt_lower for w in ["cyber", "visor", "hud", "ocular", "sci-fi", "tactical"]):
+            cand = "model_2_cyber.jpg"
+        elif aid == "3" or any(w in prompt_lower for w in ["crying", "tear", "sobbing", "meme", "comedy", "cartoon"]):
+            cand = "model_4_meme.jpg"
+        elif aid == "4" or any(w in prompt_lower for w in ["luxe", "pearl", "gold", "couture", "35mm", "film"]):
+            cand = "model_3_luxe.jpg"
+        elif aid == "5" or any(w in prompt_lower for w in ["chrome", "mercury", "y3k", "mobius", "surreal"]):
+            cand = "model_5_chrome.jpg"
+        else:
+            cand = "model_1_classic.png"
+
+        target = os.path.join(portraits_dir, cand)
+        if os.path.exists(target):
+            return target
+
+        # Fallback to standard assets/portrait_neutral.png
+        fallback = os.path.join(self.portrait_dir, "portrait_neutral.png")
+        return fallback if os.path.exists(fallback) else None
+
     def inspect_bundle(self) -> dict:
         """Deep inspects scene.scn and archive to detect 3D meshes, bindings, and slop"""
         try:
@@ -142,18 +173,18 @@ class LensSimulator:
             np = None
         from collections import deque
 
-        neutral_path = os.path.join(self.portrait_dir, "portrait_neutral.png")
+        neutral_path = self.resolve_portrait_model()
         mouth_path = os.path.join(self.portrait_dir, "portrait_mouth_open.png")
 
-        if not os.path.exists(neutral_path):
+        if not neutral_path or not os.path.exists(neutral_path):
             img_n = Image.new("RGBA", (720, 1280), (45, 48, 56, 255))
         else:
-            img_n = Image.open(neutral_path).convert("RGBA")
+            img_n = Image.open(neutral_path).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
 
         if not os.path.exists(mouth_path):
-            img_t = Image.new("RGBA", (720, 1280), (45, 48, 56, 255))
+            img_t = img_n.copy()
         else:
-            img_t = Image.open(mouth_path).convert("RGBA")
+            img_t = Image.open(mouth_path).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
 
         dominant_texture = None
         bg_texture = None
@@ -766,11 +797,9 @@ class LensSimulator:
             self.render_simulation_screenshots(out_neutral=neutral_path)
 
         ar_img = Image.open(neutral_path).convert("RGBA")
-        base_portrait = os.path.join(self.portrait_dir, "photorealistic_neutral_portrait.jpg")
-        if not os.path.exists(base_portrait):
-            base_portrait = os.path.join(self.portrait_dir, "test_portrait.png")
+        base_portrait = self.resolve_portrait_model()
 
-        if os.path.exists(base_portrait):
+        if base_portrait and os.path.exists(base_portrait):
             raw_img = Image.open(base_portrait).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
         else:
             raw_img = ar_img.copy()
