@@ -280,5 +280,27 @@
     "has_preview_video": true,
     "preview_url": "https://cf-st.sc-cdn.net/d/DQbpQ3V1kiMDAT4jiUOpN?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-19T17:02:15Z",
+    "account_id": "2",
+    "lens_name": "Anubis Jackal Coronet",
+    "lens_id": "49a738b4-240c-4803-9c14-3d60f78371ef",
+    "checkpoint_id": "06aaebfd-1057-73b2-8000-54a31b402b64",
+    "prompt": "Anubis matte black basalt and electrum jackal coronet fitted securely to crown and temples with glowing lapis lazuli inlays. 3-point contrast 2800K desert key light with ray-traced contact shadows. Opening mouth triggers swirling golden sandstorm vortex and ancient hieroglyphic embers; smiling aligns a glowing solar eclipse halo behind crown. Zero strobing, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "dragon",
+      "phoenix",
+      "mythology",
+      "3d",
+      "headpiece",
+      "crown",
+      "fantasy",
+      "pbr"
+    ],
+    "visual_hook": "Imposing ancient Egyptian jackal coronet rises with dark basalt geometry and swirling golden sandstorm vortex.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/cuT8wDTnMAIfMgXqczhQP?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
