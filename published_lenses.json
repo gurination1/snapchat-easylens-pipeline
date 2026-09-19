@@ -204,5 +204,24 @@
     "has_preview_video": true,
     "preview_url": "https://cf-st.sc-cdn.net/d/X80MdZZje9NGAWso7kY95?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-19T11:56:43Z",
+    "account_id": "3",
+    "lens_name": "Sobbing Sovereign Crown",
+    "lens_id": "d948ca56-c58c-4904-8167-19a29175dc1a",
+    "checkpoint_id": "06aae782-348e-7c08-8000-3cbb34a3b425",
+    "prompt": "Ornate 3D tragicomic theatre crown of polished 24k gold leaf anchors to forehead. Physical crystalline 3D tears cascade down cheeks with refractive water caustics. MouthOpen triggers torrential twin weeping fountains of liquid mercury and floating ruby cracked-heart shards. Smile triggers an instant, violent burst of highly reflective PBR rainbow glitter confetti. High-contrast 6500K/2800K rim lighting defines every facet.",
+    "tags": [
+      "melodrama",
+      "funny",
+      "tears",
+      "crown",
+      "confetti"
+    ],
+    "visual_hook": "Instant dramatic golden crown and hyper-reflective weeping tears that react instantly to facial expressions.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/fPj5Vl66O4ohPbfYRnhIX?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
