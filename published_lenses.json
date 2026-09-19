@@ -163,5 +163,24 @@
     "preview_url": "https://cf-st.sc-cdn.net/d/6USHfihJjWzQTf7IQJ8B9?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "rejected_technical_error",
     "rejection_reason": "Technical error in Snap automated test: Undeclared TWEEN.Easing in LensController.js caused runtime ReferenceError"
+  },
+  {
+    "timestamp": "2026-09-19T09:35:58Z",
+    "account_id": "2",
+    "lens_name": "Ion Pulse Velo",
+    "lens_id": "8afadc74-fd56-4917-be62-d41417086e88",
+    "checkpoint_id": "06aae56e-8081-7dbb-8000-8a8edc02496e",
+    "prompt": "Sleek, ergonomic brushed titanium HUD visor anchored to eyes. Frame features vibrant cyan neon edge emission and refractive glass lenses. Orbiting audio-reactive frequency bars halo the crown. High-fidelity PBR, 3-point contrast lighting with baked shadows. Mouth open triggers an instant cyan laser particle shockwave. Smile triggers a radiant neon HUD bloom. No text, no UI, no easing, no tweening. Pure immersive cyberpunk aesthetic.",
+    "tags": [
+      "cyberpunk",
+      "visor",
+      "rave",
+      "music",
+      "audioreactive"
+    ],
+    "visual_hook": "Instantaneous, high-fidelity titanium visor snap creates a premium, futuristic transformation in under 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/xNc2lJpQhhrdrSNxZnftt?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
