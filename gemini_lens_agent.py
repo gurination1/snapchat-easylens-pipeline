@@ -245,6 +245,14 @@ CHANNEL_PROMPT_MATRICES = {
         "tag_pool": ['meme', 'crying', 'karaoke', 'funny', 'cartoon', 'comedy', 'viral', 'reaction'],
         "archetypes": [
             {
+                "id": "gigachad_jawline_morph",
+                "name": "Gigachad Sculpted Jawline Morph & Crimson Laser Gaze",
+                "signature_tokens": ['gigachad', 'sculpted jawline', 'laser gaze', 'sigma', 'marble cheekbones'],
+                "focus": "Comedic classical Grecian chiseled marble jawline and high cheekbone morph anchoring seamlessly to face. PBR micro-sculpted stone with dramatic chiaroscuro side lighting. Opening mouth triggers hilarious ultra-chiseled chin flex with flashing red laser beam eye glints and low-bass rumble; smiling triggers gleaming white tooth-twinkle starburst; eyebrow raise sharpens hyper-defined jaw contours; head tilt catches dramatic rim shadows. Viral meme powerhouse, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Viral meme reaction: instant Gigachad Sculpted Jawline morph detonates hilarious sigma transformation on mouth open."
+            },
+            {
                 "id": "fluffy_crying_stormcloud",
                 "name": "Volumetric Cartoon Stormcloud & Liquid Teardrop Geyser",
                 "signature_tokens": ['stormcloud', 'cloud', 'mercury teardrop', 'gold coins bouncing'],
@@ -511,6 +519,237 @@ CHANNEL_PROMPT_MATRICES = {
                 "visual_hook": "Hypnotic Y3K surrealism: zero-G Floating Zero-G Mercury Orb Field ripples with warped environmental reflections in 0.2s."
             }
         ]
+    },
+    "6": {
+        "channel_name": "Interactive_Games",
+        "genre": "Gamified AR Challenges, Head-Tilt Racers, Mouth-Catch Food/Coins & Reflex Skill Challenges",
+        "craft_dials": {
+            "design_variance": 0.95,
+            "visual_density": 0.88,
+            "motion_intensity": 0.96
+        },
+        "forbidden_cross_contamination": ['traditional historical filigree', 'dark fantasy monsters', 'slow cinematic luxury', 'confusing multi-step tutorials', 'touchscreen buttons', 'developer UI sliders'],
+        "tag_pool": ['game', 'arcade', 'challenge', 'interactive', 'racer', 'catcher', 'reflex', 'pbr'],
+        "archetypes": [
+            {
+                "id": "arcade_neon_coin_catcher",
+                "name": "Arcade Neon Coin Catcher & Floating Score Multiplier",
+                "signature_tokens": ['coin catcher', 'arcade coins', 'score multiplier', 'combo burst'],
+                "focus": "Retro-futuristic 3D neon arcade crown with tumbling golden arcade coins descending towards mouth. PBR metallic coin luster with emissive neon rim lighting. Opening mouth chomps coins triggering explosive floating +100 COMBO point bursts and golden spark showers; smiling activates rainbow jackpot starburst flare; eyebrow raise triggers double-coin frenzy; head tilt catches angled coins. Pure 3D gamified AR, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Addictive gamified AR: high-energy Arcade Neon Coin Catcher challenges reflexes with explosive score bursts in 0.2s."
+            },
+            {
+                "id": "tilt_speed_racer",
+                "name": "Head-Tilt Neon Speeder & Obstacle Dodge Runner",
+                "signature_tokens": ['tilt speeder', 'neon racer', 'obstacle dodge', 'hyper-boost'],
+                "focus": "Sleek aerodynamic 3D neon cyber speeder hovercraft anchored above brow navigating floating neon obstacle gates. Head tilt left or right banks and steers the speeder smoothly with kinetic thruster trails; opening mouth triggers hyper-boost nitro warp with chromatic speed lines; smiling clears obstacle gates with sonic blast ring; eyebrow raise flares dual ion engine exhausts. High-velocity AR gameplay, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Addictive gamified AR: high-velocity Head-Tilt Neon Speeder puts players in the cockpit with instant responsive steering."
+            },
+            {
+                "id": "reaction_timing_meter",
+                "name": "Reaction Reflex Timing Bar & Jackpot Green Zone",
+                "signature_tokens": ['timing bar', 'reaction meter', 'green zone', 'jackpot bullseye'],
+                "focus": "Curved holographic precision reflex timing bar floating across forehead with rapidly oscillating neon laser needle. 3-point contrast lighting. Blinking or smiling freezes needle instantly—nailing the center green zone detonates giant celebratory golden trophy confetti and stadium airhorn particles; opening mouth resets needle with spark shockwave; eyebrow raise speeds up needle oscillation. Viral reflex challenge, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Addictive gamified AR: high-stakes Reaction Reflex Timing Bar hooks competitive players to hit the bullseye in 0.2s."
+            },
+            {
+                "id": "bunny_cloud_jumper",
+                "name": "Flappy Bunny Cloud Jumper & Pastel Rainbow Trails",
+                "signature_tokens": ['bunny jumper', 'cloud jumper', 'flappy hop', 'marshmallow clouds'],
+                "focus": "Whimsical sculpted 3D pastel bunny avatar hopping across floating marshmallow cloud platforms above brow. Eyebrow raise propels bunny hopping upward with bouncing pastel rainbow trails; opening mouth summons giant golden carrot feast with starburst particles; smiling triggers joyful confetti shower; head tilt steers bunny left or right between cloud platforms. Charming addictive casual AR game, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Addictive gamified AR: Flappy Bunny Cloud Jumper delivers irresistible cute casual gameplay with eyebrow-jump physics."
+            },
+            {
+                "id": "oracle_balance_scales",
+                "name": "Gold Celestial Balance Scales & This-or-That Fortune",
+                "signature_tokens": ['balance scales', 'this or that', 'oracle fortune', 'celestial scale'],
+                "focus": "Ornate beaten 24k gold celestial balance scales resting regally on brow with glowing sun and moon platters. Tilting head left or right tips the scales to choose comedic viral dilemmas, unleashing bursting celestial auras and floating ancient scrolls on the winning side; opening mouth rebalances scales with radiant solar ray burst; smiling rings harmonic brass chimes; eyebrow raise levels scales evenly. Interactive choice game.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Addictive gamified AR: Gold Celestial Balance Scales turns head tilts into interactive viral decision-making gameplay."
+            },
+            {
+                "id": "chomp_fruit_frenzy",
+                "name": "Mouth-Chomp Tropical Fruit Frenzy & Splash Waves",
+                "signature_tokens": ['fruit frenzy', 'chomp fruit', 'watermelon splash', 'fruit catch'],
+                "focus": "Tumbling 3D cartoon watermelons, pineapples, and strawberries descending toward mouth. PBR glossy fruit shaders with dynamic lighting. Opening mouth chomps fruit with juicy cartoon splash droplets and floating score popups; smiling triggers giant golden pineapple crown bonus; eyebrow raise launches fruit toss frenzy; head tilt catches angled falling fruit. High-engagement mouth challenge AR, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Addictive gamified AR: Mouth-Chomp Tropical Fruit Frenzy drives massive replay value with juicy cartoon splash rewards."
+            },
+            {
+                "id": "laser_dodge_matrix",
+                "name": "Kinetic Laser Dodge Obstacle Grid & Cyber Shield",
+                "signature_tokens": ['laser dodge', 'obstacle grid', 'cyber shield', 'matrix dodge'],
+                "focus": "Floating neon obstacle grid approaching face. Head tilt ducks and weaves left or right around incoming neon laser barriers; opening mouth deploys hexagonal kinetic energy shield deflecting lasers in brilliant spark showers; smiling triggers matrix green victory pulse wave; eyebrow raise activates slow-motion chrono-drift dodging. Pure 3D physics challenge, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Addictive gamified AR: Kinetic Laser Dodge Obstacle Grid tests head agility with high-octane laser deflection."
+            },
+            {
+                "id": "pizza_slice_catcher",
+                "name": "Speed Pizza Chomp & Floating Neon Chef Toque",
+                "signature_tokens": ['pizza chomp', 'pizza catcher', 'neon chef toque', 'cheese pull'],
+                "focus": "Stylized 3D neon chef toque hat resting on crown with tumbling cartoon pepperoni pizza slices descending toward mouth. Opening mouth chomps pizza with hilarious bubbling cheese-pull strands and floating +250 SCORE badges; smiling triggers pepperoni party confetti; eyebrow raise tosses spinning pizza dough into the air; head tilt catches slices at wild angles. Viral comedy food game, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Addictive gamified AR: Speed Pizza Chomp captures instant viral appetite with mouth-watering cartoon cheese physics."
+            }
+        ]
+    },
+    "7": {
+        "channel_name": "Retro_Decades",
+        "genre": "70s Studio 54 Disco, 80s Synthwave Neon Grid, 90s Hi-8 VHS Camcorder & Y2K Cyber Nostalgia",
+        "craft_dials": {
+            "design_variance": 0.90,
+            "visual_density": 0.93,
+            "motion_intensity": 0.85
+        },
+        "forbidden_cross_contamination": ['modern minimalist flat art', 'grotesque horror gore', 'corporate stock photography', 'developer UI sliders', 'cheap 2D stickers'],
+        "tag_pool": ['retro', '80s', '90s', '70s', 'synthwave', 'vhs', 'camcorder', 'disco', 'y2k', 'nostalgia'],
+        "archetypes": [
+            {
+                "id": "synthwave_80s_grid",
+                "name": "80s Outrun Synthwave Horizon Grid & Chrome Cassette Crown",
+                "signature_tokens": ['synthwave grid', 'outrun', 'chrome cassette', 'neon horizon'],
+                "focus": "Sculpted neon-magenta wireframe perspective grid extending behind brow with floating 80s chrome cassette diadem. Warm analog CRT scanline halation with cyan rim lighting. Opening mouth accelerates wireframe grid into hyperspace speed warp with neon laser beams; smiling triggers warm neon sunset flare; eyebrow raise pulses synthwave bass-rings; head tilt shifts grid perspective. Pure 80s nostalgia, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Decades nostalgia hit: 80s Outrun Synthwave Horizon Grid transports users directly into iconic retro arcade aesthetic in 0.2s."
+            },
+            {
+                "id": "vhs_camcorder_90s",
+                "name": "90s Hi-8 VHS Camcorder OSD & Tape-Rip Static Glitch",
+                "signature_tokens": ['vhs camcorder', 'tape-rip glitch', 'hi-8', 'tracking static', 'phosphor scanline'],
+                "focus": "Authentic 90s Hi-8 camcorder visor frame with floating green PLAY OSD timestamp and magnetic phosphor scanlines. Opening mouth triggers nostalgic magnetic tape-rip glitch shockwave with RGB color split and tracking static; smiling pulses battery REC indicator flare; eyebrow raise flashes amber night-vision beam; head tilt shifts cathode interlacing. Pure 90s camcorder nostalgia, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Decades nostalgia hit: authentic 90s Hi-8 VHS Camcorder tape glitch captures the unmistakable warmth of analogue memories."
+            },
+            {
+                "id": "disco_70s_studio54",
+                "name": "70s Studio 54 Disco Ball Headpiece & Golden Roller Glitter",
+                "signature_tokens": ['studio 54', 'disco ball', 'roller glitter', '70s disco'],
+                "focus": "Spinning multifaceted mirror disco ball crown anchored to hairline with golden starburst flares and warm sunset halation. Opening mouth showers cascading golden glitter dust and spinning roller-disco sparkles; smiling flashes multi-colored prism lightbeams across face; eyebrow raise ignites 70s funk disco aura; head tilt sweeps mirror facets. Pure 70s dancefloor glamour, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Decades nostalgia hit: 70s Studio 54 Disco Ball Headpiece radiates irresistible retro party energy in 0.2s."
+            },
+            {
+                "id": "y2k_cyber_butterfly",
+                "name": "Y2K Holographic Cyber Butterfly Diadem & Gloss Sheen",
+                "signature_tokens": ['y2k butterfly', 'holographic butterfly', 'gloss sheen', 'cyber butterfly'],
+                "focus": "Iridescent chrome and holographic translucent butterfly diadem fluttering above brow with frosted lip-gloss sheen and baby-blue Y2K aesthetic. Opening mouth flutters holographic wings releasing glowing glitter sparkles; smiling illuminates dewy cyber gloss sheen across cheekbones; eyebrow raise expands holographic wireframe wings; head tilt catches rainbow chrome reflection. Authentic Y2K cyber revival.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Decades nostalgia hit: Y2K Holographic Cyber Butterfly Diadem taps the surging viral Millennium aesthetic."
+            },
+            {
+                "id": "grunge_90s_analog",
+                "name": "90s Grunge 35mm Polaroid Frame & Film Burn Bloom",
+                "signature_tokens": ['grunge 90s', 'polaroid frame', 'film burn', 'light leaks'],
+                "focus": "Vintage weathered Polaroid camera frame floating around face with nostalgic sepia color grading and authentic light leaks. Opening mouth ignites brilliant orange film burn flare and floating amber dust motes; smiling softens portrait into warm 90s indie cinema grain; eyebrow raise flashes vintage camera xenon strobe; head tilt shifts light leak hues. Raw 90s grunge film aesthetic, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Decades nostalgia hit: 90s Grunge 35mm Polaroid Frame wraps selfies in authentic lo-fi indie nostalgia."
+            },
+            {
+                "id": "arcade_80s_pixel",
+                "name": "80s Arcade Pixel CRT Visor & Retro Power-Up Sparks",
+                "signature_tokens": ['pixel visor', '80s arcade', 'crt visor', 'power-up sparks'],
+                "focus": "Chunky 8-bit neon arcade visor contoured across brow with pixelated glowing coin insets and cathode-tube bloom. Opening mouth triggers explosive 8-bit pixel level-up burst with floating retro arcade stars; smiling pulses 1UP emerald glow; eyebrow raise charges pixel laser cannon; head tilt sweeps phosphor scanlines. Retro gaming gold, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Decades nostalgia hit: 80s Arcade Pixel CRT Visor sparks retro gaming euphoria with authentic 8-bit level-up bursts."
+            },
+            {
+                "id": "psychedelic_70s_groove",
+                "name": "70s Psychedelic Woodstock Flower Crown & Liquid Groovy Waves",
+                "signature_tokens": ['psychedelic 70s', 'woodstock flower', 'groovy waves', 'liquid lava'],
+                "focus": "Undulating liquid-lava flow flower crown with warm psychedelic orange, mustard, and magenta swirls. Opening mouth releases floating kaleidoscope groovy flower petals and liquid light ripple waves; smiling warms complexion with retro Woodstock sunset halation; eyebrow raise blooms psychedelic petals; head tilt ripples lava patterns. Trippy 70s bohemian aesthetic.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Decades nostalgia hit: 70s Psychedelic Woodstock Flower Crown delivers mesmerizing bohemian liquid light waves."
+            },
+            {
+                "id": "matrix_y2k_cyberspace",
+                "name": "Y2K Cyberspace Liquid Wireframe Visor & Digital Rain",
+                "signature_tokens": ['cyberspace visor', 'digital rain', 'y2k cyberspace', 'phosphor code'],
+                "focus": "Sleek minimalist matrix wireframe shades with cascading emerald phosphor digital code particles floating around temples. Opening mouth triggers shockwave pulse that freezes digital code into geometric cubes; smiling glints neon green laser beams through lenses; eyebrow raise accelerates matrix rain streams; head tilt angles code trajectory. Legendary late-90s cyberspace chic.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Decades nostalgia hit: Y2K Cyberspace Liquid Wireframe Visor commands instant attention with iconic falling digital code."
+            }
+        ]
+    },
+    "8": {
+        "channel_name": "Greek_Pantheon",
+        "genre": "Greek & Ancient Mythology Transformations, Olympian Thunder Laurels, Medusa Serpents & Celestial Deities",
+        "craft_dials": {
+            "design_variance": 0.89,
+            "visual_density": 0.95,
+            "motion_intensity": 0.88
+        },
+        "forbidden_cross_contamination": ['cyberpunk optics', 'cartoon weeping memes', 'sci-fi HUD telemetry', 'modern plastic glasses', 'developer UI sliders'],
+        "tag_pool": ['greek', 'mythology', 'olympus', 'zeus', 'medusa', 'aphrodite', 'apollo', 'hades', 'gods', 'deity'],
+        "archetypes": [
+            {
+                "id": "zeus_olympian_thunder",
+                "name": "Zeus Olympian Thunderbolt Laurel & Electric Arc Corona",
+                "signature_tokens": ['zeus', 'olympian thunder', 'lightning laurel', 'electric arc'],
+                "focus": "Sculpted beaten 24k gold lightning-bolt laurel wreath resting on brow with crackling electric blue plasma arcs. Opening mouth summons blinding celestial thunderbolt shockwave with booming lightning bolts arcing across temples; smiling illuminates glowing electric blue gaze; eyebrow raise sparks crackling plasma crown; head tilt discharges golden lightning sparks. Supreme deity power, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Godly transformation: Zeus Olympian Thunderbolt Laurel crowns user with crackling divine authority in 0.2s."
+            },
+            {
+                "id": "medusa_gorgon_serpents",
+                "name": "Medusa Coiling Bronze Serpents & Petrifying Stone Gaze",
+                "signature_tokens": ['medusa', 'bronze serpents', 'petrifying gaze', 'stone gaze', 'emerald fangs'],
+                "focus": "Intricately sculpted living bronze serpents coiling and writhing around hairline with glowing emerald gemstone venom eyes. Opening mouth turns background into cracked ancient marble with swirling petrification mist; smiling flashes brilliant emerald venom glints from serpent fangs; eyebrow raise makes bronze serpents hiss and flare hooded crests; head tilt ripples serpentine coils. Mythic transformation, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Godly transformation: Medusa Coiling Bronze Serpents commands supreme viral intrigue with live writhing serpents."
+            },
+            {
+                "id": "aphrodite_seafoam_pearl",
+                "name": "Aphrodite Seafoam Scallop Pearl Tiara & Oceanic Mist",
+                "signature_tokens": ['aphrodite', 'seafoam pearl', 'scallop tiara', 'oceanic mist'],
+                "focus": "Iridescent mother-of-pearl scallop seashell tiara adorned with floating baroque freshwater pearls and crystalline seafoam bubbles. Opening mouth releases swirling oceanic sea-mist with floating luminescent pearl bubbles; smiling illuminates high-glamour pearlescent skin sheen and warm Aegean sunlight; eyebrow raise expands seashell crest; head tilt sways floating pearls. Celestial goddess beauty.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Godly transformation: Aphrodite Seafoam Scallop Pearl Tiara elevates user to mythical Olympian beauty."
+            },
+            {
+                "id": "apollo_solar_chariot",
+                "name": "Apollo Radiant Solar Chariot Crown & Blinding Sunburst",
+                "signature_tokens": ['apollo', 'solar chariot', 'sunburst crown', 'god-rays'],
+                "focus": "Molten electrum and rose-gold solar ray crown radiating sunbeams from hairline with warm 2800K god-rays. Opening mouth unleashes blinding golden solar flare burst and floating solar ember motes; smiling triggers radiant sun-halo eye flares; eyebrow raise expands blazing golden ray spires; head tilt showers molten sun-sparks. Solar deity majesty, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Godly transformation: Apollo Radiant Solar Chariot Crown bathes the creator in blinding celestial radiance."
+            },
+            {
+                "id": "hades_stygian_soulfire",
+                "name": "Hades Stygian Obsidian Coronet & Necrotic Cyan Flames",
+                "signature_tokens": ['hades', 'stygian coronet', 'soulfire flames', 'underworld ash'],
+                "focus": "Chiseled black volcanic obsidian coronet with glowing stygian rune inlays resting across brow. Opening mouth erupts ethereal spectral cyan soulfire flames surging upward with floating ghostly embers; smiling awakens piercing stygian blue eye glare; eyebrow raise ignites crown spires in cold cyan plasma; head tilt wafts underworld smoke. Dark mythic majesty, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Godly transformation: Hades Stygian Obsidian Coronet summons dark underworld sovereign majesty in 0.2s."
+            },
+            {
+                "id": "athena_aegis_wisdom",
+                "name": "Athena Aegis Bronze War Helmet & Golden Owl Sigil",
+                "signature_tokens": ['athena', 'aegis helm', 'bronze helmet', 'owl sigil'],
+                "focus": "Polished Spartan bronze battle helm with sculpted golden owl crest and horsehair plume contouring forehead. Opening mouth releases shimmering golden tactical shockwave with floating runic glyphs; smiling pulses warm bronze rim light across cheekbones; eyebrow raise flares owl sigil wings; head tilt catches brilliant metallic sun-glint. Classical goddess of war and wisdom.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Godly transformation: Athena Aegis Bronze War Helmet frames facial features with timeless Spartan warrior dignity."
+            },
+            {
+                "id": "poseidon_ocean_trident",
+                "name": "Poseidon Oceanic Trident Crown & Abyssal Tidal Surge",
+                "signature_tokens": ['poseidon', 'ocean trident', 'abyssal surge', 'tidal vortex'],
+                "focus": "Deep turquoise sea-glass and encrusted barnacle-gold trident circlet with floating bioluminescent deep-sea motes. Opening mouth unleashes surging abyssal tidal wave vortex with floating glowing jellyfish particles; smiling illuminates piercing aquamarine eye glints; eyebrow raise activates tidal storm crest; head tilt ripples underwater caustics. Sovereign ocean ruler.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Godly transformation: Poseidon Oceanic Trident Crown submerges the viewer into an epic deep-ocean realm."
+            },
+            {
+                "id": "artemis_lunar_huntress",
+                "name": "Artemis Silver Crescent Moon Diadem & Ethereal Starlight",
+                "signature_tokens": ['artemis', 'crescent moon diadem', 'silver birch', 'moon-dust'],
+                "focus": "Hand-carved sterling silver crescent moon diadem resting on brow with delicate silver birch leaves and starlight motes. Opening mouth releases swirling silver arrow light trails and floating celestial moon-dust; smiling illuminates luminous cool moonlight skin glow; eyebrow raise flares brilliant crescent silver tips; head tilt catches starlight gleams. Pure lunar huntress majesty.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Godly transformation: Artemis Silver Crescent Moon Diadem enchants selfies with ethereal lunar starlight magic."
+            }
+        ]
     }
 }
 
@@ -544,14 +783,15 @@ def select_channel_archetype(account_id: str, history: list, exclude_archetypes:
     """
     Analyzes publication history across the entire fleet and deterministically selects
     the least-recently-used archetype to guarantee 100% rotating diversity across all
-    viral topics without repetition. Accounts 1 & 2 rotate dynamically across all 5 viral genres.
+    viral topics without repetition. ALL accounts (1, 2, 3, 4, 5+) have full access to
+    all 8 viral omni-niche categories (Games, Retro 70s/80s/90s, Greek Mythology, Morphs, etc.).
     Supports exclude_archetypes to prevent repeating a failed concept during retry attempts.
     Returns: (selected_archetype_dict, banned_recent_nouns)
     """
     aid = str(account_id)
     excluded = set(exclude_archetypes or [])
 
-    # Aggregate master pool of all 50 archetypes across all 5 channels
+    # Aggregate master pool of all archetypes across all 8 channels
     all_archetypes = []
     for cid, spec in CHANNEL_PROMPT_MATRICES.items():
         for arch in spec["archetypes"]:
@@ -592,12 +832,15 @@ def select_channel_archetype(account_id: str, history: list, exclude_archetypes:
                 last_acc_channel = a["channel_id"]
                 break
 
-    # Universal Diverse Fleet: Accounts 1 & 2 cater to ALL viral genres:
+    # Universal Omni-Niche Fleet: ALL accounts cater to ALL 8 top viral genres:
     # 1. Mythic Beasts & Celestial Crowns (Channel 1)
     # 2. Cyberpunk HUD & 90s Camcorder VHS Glitch Optics (Channel 2)
-    # 3. Viral Memes & Kinetic Reactions (Channel 3: Crying stormclouds, soap-opera melodrama, cartoon jaw-drop)
+    # 3. Viral Memes & Kinetic Morphs (Channel 3: Gigachad, crying stormclouds, melodrama waterfall)
     # 4. Haute Couture & 35mm Analog Luxury (Channel 4: 24k gold leaf, freshwater pearls, Portra 400 grain)
     # 5. Y3K Zero-G Liquid Chrome & Morphing Mercury (Channel 5: Mercury halos, ferrofluid, fluid ripples)
+    # 6. Interactive AR Games & Challenges (Channel 6: Head-tilt speeder, coin-catcher, reaction timing meter)
+    # 7. Decades Nostalgia & Retro (Channel 7: 70s Disco, 80s Synthwave grid, 90s Hi-8 VHS, Y2K butterflies)
+    # 8. Greek & Ancient Mythology (Channel 8: Zeus thunder laurel, Medusa bronze serpents, Aphrodite pearls)
     # Enforces strict cross-genre rotation so the same account never publishes the same genre back-to-back,
     # and diversifies away from the fleet's most recently published topic.
     most_recent_other_channel = None

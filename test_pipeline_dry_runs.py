@@ -53,10 +53,12 @@ def run_pipeline_dry_run_for_account(acc_id: str, run_index: int):
 
     lens_data = {
         "account_id": str(acc_id),
-        "channel_id": str(acc_id),
+        "channel_id": str(plan.get("channel_id", acc_id)),
         "lens_name": lens_name,
         "prompt": clean_prompt,
         "tags": tags,
+        "genre": plan.get("genre"),
+        "archetype": plan.get("archetype"),
         "checkpoint_id": f"dry_run_chk_{acc_id}_{run_index}",
         "conversation_id": f"dry_run_conv_{acc_id}_{run_index}"
     }
@@ -98,11 +100,11 @@ def run_pipeline_dry_run_for_account(acc_id: str, run_index: int):
 
 def main():
     print("=" * 65)
-    print("STARTING SNAPCHAT PIPELINE DRY-RUN SUITE (4 ACCOUNTS: 1, 2, 3, 4)")
+    print("STARTING SNAPCHAT PIPELINE DRY-RUN SUITE (5 ACCOUNTS: 1, 2, 3, 4, 5)")
     print("=" * 65)
 
     results = {}
-    for acc in ["1", "2", "3", "4"]:
+    for acc in ["1", "2", "3", "4", "5"]:
         try:
             passed = run_pipeline_dry_run_for_account(acc, 1)
             results[acc] = "PASSED"
@@ -111,7 +113,7 @@ def main():
             results[acc] = f"FAILED: {e}"
 
     print("\n" + "=" * 65)
-    print("4-ACCOUNT DRY-RUN SUMMARY:")
+    print("5-ACCOUNT DRY-RUN SUMMARY:")
     for acc, status in results.items():
         print(f"  Account #{acc}: {status}")
     print("=" * 65)

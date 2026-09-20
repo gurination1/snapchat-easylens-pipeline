@@ -594,7 +594,7 @@ class LensSimulator:
                 d.ellipse([px - prad // 3, py - prad // 2, px, py - prad // 5], fill=(255, 255, 255, 255))
             return im
 
-        elif niche == "mythic" or any(w in p_lower for w in ["crown", "horns", "tiara", "headpiece", "diadem", "helm", "coronet", "circlet", "crest", "valkyrie", "wings", "band"]):
+        elif niche in ["mythic", "greek"] or any(w in p_lower for w in ["crown", "horns", "tiara", "headpiece", "diadem", "helm", "coronet", "circlet", "crest", "valkyrie", "wings", "band", "laurel", "olympus", "zeus", "apollo", "athena", "poseidon"]):
             w, h = 540, 290
             cx = w // 2
             try:
@@ -752,7 +752,7 @@ class LensSimulator:
 
         if video_sync:
             # Sync with exact frame 0 of matching motion video
-            if aid == "2" or niche in ["cyber", "chrome"]:
+            if aid == "2" or niche in ["cyber", "chrome", "retro"]:
                 cand = "model_blonde.png"
                 target = os.path.join(portraits_dir, cand)
                 if os.path.exists(target):
@@ -768,6 +768,9 @@ class LensSimulator:
                 "comedy": "model_4_meme.jpg",
                 "luxury": "model_3_luxe.jpg",
                 "chrome": "model_5_chrome.jpg",
+                "game": "model_1_classic.png",
+                "retro": "model_blonde.png",
+                "greek": "model_3_luxe.jpg"
             }
             cand = niche_map.get(niche, "model_1_classic.png")
 
@@ -784,7 +787,7 @@ class LensSimulator:
         aid = str(account_id or self.lens_data.get("account_id", "1"))
         niche = self.resolve_visual_niche(account_id=aid)
 
-        if aid == "2" or niche in ["cyber", "chrome"]:
+        if aid == "2" or niche in ["cyber", "chrome", "retro"]:
             cand = os.path.join(self.portrait_dir, "test_portrait_blonde.mp4")
             if os.path.exists(cand):
                 return cand
@@ -798,7 +801,7 @@ class LensSimulator:
         portraits_dir = os.path.join(self.portrait_dir, "portraits")
         aid = str(account_id or self.lens_data.get("account_id", "1"))
         niche = self.resolve_visual_niche(account_id=aid)
-        if aid == "2" or niche in ["cyber", "chrome"]:
+        if aid == "2" or niche in ["cyber", "chrome", "retro"]:
             cand = os.path.join(portraits_dir, "model_blonde_mouth_open.png")
             if os.path.exists(cand):
                 return cand
@@ -1184,7 +1187,10 @@ class LensSimulator:
             "cyber": (0, 245, 255),
             "comedy": (60, 220, 255),
             "luxury": (255, 215, 80),
-            "chrome": (210, 230, 255)
+            "chrome": (210, 230, 255),
+            "game": (255, 220, 30),
+            "retro": (255, 60, 180),
+            "greek": (255, 205, 50)
         }
         flare_rgb = flare_colors.get(niche, (0, 245, 255))
 
@@ -1581,6 +1587,21 @@ class LensSimulator:
                 "liquid platinum", "bismuth", "chrysalis", "toroid", "toroidal",
                 "hypnotic", "y3k", "chrono", "mirage", "fluid drop", "tesseract",
                 "liquid titanium", "surface tension"
+            ] if w in p_text),
+            "game": sum(1 for w in [
+                "game", "arcade", "catcher", "racer", "speeder", "reaction", "timing bar",
+                "meter", "jumper", "flappy", "chomp", "score", "points", "combo",
+                "fruit", "coin catcher", "dodge", "obstacle", "balance scale", "gamified"
+            ] if w in p_text),
+            "retro": sum(1 for w in [
+                "retro", "80s", "90s", "70s", "synthwave", "vhs", "camcorder", "disco",
+                "studio 54", "outrun", "cassette", "crt", "scanline", "polaroid",
+                "light leak", "groove", "psychedelic", "y2k", "butterfly", "vintage"
+            ] if w in p_text),
+            "greek": sum(1 for w in [
+                "zeus", "olympus", "olympian", "thunderbolt", "medusa", "gorgon",
+                "aphrodite", "apollo", "hades", "stygian", "athena", "poseidon",
+                "artemis", "trident", "pantheon", "greek", "deity", "god", "goddess"
             ] if w in p_text)
         }
 
@@ -1590,7 +1611,10 @@ class LensSimulator:
 
         # Check explicit channel_id / genre metadata fallback if no keywords matched
         cid = str(self.lens_data.get("channel_id") or "").strip()
-        cid_map = {"1": "mythic", "2": "cyber", "3": "comedy", "4": "luxury", "5": "chrome"}
+        cid_map = {
+            "1": "mythic", "2": "cyber", "3": "comedy", "4": "luxury",
+            "5": "chrome", "6": "game", "7": "retro", "8": "greek"
+        }
         if cid in cid_map:
             return cid_map[cid]
 
@@ -1617,7 +1641,13 @@ class LensSimulator:
             "lumiere": "luxury",
             "5": "chrome",
             "chrono_mirage": "chrome",
-            "chrono": "chrome"
+            "chrono": "chrome",
+            "6": "game",
+            "interactive_games": "game",
+            "7": "retro",
+            "retro_decades": "retro",
+            "8": "greek",
+            "greek_pantheon": "greek"
         }
         return aid_map.get(aid, "cyber")
 
@@ -1678,6 +1708,30 @@ class LensSimulator:
             g_draw = ImageDraw.Draw(glow)
             g_draw.ellipse([cx - int(180 * scale), anc_y - int(50 * scale), cx + int(180 * scale), anc_y + int(50 * scale)], fill=(220, 235, 255, 55))
             glow = glow.filter(ImageFilter.GaussianBlur(20))
+            overlay.alpha_composite(glow)
+
+        elif niche == "game":
+            # Soft neon arcade amber rim glow around head
+            glow = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            g_draw = ImageDraw.Draw(glow)
+            g_draw.ellipse([cx - int(190 * scale), anc_y - int(50 * scale), cx + int(190 * scale), anc_y + int(50 * scale)], fill=(255, 210, 40, 45))
+            glow = glow.filter(ImageFilter.GaussianBlur(20))
+            overlay.alpha_composite(glow)
+
+        elif niche == "retro":
+            # Warm 80s/90s synthwave neon-magenta rim halo
+            glow = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            g_draw = ImageDraw.Draw(glow)
+            g_draw.ellipse([cx - int(210 * scale), anc_y - int(55 * scale), cx + int(210 * scale), anc_y + int(55 * scale)], fill=(255, 50, 160, 45))
+            glow = glow.filter(ImageFilter.GaussianBlur(22))
+            overlay.alpha_composite(glow)
+
+        elif niche == "greek":
+            # Radiant Olympian beaten gold laurel aura
+            glow = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            g_draw = ImageDraw.Draw(glow)
+            g_draw.ellipse([cx - int(210 * scale), anc_y - int(60 * scale), cx + int(210 * scale), anc_y + int(60 * scale)], fill=(255, 205, 50, 50))
+            glow = glow.filter(ImageFilter.GaussianBlur(24))
             overlay.alpha_composite(glow)
 
         blurred = overlay.filter(ImageFilter.GaussianBlur(3))
@@ -1795,6 +1849,53 @@ class LensSimulator:
             chrome_glow = chrome_glow.filter(ImageFilter.GaussianBlur(8))
             overlay.alpha_composite(chrome_glow)
 
+        elif niche == "game":
+            # Gamified AR: Floating tumbling golden coins & glowing combo point burst
+            game_layer = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            gm_draw = ImageDraw.Draw(game_layer)
+            import math
+            for c_i in range(5):
+                c_ang = c_i * (math.pi / 4.0) + (p * 1.5)
+                c_dist = int((50 + c_i * 22) * scale)
+                c_x = int(cx + math.sin(c_ang) * c_dist)
+                c_y = int(mouth_y - int(30 * scale) - p * 35 * scale + c_i * 12)
+                c_rad = max(2, int(5 * scale))
+                gm_draw.ellipse([c_x - c_rad, c_y - c_rad, c_x + c_rad, c_y + c_rad], fill=(255, 215, 30, int(210 * p)), outline=(255, 245, 160, int(240 * p)), width=1)
+                gm_draw.ellipse([c_x - 1, c_y - 1, c_x + 1, c_y + 1], fill=(255, 255, 255, int(230 * p)))
+            game_blur = game_layer.filter(ImageFilter.GaussianBlur(6))
+            overlay.alpha_composite(game_blur)
+
+        elif niche == "retro":
+            # 80s/90s Retro: Synthwave neon grid glow & horizontal CRT scanline halo
+            retro_layer = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            r_draw = ImageDraw.Draw(retro_layer)
+            rw = int(160 * p * scale)
+            r_draw.line([(cx - rw, ev_y), (cx + rw, ev_y)], fill=(255, 40, 160, int(170 * p)), width=2)
+            r_draw.line([(cx - rw // 2, ev_y), (cx + rw // 2, ev_y)], fill=(0, 245, 255, int(200 * p)), width=1)
+            retro_blur = retro_layer.filter(ImageFilter.GaussianBlur(8))
+            overlay.alpha_composite(retro_blur)
+
+        elif niche == "greek":
+            # Greek Pantheon: Zeus electric lightning arcs & Olympian solar corona
+            greek_layer = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            gr_draw = ImageDraw.Draw(greek_layer)
+            gw = int(target_w * 0.52)
+            gh = int(target_h * 0.40)
+            gr_draw.ellipse(
+                [fh_x - gw, anc_y - int(target_h * 0.55) - gh,
+                 fh_x + gw, anc_y - int(target_h * 0.55) + gh],
+                fill=(255, 205, 50, int(55 * p))
+            )
+            import math
+            for sp_i in range(6):
+                sp_ang = sp_i * (math.pi / 3.0)
+                sx = int(fh_x + math.cos(sp_ang) * (target_w * 0.45))
+                sy = int(anc_y - int(target_h * 0.4) + math.sin(sp_ang) * (target_h * 0.3) - p * 15 * scale)
+                s_rad = max(2, int(3 * scale))
+                gr_draw.ellipse([sx - s_rad, sy - s_rad, sx + s_rad, sy + s_rad], fill=(120, 220, 255, int(190 * p)))
+            greek_blur = greek_layer.filter(ImageFilter.GaussianBlur(12))
+            overlay.alpha_composite(greek_blur)
+
         blurred = overlay.filter(ImageFilter.GaussianBlur(4))
         comp = Image.alpha_composite(base_img, blurred)
         return Image.alpha_composite(comp, overlay)
@@ -1869,7 +1970,33 @@ class LensSimulator:
                 draw.ellipse([ox - drop_r, oy - drop_r, ox + drop_r, oy + drop_r], fill=(220, 235, 245, 200))
                 draw.ellipse([ox - 1, oy - 1, ox + 1, oy + 1], fill=(255, 255, 255, 240))
 
-        elif is_crown or niche == "mythic":
+        elif niche == "game":
+            if t_prog > 0.05:
+                game_layer = Image.new("RGBA", ar_layer.size, (0, 0, 0, 0))
+                g_draw = ImageDraw.Draw(game_layer)
+                import math
+                for c_i in range(5):
+                    c_ang = c_i * (math.pi / 4.0) + (t_prog * 1.5)
+                    c_dist = int((40 + c_i * 18) * scale)
+                    c_x = int(anc_x + math.sin(c_ang) * c_dist)
+                    c_y = int(mouth_y - int(25 * scale) - t_prog * 30 * scale)
+                    c_rad = max(2, int(4 * scale))
+                    g_draw.ellipse([c_x - c_rad, c_y - c_rad, c_x + c_rad, c_y + c_rad], fill=(255, 215, 30, int(190 * t_prog)), outline=(255, 245, 160, int(230 * t_prog)), width=1)
+                    g_draw.ellipse([c_x - 1, c_y - 1, c_x + 1, c_y + 1], fill=(255, 255, 255, int(230 * t_prog)))
+                g_blur = game_layer.filter(ImageFilter.GaussianBlur(6))
+                ar_layer.alpha_composite(g_blur)
+
+        elif niche == "retro":
+            if t_prog > 0.08:
+                ret_layer = Image.new("RGBA", ar_layer.size, (0, 0, 0, 0))
+                r_draw = ImageDraw.Draw(ret_layer)
+                rw = int(120 * t_prog * scale)
+                r_draw.line([(anc_x - rw, anc_y), (anc_x + rw, anc_y)], fill=(255, 40, 160, int(160 * t_prog)), width=2)
+                r_draw.line([(anc_x - rw // 2, anc_y), (anc_x + rw // 2, anc_y)], fill=(0, 245, 255, int(190 * t_prog)), width=1)
+                r_blur = ret_layer.filter(ImageFilter.GaussianBlur(6))
+                ar_layer.alpha_composite(r_blur)
+
+        elif is_crown or niche in ["mythic", "greek"]:
             # Soft atmospheric volumetric ambient rim light hugging crown & hairline
             # Strictly ZERO 2D bicycle-spoke line rays, ZERO zombie eyes, ZERO unwanted mouth cones, ZERO unblurred discs
             if t_prog > 0.05:
@@ -1974,6 +2101,21 @@ class LensSimulator:
             rim_rgb = (255, 215, 60)
             acc_rgb = (255, 245, 180)
             badge_text = "✨ 35MM LUXE"
+        elif niche == "game":
+            c_bg, e_bg = (14, 30, 48), (6, 12, 20)
+            rim_rgb = (255, 210, 40)
+            acc_rgb = (100, 255, 120)
+            badge_text = "🕹️ AR GAME"
+        elif niche == "retro":
+            c_bg, e_bg = (38, 12, 38), (14, 6, 16)
+            rim_rgb = (255, 40, 160)
+            acc_rgb = (0, 245, 255)
+            badge_text = "📼 RETRO VHS"
+        elif niche == "greek":
+            c_bg, e_bg = (36, 26, 12), (12, 8, 6)
+            rim_rgb = (255, 215, 60)
+            acc_rgb = (255, 235, 120)
+            badge_text = "⚡ OLYMPUS"
         else:
             c_bg, e_bg = (24, 22, 38), (8, 7, 14)
             rim_rgb = (210, 230, 255)
