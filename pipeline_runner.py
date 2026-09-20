@@ -432,7 +432,8 @@ def main():
 
     if AUTO_PUBLISH:
         print("\n=== STEP 6: PUBLISHING VERIFIED LENS TO SNAPCHAT CATALOG ===")
-        final_lens_name = lens_name or lens_data.get("lens_name") or "Obsidian Pyrodrake 3D"
+        actual_lens_name = (lens_data.get("lens_name") or "").strip()
+        final_lens_name = actual_lens_name if actual_lens_name else (lens_name or "Obsidian Pyrodrake 3D")
 
         # Check for simulated preview video from Gate 7
         preview_url = None

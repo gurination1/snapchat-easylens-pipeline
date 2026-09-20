@@ -82,6 +82,53 @@ class LensSimulator:
         return _audit(video_path, require_audio=require_audio)
 
     @staticmethod
+    def extract_clean_hero(raw_icon: Image.Image) -> Image.Image:
+        """
+        Extracts 3D hero asset from Snapchat Lens Studio icon.png using radial chroma/luma separation.
+        Detects background tone (dark vs light render), strips outer icon frame/bezel rings,
+        and isolates authentic 3D Gaussian splat / mesh geometry with smooth alpha.
+        """
+        try:
+            import numpy as np
+            import cv2
+        except ImportError:
+            return raw_icon
+
+        arr = np.array(raw_icon.convert("RGBA"))
+        h, w = arr.shape[:2]
+        cy, cx = h / 2.0, w / 2.0
+        y, x = np.ogrid[:h, :w]
+        dist = np.sqrt((x - cx) ** 2 + (y - cy) ** 2)
+
+        # Sample background in perimeter zone (radius 122 to 133) inside the outer bezel
+        peri_zone = (dist >= 122) & (dist <= 133)
+        bg_color = np.median(arr[peri_zone, :3], axis=0)
+        bg_is_dark = bool(np.mean(bg_color) < 100)
+
+        # Outer bezel ring starts at radius 135
+        inside = dist <= 134
+        c_diff = np.sqrt(np.sum((arr[:, :, :3] - bg_color) ** 2, axis=-1))
+
+        if bg_is_dark:
+            bright = np.max(arr[:, :, :3], axis=-1)
+            mask = inside & ((c_diff > 10.0) | (bright > 8)) & (arr[:, :, 3] > 30)
+        else:
+            mask = inside & (c_diff > 22.0) & (arr[:, :, 3] > 30)
+
+        mask_u8 = mask.astype(np.uint8) * 255
+        kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+        mask_clean = cv2.morphologyEx(mask_u8, cv2.MORPH_CLOSE, kernel)
+        mask_blur = cv2.GaussianBlur(mask_clean.astype(np.float32), (3, 3), 0)
+
+        out_arr = arr.copy()
+        out_arr[:, :, 3] = np.clip(mask_blur, 0, 255).astype(np.uint8)
+        clean_im = Image.fromarray(out_arr)
+        bbox = clean_im.split()[-1].getbbox()
+        if bbox:
+            return clean_im.crop(bbox)
+        return clean_im
+
+    @staticmethod
     def detect_face_landmarks(image_input, model_path: str = None) -> dict:
         """
         High-precision anatomical facial landmark detector.
@@ -98,6 +145,11 @@ class LensSimulator:
 
         np_frame = None
         orig_w, orig_h = 720, 1280
+        if isinstance(image_input, str) and os.path.exists(image_input):
+            try:
+                image_input = Image.open(image_input)
+            except Exception:
+                pass
         if isinstance(image_input, Image.Image):
             orig_w, orig_h = image_input.size
             rgb_arr = np.array(image_input.convert("RGB"))
@@ -376,24 +428,23 @@ class LensSimulator:
             return im
 
     def resolve_portrait_model(self) -> str:
-        """Dynamically picks distinct portrait model asset based on resolved visual niche"""
+        """Dynamically picks distinct portrait model asset matching the motion video and visual niche"""
         portraits_dir = os.path.join(self.portrait_dir, "portraits")
-        niche = self.resolve_visual_niche()
+        aid = str(self.lens_data.get("account_id", "1"))
+        niche = self.resolve_visual_niche(account_id=aid)
 
-        # Multi-model diverse studio matrix matched to visual niche:
-        # mythic: model_1_classic.png (Studio classic neutral portrait, perfect for crowns/helms)
-        # cyber: model_2_cyber.jpg (East Asian male, neon edge rim, perfect for HUD/visors)
-        # comedy: model_4_meme.jpg (Black male, expressive winking smile, perfect for memes/tears)
-        # luxury: model_3_luxe.jpg (South Asian female, radiant golden hour lighting, couture elegance)
-        # chrome: model_5_chrome.jpg (Scandinavian female, platinum hair, silver rim, surreal Y3K)
-        if niche == "cyber":
-            cand = "model_2_cyber.jpg"
-        elif niche == "comedy":
-            cand = "model_4_meme.jpg"
-        elif niche == "luxury":
-            cand = "model_3_luxe.jpg"
-        elif niche == "chrome":
+        # Account 2 (Cyber / Chrome / Tech): uses blonde model (exact frame 0 of test_portrait_blonde.mp4)
+        # Account 1 (Mythic / Comedy / Luxury): uses classic brunette model (exact frame 0 of test_portrait.mp4)
+        if aid == "2" or niche in ["cyber", "chrome"]:
+            cand = "model_blonde.png"
+            target = os.path.join(portraits_dir, cand)
+            if os.path.exists(target):
+                return target
             cand = "model_5_chrome.jpg"
+        elif niche == "comedy":
+            cand = "model_1_classic.png"
+        elif niche == "luxury":
+            cand = "model_1_classic.png"
         else:
             cand = "model_1_classic.png"
 
@@ -404,6 +455,20 @@ class LensSimulator:
         # Fallback to standard assets/portrait_neutral.png
         fallback = os.path.join(self.portrait_dir, "portrait_neutral.png")
         return fallback if os.path.exists(fallback) else None
+
+    def resolve_portrait_video(self, account_id: str = None) -> str:
+        """Picks the matching 9:16 vertical motion stock video strictly aligned with the still portrait model"""
+        aid = str(account_id or self.lens_data.get("account_id", "1"))
+        niche = self.resolve_visual_niche(account_id=aid)
+
+        if aid == "2" or niche in ["cyber", "chrome"]:
+            cand = os.path.join(self.portrait_dir, "test_portrait_blonde.mp4")
+            if os.path.exists(cand):
+                return cand
+        cand = os.path.join(self.portrait_dir, "test_portrait.mp4")
+        if os.path.exists(cand):
+            return cand
+        return None
 
     def inspect_bundle(self) -> dict:
         """Deep inspects scene.scn and archive to detect 3D meshes, bindings, and slop"""
@@ -519,65 +584,10 @@ class LensSimulator:
                     elif any(k in lower for k in ["bg.png", "background"]) and lower.endswith(".png") and not bg_texture:
                         bg_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
 
-                # 2. Extract 3D asset from icon.png using GrabCut clean room isolation
+                # 2. Extract 3D asset from icon.png using clean radial chroma/luma separation
                 if "icon.png" in z.namelist():
                     raw_icon = Image.open(io.BytesIO(z.read("icon.png"))).convert("RGBA")
-                    iw, ih = raw_icon.size
-                    icx, icy = iw / 2.0, ih / 2.0
-
-                    try:
-                        import cv2
-                    except ImportError:
-                        cv2 = None
-
-                    if cv2 is not None and np is not None:
-                        arr_rgba = np.array(raw_icon)
-                        bgr = cv2.cvtColor(arr_rgba, cv2.COLOR_RGBA2BGR)
-                        y, x = np.ogrid[:ih, :iw]
-                        dist = np.sqrt((x - icx)**2 + (y - icy)**2)
-
-                        mask = np.zeros((ih, iw), np.uint8)
-                        mask[dist <= 135] = cv2.GC_PR_FGD
-                        mask[dist > 136] = cv2.GC_BGD
-
-                        bgdModel = np.zeros((1, 65), np.float64)
-                        fgdModel = np.zeros((1, 65), np.float64)
-                        cv2.grabCut(bgr, mask, None, bgdModel, fgdModel, 5, cv2.GC_INIT_WITH_MASK)
-
-                        fg_mask = np.where((mask == cv2.GC_FGD) | (mask == cv2.GC_PR_FGD), 255, 0).astype("uint8")
-                        fg_mask = cv2.GaussianBlur(fg_mask, (3, 3), 0)
-                        rgb = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
-                        clean_icon = Image.fromarray(np.dstack([rgb, fg_mask]))
-                    elif np is not None:
-                        arr = np.array(raw_icon)
-                        y_idx, x_idx = np.ogrid[:ih, :iw]
-                        dist = np.sqrt((x_idx - icx) ** 2 + (y_idx - icy) ** 2)
-                        arr[dist > 136] = [0, 0, 0, 0]
-                        is_black = (arr[:, :, 0] < 30) & (arr[:, :, 1] < 30) & (arr[:, :, 2] < 35)
-                        visited = np.zeros((ih, iw), dtype=bool)
-                        q = deque([(0, 0), (0, iw - 1), (ih - 1, 0), (ih - 1, iw - 1)] +
-                                  [(int(icy + 137*np.sin(a)), int(icx + 137*np.cos(a))) for a in np.linspace(0, 2*np.pi, 36)])
-                        for r, c in list(q):
-                            if 0 <= r < ih and 0 <= c < iw:
-                                visited[r, c] = True
-                        while q:
-                            r, c = q.popleft()
-                            arr[r, c] = [0, 0, 0, 0]
-                            for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-                                nr, nc = r + dr, c + dc
-                                if 0 <= nr < ih and 0 <= nc < iw and not visited[nr, nc]:
-                                    if dist[nr, nc] > 130 or is_black[nr, nc]:
-                                        visited[nr, nc] = True
-                                        q.append((nr, nc))
-                        clean_icon = Image.fromarray(arr)
-                    else:
-                        clean_icon = raw_icon
-
-                    bbox = clean_icon.split()[-1].getbbox()
-                    if bbox:
-                        dominant_texture = clean_icon.crop(bbox)
-                    else:
-                        dominant_texture = clean_icon
+                    dominant_texture = self.extract_clean_hero(raw_icon)
 
         except Exception as e:
             print(f"[SIMULATOR WARN] Error extracting production assets: {e}")
@@ -611,8 +621,9 @@ class LensSimulator:
         is_full_helmet = any(w in p_text for w in ["helmet", "full-face", "full face", "motorcycle"])
         is_visor = (niche == "cyber") or any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "spectacles", "monocle", "eyewear", "sunglasses", "reticle", "optics"])
         is_tear = (niche == "comedy" and any(w in p_text for w in ["tear", "crying", "weep", "waterfall", "melodrama"]))
-        is_halo = ((niche == "chrome" or any(w in p_text for w in ["mercury", "zero-g", "mobius", "cumulus", "stormcloud", "cloud crown", "spirit cloud"])) and not is_visor)
-        is_crown = not is_full_helmet and not is_visor and not is_halo and not is_tear
+        is_brow_shell = any(w in p_text for w in ["brow", "shell", "circlet", "plate", "forehead", "beetle", "scarab", "crest"])
+        is_halo = ((niche == "chrome" or any(w in p_text for w in ["mercury", "zero-g", "mobius", "cumulus", "stormcloud", "cloud crown", "spirit cloud"])) and not is_visor and not is_brow_shell)
+        is_crown = not is_full_helmet and not is_visor and not is_halo and not is_tear and not is_brow_shell
 
         if is_full_helmet:
             target_w = int(eye_dist * 3.6)
@@ -621,7 +632,7 @@ class LensSimulator:
             ev_y = int(eye_cy)
         elif is_visor:
             target_w = int(eye_dist * 2.35)
-            target_h = min(220, int(target_w * aspect))
+            target_h = min(240, int(target_w * aspect))
             pos = (int(eye_cx - target_w // 2), int(eye_cy - target_h // 2))
             ev_y = int(eye_cy)
         elif is_tear:
@@ -630,20 +641,25 @@ class LensSimulator:
             mid_y = (eye_cy + mouth_cy) / 2.0
             pos = (int(eye_cx - target_w // 2), int(mid_y - target_h // 2))
             ev_y = int(eye_cy)
+        elif is_brow_shell:
+            target_w = int(eye_dist * (1.45 if eye_dist > 180 else 1.95))
+            target_h = int(target_w * aspect)
+            pos = (int(forehead_cx - target_w // 2), int(forehead_cy - target_h * 0.70))
+            ev_y = int(eye_cy)
         elif is_halo:
             target_w = int(eye_dist * 2.50)
             target_h = int(target_w * aspect)
             pos = (int(halo_cx - target_w // 2), int(halo_cy - target_h // 2))
             ev_y = int(eye_cy)
         elif is_crown:
-            target_w = int(eye_dist * 2.55)
+            target_w = int(eye_dist * 2.45)
             target_h = int(target_w * aspect)
-            pos = (int(forehead_cx - target_w // 2), int(forehead_cy - target_h * 0.85))
+            pos = (int(forehead_cx - target_w // 2), int(forehead_cy - target_h * 0.60))
             ev_y = int(eye_cy)
         else:
             target_w = int(eye_dist * 2.40)
-            target_h = min(280, int(target_w * aspect))
-            pos = (int(forehead_cx - target_w // 2), int(forehead_cy - target_h * 0.65))
+            target_h = int(target_w * aspect)
+            pos = (int(forehead_cx - target_w // 2), int(forehead_cy - target_h * 0.60))
             ev_y = int(eye_cy)
 
         # Trigger frame anatomical anchors
@@ -660,12 +676,14 @@ class LensSimulator:
             pos_t = (int(t_eye_cx - target_w // 2), int(t_eye_cy - target_h // 2))
         elif is_tear:
             pos_t = (int(t_eye_cx - target_w // 2), int((t_eye_cy + t_mouth_cy) / 2.0 - target_h // 2))
+        elif is_brow_shell:
+            pos_t = (int(t_forehead_cx - target_w // 2), int(t_forehead_cy - target_h * 0.70))
         elif is_halo:
             pos_t = (int(t_halo_cx - target_w // 2), int(t_halo_cy - target_h // 2))
         elif is_crown:
-            pos_t = (int(t_forehead_cx - target_w // 2), int(t_forehead_cy - target_h * 0.85))
+            pos_t = (int(t_forehead_cx - target_w // 2), int(t_forehead_cy - target_h * 0.60))
         else:
-            pos_t = (int(t_forehead_cx - target_w // 2), int(t_forehead_cy - target_h * 0.65))
+            pos_t = (int(t_forehead_cx - target_w // 2), int(t_forehead_cy - target_h * 0.60))
 
         # Store for motion video synthesis
         self.dominant_texture = dominant_texture
@@ -682,9 +700,10 @@ class LensSimulator:
             "ev_y": ev_y,
             "is_full_helmet": is_full_helmet,
             "is_visor": is_visor,
-            "is_crown": is_crown,
-            "is_halo": is_halo,
             "is_tear": is_tear,
+            "is_brow_shell": is_brow_shell,
+            "is_halo": is_halo,
+            "is_crown": is_crown,
             "p_text": p_text
         }
 
@@ -1496,7 +1515,7 @@ class LensSimulator:
             self.render_simulation_screenshots(out_neutral=out_neutral, out_trigger=out_trigger)
 
         import tempfile
-        video_src = motion_video or os.path.join(self.portrait_dir, "test_portrait.mp4")
+        video_src = motion_video or self.resolve_portrait_video(account_id=account_id) or os.path.join(self.portrait_dir, "test_portrait.mp4")
         temp_video = os.path.join(tempfile.gettempdir(), f"lens_sim_temp_{os.getpid()}_{int(time.time() * 1000)}.mp4")
 
         # ---------------- 1. REAL PORTRAIT MOTION ENGINE WITH LANDMARK TRACKING ----------------
@@ -1586,8 +1605,9 @@ class LensSimulator:
                 is_full_helmet = self.asset_scale_info.get("is_full_helmet", False) or any(w in p_text for w in ["helmet", "full-face", "full face", "motorcycle"])
                 is_visor = self.asset_scale_info.get("is_visor", False) or (niche == "cyber") or any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "spectacles", "monocle", "eyewear", "sunglasses", "reticle", "optics"])
                 is_tear = self.asset_scale_info.get("is_tear", False) or (niche == "comedy" and any(w in p_text for w in ["tear", "crying", "weep", "waterfall", "melodrama"]))
-                is_halo = self.asset_scale_info.get("is_halo", False) or ((niche == "chrome" or any(w in p_text for w in ["mercury", "zero-g", "mobius", "cumulus", "stormcloud", "cloud crown", "spirit cloud"])) and not is_visor)
-                is_crown = not is_full_helmet and not is_visor and not is_halo and not is_tear
+                is_brow_shell = self.asset_scale_info.get("is_brow_shell", False) or any(w in p_text for w in ["brow", "shell", "circlet", "plate", "forehead", "beetle", "scarab", "crest"])
+                is_halo = self.asset_scale_info.get("is_halo", False) or ((niche == "chrome" or any(w in p_text for w in ["mercury", "zero-g", "mobius", "cumulus", "stormcloud", "cloud crown", "spirit cloud"])) and not is_visor and not is_brow_shell)
+                is_crown = not is_full_helmet and not is_visor and not is_halo and not is_tear and not is_brow_shell
 
                 # Pre-generate optimized contact shadow sprite template (resized dynamically per-frame)
                 sh_w, sh_h = 480, 190
@@ -1637,11 +1657,11 @@ class LensSimulator:
                         cur_w = int(eye_dist * 3.60)
                         cur_h = int(cur_w * aspect)
                         anc_x = eye_cx
-                        anc_y = float(eye_cy - cur_h * 0.05)
+                        anc_y = float(eye_cy - cur_h * 0.02)
                     elif is_visor:
                         # Full temple-to-temple ocular eyewear centered strictly over pupils
                         cur_w = int(eye_dist * 2.35)
-                        cur_h = min(220, int(cur_w * aspect))
+                        cur_h = min(240, int(cur_w * aspect))
                         anc_x = eye_cx
                         anc_y = eye_cy
                     elif is_tear:
@@ -1649,6 +1669,11 @@ class LensSimulator:
                         cur_h = min(380, int(cur_w * aspect))
                         anc_x = eye_cx
                         anc_y = float((eye_cy + mouth[1]) / 2.0)
+                    elif is_brow_shell:
+                        cur_w = int(eye_dist * (1.45 if eye_dist > 180 else 1.95))
+                        cur_h = int(cur_w * aspect)
+                        anc_x = float(fh[0])
+                        anc_y = float(fh[1] - cur_h * 0.20)
                     elif is_halo:
                         # Floating celestial toroid above skull
                         cur_w = int(eye_dist * 2.50)
@@ -1657,17 +1682,17 @@ class LensSimulator:
                         anc_y = float(fh[1] - cur_h * 0.65)
                     elif is_crown:
                         # Full temple-to-temple regal crown span resting on forehead hairline
-                        cur_w = max(550, int(eye_dist * 2.55))
-                        cur_h = max(280, int(cur_w * aspect))
-                        anc_x = float(fh[0])
-                        anc_y = float(fh[1] - cur_h * 0.35)
-                    else:
                         cur_w = int(eye_dist * 2.45)
-                        cur_h = max(240, int(cur_w * aspect))
+                        cur_h = int(cur_w * aspect)
                         anc_x = float(fh[0])
-                        anc_y = float(fh[1] - cur_h * 0.35)
+                        anc_y = float(fh[1] - cur_h * 0.10)
+                    else:
+                        cur_w = int(eye_dist * 2.40)
+                        cur_h = int(cur_w * aspect)
+                        anc_x = float(fh[0])
+                        anc_y = float(fh[1] - cur_h * 0.10)
 
-                    scale = float(eye_dist / 232.0)  # Normalized scale relative to canonical portrait video
+                    scale = float(eye_dist / base_eye_dist)  # Normalized dynamically to video base eye distance
 
                     # Dynamic trigger progression curve (mouth open / smile transition)
                     # Peak trigger between 35% and 75% of clip duration
