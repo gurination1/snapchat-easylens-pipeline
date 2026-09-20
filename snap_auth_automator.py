@@ -36,12 +36,12 @@ REPO = "gurination1/snapchat-easylens-pipeline"
 
 
 def is_authenticated_url(url: str) -> bool:
-    """Returns True if the URL is on easylens.snapchat.com or accounts.snapchat.com/accounts/sso as host/path (ignoring query params)."""
+    """Returns True if the URL is on easylens.snapchat.com, my-lenses.snapchat.com, or accounts.snapchat.com/accounts/sso as host/path (ignoring query params)."""
     if not url:
         return False
     try:
         parsed = urllib.parse.urlparse(url)
-        if parsed.netloc == "easylens.snapchat.com":
+        if parsed.netloc in ("easylens.snapchat.com", "my-lenses.snapchat.com"):
             return True
         if "accounts.snapchat.com" in parsed.netloc and parsed.path.startswith("/accounts/sso"):
             return True
@@ -307,21 +307,22 @@ def test_bearer_token(ticket: str, cookie_header: str = "") -> dict:
     return None
 
 
-def mint_sso_ticket_from_cookies(cookie_header: str) -> str:
+def mint_sso_ticket_from_cookies(cookie_header: str, client_id: str = "web-ar-applier") -> str:
     """Fast-path: Calls accounts.snapchat.com/accounts/sso to mint fresh Bearer ticket."""
     if not cookie_header:
         return ""
+    origin = "https://my-lenses.snapchat.com" if client_id == "lens-studio-web" else "https://easylens.snapchat.com"
     url = f"{ACCOUNTS_BASE}/accounts/sso"
     headers = {
         "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
-        "Origin": "https://easylens.snapchat.com",
-        "Referer": "https://easylens.snapchat.com/",
+        "Origin": origin,
+        "Referer": f"{origin}/",
         "User-Agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36",
         "Cookie": cookie_header
     }
-    data = "client_id=web-ar-applier"
+    data = f"client_id={client_id}"
     try:
-        print("[SSO FAST-PATH] Testing /accounts/sso with existing session cookies...")
+        print(f"[SSO FAST-PATH] Testing /accounts/sso with client_id={client_id}...")
         res = requests.post(url, headers=headers, data=data, timeout=12)
         if res.status_code == 200 and not res.text.strip().startswith("<"):
             raw = res.text.strip()
@@ -330,9 +331,9 @@ def mint_sso_ticket_from_cookies(cookie_header: str) -> str:
             except Exception:
                 ticket = raw
             if ticket.startswith("hCgw"):
-                print(f"[SSO FAST-PATH SUCCESS] Minted fresh Bearer ticket ({ticket[:16]}...)")
+                print(f"[SSO FAST-PATH SUCCESS] Minted fresh Bearer ticket for {client_id} ({ticket[:16]}...)")
                 return ticket
-        print(f"[SSO FAST-PATH INFO] Cookie needs renewal (HTTP {res.status_code})")
+        print(f"[SSO FAST-PATH INFO] Cookie needs renewal for {client_id} (HTTP {res.status_code})")
     except Exception as e:
         print(f"[SSO FAST-PATH WARN] {e}")
     return ""

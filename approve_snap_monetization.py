@@ -33,6 +33,7 @@ except ImportError:
 
 from snap_auth_automator import (
     obtain_valid_snap_session,
+    mint_sso_ticket_from_cookies,
     human_type,
     human_click,
     get_gemini_api_keys
@@ -359,21 +360,31 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                 if account_input:
                     print(f"[AUTH LOGIN] Filling username: {login_user}...")
                     await human_type(page, account_input, login_user)
-                    await page.wait_for_timeout(400)
+                    await page.wait_for_timeout(500)
+                    await page.keyboard.press("Enter")
+                    await page.wait_for_timeout(500)
                     next_btn = await page.query_selector("button:has-text('Next'), button[type='submit']")
-                    if next_btn:
+                    if next_btn and await next_btn.is_visible():
                         await human_click(page, next_btn)
-                        await page.wait_for_timeout(3000)
 
-                # Wait for password input
-                pwd_input = await page.wait_for_selector("input[type='password']", state="visible", timeout=12000)
+                # Wait for password input to become genuinely visible
+                pwd_input = None
+                for _ in range(30):
+                    await page.wait_for_timeout(1000)
+                    p_el = await page.query_selector("input[type='password']")
+                    if p_el and await p_el.is_visible():
+                        pwd_input = p_el
+                        break
+
                 if pwd_input:
                     env_pwd = os.getenv(f"SNAP_PASSWORD_ACC_{aid}") or os.getenv("SNAP_PASSWORD") or ""
                     print("[AUTH LOGIN] Filling password...")
                     await human_type(page, pwd_input, env_pwd)
-                    await page.wait_for_timeout(400)
+                    await page.wait_for_timeout(500)
+                    await page.keyboard.press("Enter")
+                    await page.wait_for_timeout(500)
                     login_btn = await page.query_selector("button:has-text('Log In'), button:has-text('Next'), button[type='submit']")
-                    if login_btn:
+                    if login_btn and await login_btn.is_visible():
                         await human_click(page, login_btn)
                         await page.wait_for_timeout(6000)
 
@@ -572,10 +583,19 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
 
     user = user or {}
 
+    # Mint a ticket specifically for lens-studio-web (my-lenses.snapchat.com)
+    my_lenses_ticket = None
+    if cookie_str:
+        my_lenses_ticket = mint_sso_ticket_from_cookies(cookie_str, client_id="lens-studio-web")
+    if not my_lenses_ticket:
+        my_lenses_ticket = ticket
+
+    print(f"[AUTH TICKET] Active lens-studio-web Bearer ticket: {my_lenses_ticket[:16] if my_lenses_ticket else 'None'}...")
+
     # 1. Execute direct GraphQL operations first (highest reliability, runs in ~200ms)
     print("\n--- PHASE 1: DIRECT GRAPHQL MONETIZATION ENROLLMENT ---")
-    tos_results = direct_approve_tos(ticket, cookie_str)
-    enroll_results = direct_enroll_lenses(ticket, cookie_str, target_lens_id=target_lens_id)
+    tos_results = direct_approve_tos(my_lenses_ticket, cookie_str)
+    enroll_results = direct_enroll_lenses(my_lenses_ticket, cookie_str, target_lens_id=target_lens_id)
 
     # 2. Execute browser UI automation for visual proof and on-screen toggle
     print("\n--- PHASE 2: HEADLESS BROWSER UI VERIFICATION & TOGGLE ---")
@@ -587,7 +607,7 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
                 break
 
     browser_results = asyncio.run(_run_browser_approval(
-        aid, user, cookie_str, ticket, exec_path,
+        aid, user, cookie_str, my_lenses_ticket, exec_path,
         target_lens_id=target_lens_id, target_lens_url=target_lens_url
     ))
 
