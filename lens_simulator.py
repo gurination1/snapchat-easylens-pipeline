@@ -6,6 +6,7 @@ renders visual composite previews, and runs Gemini Multimodal Vision Judge.
 
 import os
 import io
+import math
 import json
 import base64
 import zipfile
@@ -336,27 +337,43 @@ class LensSimulator:
         r_e = np.array(landmarks.get("r_eye", (w * 0.40, h * 0.40)), dtype=np.float64)
         l_e = np.array(landmarks.get("l_eye", (w * 0.60, h * 0.40)), dtype=np.float64)
         n = np.array(landmarks.get("nose", (w * 0.50, h * 0.48)), dtype=np.float64)
-        r_m = np.array(landmarks.get("r_mouth", (w * 0.44, h * 0.57)), dtype=np.float64)
-        l_m = np.array(landmarks.get("l_mouth", (w * 0.56, h * 0.57)), dtype=np.float64)
+
+        eye_dist = float(landmarks.get("eye_dist", np.linalg.norm(l_e - r_e)))
+        eye_center = (l_e + r_e) / 2.0
+        roll_deg = float(landmarks.get("roll_angle", math.degrees(math.atan2(l_e[1] - r_e[1], l_e[0] - r_e[0]))))
+        roll_rad = math.radians(roll_deg)
+        cos_r = math.cos(roll_rad)
+        sin_r = math.sin(roll_rad)
+
+        if "mouth_center" in landmarks:
+            m_cx, m_cy = landmarks["mouth_center"]
+        else:
+            m_cx, m_cy = eye_center[0] - sin_r * (eye_dist * 0.95), eye_center[1] + cos_r * (eye_dist * 0.95)
+
+        half_mw = eye_dist * 0.28
+        def_r_m = (m_cx - half_mw * cos_r, m_cy - half_mw * sin_r)
+        def_l_m = (m_cx + half_mw * cos_r, m_cy + half_mw * sin_r)
+
+        r_m = np.array(landmarks.get("r_mouth", def_r_m), dtype=np.float64)
+        l_m = np.array(landmarks.get("l_mouth", def_l_m), dtype=np.float64)
 
         if "chin" in landmarks:
             chin = np.array(landmarks["chin"], dtype=np.float64)
         else:
-            m_center = (l_m + r_m) / 2.0
-            eye_center = (l_e + r_e) / 2.0
-            chin = m_center + (m_center - eye_center) * 0.55
+            chin = np.array([m_cx + sin_r * (eye_dist * 0.50), m_cy + cos_r * (eye_dist * 0.50)], dtype=np.float64)
 
         image_points = np.array([n, l_e, r_e, l_m, r_m, chin], dtype=np.float64)
 
         # 2. 3D Anthropometric Canonical Face Model in centimeters (Snapchat Lens Studio space)
         # Standard head: Intercanthal distance 6.4cm (+-3.2cm), Eye plane 3.2cm above nose
         # Mouth corners 2.8cm below nose (+-2.4cm wide), Chin 6.8cm below nose
+        # +X: viewer right, +Y: viewer down, +Z: into cranium (nose tip protrudes at -2.2cm towards camera)
         model_points = np.array([
-            [0.0, 0.0, 2.2],    # 0: Nose tip (protrudes +2.2cm forward)
-            [3.2, -3.2, 0.0],   # 1: Left eye pupil
-            [-3.2, -3.2, 0.0],  # 2: Right eye pupil
-            [2.4, 2.8, 0.4],    # 3: Left mouth corner
-            [-2.4, 2.8, 0.4],   # 4: Right mouth corner
+            [0.0, 0.0, -2.2],   # 0: Nose tip (protrudes towards camera)
+            [3.2, -3.2, 0.0],   # 1: Left eye pupil (viewer right)
+            [-3.2, -3.2, 0.0],  # 2: Right eye pupil (viewer left)
+            [2.4, 2.8, -0.4],   # 3: Left mouth corner
+            [-2.4, 2.8, -0.4],  # 4: Right mouth corner
             [0.0, 6.8, 0.0]     # 5: Chin tip
         ], dtype=np.float64)
 
@@ -369,13 +386,23 @@ class LensSimulator:
         ], dtype=np.float64)
         dist_coeffs = np.zeros((4, 1), dtype=np.float64)
 
-        # 4. solvePnP Optimization
+        # 4. solvePnP Optimization with Extrinsic Prior (guarantees positive Z and natural roll bounds)
+        eye_dist = float(np.linalg.norm(l_e - r_e))
+        eye_center = (l_e + r_e) / 2.0
+        init_z = focal_length * 6.3 / max(10.0, eye_dist)
+        init_x = (eye_center[0] - w / 2.0) * init_z / focal_length
+        init_y = (eye_center[1] - h / 2.0) * init_z / focal_length
+        roll_rad = float(np.radians(landmarks.get("roll_angle", 0.0)))
+
+        rvec = np.array([0.15, 0.0, -roll_rad], dtype=np.float64).reshape(3, 1)
+        tvec = np.array([init_x, init_y, init_z], dtype=np.float64).reshape(3, 1)
+
         success = False
-        rvec = np.zeros((3, 1), dtype=np.float64)
-        tvec = np.zeros((3, 1), dtype=np.float64)
         try:
             success, rvec, tvec = cv2.solvePnP(
-                model_points, image_points, cam_matrix, dist_coeffs, flags=cv2.SOLVEPNP_ITERATIVE
+                model_points, image_points, cam_matrix, dist_coeffs,
+                rvec=rvec, tvec=tvec, useExtrinsicGuess=True,
+                flags=cv2.SOLVEPNP_ITERATIVE
             )
         except Exception:
             pass
@@ -486,25 +513,65 @@ class LensSimulator:
                 d.ellipse([tx - trad//3, ty - trad//2, tx, ty - trad//5], fill=(255, 255, 255, 250))
             return im
 
-        elif any(w in p_lower for w in ["pearl", "baroque", "filigree", "champagne", "couture", "gold leaf", "diamond", "haute", "luxe"]) or niche == "luxury":
-            w, h = 530, 240
+        elif any(w in p_lower for w in ["pearl", "baroque", "filigree", "champagne", "couture", "gold leaf", "diamond", "haute", "luxe", "moonstone", "tiara", "coronal", "heirloom", "emerald"]) or niche == "luxury":
+            w, h = 540, 270
             im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
             d = ImageDraw.Draw(im)
-            base_pts = [
-                (50, 195), (140, 180), (w // 2, 172), (w - 140, 180), (w - 50, 195),
-                (w - 58, 212), (w - 145, 198), (w // 2, 190), (145, 198), (58, 212)
+            cx = w // 2
+
+            # 1. Base Arch Rim
+            base_shadow = [
+                (45, 215), (130, 202), (cx, 196), (w - 130, 202), (w - 45, 215),
+                (w - 55, 235), (w - 140, 224), (cx, 218), (140, 224), (55, 235)
             ]
-            d.polygon(base_pts, fill=(230, 185, 55, 255), outline=(255, 240, 160, 255), width=2)
-            pearl_coords = [
-                (w // 2, 110, 16),
-                (w // 2 - 75, 125, 13), (w // 2 + 75, 125, 13),
-                (w // 2 - 145, 145, 11), (w // 2 + 145, 145, 11),
-                (w // 2 - 205, 170, 9), (w // 2 + 205, 170, 9),
+            d.polygon(base_shadow, fill=(140, 95, 20, 230))
+
+            base_gold = [
+                (45, 208), (130, 195), (cx, 189), (w - 130, 195), (w - 45, 208),
+                (w - 52, 228), (w - 138, 217), (cx, 211), (138, 217), (52, 228)
             ]
-            for px, py, prad in pearl_coords:
-                d.line([(px, py + prad), (px, py + prad + 25)], fill=(225, 180, 50), width=3)
-                d.ellipse([px - prad, py - prad, px + prad, py + prad], fill=(245, 240, 230, 255), outline=(220, 205, 185, 255), width=1)
-                d.ellipse([px - prad // 2, py - prad // 2, px - prad // 5, py - prad // 5], fill=(255, 255, 255, 250))
+            d.polygon(base_gold, fill=(245, 195, 55, 255), outline=(255, 245, 180, 255), width=2)
+            d.line([(55, 213), (135, 201), (cx, 195), (w - 135, 201), (w - 55, 213)], fill=(255, 250, 220, 220), width=2)
+
+            # 2. Ornate Filigree Spires (100% symmetric about cx)
+            spires = [
+                ([(cx, 32), (cx - 42, 110), (cx - 28, 190), (cx + 28, 190), (cx + 42, 110)], (245, 195, 55), (190, 140, 30)),
+                ([(cx - 105, 56), (cx - 138, 125), (cx - 80, 195), (cx - 48, 190)], (235, 185, 50), (180, 130, 25)),
+                ([(cx + 105, 56), (cx + 48, 190), (cx + 80, 195), (cx + 138, 125)], (235, 185, 50), (180, 130, 25)),
+                ([(cx - 185, 88), (cx - 210, 148), (cx - 142, 202), (cx - 118, 198)], (225, 175, 45), (170, 120, 20)),
+                ([(cx + 185, 88), (cx + 118, 198), (cx + 142, 202), (cx + 210, 148)], (225, 175, 45), (170, 120, 20))
+            ]
+            for sp_pts, gold_col, shade_col in spires:
+                d.polygon(sp_pts, fill=gold_col, outline=(255, 245, 195, 255), width=2)
+                for p_idx in range(len(sp_pts) - 1):
+                    p1, p2 = sp_pts[p_idx], sp_pts[p_idx + 1]
+                    if p1[0] <= cx or p2[0] <= cx:
+                        d.line([p1, p2], fill=(255, 255, 230, 210), width=2)
+
+            # 3. Faceted Gemstones with Gold Bezels
+            gems = [
+                (cx, 128, 18, (30, 180, 90), (15, 110, 50)),
+                (cx - 95, 138, 14, (35, 185, 95), (18, 115, 55)),
+                (cx + 95, 138, 14, (35, 185, 95), (18, 115, 55)),
+                (cx - 168, 155, 11, (40, 190, 100), (20, 120, 60)),
+                (cx + 168, 155, 11, (40, 190, 100), (20, 120, 60))
+            ]
+            for gx, gy, grad, gem_light, gem_dark in gems:
+                d.ellipse([gx - grad - 3, gy - grad - 3, gx + grad + 3, gy + grad + 3], fill=(255, 220, 80), outline=(160, 110, 25), width=2)
+                d.ellipse([gx - grad, gy - grad, gx + grad, gy + grad], fill=gem_dark)
+                d.ellipse([gx - grad + 2, gy - grad + 2, gx + grad - 1, gy + grad - 1], fill=gem_light)
+                d.ellipse([gx - grad//2, gy - grad//2, gx - grad//5, gy - grad//5], fill=(255, 255, 255, 245))
+
+            # 4. Spire Pearlescent Cabochons
+            spire_pearls = [
+                (cx, 32, 12),
+                (cx - 105, 56, 10), (cx + 105, 56, 10),
+                (cx - 185, 88, 8), (cx + 185, 88, 8)
+            ]
+            for px, py, prad in spire_pearls:
+                d.ellipse([px - prad - 2, py - prad - 2, px + prad + 2, py + prad + 2], fill=(255, 225, 85))
+                d.ellipse([px - prad, py - prad, px + prad, py + prad], fill=(250, 248, 240), outline=(210, 200, 185), width=1)
+                d.ellipse([px - prad//2, py - prad//2, px - prad//5, py - prad//5], fill=(255, 255, 255, 250))
             return im
 
         elif niche == "mythic" or any(w in p_lower for w in ["crown", "horns", "tiara", "headpiece", "diadem", "helm", "coronet", "circlet", "crest", "valkyrie", "wings", "band"]):
@@ -906,33 +973,33 @@ class LensSimulator:
         scale_mult = max(0.4, min(2.5, scale_off / 10.0))
 
         if is_full_helmet:
-            base_w = int(eye_dist * 3.60 * scale_mult)
+            base_w = int(eye_dist * 2.60 * scale_mult)
             base_anc_x = eye_cx
             base_anc_y = float(eye_cy - (base_w * aspect) * 0.02)
         elif is_visor:
-            base_w = int(eye_dist * 2.35 * scale_mult)
+            base_w = int(eye_dist * 1.85 * scale_mult)
             base_anc_x = eye_cx
             base_anc_y = eye_cy
         elif is_tear:
-            base_w = int(eye_dist * 2.20 * scale_mult)
+            base_w = int(eye_dist * 1.80 * scale_mult)
             base_anc_x = eye_cx
             base_anc_y = float((eye_cy + mouth[1]) / 2.0)
         elif is_brow_shell:
-            base_w = int(eye_dist * (1.45 if eye_dist > 180 else 1.95) * scale_mult)
+            base_w = int(eye_dist * 1.45 * scale_mult)
             base_anc_x = float(fh[0])
             base_anc_y = float(fh[1] - (base_w * aspect) * 0.20)
         elif is_halo:
-            base_w = int(eye_dist * 2.50 * scale_mult)
+            base_w = int(eye_dist * 2.00 * scale_mult)
             base_anc_x = float(fh[0])
-            base_anc_y = float(fh[1] - (base_w * aspect) * 0.65)
+            base_anc_y = float(fh[1] - (base_w * aspect) * 0.55)
         elif is_crown:
-            base_w = int(eye_dist * 2.45 * scale_mult)
+            base_w = int(eye_dist * 1.70 * scale_mult)
             base_anc_x = float(fh[0])
-            base_anc_y = float(fh[1] - (base_w * aspect) * 0.10)
+            base_anc_y = float(fh[1] - (base_w * aspect) * 0.15)
         else:
-            base_w = int(eye_dist * 2.40 * scale_mult)
+            base_w = int(eye_dist * 1.70 * scale_mult)
             base_anc_x = float(fh[0])
-            base_anc_y = float(fh[1] - (base_w * aspect) * 0.10)
+            base_anc_y = float(fh[1] - (base_w * aspect) * 0.15)
 
         # Ground-truth scene graph projection
         if has_sg:
@@ -971,9 +1038,9 @@ class LensSimulator:
         cur_w = base_w
         cur_h = int(cur_w * aspect)
         if is_visor:
-            cur_h = min(240, cur_h)
+            cur_h = min(200, cur_h)
         elif is_tear:
-            cur_h = min(380, cur_h)
+            cur_h = min(320, cur_h)
 
         pos_x = int(anc_x - cur_w // 2)
         pos_y = int(anc_y - cur_h // 2)
@@ -994,58 +1061,62 @@ class LensSimulator:
             off_y_3d = -(float(pos_off[1]) - 7.3) if has_sg else 0.0
 
             if is_crown:
-                anc_y_3d = -9.6 + off_y_3d
-                w_3d = 17.6 * scale_mult
-                h_3d = max(6.0, min(14.0, (w_3d * aspect) * 0.95))
+                anc_y_3d = -7.2 + off_y_3d
+                w_3d = 11.2 * scale_mult
+                h_3d = max(3.8, min(7.5, (w_3d * aspect) * 0.85))
                 corners_3d = np.array([
-                    [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -1.8],
-                    [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -1.8],
-                    [ (w_3d / 2.0) * 0.94 + off_x_3d, anc_y_3d, -0.4],
-                    [-(w_3d / 2.0) * 0.94 + off_x_3d, anc_y_3d, -0.4]
+                    [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, 1.2],
+                    [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, 1.2],
+                    [ (w_3d / 2.0) * 0.94 + off_x_3d, anc_y_3d, 0.2],
+                    [-(w_3d / 2.0) * 0.94 + off_x_3d, anc_y_3d, 0.2]
                 ], dtype=np.float64)
             elif is_visor:
                 anc_y_3d = -3.2 + off_y_3d
-                w_3d = 17.5 * scale_mult
-                h_3d = max(4.0, min(8.0, 5.5 * aspect))
+                w_3d = 11.5 * scale_mult
+                h_3d = max(3.5, min(6.5, 4.5 * aspect))
                 corners_3d = np.array([
-                    [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -1.2],
-                    [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -1.2],
-                    [ (w_3d / 2.0) * 0.96 + off_x_3d, anc_y_3d, 0.4],
-                    [-(w_3d / 2.0) * 0.96 + off_x_3d, anc_y_3d, 0.4]
+                    [-w_3d / 2.0 + off_x_3d, -3.2 - h_3d / 2.0 + off_y_3d, -0.6],
+                    [ w_3d / 2.0 + off_x_3d, -3.2 - h_3d / 2.0 + off_y_3d, -0.6],
+                    [ (w_3d / 2.0) * 0.96 + off_x_3d, -3.2 + h_3d / 2.0 + off_y_3d, 0.3],
+                    [-(w_3d / 2.0) * 0.96 + off_x_3d, -3.2 + h_3d / 2.0 + off_y_3d, 0.3]
                 ], dtype=np.float64)
             elif is_tear:
-                anc_y_3d = -12.0 + off_y_3d
-                w_3d = 19.0 * scale_mult
-                h_3d = max(6.0, min(12.0, (w_3d * aspect) * 0.90))
+                anc_y_3d = -10.0 + off_y_3d
+                w_3d = 12.0 * scale_mult
+                h_3d = max(5.0, min(10.0, (w_3d * aspect) * 0.85))
                 corners_3d = np.array([
-                    [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -1.5],
-                    [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -1.5],
-                    [ (w_3d / 2.0) + off_x_3d, anc_y_3d, -0.5],
-                    [-(w_3d / 2.0) + off_x_3d, anc_y_3d, -0.5]
+                    [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, 1.0],
+                    [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, 1.0],
+                    [ (w_3d / 2.0) + off_x_3d, anc_y_3d, 0.2],
+                    [-(w_3d / 2.0) + off_x_3d, anc_y_3d, 0.2]
                 ], dtype=np.float64)
             elif is_halo:
-                anc_y_3d = -14.5 + off_y_3d
-                w_3d = 21.0 * scale_mult
-                h_3d = max(6.0, min(14.0, (w_3d * aspect) * 0.85))
+                anc_y_3d = -9.5 + off_y_3d
+                w_3d = 12.5 * scale_mult
+                h_3d = max(4.0, min(8.0, (w_3d * aspect) * 0.80))
                 corners_3d = np.array([
-                    [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -2.0],
-                    [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -2.0],
-                    [ (w_3d / 2.0) + off_x_3d, anc_y_3d, -1.0],
-                    [-(w_3d / 2.0) + off_x_3d, anc_y_3d, -1.0]
+                    [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, 1.5],
+                    [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, 1.5],
+                    [ (w_3d / 2.0) + off_x_3d, anc_y_3d, 0.5],
+                    [-(w_3d / 2.0) + off_x_3d, anc_y_3d, 0.5]
                 ], dtype=np.float64)
             else:
-                anc_y_3d = -6.5 + off_y_3d
-                w_3d = 18.0 * scale_mult
-                h_3d = max(5.0, min(15.0, (w_3d * aspect) * 0.90))
+                anc_y_3d = -7.0 + off_y_3d
+                w_3d = 12.0 * scale_mult
+                h_3d = max(4.0, min(9.0, (w_3d * aspect) * 0.85))
                 corners_3d = np.array([
-                    [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -1.5],
-                    [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -1.5],
-                    [ (w_3d / 2.0) * 0.95 + off_x_3d, anc_y_3d, 0.0],
-                    [-(w_3d / 2.0) * 0.95 + off_x_3d, anc_y_3d, 0.0]
+                    [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, 1.2],
+                    [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, 1.2],
+                    [ (w_3d / 2.0) * 0.95 + off_x_3d, anc_y_3d, 0.2],
+                    [-(w_3d / 2.0) * 0.95 + off_x_3d, anc_y_3d, 0.2]
                 ], dtype=np.float64)
 
             proj_corners, _ = cv2.projectPoints(corners_3d, rvec, tvec, cam_matrix, dist_coeffs)
             perspective_quad = proj_corners.reshape(-1, 2).tolist()
+            min_y = min(p[1] for p in perspective_quad)
+            if min_y < 12.0:
+                shift_down = 12.0 - min_y
+                perspective_quad = [[p[0], p[1] + shift_down] for p in perspective_quad]
         except Exception:
             perspective_quad = None
 
@@ -1121,21 +1192,23 @@ class LensSimulator:
         quad = geom.get("perspective_quad")
         has_quad = quad is not None and len(quad) == 4
 
-        # Contact shadow (for crowns only, positioned exactly at hairline base)
+        # Contact shadow (for crowns only, positioned exactly at hairline base, rotated with baseline)
         if is_crown:
             if has_quad:
                 try:
                     import cv2
                     import numpy as np
+                    import math
                     bl = np.array(quad[3], dtype=np.float32)
                     br = np.array(quad[2], dtype=np.float32)
                     center_base = (bl + br) / 2.0
-                    shadow_w = int(np.linalg.norm(br - bl) * 0.85)
-                    shadow_h = max(6, int(shadow_w * 0.08))
+                    base_angle = float(math.degrees(math.atan2(br[1] - bl[1], br[0] - bl[0])))
+                    shadow_w = int(np.linalg.norm(br - bl) * 0.88)
+                    shadow_h = max(2, int(shadow_w * 0.025))
                     sh_mask = np.zeros((pil_frame.height, pil_frame.width), dtype=np.uint8)
-                    cv2.ellipse(sh_mask, (int(center_base[0]), int(center_base[1] + shadow_h // 2)),
-                                (shadow_w // 2, shadow_h), 0, 0, 360, 45, -1)
-                    sh_mask = cv2.GaussianBlur(sh_mask, (15, 15), 0)
+                    cv2.ellipse(sh_mask, (int(center_base[0]), int(center_base[1] + 1)),
+                                (shadow_w // 2, shadow_h), base_angle, 0, 360, 20, -1)
+                    sh_mask = cv2.GaussianBlur(sh_mask, (7, 7), 0)
                     sh_rgba = np.zeros((pil_frame.height, pil_frame.width, 4), dtype=np.uint8)
                     sh_rgba[:, :, 3] = sh_mask
                     sh_pil = Image.fromarray(sh_rgba)
@@ -1144,7 +1217,7 @@ class LensSimulator:
                     pass
             else:
                 cur_sh_w = max(20, int(cur_w * 0.75))
-                cur_sh_h = max(6, int(cur_h * 0.10))
+                cur_sh_h = max(4, int(cur_h * 0.04))
                 shadow_sprite = Image.new("RGBA", (cur_sh_w, cur_sh_h), (0, 0, 0, 0))
                 s_draw = ImageDraw.Draw(shadow_sprite)
                 s_draw.ellipse([2, 2, cur_sh_w - 2, cur_sh_h - 2], fill=(0, 0, 0, 40))
@@ -1371,24 +1444,18 @@ class LensSimulator:
         except Exception as e:
             print(f"[SIMULATOR WARN] Error extracting production assets: {e}")
 
-        # Secondary hero discovery from lens icon paths / filesystem
+        # Secondary hero discovery from explicit lens icon path if provided in lens_data
         if dominant_texture is None:
-            icon_candidates = [
-                self.lens_data.get("lens_icon_path"),
-                os.path.join(os.getcwd(), "lens_icon.png"),
-                os.path.join(os.getcwd(), "latest_published_run", "snapchat-lens-verified-data", "lens_icon.png")
-            ]
-            for ic in icon_candidates:
-                if ic and os.path.exists(ic) and os.path.getsize(ic) > 1000:
-                    try:
-                        raw_icon = Image.open(ic).convert("RGBA")
-                        extracted = self.extract_clean_hero(raw_icon)
-                        if extracted and extracted.size[0] > 20 and extracted.size[1] > 20:
-                            dominant_texture = extracted
-                            print(f"[SIMULATOR] Extracted authentic 3D hero asset from {ic}")
-                            break
-                    except Exception:
-                        pass
+            explicit_icon = self.lens_data.get("lens_icon_path")
+            if explicit_icon and os.path.exists(explicit_icon) and os.path.getsize(explicit_icon) > 1000:
+                try:
+                    raw_icon = Image.open(explicit_icon).convert("RGBA")
+                    extracted = self.extract_clean_hero(raw_icon)
+                    if extracted and extracted.size[0] > 20 and extracted.size[1] > 20:
+                        dominant_texture = extracted
+                        print(f"[SIMULATOR] Extracted authentic 3D hero asset from {explicit_icon}")
+                except Exception:
+                    pass
 
         # Metadata parsing
         labels = []
@@ -2041,13 +2108,6 @@ class LensSimulator:
         }
         rim_rgb = rim_map.get(niche, (0, 245, 255))
 
-        # Load neutral simulated preview as AR half
-        n_path = neutral_path or getattr(self, "_last_neutral_path", None) or "preview_neutral_simulated.png"
-        if not os.path.exists(n_path):
-            self.render_simulation_screenshots(out_neutral=n_path, account_id=account_id)
-
-        ar_img = Image.open(n_path).convert("RGBA")
-
         # Base portrait for RAW STUDIO half: use exact frame 0 with matching camera grading
         raw_base = getattr(self, "_last_raw_neutral_frame", None)
         if raw_base is None:
@@ -2067,22 +2127,41 @@ class LensSimulator:
             if base_portrait and os.path.exists(base_portrait):
                 raw_base = Image.open(base_portrait).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
             else:
-                raw_base = ar_img.copy()
+                raw_base = Image.open(self.resolve_portrait_model()).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
+
+        # Detect face landmarks on base portrait
+        lm = self.detect_face_landmarks(raw_base)
+
+        # Load or composite neutral simulated preview as AR half with 1:1 parity
+        cand_n = os.path.join(os.path.dirname(out_path), "preview_neutral_simulated.png") if out_path else None
+        n_path = neutral_path or getattr(self, "_last_neutral_path", None)
+        if not n_path and cand_n and os.path.exists(cand_n):
+            n_path = cand_n
+
+        if n_path and os.path.exists(n_path):
+            ar_img = Image.open(n_path).convert("RGBA")
+        else:
+            ar_img = self.composite_ar_frame(raw_base.copy(), lm, t_prog=0.0, frame_ratio=0.0, account_id=account_id)
 
         # Camera grade raw image identically to AR frame 0
         raw_img = ImageEnhance.Contrast(raw_base.copy()).enhance(1.08)
         raw_img = ImageEnhance.Color(raw_img).enhance(1.12)
 
-        # Anatomical symmetry split: aligns divider directly down user's nose/face axis
+        # Anatomical symmetry split: aligns divider directly down user's nose/face/asset axis
         lm = self.detect_face_landmarks(raw_base)
         if lm.get("detected", False):
-            face_cx = (lm["l_eye"][0] + lm["r_eye"][0]) / 2.0
-            split_x = int(lm.get("nose", (face_cx, 640))[0])
-            split_y = int(lm.get("nose", (face_cx, 640))[1])
+            geom = self.compute_asset_geometry(lm)
+            quad = geom.get("perspective_quad")
+            if quad and len(quad) == 4:
+                split_x = int(round((quad[0][0] + quad[1][0]) / 2.0))
+            else:
+                face_cx = (lm["l_eye"][0] + lm["r_eye"][0]) / 2.0
+                split_x = int(lm.get("nose", (face_cx, 640))[0])
+            split_y = int(lm.get("nose", (360, 640))[1])
         else:
             split_x = 360
             split_y = 640
-        split_x = max(260, min(460, split_x))
+        split_x = max(180, min(540, split_x))
         split_y = max(450, min(800, split_y))
 
         # Split image: left is raw, right is AR
@@ -2156,6 +2235,7 @@ class LensSimulator:
         import subprocess
         import time
         import shutil
+        import math
         from PIL import ImageEnhance
 
         try:
@@ -2262,13 +2342,22 @@ class LensSimulator:
 
                     rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
                     pil_frame = Image.fromarray(rgb).convert("RGBA")
+                    roll_rad = math.radians(roll_angle)
+                    cos_r = math.cos(roll_rad)
+                    sin_r = math.sin(roll_rad)
+                    half_mw = eye_dist * 0.28
+                    mc_x, mc_y = float(mouth[0]), float(mouth[1])
 
                     lm_dict = {
+                        "detected": True,
                         "l_eye": (float(le[0]), float(le[1])),
                         "r_eye": (float(re[0]), float(re[1])),
                         "nose": (float(nose[0]), float(nose[1])),
                         "forehead_center": (float(fh[0]), float(fh[1])),
-                        "mouth_center": (float(mouth[0]), float(mouth[1])),
+                        "mouth_center": (mc_x, mc_y),
+                        "r_mouth": (mc_x - half_mw * cos_r, mc_y - half_mw * sin_r),
+                        "l_mouth": (mc_x + half_mw * cos_r, mc_y + half_mw * sin_r),
+                        "chin": (mc_x + sin_r * (eye_dist * 0.50), mc_y + cos_r * (eye_dist * 0.50)),
                         "eye_dist": eye_dist,
                         "roll_angle": roll_angle
                     }
