@@ -430,5 +430,29 @@
     "has_preview_image": true,
     "has_lens_icon": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-20T21:03:31Z",
+    "account_id": "4",
+    "lens_name": "Titanium Orbit Vis",
+    "lens_id": "c073bb5e-b524-47f1-bfb3-8957b12ac6ee",
+    "checkpoint_id": "06ab049b-9719-724d-8000-d8d51a407ff2",
+    "prompt": "Authentic 3D aerospace headgear featuring raw matte titanium plating and a curved reflective sun-shield mirroring the Earthrise horizon. Mouth opening vents pressurized nitrogen gas plumes. Smiling emits a radiant blue light pulse from the collar. Eyebrow raises flare a sharp stellar sunburst across the glass. Tilting the head shifts the reflection of a rotating planet. Cinematic PBR materials, no overlays. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "space",
+      "astronaut",
+      "future",
+      "tech",
+      "cosmic"
+    ],
+    "visual_hook": "The immediate 0.2s identification of a high-fidelity, reflective space helmet silhouette frames the face for an instant transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/bTD2LdNuUcW53EAnGTbwR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/kvqjmsOosIEAxZaWJHyYe?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/ZGRxiUuIaVqOd27xRhcSC?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
