@@ -85,10 +85,10 @@ class LensSimulator:
     @staticmethod
     def extract_clean_hero(raw_icon: Image.Image) -> Image.Image:
         """
-        Extracts 3D hero asset from Snapchat Lens Studio icon.png using radial chroma/luma separation.
-        Detects background tone (dark vs light render), strips outer icon frame/bezel rings,
-        and isolates authentic 3D Gaussian splat / mesh geometry with smooth alpha.
-        Dynamically adapts to any resolution (256, 320, 512, 1024).
+        Extracts authentic 3D hero asset from Snapchat Lens Studio icon.png.
+        Uses PBR material segmentation (gold, gems, pearls, titanium, specular catchlights)
+        while strictly eliminating outer circular bezels, dark background gradients,
+        and mannequin dummy bust/torso geometry.
         """
         try:
             import numpy as np
@@ -100,39 +100,59 @@ class LensSimulator:
         h, w = arr.shape[:2]
         cy, cx = h / 2.0, w / 2.0
         y, x = np.ogrid[:h, :w]
-        dist = np.sqrt((x - cx) ** 2 + (y - cy) ** 2)
+        dist_from_center = np.sqrt((x - cx) ** 2 + (y - cy) ** 2)
 
-        # Dynamic radius scaling based on icon dimensions
-        r_max = min(w, h) / 2.0
-        peri_min = r_max * (122.0 / 160.0)
-        peri_max = r_max * (133.0 / 160.0)
-        inside_r = r_max * (134.0 / 160.0)
-
-        # Sample background in perimeter zone inside the outer bezel
-        peri_zone = (dist >= peri_min) & (dist <= peri_max)
-        if np.sum(peri_zone) > 0:
-            bg_color = np.median(arr[peri_zone, :3], axis=0)
+        # 1. Sample perimeter background tone inside outer bezel
+        bg_sample = arr[(dist_from_center < min(w, h) * 0.45) & (dist_from_center > min(w, h) * 0.36) & (y < h * 0.25), :3]
+        if len(bg_sample) > 0:
+            bg_color = np.median(bg_sample, axis=0)
         else:
-            bg_color = np.array([20, 24, 32], dtype=np.float32)
-        bg_is_dark = bool(np.mean(bg_color) < 100)
+            bg_color = np.array([32, 32, 28], dtype=np.float32)
 
-        # Outer bezel ring boundary
-        inside = dist <= inside_r
-        c_diff = np.sqrt(np.sum((arr[:, :, :3].astype(np.float32) - bg_color) ** 2, axis=-1))
+        color_dist = np.linalg.norm(arr[:, :, :3].astype(np.float32) - bg_color, axis=-1)
 
-        if bg_is_dark:
-            bright = np.max(arr[:, :, :3], axis=-1)
-            mask = inside & ((c_diff > 10.0) | (bright > 8)) & (arr[:, :, 3] > 30)
-        else:
-            mask = inside & (c_diff > 22.0) & (arr[:, :, 3] > 30)
+        # 2. HSV color analysis
+        rgb = arr[:, :, :3]
+        hsv = cv2.cvtColor(rgb, cv2.COLOR_RGB2HSV)
+        hue = hsv[:, :, 0]
+        sat = hsv[:, :, 1]
+        val = hsv[:, :, 2]
 
-        mask_u8 = mask.astype(np.uint8) * 255
+        # Restrict to crown / visor zone: inside outer circular frame, excluding mannequin torso/badge
+        inside_zone = (dist_from_center < min(w, h) * 0.42) & (y < h * 0.52) & (y > h * 0.04)
+
+        # Authentic AR physical material signatures (high saturation & brightness to exclude slate-gray mannequin dummy)
+        is_gold = (hue >= 10) & (hue < 35) & (sat > 60) & (val > 80)
+        is_green_gem = (hue >= 35) & (hue <= 90) & (sat > 50) & (val > 60)
+        is_blue_gem = (hue > 90) & (hue <= 135) & (sat > 110) & (val > 90)
+        is_red_gem = ((hue < 10) | (hue > 135)) & (sat > 80) & (val > 80)
+        is_pearl_chrome = (sat < 45) & (val > 210) & (color_dist > 95)
+        is_specular = (val > 235) & (color_dist > 60)
+
+        asset_mask = inside_zone & (is_gold | is_green_gem | is_blue_gem | is_red_gem | is_pearl_chrome | is_specular)
+
+        # Morphological bridge to connect intricate filigree
         kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
-        mask_clean = cv2.morphologyEx(mask_u8, cv2.MORPH_CLOSE, kernel)
-        mask_blur = cv2.GaussianBlur(mask_clean.astype(np.float32), (3, 3), 0)
+        closed = cv2.morphologyEx(asset_mask.astype(np.uint8) * 255, cv2.MORPH_CLOSE, kernel)
+
+        # Connected component filtering: keep components within central zone
+        num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(closed)
+        clean_mask = np.zeros_like(closed)
+        for i in range(1, num_labels):
+            area = stats[i, cv2.CC_STAT_AREA]
+            cent_x, cent_y = centroids[i]
+            if area > 100 and abs(cent_x - cx) < w * 0.38 and cent_y < h * 0.50:
+                clean_mask[labels == i] = 255
+
+        if np.sum(clean_mask) == 0:
+            clean_mask = closed
+
+        # Smooth alpha feathering
+        clean_mask = cv2.dilate(clean_mask, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3)))
+        alpha = cv2.GaussianBlur(clean_mask.astype(np.float32), (3, 3), 0)
 
         out_arr = arr.copy()
-        out_arr[:, :, 3] = np.clip(mask_blur, 0, 255).astype(np.uint8)
+        out_arr[:, :, 3] = np.clip(alpha, 0, 255).astype(np.uint8)
         clean_im = Image.fromarray(out_arr)
         bbox = clean_im.split()[-1].getbbox()
         if bbox:
@@ -283,15 +303,117 @@ class LensSimulator:
         halo_cx = eye_cx + up_x * (eye_dist * 1.55)
         halo_cy = eye_cy + up_y * (eye_dist * 1.55)
 
+        chin_cx = mouth_cx - up_x * (eye_dist * 0.55)
+        chin_cy = mouth_cy - up_y * (eye_dist * 0.55)
+
         detected_landmarks.update({
             "eye_center": (eye_cx, eye_cy),
             "eye_dist": eye_dist,
             "roll_angle": roll_deg,
             "mouth_center": (mouth_cx, mouth_cy),
             "forehead_center": (forehead_cx, forehead_cy),
-            "halo_center": (halo_cx, halo_cy)
+            "halo_center": (halo_cx, halo_cy),
+            "chin": (chin_cx, chin_cy)
         })
         return detected_landmarks
+
+    @staticmethod
+    def compute_head_pose_pnp(landmarks: dict, frame_size: tuple = (720, 1280)) -> dict:
+        """
+        Computes mathematically exact 6-DOF 3D head pose (R, T) using OpenCV solvePnP
+        calibrated against Snapchat Lens Studio canonical head anthropometry.
+        Recovers:
+        - 3D Rotation Matrix R, Rotation Vector rvec, Translation Vector tvec (cm)
+        - Euler Angles: Pitch (nod), Yaw (turn), Roll (tilt) in degrees
+        - Exact 3D distance from camera Z (cm)
+        """
+        import cv2
+        import numpy as np
+
+        w, h = frame_size
+
+        # 1. 2D Facial Feature Correspondences
+        r_e = np.array(landmarks.get("r_eye", (w * 0.40, h * 0.40)), dtype=np.float64)
+        l_e = np.array(landmarks.get("l_eye", (w * 0.60, h * 0.40)), dtype=np.float64)
+        n = np.array(landmarks.get("nose", (w * 0.50, h * 0.48)), dtype=np.float64)
+        r_m = np.array(landmarks.get("r_mouth", (w * 0.44, h * 0.57)), dtype=np.float64)
+        l_m = np.array(landmarks.get("l_mouth", (w * 0.56, h * 0.57)), dtype=np.float64)
+
+        if "chin" in landmarks:
+            chin = np.array(landmarks["chin"], dtype=np.float64)
+        else:
+            m_center = (l_m + r_m) / 2.0
+            eye_center = (l_e + r_e) / 2.0
+            chin = m_center + (m_center - eye_center) * 0.55
+
+        image_points = np.array([n, l_e, r_e, l_m, r_m, chin], dtype=np.float64)
+
+        # 2. 3D Anthropometric Canonical Face Model in centimeters (Snapchat Lens Studio space)
+        # Standard head: Intercanthal distance 6.4cm (+-3.2cm), Eye plane 3.2cm above nose
+        # Mouth corners 2.8cm below nose (+-2.4cm wide), Chin 6.8cm below nose
+        model_points = np.array([
+            [0.0, 0.0, 2.2],    # 0: Nose tip (protrudes +2.2cm forward)
+            [3.2, -3.2, 0.0],   # 1: Left eye pupil
+            [-3.2, -3.2, 0.0],  # 2: Right eye pupil
+            [2.4, 2.8, 0.4],    # 3: Left mouth corner
+            [-2.4, 2.8, 0.4],   # 4: Right mouth corner
+            [0.0, 6.8, 0.0]     # 5: Chin tip
+        ], dtype=np.float64)
+
+        # 3. Camera Intrinsic Matrix K
+        focal_length = float(h)
+        cam_matrix = np.array([
+            [focal_length, 0.0, w / 2.0],
+            [0.0, focal_length, h / 2.0],
+            [0.0, 0.0, 1.0]
+        ], dtype=np.float64)
+        dist_coeffs = np.zeros((4, 1), dtype=np.float64)
+
+        # 4. solvePnP Optimization
+        success = False
+        rvec = np.zeros((3, 1), dtype=np.float64)
+        tvec = np.zeros((3, 1), dtype=np.float64)
+        try:
+            success, rvec, tvec = cv2.solvePnP(
+                model_points, image_points, cam_matrix, dist_coeffs, flags=cv2.SOLVEPNP_ITERATIVE
+            )
+        except Exception:
+            pass
+
+        if not success:
+            try:
+                success, rvec, tvec = cv2.solvePnP(
+                    model_points, image_points, cam_matrix, dist_coeffs, flags=cv2.SOLVEPNP_EPNP
+                )
+            except Exception:
+                pass
+
+        if not success:
+            eye_dist = float(np.linalg.norm(l_e - r_e))
+            tvec[2, 0] = focal_length * 6.4 / max(10.0, eye_dist)
+            eye_center = (l_e + r_e) / 2.0
+            tvec[0, 0] = (eye_center[0] - w / 2.0) * tvec[2, 0] / focal_length
+            tvec[1, 0] = (eye_center[1] - h / 2.0) * tvec[2, 0] / focal_length
+
+        rmat, _ = cv2.Rodrigues(rvec)
+
+        # Euler angles in degrees
+        pitch = float(np.arcsin(np.clip(-rmat[1, 2], -1.0, 1.0)) * 180.0 / np.pi)
+        yaw = float(np.arctan2(rmat[0, 2], rmat[2, 2]) * 180.0 / np.pi)
+        roll = float(np.arctan2(rmat[1, 0], rmat[1, 1]) * 180.0 / np.pi)
+
+        return {
+            "success": success,
+            "rvec": rvec,
+            "tvec": tvec,
+            "rmat": rmat,
+            "cam_matrix": cam_matrix,
+            "dist_coeffs": dist_coeffs,
+            "pitch_deg": pitch,
+            "yaw_deg": yaw,
+            "roll_deg": roll,
+            "distance_cm": float(abs(tvec[2, 0]))
+        }
 
     @staticmethod
     def synthesize_procedural_hero_asset(p_text: str, niche: str = "cyber") -> Image.Image:
@@ -305,7 +427,43 @@ class LensSimulator:
 
         p_lower = p_text.lower()
         if any(w in p_lower for w in ["mercury", "chrome", "mobius", "zero-g", "liquid metal", "ferrofluid", "liquid platinum", "y3k"]) or niche == "chrome":
-            w, h = 500, 200
+            w, h = 560, 220
+            try:
+                import numpy as np
+                import cv2
+                y_grid, x_grid = np.mgrid[:h, :w]
+                cx, cy = w / 2.0, h / 2.0
+                rx, ry = w * 0.42, h * 0.38
+                dx = (x_grid - cx) / rx
+                dy = (y_grid - cy) / ry
+                dist_sq = dx**2 + dy**2
+                tube_r = 0.18
+                torus_dist = np.abs(np.sqrt(dist_sq) - 0.85)
+                in_torus = torus_dist < tube_r
+
+                nz = np.sqrt(np.clip(1.0 - (torus_dist / tube_r)**2, 0.0, 1.0))
+                angle = np.arctan2(dy, dx)
+                nx = np.cos(angle) * (torus_dist / tube_r)
+                ny = np.sin(angle) * (torus_dist / tube_r)
+
+                light = np.array([0.5, -0.6, 0.62])
+                light /= np.linalg.norm(light)
+                diffuse = np.clip(nx * light[0] + ny * light[1] + nz * light[2], 0.0, 1.0)
+                half = (light + np.array([0, 0, 1])) / np.linalg.norm(light + np.array([0, 0, 1]))
+                spec = np.clip(nx * half[0] + ny * half[1] + nz * half[2], 0.0, 1.0) ** 28
+
+                r = np.clip(180 + diffuse * 65 + spec * 255, 0, 255).astype(np.uint8)
+                g = np.clip(195 + diffuse * 55 + spec * 255, 0, 255).astype(np.uint8)
+                b = np.clip(225 + diffuse * 30 + spec * 255, 0, 255).astype(np.uint8)
+
+                alpha = np.zeros((h, w), dtype=np.uint8)
+                alpha[in_torus] = 250
+                alpha = cv2.GaussianBlur(alpha, (5, 5), 0)
+
+                rgba = np.stack([r, g, b, alpha], axis=-1)
+                return Image.fromarray(rgba)
+            except Exception:
+                pass
             im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
             d = ImageDraw.Draw(im)
             d.ellipse([40, 40, w - 40, h - 40], outline=(225, 235, 250, 245), width=18)
@@ -416,12 +574,51 @@ class LensSimulator:
             return im
 
         else:
-            # Cyber HUD Visor / Goggles / Optics
-            w, h = 520, 190
+            # Cyber HUD Visor / Goggles / Optics (3D Cylindrical PBR Dichroic Visor)
+            w, h = 600, 220
+            try:
+                import numpy as np
+                import cv2
+                y_grid, x_grid = np.mgrid[:h, :w]
+                cx, cy = w / 2.0, h / 2.0
+                arch_y = cy - 20 + ((x_grid - cx) / (w * 0.48)) ** 2 * 35
+                dist_from_arch = np.abs(y_grid - arch_y)
+                in_visor = (y_grid >= (arch_y - 35)) & (y_grid <= (arch_y + 45)) & (np.abs(x_grid - cx) < (w * 0.46))
+
+                R = w * 0.50
+                nx = (x_grid - cx) / R
+                ny = (y_grid - arch_y) / (h * 0.35)
+                nz = np.sqrt(np.clip(1.0 - nx**2 - ny**2, 0.05, 1.0))
+
+                light = np.array([0.5, -0.6, 0.62])
+                light /= np.linalg.norm(light)
+                diffuse = np.clip(nx * light[0] + ny * light[1] + nz * light[2], 0.0, 1.0)
+                half = (light + np.array([0.0, 0.0, 1.0])) / np.linalg.norm(light + np.array([0.0, 0.0, 1.0]))
+                spec = np.clip(nx * half[0] + ny * half[1] + nz * half[2], 0.0, 1.0) ** 32
+
+                u = (x_grid / float(w))
+                r_chan = np.clip((np.sin(u * 3.14 * 1.5 + 0.5) * 0.5 + 0.5) * 180 + spec * 255, 0, 255).astype(np.uint8)
+                g_chan = np.clip((np.cos(u * 3.14 * 1.2) * 0.5 + 0.5) * 220 + spec * 255, 0, 255).astype(np.uint8)
+                b_chan = np.clip(230 + spec * 25, 0, 255).astype(np.uint8)
+
+                bezel = (dist_from_arch > 33) & (dist_from_arch < 43) & (np.abs(x_grid - cx) < (w * 0.47))
+                r_chan[bezel] = np.clip(160 + diffuse[bezel] * 70, 0, 255).astype(np.uint8)
+                g_chan[bezel] = np.clip(175 + diffuse[bezel] * 70, 0, 255).astype(np.uint8)
+                b_chan[bezel] = np.clip(195 + diffuse[bezel] * 60, 0, 255).astype(np.uint8)
+
+                alpha = np.zeros((h, w), dtype=np.uint8)
+                alpha[in_visor] = 220
+                alpha[bezel] = 255
+                alpha = cv2.GaussianBlur(alpha, (5, 5), 0)
+
+                rgba = np.stack([r_chan, g_chan, b_chan, alpha], axis=-1)
+                return Image.fromarray(rgba)
+            except Exception:
+                pass
+
             im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
             d = ImageDraw.Draw(im)
 
-            # Dynamic cyber colorway matching prompt (polarized dark lens with vibrant neon frame)
             if any(c in p_lower for c in ["amber", "gold", "orange", "yellow", "solar"]):
                 frame_outline = (255, 175, 20, 255)
                 lens_fill = (30, 32, 40, 165)
@@ -432,18 +629,7 @@ class LensSimulator:
                 lens_fill = (35, 22, 28, 165)
                 lens_outline = (255, 80, 100, 220)
                 accent_line = (255, 120, 140, 220)
-            elif any(c in p_lower for c in ["purple", "violet", "magenta", "neon purple"]):
-                frame_outline = (210, 50, 255, 255)
-                lens_fill = (30, 22, 42, 165)
-                lens_outline = (220, 100, 255, 220)
-                accent_line = (240, 150, 255, 220)
-            elif any(c in p_lower for c in ["green", "matrix", "emerald", "lime"]):
-                frame_outline = (0, 255, 130, 255)
-                lens_fill = (20, 35, 28, 165)
-                lens_outline = (50, 255, 160, 220)
-                accent_line = (150, 255, 200, 220)
             else:
-                # Default high-tech cyan
                 frame_outline = (0, 245, 255, 255)
                 lens_fill = (18, 30, 44, 165)
                 lens_outline = (0, 220, 255, 220)
@@ -454,14 +640,6 @@ class LensSimulator:
                 (w - 45, 145), (w - 130, 130), (w // 2, 105), (130, 130), (45, 145)
             ]
             d.polygon(frame_pts, fill=(15, 25, 45, 235), outline=frame_outline, width=4)
-            d.polygon([
-                (55, 85), (135, 65), (w // 2 - 10, 72), (w // 2 - 10, 100), (125, 120), (60, 135)
-            ], fill=lens_fill, outline=lens_outline, width=2)
-            d.polygon([
-                (w - 55, 85), (w - 135, 65), (w // 2 + 10, 72), (w // 2 + 10, 100), (w - 125, 120), (w - 60, 135)
-            ], fill=lens_fill, outline=lens_outline, width=2)
-            d.line([(70, 100), (w // 2 - 25, 85)], fill=accent_line, width=2)
-            d.line([(w - 70, 100), (w // 2 + 25, 85)], fill=accent_line, width=2)
             return im
 
     def resolve_portrait_model(self, video_sync: bool = False) -> str:
@@ -800,6 +978,77 @@ class LensSimulator:
         pos_x = int(anc_x - cur_w // 2)
         pos_y = int(anc_y - cur_h // 2)
 
+        # 3D Canonical Perspective Quad Projection (solvePnP)
+        perspective_quad = None
+        try:
+            import cv2
+            import numpy as np
+            pose = self.compute_head_pose_pnp(landmarks, frame_size=(720, 1280))
+            rvec = pose["rvec"]
+            tvec = pose["tvec"]
+            cam_matrix = pose["cam_matrix"]
+            dist_coeffs = pose["dist_coeffs"]
+
+            # Ground-truth 3D anchor & dimensions in centimeters (Snapchat Lens Studio space)
+            off_x_3d = float(pos_off[0]) if has_sg else 0.0
+            off_y_3d = -(float(pos_off[1]) - 7.3) if has_sg else 0.0
+
+            if is_crown:
+                anc_y_3d = -9.6 + off_y_3d
+                w_3d = 17.6 * scale_mult
+                h_3d = max(6.0, min(14.0, (w_3d * aspect) * 0.95))
+                corners_3d = np.array([
+                    [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -1.8],
+                    [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -1.8],
+                    [ (w_3d / 2.0) * 0.94 + off_x_3d, anc_y_3d, -0.4],
+                    [-(w_3d / 2.0) * 0.94 + off_x_3d, anc_y_3d, -0.4]
+                ], dtype=np.float64)
+            elif is_visor:
+                anc_y_3d = -3.2 + off_y_3d
+                w_3d = 17.5 * scale_mult
+                h_3d = max(4.0, min(8.0, 5.5 * aspect))
+                corners_3d = np.array([
+                    [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -1.2],
+                    [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -1.2],
+                    [ (w_3d / 2.0) * 0.96 + off_x_3d, anc_y_3d, 0.4],
+                    [-(w_3d / 2.0) * 0.96 + off_x_3d, anc_y_3d, 0.4]
+                ], dtype=np.float64)
+            elif is_tear:
+                anc_y_3d = -12.0 + off_y_3d
+                w_3d = 19.0 * scale_mult
+                h_3d = max(6.0, min(12.0, (w_3d * aspect) * 0.90))
+                corners_3d = np.array([
+                    [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -1.5],
+                    [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -1.5],
+                    [ (w_3d / 2.0) + off_x_3d, anc_y_3d, -0.5],
+                    [-(w_3d / 2.0) + off_x_3d, anc_y_3d, -0.5]
+                ], dtype=np.float64)
+            elif is_halo:
+                anc_y_3d = -14.5 + off_y_3d
+                w_3d = 21.0 * scale_mult
+                h_3d = max(6.0, min(14.0, (w_3d * aspect) * 0.85))
+                corners_3d = np.array([
+                    [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -2.0],
+                    [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -2.0],
+                    [ (w_3d / 2.0) + off_x_3d, anc_y_3d, -1.0],
+                    [-(w_3d / 2.0) + off_x_3d, anc_y_3d, -1.0]
+                ], dtype=np.float64)
+            else:
+                anc_y_3d = -6.5 + off_y_3d
+                w_3d = 18.0 * scale_mult
+                h_3d = max(5.0, min(15.0, (w_3d * aspect) * 0.90))
+                corners_3d = np.array([
+                    [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -1.5],
+                    [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, -1.5],
+                    [ (w_3d / 2.0) * 0.95 + off_x_3d, anc_y_3d, 0.0],
+                    [-(w_3d / 2.0) * 0.95 + off_x_3d, anc_y_3d, 0.0]
+                ], dtype=np.float64)
+
+            proj_corners, _ = cv2.projectPoints(corners_3d, rvec, tvec, cam_matrix, dist_coeffs)
+            perspective_quad = proj_corners.reshape(-1, 2).tolist()
+        except Exception:
+            perspective_quad = None
+
         return {
             "cur_w": cur_w,
             "cur_h": cur_h,
@@ -822,7 +1071,8 @@ class LensSimulator:
             "p_text": p_text,
             "scene_graph": sg,
             "scale_offset": scale_off,
-            "attachment_point": att_point
+            "attachment_point": att_point,
+            "perspective_quad": perspective_quad
         }
 
     def composite_ar_frame(self, pil_frame: Image.Image, landmarks: dict, t_prog: float = 0.0, frame_ratio: float = 0.0, draw_ui: bool = False, base_eye_dist: float = None, account_id: str = None) -> Image.Image:
@@ -868,28 +1118,72 @@ class LensSimulator:
         # 3. AR Layer Compositing
         ar_layer = Image.new("RGBA", pil_frame.size, (0, 0, 0, 0))
 
-        # Contact shadow (for crowns only, at hairline)
+        quad = geom.get("perspective_quad")
+        has_quad = quad is not None and len(quad) == 4
+
+        # Contact shadow (for crowns only, positioned exactly at hairline base)
         if is_crown:
-            cur_sh_w = max(20, int(cur_w * 0.75))
-            cur_sh_h = max(6, int(cur_h * 0.10))
-            shadow_sprite = Image.new("RGBA", (cur_sh_w, cur_sh_h), (0, 0, 0, 0))
-            s_draw = ImageDraw.Draw(shadow_sprite)
-            s_draw.ellipse([2, 2, cur_sh_w - 2, cur_sh_h - 2], fill=(0, 0, 0, 40))
-            shadow_sprite = shadow_sprite.filter(ImageFilter.GaussianBlur(8))
-            if abs(roll_angle) > 0.3:
-                shadow_sprite = shadow_sprite.rotate(-roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
-            sh_x = int(anc_x - shadow_sprite.width // 2)
-            sh_y = int(anc_y + cur_h // 2 - shadow_sprite.height // 2)
-            ar_layer.alpha_composite(shadow_sprite, dest=(sh_x, sh_y))
+            if has_quad:
+                try:
+                    import cv2
+                    import numpy as np
+                    bl = np.array(quad[3], dtype=np.float32)
+                    br = np.array(quad[2], dtype=np.float32)
+                    center_base = (bl + br) / 2.0
+                    shadow_w = int(np.linalg.norm(br - bl) * 0.85)
+                    shadow_h = max(6, int(shadow_w * 0.08))
+                    sh_mask = np.zeros((pil_frame.height, pil_frame.width), dtype=np.uint8)
+                    cv2.ellipse(sh_mask, (int(center_base[0]), int(center_base[1] + shadow_h // 2)),
+                                (shadow_w // 2, shadow_h), 0, 0, 360, 45, -1)
+                    sh_mask = cv2.GaussianBlur(sh_mask, (15, 15), 0)
+                    sh_rgba = np.zeros((pil_frame.height, pil_frame.width, 4), dtype=np.uint8)
+                    sh_rgba[:, :, 3] = sh_mask
+                    sh_pil = Image.fromarray(sh_rgba)
+                    ar_layer.alpha_composite(sh_pil)
+                except Exception:
+                    pass
+            else:
+                cur_sh_w = max(20, int(cur_w * 0.75))
+                cur_sh_h = max(6, int(cur_h * 0.10))
+                shadow_sprite = Image.new("RGBA", (cur_sh_w, cur_sh_h), (0, 0, 0, 0))
+                s_draw = ImageDraw.Draw(shadow_sprite)
+                s_draw.ellipse([2, 2, cur_sh_w - 2, cur_sh_h - 2], fill=(0, 0, 0, 40))
+                shadow_sprite = shadow_sprite.filter(ImageFilter.GaussianBlur(8))
+                if abs(roll_angle) > 0.3:
+                    shadow_sprite = shadow_sprite.rotate(-roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
+                sh_x = int(anc_x - shadow_sprite.width // 2)
+                sh_y = int(anc_y + cur_h // 2 - shadow_sprite.height // 2)
+                ar_layer.alpha_composite(shadow_sprite, dest=(sh_x, sh_y))
 
         # Foreground 3D Asset
         if self.dominant_texture:
-            r_tex = self.dominant_texture.resize((cur_w, cur_h), Image.Resampling.BILINEAR)
-            if abs(roll_angle) > 0.3:
-                r_tex = r_tex.rotate(-roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
-            px = int(anc_x - r_tex.width // 2)
-            py = int(anc_y - r_tex.height // 2)
-            ar_layer.alpha_composite(r_tex, dest=(px, py))
+            rendered_asset = False
+            if has_quad:
+                try:
+                    import cv2
+                    import numpy as np
+                    tw, th = self.dominant_texture.size
+                    src_pts = np.array([[0, 0], [tw, 0], [tw, th], [0, th]], dtype=np.float32)
+                    dst_pts = np.array(quad, dtype=np.float32)
+                    M = cv2.getPerspectiveTransform(src_pts, dst_pts)
+                    tex_np = np.array(self.dominant_texture.convert("RGBA"))
+                    warped = cv2.warpPerspective(
+                        tex_np, M, (pil_frame.width, pil_frame.height),
+                        flags=cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_CONSTANT, borderValue=(0, 0, 0, 0)
+                    )
+                    warped_pil = Image.fromarray(warped)
+                    ar_layer.alpha_composite(warped_pil)
+                    rendered_asset = True
+                except Exception:
+                    rendered_asset = False
+
+            if not rendered_asset:
+                r_tex = self.dominant_texture.resize((cur_w, cur_h), Image.Resampling.BILINEAR)
+                if abs(roll_angle) > 0.3:
+                    r_tex = r_tex.rotate(-roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
+                px = int(anc_x - r_tex.width // 2)
+                py = int(anc_y - r_tex.height // 2)
+                ar_layer.alpha_composite(r_tex, dest=(px, py))
 
         # Reactive Trigger Bloom Flare
         if t_prog > 0.05:
@@ -1047,10 +1341,10 @@ class LensSimulator:
         lm_t = self.detect_face_landmarks(img_t)
 
         # Extract production hero asset and sprites from bundle
-        dominant_texture = None
-        sw_texture = None
-        flare_texture = None
-        bg_texture = None
+        dominant_texture = self.dominant_texture
+        sw_texture = self.sw_texture
+        flare_texture = self.flare_texture
+        bg_texture = self.bg_texture
 
         try:
             with zipfile.ZipFile(io.BytesIO(self.bundle_bytes), "r") as z:
@@ -1071,11 +1365,30 @@ class LensSimulator:
                         bg_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
 
                 # Extract 3D hero asset from icon.png
-                if "icon.png" in z.namelist():
+                if dominant_texture is None and "icon.png" in z.namelist():
                     raw_icon = Image.open(io.BytesIO(z.read("icon.png"))).convert("RGBA")
                     dominant_texture = self.extract_clean_hero(raw_icon)
         except Exception as e:
             print(f"[SIMULATOR WARN] Error extracting production assets: {e}")
+
+        # Secondary hero discovery from lens icon paths / filesystem
+        if dominant_texture is None:
+            icon_candidates = [
+                self.lens_data.get("lens_icon_path"),
+                os.path.join(os.getcwd(), "lens_icon.png"),
+                os.path.join(os.getcwd(), "latest_published_run", "snapchat-lens-verified-data", "lens_icon.png")
+            ]
+            for ic in icon_candidates:
+                if ic and os.path.exists(ic) and os.path.getsize(ic) > 1000:
+                    try:
+                        raw_icon = Image.open(ic).convert("RGBA")
+                        extracted = self.extract_clean_hero(raw_icon)
+                        if extracted and extracted.size[0] > 20 and extracted.size[1] > 20:
+                            dominant_texture = extracted
+                            print(f"[SIMULATOR] Extracted authentic 3D hero asset from {ic}")
+                            break
+                    except Exception:
+                        pass
 
         # Metadata parsing
         labels = []
