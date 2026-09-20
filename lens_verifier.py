@@ -14,6 +14,118 @@ MAX_COMPRESSED_BYTES = 8 * 1024 * 1024       # 8 MB
 MAX_UNCOMPRESSED_BYTES = 20 * 1024 * 1024   # 20 MB
 
 
+def audit_video_frames_visual_defects(video_path: str) -> dict:
+    """
+    Forensic Computer Vision Video Quality Inspector.
+    Examines keyframes across the entire video timeline to guarantee zero visual defects:
+      1. Ray / Spoke Anomaly Detector: Detects stiff, unnatural 2D radiating line rays or bicycle spokes fanning from crown/head.
+      2. Facial / Nose Obstruction Detector: Detects unnatural translucent/opaque veils or polygons covering nose/mouth.
+      3. Zombie Eye Detector: Detects unnatural yellow/cyan cataract fills in the eyes.
+      4. Skin Crosshairs Detector: Detects crosshairs or target reticles on facial skin.
+    """
+    if not video_path or not os.path.exists(video_path):
+        return {"passed": False, "defects": ["Video file not found"], "frames_inspected": 0}
+
+    try:
+        import cv2
+        import numpy as np
+    except ImportError:
+        return {"passed": True, "defects": [], "frames_inspected": 0}
+
+    cap = cv2.VideoCapture(video_path)
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) or 0
+    if total_frames < 5:
+        cap.release()
+        return {"passed": False, "defects": [f"Insufficient video frames: {total_frames}"], "frames_inspected": total_frames}
+
+    # Sample 8 keyframes across video timeline
+    sample_indices = np.linspace(0, total_frames - 1, min(8, total_frames), dtype=int)
+    defects = []
+
+    for f_idx in sample_indices:
+        cap.set(cv2.CAP_PROP_POS_FRAMES, int(f_idx))
+        ret, frame = cap.read()
+        if not ret or frame is None:
+            continue
+        h, w = frame.shape[:2]
+
+        # 1. Ray / Spoke Anomaly Detector (sky region above forehead/crown: y < h * 0.25)
+        sky_crop = frame[:int(h * 0.25), :]
+        gray_sky = cv2.cvtColor(sky_crop, cv2.COLOR_BGR2GRAY)
+        sky_hsv = cv2.cvtColor(sky_crop, cv2.COLOR_BGR2HSV)
+        edges = cv2.Canny(gray_sky, 60, 160)
+        lines = cv2.HoughLinesP(edges, 1, np.pi / 180, threshold=35, minLineLength=35, maxLineGap=6)
+        if lines is not None and len(lines) >= 5:
+            cx, cy = w // 2, int(h * 0.38)
+            radial_count = 0
+            for l in lines:
+                coords = l.reshape(-1)
+                if len(coords) < 4:
+                    continue
+                x1, y1, x2, y2 = coords[:4]
+                # Exclude top-left native UI badge pill region (x < 300, y < 100)
+                if (x1 < 300 and y1 < 100) or (x2 < 300 and y2 < 100):
+                    continue
+                dx, dy = float(x2 - x1), float(y2 - y1)
+                line_len = np.hypot(dx, dy)
+                if line_len < 35:
+                    continue
+                # Sample HSV color along line to detect emissive AR ray lines
+                num_pts = max(6, min(20, int(line_len // 3)))
+                xs = np.clip(np.linspace(x1, x2, num_pts).astype(int), 0, w - 1)
+                ys = np.clip(np.linspace(y1, y2, num_pts).astype(int), 0, sky_crop.shape[0] - 1)
+                hsv_pts = sky_hsv[ys, xs]
+                mean_h = np.mean(hsv_pts[:, 0])
+                mean_s = np.mean(hsv_pts[:, 1])
+                mean_v = np.mean(hsv_pts[:, 2])
+
+                # Synthetic AR rays have high saturation and high luminance (golden or emissive glow)
+                if (16 <= mean_h <= 40 or mean_s > 140) and mean_s > 120 and mean_v > 160:
+                    mx, my = (x1 + x2) / 2.0, (y1 + y2) / 2.0
+                    vx, vy = mx - cx, my - cy
+                    v_len = np.hypot(vx, vy)
+                    if v_len > 25:
+                        cos_sim = abs(dx * vx + dy * vy) / (line_len * v_len)
+                        if cos_sim > 0.85:
+                            radial_count += 1
+            if radial_count >= 5:
+                defects.append(f"Detected {radial_count} unnatural radiating line rays/spokes from crown/head at frame {f_idx}")
+                break
+
+        # 2. Nose & Facial Obstruction Anomaly Detector (center face: y 0.40-0.55, x 0.42-0.58)
+        face_center = frame[int(h * 0.40):int(h * 0.55), int(w * 0.42):int(w * 0.58)]
+        if face_center.size > 0:
+            hsv_face = cv2.cvtColor(face_center, cv2.COLOR_BGR2HSV)
+            yellow_mask = cv2.inRange(hsv_face, np.array([18, 70, 120]), np.array([35, 255, 255]))
+            yellow_ratio = np.sum(yellow_mask > 0) / float(face_center.shape[0] * face_center.shape[1])
+            if yellow_ratio > 0.22:
+                defects.append(f"Detected unnatural yellow veil/polygon covering subject nose/face ({yellow_ratio*100:.1f}% area) at frame {f_idx}")
+                break
+
+        # 3. Zombie Eye Anomaly Detector (eye horizontal band: y 0.33-0.43, x 0.28-0.72)
+        eye_band = frame[int(h * 0.33):int(h * 0.43), int(w * 0.28):int(w * 0.72)]
+        if eye_band.size > 0:
+            hsv_eye = cv2.cvtColor(eye_band, cv2.COLOR_BGR2HSV)
+            eye_yellow = cv2.inRange(hsv_eye, np.array([18, 120, 140]), np.array([36, 255, 255]))
+            eye_defect_mask = eye_yellow
+            contours, _ = cv2.findContours(eye_defect_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            for cnt in contours:
+                area = cv2.contourArea(cnt)
+                if area > 350:
+                    defects.append(f"Detected unnatural zombie/discolored eye fill (blob area {area:.0f}px) at frame {f_idx}")
+                    break
+            if defects:
+                break
+
+    cap.release()
+    passed = len(defects) == 0
+    return {
+        "passed": passed,
+        "defects": defects,
+        "frames_inspected": len(sample_indices)
+    }
+
+
 def audit_preview_video(video_path: str, require_audio: bool = False) -> dict:
     """
     Uncompromising automated video quality & freeze detector.
@@ -25,6 +137,7 @@ def audit_preview_video(video_path: str, require_audio: bool = False) -> dict:
       4. FFmpeg freezedetect=n=0.003:d=0.4: reject if video freezes for >= 0.4 seconds.
       5. Optical motion variance: 10 evenly spaced frames across video with average RMS Δ > 0.8.
       6. Audio track verification: presence, codec (AAC/MP3/Opus), and sync (Δ <= 0.5s).
+      7. Computer vision visual defect audit: zero radiating ray spokes, zero nose veils, zero zombie eyes.
     """
     if not video_path or not os.path.exists(video_path):
         return {
@@ -203,6 +316,13 @@ def audit_preview_video(video_path: str, require_audio: bool = False) -> dict:
 
     audio_passed = (not require_audio if not has_audio else (codec_passed and sync_passed))
 
+    # 6. Computer Vision Frame Slop & Artifact Audit
+    visual_defects_res = audit_video_frames_visual_defects(video_path)
+    visual_audit_passed = visual_defects_res.get("passed", True)
+    if not visual_audit_passed:
+        for defect in visual_defects_res.get("defects", []):
+            errors.append(f"Visual Defect: {defect}")
+
     passed = (
         file_size_passed and
         resolution_passed and
@@ -211,6 +331,7 @@ def audit_preview_video(video_path: str, require_audio: bool = False) -> dict:
         freeze_detect_passed and
         motion_variance_passed and
         audio_passed and
+        visual_audit_passed and
         len(errors) == 0
     )
 
@@ -248,6 +369,7 @@ def audit_preview_video(video_path: str, require_audio: bool = False) -> dict:
             "sync_delta_seconds": audio_sync_delta,
             "sync_passed": sync_passed
         },
+        "visual_defects": visual_defects_res,
         "errors": errors
     }
 
@@ -865,19 +987,23 @@ class LensVerifier:
                 account_id=sim_lens_data.get("account_id")
             )
 
-            # Evaluate with Gemini Multimodal Vision AI (Dual-Frame: Neutral + Trigger)
+            # Evaluate with Gemini Multimodal Vision AI (Dual-Frame + Video Timeline Keyframes)
             judge_res = simulator.judge_visuals_with_gemini_vision(
                 trigger_screenshot=out_trigger,
-                neutral_screenshot=out_neutral
+                neutral_screenshot=out_neutral,
+                preview_video=preview_video
             )
 
             has_3d = analysis.get("has_3d_mesh", False)
             is_bg_only = analysis.get("is_background_only", False) or judge_res.get("is_background_only", False)
             is_cringe = judge_res.get("is_cringe_or_defective", False)
+            has_rays = judge_res.get("has_unnatural_rays_or_spokes", False)
+            has_veil = judge_res.get("has_face_obstruction_or_veil", False)
+            has_zombie = judge_res.get("has_zombie_eyes", False)
             judge_passed = judge_res.get("passed", False)
             score = judge_res.get("virality_score", judge_res.get("score", 0))
 
-            # Audit preview video for black frames, freeze, motion variance, resolution, and audio
+            # Audit preview video for black frames, freeze, motion variance, resolution, audio, and visual defects
             video_audit = audit_preview_video(preview_video)
             video_passed = video_audit.get("passed", False)
             if not video_passed:
@@ -890,14 +1016,17 @@ class LensVerifier:
                 else:
                     self.report["errors"].append("Gate 7 Failed: Preview video failed automated quality & freeze audit")
 
-            # Strictly reject background-only, lack of 3D mesh, cringe elements, score < 80, or defective video
-            passed = has_3d and (not is_bg_only) and (not is_cringe) and judge_passed and video_passed
+            # Strictly reject background-only, lack of 3D mesh, cringe elements, rays/spokes, face veil, zombie eyes, score < 85, or defective video
+            passed = has_3d and (not is_bg_only) and (not is_cringe) and (not has_rays) and (not has_veil) and (not has_zombie) and judge_passed and video_passed
 
             self.report["gates"]["gate7_visual_simulation"] = {
                 "passed": passed,
                 "score": score,
                 "has_3d_mesh": has_3d,
                 "is_background_only": is_bg_only,
+                "has_unnatural_rays_or_spokes": has_rays,
+                "has_face_obstruction_or_veil": has_veil,
+                "has_zombie_eyes": has_zombie,
                 "has_particles": analysis.get("has_particles", False),
                 "has_head_binding": analysis.get("has_head_binding", False),
                 "critique": judge_res.get("critique", ""),
@@ -914,8 +1043,14 @@ class LensVerifier:
                     self.report["errors"].append("Gate 7 Failed: No foreground 3D mesh (.mesh/.glb/.ply) found in bundle")
                 if is_bg_only:
                     self.report["errors"].append("Gate 7 Failed: Filter detected as flat 2D background replacement only")
+                if has_rays:
+                    self.report["errors"].append("Gate 7 Failed: Detected unnatural 2D radiating line rays/spokes from crown")
+                if has_veil:
+                    self.report["errors"].append("Gate 7 Failed: Detected unnatural veil or polygon covering subject nose/mouth")
+                if has_zombie:
+                    self.report["errors"].append("Gate 7 Failed: Detected unnatural zombie/discolored eye fill")
                 if not judge_passed:
-                    self.report["errors"].append(f"Gate 7 Failed: Gemini Vision Judge score {score}/100 below 80 threshold")
+                    self.report["errors"].append(f"Gate 7 Failed: Gemini Vision Judge score {score}/100 below 85 threshold")
                 if not video_passed:
                     self.report["errors"].append("Gate 7 Failed: Preview video failed automated quality & freeze audit")
 

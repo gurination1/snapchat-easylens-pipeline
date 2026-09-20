@@ -216,32 +216,69 @@ class LensSimulator:
 
         p_lower = p_text.lower()
         if any(w in p_lower for w in ["crown", "horns", "tiara", "headpiece", "diadem", "helm", "coronet"]):
-            w, h = 500, 260
+            w, h = 540, 290
             im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
             d = ImageDraw.Draw(im)
-            base_pts = [
-                (40, 210), (120, 195), (w // 2, 190), (w - 120, 195), (w - 40, 210),
-                (w - 50, 235), (w - 130, 225), (w // 2, 220), (130, 225), (50, 235)
+
+            # 1. Base arch shadow & metallic rim
+            base_shadow = [
+                (45, 238), (130, 222), (w // 2, 216), (w - 130, 222), (w - 45, 238),
+                (w - 55, 260), (w - 140, 248), (w // 2, 242), (140, 248), (55, 260)
             ]
-            d.polygon(base_pts, fill=(225, 175, 45, 245), outline=(255, 240, 180, 255), width=3)
+            d.polygon(base_shadow, fill=(140, 95, 20, 230))
+
+            base_gold = [
+                (45, 230), (130, 214), (w // 2, 208), (w - 130, 214), (w - 45, 230),
+                (w - 52, 252), (w - 138, 240), (w // 2, 234), (138, 240), (52, 252)
+            ]
+            d.polygon(base_gold, fill=(235, 185, 45, 255), outline=(255, 245, 180, 255), width=2)
+
+            # Beveled headband filigree highlight line
+            d.line([(55, 235), (135, 220), (w // 2, 214), (w - 135, 220), (w - 55, 235)], fill=(255, 250, 220, 220), width=2)
+
+            # 2. Ornate 3D Spires with deep gold shading and specular bevels
+            # (Center towering spire, flanked by 4 symmetric baroque spires)
             spires = [
-                [(w//2, 20), (w//2 - 45, 120), (w//2 - 25, 200), (w//2 + 25, 200), (w//2 + 45, 120)],
-                [(w//2 - 110, 50), (w//2 - 145, 135), (w//2 - 80, 200), (w//2 - 50, 195)],
-                [(w//2 + 110, 50), (w//2 + 80, 195), (w//2 + 50, 195), (w//2 + 145, 135)],
-                [(w//2 - 190, 85), (w//2 - 215, 160), (w//2 - 140, 205), (w//2 - 120, 200)],
-                [(w//2 + 190, 85), (w//2 + 120, 200), (w//2 + 140, 205), (w//2 + 215, 160)]
+                # Center Spire
+                ([(w//2, 18), (w//2 - 50, 115), (w//2 - 32, 210), (w//2 + 32, 210), (w//2 + 50, 115)], (240, 190, 50), (180, 130, 30)),
+                # Mid-Left Spire
+                ([(w//2 - 118, 48), (w//2 - 155, 135), (w//2 - 90, 214), (w//2 - 55, 210)], (230, 180, 45), (170, 120, 25)),
+                # Mid-Right Spire
+                ([(w//2 + 118, 48), (w//2 + 55, 210), (w//2 + 90, 214), (w//2 + 155, 135)], (230, 180, 45), (170, 120, 25)),
+                # Outer-Left Wing Spire
+                ([(w//2 - 205, 82), (w//2 - 232, 162), (w//2 - 155, 220), (w//2 - 130, 216)], (220, 170, 40), (160, 110, 20)),
+                # Outer-Right Wing Spire
+                ([(w//2 + 205, 82), (w//2 + 130, 216), (w//2 + 155, 220), (w//2 + 232, 162)], (220, 170, 40), (160, 110, 20))
             ]
-            for sp in spires:
-                d.polygon(sp, fill=(245, 195, 55, 245), outline=(255, 245, 190, 255), width=2)
-            for gx, gy, grad, gcol in [
-                (w//2, 135, 18, (230, 30, 70)),
-                (w//2 - 95, 145, 14, (30, 160, 240)),
-                (w//2 + 95, 145, 14, (30, 160, 240)),
-                (w//2 - 170, 165, 11, (50, 220, 120)),
-                (w//2 + 170, 165, 11, (50, 220, 120))
-            ]:
-                d.ellipse([gx - grad, gy - grad, gx + grad, gy + grad], fill=(*gcol, 255), outline=(255, 255, 255, 230), width=2)
-                d.ellipse([gx - grad//3, gy - grad//2, gx + grad//4, gy - grad//6], fill=(255, 255, 255, 240))
+            for sp_pts, gold_col, shade_col in spires:
+                # Shadow/crevice stroke
+                d.polygon(sp_pts, fill=gold_col, outline=(255, 245, 195, 255), width=2)
+                # Left-side specular bevel highlight
+                for p_idx in range(len(sp_pts) - 1):
+                    p1, p2 = sp_pts[p_idx], sp_pts[p_idx + 1]
+                    if p1[0] <= w // 2 or p2[0] <= w // 2:
+                        d.line([p1, p2], fill=(255, 255, 230, 210), width=2)
+
+            # 3. Realistic Faceted Gemstones with Gold Bezels & Specular Facets
+            gems = [
+                # Center Grand Ruby
+                (w//2, 138, 20, (220, 25, 65), (150, 10, 40)),
+                # Mid Sapphires
+                (w//2 - 105, 148, 15, (25, 130, 240), (10, 70, 160)),
+                (w//2 + 105, 148, 15, (25, 130, 240), (10, 70, 160)),
+                # Outer Emeralds
+                (w//2 - 185, 168, 12, (30, 200, 100), (15, 120, 60)),
+                (w//2 + 185, 168, 12, (30, 200, 100), (15, 120, 60))
+            ]
+            for gx, gy, grad, gem_light, gem_dark in gems:
+                # Gold Bezel Mount
+                d.ellipse([gx - grad - 3, gy - grad - 3, gx + grad + 3, gy + grad + 3], fill=(255, 215, 80), outline=(160, 110, 25), width=2)
+                # Gem Base Dark Shadow
+                d.ellipse([gx - grad, gy - grad, gx + grad, gy + grad], fill=gem_dark)
+                # Gem Facet Light
+                d.ellipse([gx - grad + 2, gy - grad + 2, gx + grad - 1, gy + grad - 1], fill=gem_light)
+                # Realistic Specular Catchlight
+                d.ellipse([gx - grad//2, gy - grad//2, gx - grad//5, gy - grad//5], fill=(255, 255, 255, 245))
             return im
 
         elif any(w in p_lower for w in ["cloud", "crying", "teardrop", "soap-opera", "comedy", "weep"]):
@@ -533,7 +570,7 @@ class LensSimulator:
             pos = (int(eye_cx - target_w // 2), int(eye_cy - target_h * 0.52))
             ev_y = int(eye_cy)
         elif is_crown:
-            target_w = int(eye_dist * 2.50)
+            target_w = int(eye_dist * 2.55)
             target_h = int(target_w * aspect)
             pos = (int(forehead_cx - target_w // 2), int(forehead_cy - target_h * 0.85))
             ev_y = int(eye_cy)
@@ -543,7 +580,7 @@ class LensSimulator:
             pos = (int(eye_cx - target_w // 2), int(eye_cy - target_h // 2))
             ev_y = int(eye_cy)
         elif is_halo:
-            target_w = int(eye_dist * 2.30)
+            target_w = int(eye_dist * 2.50)
             target_h = int(target_w * aspect)
             pos = (int(halo_cx - target_w // 2), int(halo_cy - target_h // 2))
             ev_y = int(eye_cy)
@@ -679,12 +716,12 @@ class LensSimulator:
         comp_t = Image.alpha_composite(comp_t, shadow_t)
 
         # 2. Trigger reaction VFX (Strictly tailored to archetype, ZERO generic cones!)
-        if not is_full_helmet:
-            if any(k in p_text for k in ["flame", "fire", "breath", "dragon", "amber"]):
+        if not is_full_helmet and not is_crown:
+            if any(k in p_text for k in ["fire breath", "flame breath", "dragon breath", "breathe fire"]):
                 flame = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
                 f_draw = ImageDraw.Draw(flame)
                 mx, my = int(t_mouth_cx), int(t_mouth_cy)
-                for cone_w, cone_len, col in [(280, 480, (0, 180, 90, 90)), (190, 360, (20, 230, 120, 160)), (110, 240, (80, 255, 180, 220)), (50, 120, (220, 255, 240, 255))]:
+                for cone_w, cone_len, col in [(280, 480, (255, 120, 30, 90)), (190, 360, (255, 180, 40, 160)), (110, 240, (255, 230, 90, 220)), (50, 120, (255, 255, 240, 255))]:
                     f_draw.polygon([
                         (mx, my),
                         (mx - cone_w // 2, my + cone_len),
@@ -925,32 +962,62 @@ class LensSimulator:
         p = max(0.1, min(1.0, progression))
 
         if niche == "mythic":
-            # Volumetric elemental dragon breath / energy discharge with smooth Gaussian blur
-            flame = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
-            f_draw = ImageDraw.Draw(flame)
-            f_len = int(420 * p * scale)
-            f_w = int(260 * p * scale)
-            for cone_w, cone_len, col in [
-                (f_w, f_len, (40, 220, 100, int(110 * p))),
-                (int(f_w * 0.7), int(f_len * 0.75), (255, 180, 30, int(160 * p))),
-                (int(f_w * 0.4), int(f_len * 0.5), (255, 240, 120, int(220 * p))),
-                (int(f_w * 0.2), int(f_len * 0.25), (255, 255, 255, 255))
-            ]:
-                f_draw.polygon([
-                    (mouth_x, mouth_y),
-                    (mouth_x - cone_w // 2, mouth_y + cone_len),
-                    (mouth_x + cone_w // 2, mouth_y + cone_len)
-                ], fill=col)
-            flame = flame.filter(ImageFilter.GaussianBlur(14))
-            overlay.alpha_composite(flame)
+            p_text = self.asset_scale_info.get("p_text", "").lower()
+            if any(k in p_text for k in ["fire breath", "flame breath", "dragon breath", "breathe fire"]):
+                flame = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+                f_draw = ImageDraw.Draw(flame)
+                f_len = int(420 * p * scale)
+                f_w = int(260 * p * scale)
+                for cone_w, cone_len, col in [
+                    (f_w, f_len, (255, 120, 30, int(110 * p))),
+                    (int(f_w * 0.7), int(f_len * 0.75), (255, 180, 30, int(160 * p))),
+                    (int(f_w * 0.4), int(f_len * 0.5), (255, 240, 120, int(220 * p))),
+                    (int(f_w * 0.2), int(f_len * 0.25), (255, 255, 255, 255))
+                ]:
+                    f_draw.polygon([
+                        (mouth_x, mouth_y),
+                        (mouth_x - cone_w // 2, mouth_y + cone_len),
+                        (mouth_x + cone_w // 2, mouth_y + cone_len)
+                    ], fill=col)
+                flame = flame.filter(ImageFilter.GaussianBlur(14))
+                overlay.alpha_composite(flame)
+            else:
+                # Soft volumetric celestial backlight corona behind crown (ZERO bicycle-spoke line rays)
+                aura = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+                a_draw = ImageDraw.Draw(aura)
+                # Outer warm amber halo
+                halo_w = int(target_w * 0.95)
+                halo_h = int(target_h * 0.85)
+                a_draw.ellipse(
+                    [fh_x - halo_w // 2, anc_y - int(target_h * 0.6) - halo_h // 2,
+                     fh_x + halo_w // 2, anc_y - int(target_h * 0.6) + halo_h // 2],
+                    fill=(255, 190, 50, int(65 * p))
+                )
+                # Inner radiant golden core
+                core_w = int(target_w * 0.65)
+                core_h = int(target_h * 0.55)
+                a_draw.ellipse(
+                    [fh_x - core_w // 2, anc_y - int(target_h * 0.5) - core_h // 2,
+                     fh_x + core_w // 2, anc_y - int(target_h * 0.5) + core_h // 2],
+                    fill=(255, 225, 100, int(90 * p))
+                )
+                # Subtle ascending golden dust motes (soft dots, NO harsh crosshairs)
+                import math
+                for p_i in range(8):
+                    p_ang = p_i * (math.pi / 4.0)
+                    px = int(fh_x + math.sin(p_ang) * (target_w * 0.38))
+                    py = int(anc_y - target_h * 0.4 - abs(math.cos(p_ang)) * (target_h * 0.45) - p * 30 * scale)
+                    pr = max(2, int(3 * scale))
+                    a_draw.ellipse([px - pr, py - pr, px + pr, py + pr], fill=(255, 235, 140, int(150 * p)))
+                aura = aura.filter(ImageFilter.GaussianBlur(16))
+                overlay.alpha_composite(aura)
 
-            # Soft radial eye energy glints
+            # Natural microscopic eye catchlight (preserving real human eyes, ZERO zombie yellow fill)
             eye_f = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
             ef_draw = ImageDraw.Draw(eye_f)
             for ex, ey in [(re_x, re_y), (le_x, le_y)]:
-                ef_draw.ellipse([int(ex - 18 * scale), int(ey - 18 * scale), int(ex + 18 * scale), int(ey + 18 * scale)], fill=(255, 215, 60, int(160 * p)))
-                ef_draw.ellipse([int(ex - 7 * scale), int(ey - 7 * scale), int(ex + 7 * scale), int(ey + 7 * scale)], fill=(255, 255, 220, int(220 * p)))
-            eye_f = eye_f.filter(ImageFilter.GaussianBlur(6))
+                ef_draw.ellipse([int(ex + 2 * scale), int(ey - 2 * scale), int(ex + 4 * scale), int(ey)], fill=(255, 255, 255, int(140 * p)))
+            eye_f = eye_f.filter(ImageFilter.GaussianBlur(1))
             overlay.alpha_composite(eye_f)
 
         elif niche == "cyber":
@@ -1019,7 +1086,7 @@ class LensSimulator:
         comp = Image.alpha_composite(base_img, blurred)
         return Image.alpha_composite(comp, overlay)
 
-    def render_niche_video_vfx(self, ar_layer: Image.Image, niche: str, landmarks: list, scale: float, t_prog: float, flare_rgb: tuple, anc_x: float, anc_y: float) -> Image.Image:
+    def render_niche_video_vfx(self, ar_layer: Image.Image, niche: str, landmarks: list, scale: float, t_prog: float, flare_rgb: tuple, anc_x: float, anc_y: float, cur_w: int = 0, cur_h: int = 0, is_crown: bool = False) -> Image.Image:
         """Renders dynamic, motion-tracked niche effects on vertical preview video frames"""
         draw = ImageDraw.Draw(ar_layer)
         le, re, nose, fh, mouth = landmarks
@@ -1028,83 +1095,146 @@ class LensSimulator:
         mouth_x, mouth_y = float(mouth[0]), float(mouth[1])
         nose_x, nose_y = float(nose[0]), float(nose[1])
 
-        if niche == "comedy":
+        if is_crown or niche == "mythic":
+            # Soft volumetric celestial backlight corona, delicate floating dust motes, subtle gem specular points
+            # Strictly ZERO 2D bicycle-spoke line rays, ZERO zombie eyes, ZERO unwanted mouth cones
+            if t_prog > 0.05:
+                aura_layer = Image.new("RGBA", ar_layer.size, (0, 0, 0, 0))
+                a_draw = ImageDraw.Draw(aura_layer)
+                cx, cy = int(anc_x), int(anc_y)
+                cw = cur_w if cur_w > 0 else int(232.0 * scale * 2.55)
+                ch = cur_h if cur_h > 0 else int(cw * 0.52)
+                import math
+
+                # 1. Soft Volumetric Backlight Corona hugging crown spires (ZERO straight spoke rays)
+                halo_w = int(cw * 0.92)
+                halo_h = int(ch * 0.82)
+                halo_cy = int(anc_y - ch * 0.25)
+                a_draw.ellipse(
+                    [cx - halo_w // 2, halo_cy - halo_h // 2, cx + halo_w // 2, halo_cy + halo_h // 2],
+                    fill=(255, 195, 55, int(75 * t_prog))
+                )
+                core_w = int(cw * 0.65)
+                core_h = int(ch * 0.55)
+                a_draw.ellipse(
+                    [cx - core_w // 2, halo_cy - core_h // 2, cx + core_w // 2, halo_cy + core_h // 2],
+                    fill=(255, 230, 110, int(105 * t_prog))
+                )
+
+                # 2. Organic ascending celestial ember motes (soft glowing points, ZERO crosshair lines)
+                for p_i in range(12):
+                    p_phase = p_i * (math.pi / 6.0)
+                    p_speed = 0.7 + (p_i % 4) * 0.25
+                    p_ox = math.sin(p_phase + t_prog * 2.8 * p_speed) * (cw * 0.40)
+                    p_oy = -abs(math.cos(p_phase)) * (ch * 0.45) - (t_prog * 55.0 * p_speed)
+                    px = int(anc_x + p_ox)
+                    py = int(anc_y + p_oy)
+                    p_rad = max(2, int(3 * scale))
+                    p_alpha = int(180 * t_prog * max(0.0, 1.0 - abs(p_oy) / (ch * 1.2)))
+                    if p_alpha > 10:
+                        a_draw.ellipse([px - p_rad, py - p_rad, px + p_rad, py + p_rad], fill=(255, 235, 140, p_alpha))
+
+                # 3. Micro-specular pinpoint glints on gemstone facets (delicate tiny points, ZERO harsh spikes)
+                gem_specs = [
+                    (0, -ch * 0.42, (255, 60, 90)),
+                    (-cw * 0.22, -ch * 0.28, (50, 190, 255)),
+                    (cw * 0.22, -ch * 0.28, (50, 190, 255)),
+                    (-cw * 0.38, -ch * 0.12, (50, 235, 150)),
+                    (cw * 0.38, -ch * 0.12, (50, 235, 150))
+                ]
+                for gx_off, gy_off, gcol in gem_specs:
+                    gx = int(anc_x + gx_off)
+                    gy = int(anc_y + gy_off)
+                    grad = max(3, int(6 * scale * (0.8 + 0.4 * t_prog)))
+                    a_draw.ellipse([gx - grad, gy - grad, gx + grad, gy + grad], fill=(*gcol, int(180 * t_prog)))
+                    a_draw.ellipse([gx - max(1, grad // 3), gy - max(1, grad // 3), gx + max(1, grad // 3), gy + max(1, grad // 3)], fill=(255, 255, 255, int(230 * t_prog)))
+
+                # 4. Natural eye catchlight (preserving real human eye beauty, ZERO zombie yellow pupil fills)
+                for ex, ey in [(re_x, re_y), (le_x, le_y)]:
+                    a_draw.ellipse([int(ex + 2 * scale), int(ey - 2 * scale), int(ex + 4 * scale), int(ey)], fill=(255, 255, 255, int(130 * t_prog)))
+
+                aura_blur = aura_layer.filter(ImageFilter.GaussianBlur(14))
+                ar_layer.alpha_composite(aura_blur)
+                ar_layer.alpha_composite(aura_layer)
+
+        elif niche == "comedy":
             if t_prog > 0.08:
-                t_len = int(240 * t_prog * scale)
+                t_len = int(260 * t_prog * scale)
                 pts_l = [
                     (int(le_x), int(le_y + 12 * scale)),
-                    (int(le_x - 3 * scale), int(le_y + 12 * scale + t_len * 0.4)),
-                    (int(le_x + 8 * scale), int(le_y + 12 * scale + t_len))
+                    (int(le_x - 4 * scale), int(le_y + 12 * scale + t_len * 0.4)),
+                    (int(le_x + 10 * scale), int(le_y + 12 * scale + t_len))
                 ]
                 pts_r = [
                     (int(re_x), int(re_y + 12 * scale)),
-                    (int(re_x + 3 * scale), int(re_y + 12 * scale + t_len * 0.4)),
-                    (int(re_x - 8 * scale), int(re_y + 12 * scale + t_len))
+                    (int(re_x + 4 * scale), int(re_y + 12 * scale + t_len * 0.4)),
+                    (int(re_x - 10 * scale), int(re_y + 12 * scale + t_len))
                 ]
                 for pts in [pts_l, pts_r]:
-                    for w_outer, col in [(int(14 * scale), (100, 200, 255, 140)), (int(7 * scale), (160, 230, 255, 210)), (max(2, int(3 * scale)), (255, 255, 255, 240))]:
+                    for w_outer, col in [(int(16 * scale), (100, 200, 255, 140)), (int(8 * scale), (160, 230, 255, 210)), (max(2, int(3 * scale)), (255, 255, 255, 240))]:
                         for i in range(len(pts) - 1):
                             draw.line([pts[i], pts[i+1]], fill=col, width=w_outer)
                     bx, by = pts[-1]
-                    b_rad = max(4, int(9 * scale))
+                    b_rad = max(4, int(11 * scale))
                     draw.ellipse([bx - b_rad, by - b_rad, bx + b_rad, by + b_rad], fill=(120, 215, 255, 230))
                     draw.ellipse([bx - 3, by - 4, bx + 2, by + 1], fill=(255, 255, 255, 255))
-                if t_prog > 0.5:
-                    for sp_ox in [-30, 30]:
-                        sp_x = int(mouth_x + sp_ox * scale)
-                        sp_y = int(mouth_y + 70 * scale)
-                        draw.ellipse([sp_x - 5, sp_y - 5, sp_x + 5, sp_y + 5], fill=(140, 220, 255, 200))
+                if t_prog > 0.4:
+                    for sp_ox, coin_c in [(-45, (255, 215, 0)), (45, (255, 200, 30))]:
+                        cx = int(mouth_x + sp_ox * scale)
+                        cy = int(mouth_y + (85 + 20 * t_prog) * scale)
+                        draw.ellipse([cx - 8, cy - 8, cx + 8, cy + 8], fill=(*coin_c, 240), outline=(255, 255, 255, 250), width=2)
 
         elif niche == "cyber":
             rx, ry = int(re_x), int(re_y)
-            r_rad = max(10, int(26 * scale))
-            draw.ellipse([rx - r_rad, ry - r_rad, rx + r_rad, ry + r_rad], outline=(0, 245, 255, 210), width=2)
-            if t_prog > 0.15:
-                sw_rad = int(r_rad * (1.0 + 0.5 * t_prog))
-                draw.ellipse([rx - sw_rad, ry - sw_rad, rx + sw_rad, ry + sw_rad], outline=(0, 245, 255, int(150 * t_prog)), width=2)
-
-        elif niche == "mythic":
-            if t_prog > 0.08:
-                f_len = int(180 * t_prog * scale)
-                f_w = int(120 * t_prog * scale)
-                flame_patch = Image.new("RGBA", (f_len * 2, f_len * 2), (0, 0, 0, 0))
-                fp_draw = ImageDraw.Draw(flame_patch)
-                fx0, fy0 = f_len, f_len
-                for c_w, c_l, col in [
-                    (f_w, f_len, (40, 220, 110, int(130 * t_prog))),
-                    (int(f_w * 0.6), int(f_len * 0.75), (255, 180, 40, int(180 * t_prog))),
-                    (int(f_w * 0.25), int(f_len * 0.4), (255, 255, 255, 240))
-                ]:
-                    fp_draw.polygon([
-                        (fx0, fy0),
-                        (fx0 - c_w // 2, fy0 + c_l),
-                        (fx0 + c_w // 2, fy0 + c_l)
-                    ], fill=col)
-                flame_patch = flame_patch.filter(ImageFilter.GaussianBlur(8))
-                ar_layer.alpha_composite(flame_patch, dest=(int(mouth_x - fx0), int(mouth_y - fy0)))
-
+            lx, ly = int(le_x), int(le_y)
+            r_rad = max(10, int(28 * scale))
+            draw.ellipse([rx - r_rad, ry - r_rad, rx + r_rad, ry + r_rad], outline=(0, 245, 255, 220), width=2)
+            draw.ellipse([lx - r_rad, ly - r_rad, lx + r_rad, ly + r_rad], outline=(0, 245, 255, 220), width=2)
+            if t_prog > 0.10:
+                sw_rad = int(r_rad * (1.0 + 0.6 * t_prog))
+                draw.ellipse([rx - sw_rad, ry - sw_rad, rx + sw_rad, ry + sw_rad], outline=(0, 245, 255, int(170 * t_prog)), width=2)
+                draw.ellipse([lx - sw_rad, ly - sw_rad, lx + sw_rad, ly + sw_rad], outline=(0, 245, 255, int(170 * t_prog)), width=2)
+                draw.line([(rx - sw_rad - 12, ry), (rx + sw_rad + 12, ry)], fill=(0, 245, 255, int(220 * t_prog)), width=1)
+                draw.line([(lx - sw_rad - 12, ly), (lx + sw_rad + 12, ly)], fill=(0, 245, 255, int(220 * t_prog)), width=1)
         elif niche == "luxury":
-            for sx, sy in [
-                (int(le_x - 18 * scale), int(nose_y - 10 * scale)),
-                (int(re_x + 18 * scale), int(nose_y - 10 * scale)),
-                (int(le_x - 32 * scale), int(nose_y + 15 * scale)),
-                (int(re_x + 32 * scale), int(nose_y + 15 * scale)),
-                (int(anc_x), int(anc_y - 45 * scale))
-            ]:
-                s_rad = max(4, int(10 * scale * (0.7 + 0.5 * t_prog)))
-                draw.ellipse([sx - s_rad, sy - s_rad, sx + s_rad, sy + s_rad], fill=(255, 240, 180, int(180 * (0.7 + 0.3 * t_prog))))
-                draw.ellipse([sx - 2, sy - 2, sx + 2, sy + 2], fill=(255, 255, 255, 255))
+            # Haute Couture Luxury: Warm golden hour backlight bloom hugging hair & soft floating champagne motes
+            # Strictly ZERO face veils over nose/mouth, ZERO crosshairs on nostrils/cheeks
+            if t_prog > 0.05:
+                lux_layer = Image.new("RGBA", ar_layer.size, (0, 0, 0, 0))
+                l_draw = ImageDraw.Draw(lux_layer)
+                cx = int(anc_x)
+                cw = cur_w if cur_w > 0 else int(232.0 * scale * 2.55)
+                ch = cur_h if cur_h > 0 else int(cw * 0.52)
+                # Volumetric warm golden hour hair rim backlight
+                glow_w = int(cw * 1.05)
+                glow_h = int(ch * 0.90)
+                l_draw.ellipse(
+                    [cx - glow_w // 2, int(anc_y - ch * 0.3) - glow_h // 2,
+                     cx + glow_w // 2, int(anc_y - ch * 0.3) + glow_h // 2],
+                    fill=(255, 215, 120, int(65 * t_prog))
+                )
+                # Delicate floating champagne sparkle dust in hair/temple periphery (NO face crosshairs)
+                import math
+                for sp_i in range(8):
+                    sp_ang = sp_i * (math.pi / 4.0)
+                    sx = int(cx + math.cos(sp_ang) * (cw * 0.48))
+                    sy = int(anc_y - ch * 0.2 + math.sin(sp_ang) * (ch * 0.35) - t_prog * 20 * scale)
+                    s_rad = max(2, int(3 * scale))
+                    l_draw.ellipse([sx - s_rad, sy - s_rad, sx + s_rad, sy + s_rad], fill=(255, 245, 190, int(170 * t_prog)))
+                l_blur = lux_layer.filter(ImageFilter.GaussianBlur(16))
+                ar_layer.alpha_composite(l_blur)
+                ar_layer.alpha_composite(lux_layer)
 
         elif niche == "chrome":
             import math
             for orb_i in range(5):
                 angle = orb_i * (2 * math.pi / 5.0) + (t_prog * math.pi)
-                rad_x = int(80 * scale)
-                rad_y = int(35 * scale)
+                rad_x = int(95 * scale)
+                rad_y = int(45 * scale)
                 ox = int(anc_x + rad_x * math.cos(angle))
                 oy = int(anc_y - 25 * scale + rad_y * math.sin(angle))
-                drop_r = max(3, int(7 * scale))
-                draw.ellipse([ox - drop_r, oy - drop_r, ox + drop_r, oy + drop_r], fill=(220, 235, 245, 220))
+                drop_r = max(3, int(9 * scale))
+                draw.ellipse([ox - drop_r, oy - drop_r, ox + drop_r, oy + drop_r], fill=(220, 235, 245, 230))
                 draw.ellipse([ox - 2, oy - 2, ox + 1, oy + 1], fill=(255, 255, 255, 255))
 
         return ar_layer
@@ -1501,18 +1631,20 @@ class LensSimulator:
                 print(f"[SIMULATOR] Loaded {num_frames} frames from portrait motion video ({src_w}x{src_h} @ {fps:.1f}fps)")
 
                 # Asset geometry configs
-                target_w = self.asset_scale_info.get("target_w", 480)
-                target_h = self.asset_scale_info.get("target_h", 190)
-                is_full_helmet = self.asset_scale_info.get("is_full_helmet", False)
-                is_visor = self.asset_scale_info.get("is_visor", False)
-                is_crown = self.asset_scale_info.get("is_crown", False)
-                is_halo = self.asset_scale_info.get("is_halo", False)
-                p_text = self.asset_scale_info.get("p_text", "")
-                base_eye_dist = 280.0
+                p_text = (
+                    str(self.asset_scale_info.get("p_text", "")) + " " +
+                    str(self.lens_data.get("lens_name", "")) + " " +
+                    str(self.lens_data.get("prompt", "")) + " " +
+                    str(self.lens_data.get("archetype", ""))
+                ).lower()
+                is_full_helmet = self.asset_scale_info.get("is_full_helmet", False) or any(w in p_text for w in ["helmet", "full-face", "full face", "motorcycle"])
+                is_crown = self.asset_scale_info.get("is_crown", False) or any(w in p_text for w in ["crown", "horns", "tiara", "headpiece", "diadem", "horn", "antlers", "coronet", "wreath", "circlet", "halo crown", "headband"])
+                is_visor = self.asset_scale_info.get("is_visor", False) or any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "spectacles", "monocle", "eyewear", "sunglasses", "reticle", "optics"])
+                is_halo = self.asset_scale_info.get("is_halo", False) or any(w in p_text for w in ["cloud", "halo", "floating", "above", "sky", "mercury halo"])
+                is_tear = self.asset_scale_info.get("is_tear", False) or any(w in p_text for w in ["tear", "crying", "weep", "waterfall", "melodrama", "makeup", "blush"])
 
-                # Pre-generate optimized contact shadow sprite
-                sh_w = max(20, int(target_w * 0.85))
-                sh_h = max(20, int(target_h * 0.45))
+                # Pre-generate optimized contact shadow sprite template (resized dynamically per-frame)
+                sh_w, sh_h = 480, 190
                 shadow_sprite = Image.new("RGBA", (sh_w, sh_h), (0, 0, 0, 0))
                 s_draw = ImageDraw.Draw(shadow_sprite)
                 s_draw.ellipse([8, 8, sh_w - 8, sh_h - 8], fill=(0, 0, 0, 85))
@@ -1562,27 +1694,45 @@ class LensSimulator:
                     eye_cx = float((le[0] + re[0]) / 2.0)
                     eye_cy = float((le[1] + re[1]) / 2.0)
                     eye_dist = float(np.linalg.norm(re - le))
-                    scale = float(eye_dist / max(1.0, base_eye_dist))
                     roll_angle = float(np.degrees(np.arctan2(le[1] - re[1], le[0] - re[0])))
+                    aspect = (self.dominant_texture.height / max(1, self.dominant_texture.width)) if self.dominant_texture else 0.52
 
-                    # Anchor point determination - use anatomical midline axis
-                    face_midline_x = float(eye_cx * 0.65 + nose[0] * 0.35)
+                    # Compute precise per-frame asset dimensions directly from video face landmarks
                     if is_full_helmet:
-                        anc_x, anc_y = eye_cx, eye_cy
-                    elif is_visor:
-                        anc_x, anc_y = eye_cx, eye_cy
+                        cur_w = int(eye_dist * 3.60)
+                        cur_h = int(cur_w * aspect)
+                        anc_x = eye_cx
+                        anc_y = float(eye_cy - cur_h * 0.05)
                     elif is_crown:
+                        # Full temple-to-temple regal crown span resting on forehead hairline
+                        cur_w = max(550, int(eye_dist * 2.55))
+                        cur_h = max(280, int(cur_w * aspect))
                         anc_x = float(fh[0])
-                        anc_y = float(fh[1] - (target_h // 2 - 15) * scale)
+                        anc_y = float(fh[1] - cur_h * 0.35)
+                    elif is_visor:
+                        # Full temple-to-temple ocular eyewear centered strictly over pupils
+                        cur_w = int(eye_dist * 2.35)
+                        cur_h = min(220, int(cur_w * aspect))
+                        anc_x = eye_cx
+                        anc_y = eye_cy
                     elif is_halo:
+                        # Floating celestial toroid above skull
+                        cur_w = int(eye_dist * 2.50)
+                        cur_h = int(cur_w * aspect)
                         anc_x = float(fh[0])
-                        anc_y = float(fh[1] - (target_h // 2 + 55) * scale)
+                        anc_y = float(fh[1] - cur_h * 0.65)
                     elif is_tear:
+                        cur_w = int(eye_dist * 2.20)
+                        cur_h = min(380, int(cur_w * aspect))
                         anc_x = eye_cx
                         anc_y = float((eye_cy + mouth[1]) / 2.0)
                     else:
+                        cur_w = int(eye_dist * 2.45)
+                        cur_h = max(240, int(cur_w * aspect))
                         anc_x = float(fh[0])
-                        anc_y = float(fh[1] - (target_h // 2) * scale)
+                        anc_y = float(fh[1] - cur_h * 0.35)
+
+                    scale = float(eye_dist / 232.0)  # Normalized scale relative to canonical portrait video
 
                     # Dynamic trigger progression curve (mouth open / smile transition)
                     # Peak trigger between 35% and 75% of clip duration
@@ -1606,84 +1756,50 @@ class LensSimulator:
                     enh_col = ImageEnhance.Color(pil_frame)
                     pil_frame = enh_col.enhance(1.12)
 
-                    # Holographic Activation Scan-line Wipe parameters
-                    wipe_start = max(5, int(num_frames * 0.10))
-                    wipe_end = max(wipe_start + 8, int(num_frames * 0.28))
-                    is_pre_wipe = idx < wipe_start
-                    is_wiping = wipe_start <= idx <= wipe_end
-                    is_post_wipe = idx > wipe_end
-
-                    if is_wiping:
-                        w_prog = (idx - wipe_start) / float(wipe_end - wipe_start)
-                        scan_y = int(220 + w_prog * 540)
-                    elif is_pre_wipe:
-                        scan_y = -999
-                    else:
-                        scan_y = 9999
-
                     # Build AR overlay layer
                     ar_layer = Image.new("RGBA", (src_w, src_h), (0, 0, 0, 0))
 
-                    if not is_pre_wipe:
-                        # Contact shadow composite
-                        cur_sh_w = max(10, int(sh_w * scale))
-                        cur_sh_h = max(10, int(sh_h * scale))
-                        r_sh = shadow_sprite.resize((cur_sh_w, cur_sh_h), Image.Resampling.BILINEAR)
-                        if roll_angle != 0:
-                            r_sh = r_sh.rotate(-roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
-                        sh_x = int(anc_x - r_sh.width // 2)
-                        sh_y = int(anc_y - r_sh.height // 2 + 25 * scale)
-                        ar_layer.alpha_composite(r_sh, dest=(sh_x, sh_y))
+                    # Contact shadow composite
+                    cur_sh_w = max(20, int(cur_w * 0.85))
+                    cur_sh_h = max(20, int(cur_h * 0.40))
+                    r_sh = shadow_sprite.resize((cur_sh_w, cur_sh_h), Image.Resampling.BILINEAR)
+                    if roll_angle != 0:
+                        r_sh = r_sh.rotate(-roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
+                    sh_x = int(anc_x - r_sh.width // 2)
+                    sh_y = int(anc_y + cur_h // 2 - r_sh.height // 2)
+                    ar_layer.alpha_composite(r_sh, dest=(sh_x, sh_y))
 
-                        # Foreground 3D asset overlay
-                        cur_w = max(10, int(target_w * scale))
-                        cur_h = max(10, int(target_h * scale))
-                        r_tex = self.dominant_texture.resize((cur_w, cur_h), Image.Resampling.BILINEAR)
-                        if roll_angle != 0:
-                            r_tex = r_tex.rotate(-roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
-                        pos_x = int(anc_x - r_tex.width // 2)
-                        pos_y = int(anc_y - r_tex.height // 2)
-                        ar_layer.alpha_composite(r_tex, dest=(pos_x, pos_y))
+                    # Foreground 3D asset overlay
+                    r_tex = self.dominant_texture.resize((cur_w, cur_h), Image.Resampling.BILINEAR)
+                    if roll_angle != 0:
+                        r_tex = r_tex.rotate(-roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
+                    pos_x = int(anc_x - r_tex.width // 2)
+                    pos_y = int(anc_y - r_tex.height // 2)
+                    ar_layer.alpha_composite(r_tex, dest=(pos_x, pos_y))
 
-                        # Reactive trigger VFX (bloom flare / particle burst)
-                        if t_prog > 0.05 or is_post_wipe:
-                            cur_fl = int(fl_size * scale * (0.8 + 0.4 * t_prog))
-                            r_flare = flare_sprite.resize((cur_fl, cur_fl), Image.Resampling.BILINEAR)
-                            fl_x = int(anc_x - r_flare.width // 2)
-                            fl_y = int(anc_y - r_flare.height // 2)
-                            ar_layer.alpha_composite(r_flare, dest=(fl_x, fl_y))
+                    # Reactive trigger VFX (bloom flare / particle burst)
+                    if t_prog > 0.05:
+                        cur_fl = int(fl_size * scale * (0.8 + 0.4 * t_prog))
+                        r_flare = flare_sprite.resize((cur_fl, cur_fl), Image.Resampling.BILINEAR)
+                        fl_x = int(anc_x - r_flare.width // 2)
+                        fl_y = int(anc_y - r_flare.height // 2)
+                        ar_layer.alpha_composite(r_flare, dest=(fl_x, fl_y))
 
-                        # Render tailored reactive niche animation anchored to moving face landmarks
-                        niche = self.resolve_visual_niche(account_id=aid)
-                        ar_layer = self.render_niche_video_vfx(ar_layer, niche, landmarks, scale, t_prog, flare_rgb, anc_x, anc_y)
+                    # Render tailored reactive niche animation anchored to moving face landmarks
+                    niche = self.resolve_visual_niche(account_id=aid)
+                    ar_layer = self.render_niche_video_vfx(
+                        ar_layer, niche, landmarks, scale, t_prog, flare_rgb, anc_x, anc_y,
+                        cur_w=cur_w, cur_h=cur_h, is_crown=is_crown
+                    )
 
-                    # Composite AR layer onto frame with wipe or full reveal
-                    if is_wiping:
+                    # Smooth cinematic asset presence
+                    intro_fade = min(1.0, (idx + 1) / 6.0)
+                    if intro_fade < 1.0:
                         ar_np = np.array(ar_layer)
-                        ar_np[scan_y + 4:, :, 3] = 0
+                        ar_np[:, :, 3] = (ar_np[:, :, 3].astype(float) * intro_fade).astype(np.uint8)
                         ar_layer = Image.fromarray(ar_np)
-                        pil_frame.alpha_composite(ar_layer)
 
-                        # Draw horizontal holographic laser scanline with bright white core & sparks
-                        scan_line_img = Image.new("RGBA", (src_w, src_h), (0, 0, 0, 0))
-                        sl_draw = ImageDraw.Draw(scan_line_img)
-                        x_min = int(anc_x - 240 * scale)
-                        x_max = int(anc_x + 240 * scale)
-                        sl_draw.line([(x_min, scan_y), (x_max, scan_y)], fill=(*flare_rgb, 250), width=5)
-                        sl_draw.line([(x_min, scan_y), (x_max, scan_y)], fill=(255, 255, 255, 255), width=2)
-                        # Sparkling particle sparks along scanline
-                        import math
-                        for sp_i, sp_x_off in enumerate([-180, -120, -60, 0, 60, 120, 180]):
-                            sp_x = int(anc_x + sp_x_off * scale)
-                            sp_y = scan_y + int(math.sin(idx * 0.8 + sp_i) * 5)
-                            sl_draw.line([(sp_x - 4, sp_y), (sp_x + 4, sp_y)], fill=(255, 255, 255, 240), width=2)
-                            sl_draw.line([(sp_x, sp_y - 4), (sp_x, sp_y + 4)], fill=(255, 255, 255, 240), width=2)
-
-                        sl_blur = scan_line_img.filter(ImageFilter.GaussianBlur(6))
-                        pil_frame.alpha_composite(sl_blur)
-                        pil_frame.alpha_composite(scan_line_img)
-                    elif is_post_wipe:
-                        pil_frame.alpha_composite(ar_layer)
+                    pil_frame.alpha_composite(ar_layer)
 
                     # Dynamic Climax Shockwave Ring Pulse (Peak Trigger)
                     if 0.38 <= frame_ratio <= 0.65:
@@ -1842,8 +1958,8 @@ class LensSimulator:
         return None
 
 
-    def judge_visuals_with_gemini_vision(self, trigger_screenshot: str, neutral_screenshot: str = "preview_neutral_simulated.png") -> dict:
-        """Gate 7: Dual-frame forensic visual evaluation via Gemini Multimodal Vision AI (Strict Threshold >= 75)"""
+    def judge_visuals_with_gemini_vision(self, trigger_screenshot: str, neutral_screenshot: str = "preview_neutral_simulated.png", preview_video: str = None) -> dict:
+        """Gate 7: Multi-frame & video forensic visual evaluation via Gemini Multimodal Vision AI (Strict Threshold >= 85)"""
         api_keys = get_gemini_api_keys()
         if not api_keys or not os.path.exists(trigger_screenshot):
             return {"passed": True, "score": 90, "note": "Vision evaluation skipped (missing key or screenshot)"}
@@ -1856,25 +1972,51 @@ class LensSimulator:
             with open(neutral_screenshot, "rb") as fn:
                 b64_neutral = base64.b64encode(fn.read()).decode("utf-8")
 
+        # Extract video keyframes across the timeline if preview_video is provided
+        video_keyframe_b64s = []
+        if preview_video and os.path.exists(preview_video):
+            try:
+                import cv2
+                cap = cv2.VideoCapture(preview_video)
+                tot_f = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) or 0
+                if tot_f >= 4:
+                    for pct in [0.20, 0.45, 0.70, 0.95]:
+                        tgt_frame = int(tot_f * pct)
+                        cap.set(cv2.CAP_PROP_POS_FRAMES, tgt_frame)
+                        ret, f_mat = cap.read()
+                        if ret and f_mat is not None:
+                            f_rgb = cv2.cvtColor(f_mat, cv2.COLOR_BGR2RGB)
+                            pil_kf = Image.fromarray(f_rgb)
+                            buf = io.BytesIO()
+                            pil_kf.save(buf, format="JPEG", quality=85)
+                            video_keyframe_b64s.append((f"{int(pct*100)}%", base64.b64encode(buf.getvalue()).decode("utf-8")))
+                cap.release()
+            except Exception as e:
+                print(f"[VISION JUDGE WARN] Could not extract video keyframes: {e}")
+
         judge_prompt = (
             "You are the Principal AR Quality Evaluator for Snapchat Lens Explorer.\n"
-            "Evaluate these simulated preview frames of an AR Lens applied over a portrait test subject (Neutral Face vs Mouth Open Trigger).\n\n"
-            "Evaluate against these production gates:\n"
-            "1. FOREGROUND 3D ASSET: Is there a legitimate 3D wearable asset (visor, helmet, crown, halo, glasses) anchored to the head/face?\n"
-            "2. ANATOMICAL PROPORTIONS: Does it fit human head/face proportions naturally (not tiny doll size, not misaligned)?\n"
-            "3. ANTI-CRINGE & ANTI-SLOP: ZERO weird on-screen text, ZERO developer UI sliders, ZERO awkward circular badge cutouts, ZERO cheesy clipart, ZERO 2D canvas loading wheels or equalizer bars. (Note: Soft radiant glows, particle sparkles, and volumetric lighting around headpieces are expected AR visual effects).\n"
-            "4. ACTIVE TRIGGER: Does the trigger frame show an active visual reaction (visor overdrive bloom, particle burst, flame, or optical flare)?\n\n"
+            "Evaluate these simulated preview frames and video keyframes of an AR Lens applied over a portrait test subject across the entire clip timeline.\n\n"
+            "Evaluate against these strict production gates:\n"
+            "1. FOREGROUND 3D ASSET: Is there a legitimate 3D wearable asset (visor, helmet, crown, halo, glasses) anchored to the head/face with realistic lighting, depth, and anatomical temple-to-temple span?\n"
+            "2. ZERO 2D RAYS OR SPOKES: Are there any unnatural straight radiating lines, bicycle-spoke rays, or needle fans shooting out from the head/crown? (Volumetric soft atmospheric bloom and tiny floating dust motes are acceptable; stiff straight 2D line rays are STRICTLY BANNED and must fail).\n"
+            "3. NATURAL FACE INTEGRITY: Is the subject's face preserved naturally? ZERO translucent or solid veils/polygons drawn over the nose, mouth, or eyes; ZERO sniper crosshairs on the cheeks or nostrils. (Any colored veil or polygon on the nose is STRICTLY BANNED and must fail).\n"
+            "4. NATURAL HUMAN EYES: Are the subject's eyes natural human eyes? ZERO solid yellow or cyan cataract fills turning the subject into a zombie or demon. (If eyes are painted with solid color fills, must fail).\n"
+            "5. ACTIVE TRIGGER & CONTINUITY: Does the trigger/video show an active visual reaction (overdrive bloom, particle burst, flame, or optical flare) and track smoothly without abrupt popping or floating?\n\n"
             "Return ONLY a JSON object with this exact schema:\n"
             "{\n"
             '  "has_foreground_3d": true,\n'
             '  "has_active_trigger": true,\n'
             '  "is_background_only": false,\n'
+            '  "has_unnatural_rays_or_spokes": false,\n'
+            '  "has_face_obstruction_or_veil": false,\n'
+            '  "has_zombie_eyes": false,\n'
             '  "is_cringe_or_defective": false,\n'
             '  "virality_score": 88,\n'
             '  "passed": true,\n'
             '  "critique": "1-sentence professional critique highlighting fit and aesthetics"\n'
             "}\n"
-            "CRITICAL: If is_cringe_or_defective is true or is_background_only is true or has_foreground_3d is false or virality_score < 75, set passed: false."
+            "CRITICAL: If has_unnatural_rays_or_spokes is true or has_face_obstruction_or_veil is true or has_zombie_eyes is true or is_cringe_or_defective is true or is_background_only is true or has_foreground_3d is false or virality_score < 85, set passed: false."
         )
 
         parts = [{"text": judge_prompt}]
@@ -1883,6 +2025,10 @@ class LensSimulator:
             parts.append({"inlineData": {"mimeType": "image/png", "data": b64_neutral}})
         parts.append({"text": "Frame 2 (Trigger Action / Reaction):"})
         parts.append({"inlineData": {"mimeType": "image/png", "data": b64_trigger}})
+
+        for pct_label, kf_b64 in video_keyframe_b64s:
+            parts.append({"text": f"Video Keyframe ({pct_label} Timeline Progression):"})
+            parts.append({"inlineData": {"mimeType": "image/jpeg", "data": kf_b64}})
 
         payload = {
             "contents": [{"role": "user", "parts": parts}],
@@ -1909,8 +2055,11 @@ class LensSimulator:
                             is_bg = result.get("is_background_only", False)
                             is_cringe = result.get("is_cringe_or_defective", False)
                             has_fg = result.get("has_foreground_3d", True)
-                            result["passed"] = (score >= 75) and (not is_bg) and (not is_cringe) and has_fg
-                            print(f"[VISION JUDGE] Score: {score}/100, Passed: {result['passed']}, BG Only: {is_bg}, Cringe/Defective: {is_cringe}")
+                            has_rays = result.get("has_unnatural_rays_or_spokes", False)
+                            has_veil = result.get("has_face_obstruction_or_veil", False)
+                            has_zombie = result.get("has_zombie_eyes", False)
+                            result["passed"] = (score >= 85) and (not is_bg) and (not is_cringe) and has_fg and (not has_rays) and (not has_veil) and (not has_zombie)
+                            print(f"[VISION JUDGE] Score: {score}/100, Passed: {result['passed']}, Rays: {has_rays}, Veil: {has_veil}, Zombie: {has_zombie}")
                             print(f"[VISION JUDGE] Critique: {result.get('critique')}")
                             return result
                 except Exception as e:

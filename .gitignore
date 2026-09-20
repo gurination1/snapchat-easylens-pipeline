@@ -16,3 +16,4 @@ artifacts/
 *.mp4
 !assets/*.mp4
 !assets/**/*.mp4
+latest_published_run/

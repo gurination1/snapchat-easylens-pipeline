@@ -28,7 +28,8 @@ def main():
         "test_video_quality_audit.py",
         "test_advanced_gates.py",
         "test_multi_model_vfx_parity.py",
-        "test_preview_visual_quality.py"
+        "test_preview_visual_quality.py",
+        "test_viral_trend_matrix.py"
     ]
     all_passed = True
     for s in scripts:

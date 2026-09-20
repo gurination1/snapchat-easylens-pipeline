@@ -44,6 +44,11 @@ class BlueprintPool(list):
 STATIC_FALLBACKS = {
     "1": BlueprintPool([
         {
+            "lens_name": "Ghibli Watercolor Cloud Crown",
+            "prompt": "Hand-painted Ghibli watercolor cumulus cloud crown resting above hairline with floating soot spirit dust and celestial spirit serpent coils. Soft cel-shaded gouache textures with warm 2800K sunlight ray-traced highlights. Opening mouth erupts swirling sakura petal cyclone; smiling spawns cheerful soot sprites around temples; head tilt shifts floating spirit dust. Pure 3D PBR fantasy, zero strobing, zero UI.",
+            "tags": ["ghibli", "watercolor", "anime", "clouds", "spirit", "pbr"]
+        },
+        {
             "lens_name": "Aether Dragon Crown",
             "prompt": "Sculpted obsidian dragon horn crown anchored strictly to hairline and temples with liquid 24k gold filigree and caustic ruby gems, PBR anisotropic metallic reflections, 3-point contrast 6500K/2800K lighting with ray-traced contact shadows. Mouth open erupts turbulent emerald flame torrent with floating amber sparks; smiling ignites alpha-fading golden runic eye halos. Depth occlusion enabled, zero strobing.",
             "tags": ["dragon", "3d", "headpiece", "horns", "fantasy", "pbr"]
@@ -59,17 +64,17 @@ STATIC_FALLBACKS = {
             "tags": ["valkyrie", "winged", "circlet", "aurora", "pbr"]
         },
         {
-            "lens_name": "Anubis Eclipse Coronet",
-            "prompt": "Matte black basalt and electrum jackal coronet fitted securely to crown and temples with glowing lapis lazuli inlays. 3-point contrast 2800K desert key light with ray-traced contact shadows. Opening mouth triggers swirling golden sandstorm vortex and ancient hieroglyphic embers; smiling aligns a glowing solar eclipse halo behind crown. Zero strobing, zero UI.",
-            "tags": ["anubis", "egyptian", "coronet", "jackal", "pbr"]
-        },
-        {
             "lens_name": "Celestial Kitsune Crest",
             "prompt": "Carved porcelain and polished vermilion lacquer kitsune forehead crest anchored strictly to brow, leaving eyes and mouth clear. Shimmering spirit bells and twin floating foxfire tails contouring jawline. Opening mouth erupts swirling azure spirit flame orbs with dynamic volumetric embers; smiling reveals ethereal golden fox spirit eye reflections. Pure PBR craft, zero UI.",
             "tags": ["kitsune", "foxfire", "spirit", "mask", "pbr"]
         }
     ]),
     "2": BlueprintPool([
+        {
+            "lens_name": "90s Cyber Camcorder Visor",
+            "prompt": "Retro-futuristic 90s cyber camcorder visor frame contoured across brow and temples with holographic rec timestamp and magnetic phosphor glass. PBR brushed titanium, cathode-ray scanline reflections. Opening mouth discharges magnetic tape-rip glitch shockwave and RGB chromatic particle split; smiling pulses neon REC battery flare; head tilt shifts scanlines. Zero strobing, pure 3D AR craft, zero UI.",
+            "tags": ["camcorder", "vhs", "glitch", "cyberpunk", "visor", "pbr"]
+        },
         {
             "lens_name": "Chrono Echo Visor",
             "prompt": "Sleek ergonomic 3D cyberpunk glasses and visor resting across eyes, leaving cheeks and mouth clear for tracking. Brushed titanium frame with pulsing cyan neon edge emission and refractive optical glass. Floating volumetric cyan neon embers drift around temples. Opening mouth triggers radial laser particle shockwave; smiling illuminates glowing neon visor frame rim. Zero strobing, zero text, zero UI sliders, pure 3D assets only.",
@@ -86,11 +91,6 @@ STATIC_FALLBACKS = {
             "tags": ["goggles", "speed", "neon", "racing", "optics"]
         },
         {
-            "lens_name": "Tactical Orbital Monocle",
-            "prompt": "Matte carbon-fiber ballistic monocle anchored over right eye and brow with micro-aperture ring. Anisotropic PBR reflections, ray-traced shadows. Opening mouth projects 3D floating volumetric wireframe ring expanding into space; smiling pulses glowing red optic beam flare across lens. Pure 3D assets, zero screen text.",
-            "tags": ["tactical", "orbital", "reticle", "targeting", "hud"]
-        },
-        {
             "lens_name": "Apex Spectre Visor",
             "prompt": "Faceted obsidian and dichroic glass stealth visor contoured across brow and temples. PBR metallic luster with 3-point contrast violet rim lighting. Opening mouth emits radial sonic particle shockwave with refractive edge displacement; smiling pulses brilliant violet prism reflections across glass face. Zero strobing, zero 2D canvas spinners, zero screen text, pure 3D mesh only.",
             "tags": ["spectre", "stealth", "visor", "prismatic", "hud"]
@@ -98,24 +98,24 @@ STATIC_FALLBACKS = {
     ]),
     "3": BlueprintPool([
         {
+            "lens_name": "Viral Karaoke Lyric Headpiece",
+            "prompt": "Pulsing 3D neon musical staff headpiece contoured around brow with orbiting treble clef notes and bouncing rhythm sphere balls. PBR emissive neon shaders with 3-point contrast lighting. Opening mouth unleashes explosive pulsing neon musical note shockwave and basswave rings; smiling makes rhythm spheres bounce in tempo across brow; head tilt sways musical staff. High virality, zero UI.",
+            "tags": ["karaoke", "lyrics", "neon", "music", "meme", "viral"]
+        },
+        {
             "lens_name": "Stormcloud Tears",
             "prompt": "Fluffy 3D cartoon stormcloud hovering directly above head with gentle glowing rain droplets and soft ambient thunder light. PBR volumetric stylization, 3-point contrast lighting. Opening mouth erupts an exaggerated geyser of liquid mercury tears and spinning 24k gold coins bouncing off screen frame; smiling triggers a dramatic cartoon lightning rim flash. Physics-driven, zero strobe.",
             "tags": ["meme", "crying", "funny", "cloud", "cartoon"]
         },
         {
-            "lens_name": "Soap Opera Melodrama",
-            "prompt": "Wearable comedic 3D dramatic weeping theatre crown with physical 3D crystalline tear waterfalls cascading comically from eyes across cheeks. PBR water caustics with soft romantic halo lighting. Opening mouth erupts torrential twin weeping fountains and floating comedy broken-heart shards; smiling instantly shatters the drama into a cheerful explosion of rainbow glitter confetti. Pure comedy AR.",
-            "tags": ["soapopera", "tears", "crown", "comedy", "confetti"]
+            "lens_name": "Soap Opera Melodrama Tears",
+            "prompt": "Wearable comedic 3D dramatic weeping theatre crown with physical crystalline tear waterfalls cascading comically from eyes across cheeks. PBR water caustics with soft romantic halo lighting. Opening mouth erupts torrential twin weeping waterfalls, broken-heart shards, and spinning 24k gold coin shower; smiling shatters drama into cheerful rainbow confetti; head tilt curves tear streams. Pure viral comedy AR.",
+            "tags": ["soapopera", "tears", "melodrama", "brokenheart", "coins", "comedy"]
         },
         {
             "lens_name": "Steam Rage Valve",
             "prompt": "Comic stylized polished brass steam boiler pressure valve mounted securely to forehead with vibrating needle gauge. 3-point warm lighting with baked shadows. Opening mouth releases explosive pressurized cartoon steam clouds blasting sideways from ears with comic red face flush; smiling vents gentle harmless rainbow bubble streams from the whistle valve. Zero UI, high viral comedy.",
             "tags": ["rage", "steam", "cartoon", "whistle", "funny"]
-        },
-        {
-            "lens_name": "Cartoon Jaw Drop Cascade",
-            "prompt": "Exaggerated 3D mechanical cartoon spring chin and bulging cartoon eyes anchored to face. 3-point comic lighting with ray-traced shadows. Opening mouth triggers hilarious jaw-drop extension unleashing cascading fountain of spinning 24k gold coins and comic exclamation sparks; smiling pops eyes back with comical starburst glints. Pure viral comedy AR.",
-            "tags": ["jawdrop", "cartoon", "coins", "meme", "comedy"]
         },
         {
             "lens_name": "Pop-Out Hypno Goggles",
@@ -124,6 +124,11 @@ STATIC_FALLBACKS = {
         }
     ]),
     "4": BlueprintPool([
+        {
+            "lens_name": "High-Fashion Parisian Couture",
+            "prompt": "High-fashion Parisian couture 24k gold leaf baroque crown fitted to hairline with draped raw freshwater pearls and caustic crystal prisms. Warm Kodak Portra 400 film grain and analog halation bloom. Opening mouth parts delicate golden gossamer veil with champagne spark motes; smiling cascades radiant golden sparkle dust across cheekbones; head tilt catches prismatic diamond dispersion. Pure Parisian luxury, zero UI.",
+            "tags": ["parisian", "couture", "goldleaf", "pearls", "portra400", "luxury"]
+        },
         {
             "lens_name": "Haute Baroque Gold",
             "prompt": "Sculpted 24k gold leaf baroque crown fitted strictly to hairline and temples with pale champagne crystal halo and caustic crystal prisms. Warm Kodak Portra 35mm film halation with colorCorrection 10 Golden Glow and grain. Anisotropic PBR reflections, ray-traced shadows. Opening mouth parts delicate golden veil; smiling unleashes rich golden sparkle dust cascading across cheekbones. Photosensitive safe, zero strobing.",
@@ -143,14 +148,14 @@ STATIC_FALLBACKS = {
             "lens_name": "Champagne Diamond Coronal",
             "prompt": "Precision micro-faceted champagne diamond coronal resting tightly along hairline. Micro-surface roughness maps catching golden hour sunlight with realistic chromatic dispersion. Opening mouth emits delicate suspended diamond dust particles orbiting crown; smiling triggers radiant starburst glints across cheekbone highlights with Portra warm tones. Zero strobing.",
             "tags": ["diamond", "coronal", "champagne", "35mm", "luxury"]
-        },
-        {
-            "lens_name": "Venetian Gold Filigree",
-            "prompt": "Hand-crafted Venetian 24k gold filigree half-mask contouring upper brow and cheekbones, leaving mouth completely free. Kodak Portra 400 film grain and warm 2800K halation. Opening mouth releases drifting amber gossamer specks; smiling triggers brilliant caustic diamond prism glints across cheekbones. High fashion luxury AR.",
-            "tags": ["venetian", "filigree", "mask", "gold", "haute_couture"]
         }
     ]),
     "5": BlueprintPool([
+        {
+            "lens_name": "Y3K Liquid Mercury Halo",
+            "prompt": "Weightless Y3K zero-G liquid mercury halo crown morphing above head with sculpted chrome cheekbone armor. Anisotropic mirror PBR reflections with fluid surface tension and ray-traced contact shadows. Opening mouth erupts orbiting refractive liquid chrome spheres into expanding toroidal shockwave; smiling triggers fluid ripple normal-map distortion across armor; head tilt shifts mercury droplets. Zero strobing, zero UI.",
+            "tags": ["y3k", "liquidmercury", "chrome", "zerog", "surreal", "pbr"]
+        },
         {
             "lens_name": "Liquid Chrome Mirage",
             "prompt": "Zero-G floating liquid mercury halo crown morphing above head with sculpted chrome cheek plates. Anisotropic mirror PBR reflections with fluid surface tension, 3-point contrast lighting and ray-traced contact shadows. Opening mouth releases orbiting liquid chrome spheres with refractive rippling reflections; smiling ripples the ambient background. Seamless physics, zero strobing.",
@@ -170,11 +175,6 @@ STATIC_FALLBACKS = {
             "lens_name": "Liquid Platinum Tears",
             "prompt": "Mirrored liquid platinum teardrop sculptures frozen weightlessly along cheekbones with a floating surreal chrome toroid halo above head. Anisotropic fluid reflections with ray-traced shadows. Opening mouth releases liquid metal ripple shockwave radiating across cheek sculptures; smiling inverts chrome surface reflections with chromatic prism sheen. Photosensitive safe, zero strobing.",
             "tags": ["liquidplatinum", "tears", "toroid", "surreal", "chrome"]
-        },
-        {
-            "lens_name": "Chrome Tesseract Halo",
-            "prompt": "Weightless 4D liquid chrome tesseract frame rotating smoothly above head with mirrored vertices. Anisotropic reflections, ray-traced contact shadows. Opening mouth triggers gravitational shockwave ripple warping ambient reflections; smiling flashes prismatic chromatic aberration rings along cheek contours. Y3K surrealism, zero strobing.",
-            "tags": ["tesseract", "chrome", "halo", "surreal", "y3k"]
         }
     ])
 }
