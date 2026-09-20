@@ -8,6 +8,7 @@ __pycache__/
 !generated_lens_metadata.json
 !publish_status.json
 !published_lenses.json
+!monetization_approval_status.json
 !assets/*.png
 !assets/**/*.png
 !assets/portraits/*.png

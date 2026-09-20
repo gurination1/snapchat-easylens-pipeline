@@ -150,7 +150,7 @@ jobs:
           git fetch origin main
           git checkout -B main origin/main
           if [ -f monetization_approval_status.json ]; then
-            git add monetization_approval_status.json || true
+            git add -f monetization_approval_status.json || true
           fi
           if git status --porcelain | grep -q 'monetization_approval_status.json'; then
             git commit -m "chore(monetization): record updated TOS & Top Performer payout approvals [skip ci]"
