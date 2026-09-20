@@ -103,6 +103,42 @@ mutation updateLens($lensId: ID!, $creatorRewardProgramEnrolled: Boolean!, $isGa
 }
 """
 
+GQL_GET_CATEGORIES = """
+query getLensCategoryList {
+    getLensCategoryList {
+        lensCategoryList {
+            parentLensCategoriesList {
+                id
+                parentId
+                displayName
+                deprecated
+            }
+            subLensCategoriesList {
+                id
+                parentId
+                displayName
+                deprecated
+            }
+        }
+    }
+}
+"""
+
+GQL_SET_CATEGORY = """
+mutation setLensCategory($lensId: ID!, $primaryCategoryId: ID!, $secondaryCategoryId: ID) {
+    setLensCategory(
+        input: { lensId: $lensId, primaryCategoryId: $primaryCategoryId, secondaryCategoryId: $secondaryCategoryId }
+    ) {
+        lens {
+            id
+            status
+            primaryCategoryId
+            secondaryCategoryId
+        }
+    }
+}
+"""
+
 GQL_GET_LENS = """
 query getLens($lensId: ID!) {
     getLens(input: { lensId: $lensId }) {
@@ -111,6 +147,8 @@ query getLens($lensId: ID!) {
             name
             status
             lensCreatorPayoutEligibility
+            primaryCategoryId
+            secondaryCategoryId
         }
     }
 }
@@ -118,7 +156,7 @@ query getLens($lensId: ID!) {
 
 
 def execute_direct_graphql(ticket: str, cookie_header: str, query: str, variables: dict = None, operation_name: str = None) -> dict:
-    """Executes a GraphQL query/mutation directly against my-lenses.snapchat.com."""
+    """Executes a GraphQL query/mutation directly against my-lenses.snapchat.com with rate-limit retry."""
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {ticket}",
@@ -137,14 +175,26 @@ def execute_direct_graphql(ticket: str, cookie_header: str, query: str, variable
     if operation_name is not None:
         payload["operationName"] = operation_name
 
-    try:
-        res = requests.post(GRAPHQL_URL, headers=headers, json=payload, timeout=25)
+    for attempt in range(4):
         try:
-            return res.json()
-        except Exception:
-            return {"error": res.text, "status_code": res.status_code}
-    except Exception as e:
-        return {"error": str(e)}
+            res = requests.post(GRAPHQL_URL, headers=headers, json=payload, timeout=25)
+            try:
+                data = res.json()
+            except Exception:
+                return {"error": res.text, "status_code": res.status_code}
+
+            err_str = json.dumps(data)
+            if "RESOURCE_EXHAUSTED" in err_str or res.status_code == 429:
+                wait_time = (attempt + 1) * 2.5
+                print(f"  [GQL RATE LIMIT] Hit rate limit, sleeping {wait_time}s (attempt {attempt+1}/4)...")
+                time.sleep(wait_time)
+                continue
+            return data
+        except Exception as e:
+            if attempt == 3:
+                return {"error": str(e)}
+            time.sleep(2.0)
+    return {"error": "max_retries_exceeded"}
 
 
 def direct_approve_tos(ticket: str, cookie_header: str) -> dict:
@@ -174,6 +224,7 @@ def direct_approve_tos(ticket: str, cookie_header: str) -> dict:
         except Exception as te:
             print(f"[DIRECT GRAPHQL WARN] Error setting {key}: {te}")
             results[key] = False
+        time.sleep(1.0)
 
     # Verification query
     for key in keys:
@@ -188,14 +239,32 @@ def direct_approve_tos(ticket: str, cookie_header: str) -> dict:
                 print(f"  ✓ {key} VERIFIED: acceptedVersion={acc_ver} (latestVersion={latest_ver})")
         except Exception as ve:
             print(f"[DIRECT GRAPHQL WARN] Error verifying {key}: {ve}")
+        time.sleep(1.0)
     return results
 
 
 def direct_enroll_lenses(ticket: str, cookie_header: str, target_lens_id: str = None) -> dict:
-    """Enrolls target lens and all published lenses into Top Performer Payouts & Lens+ Rewards."""
+    """Enrolls target lens and all published lenses into Top Performer Payouts & Lens+ Rewards with category standardization."""
     target_ids = set()
     if target_lens_id:
         target_ids.add(target_lens_id)
+
+    # 1. Fetch category taxonomy
+    preferred_primary_cat_id = None
+    try:
+        cat_res = execute_direct_graphql(ticket, cookie_header, GQL_GET_CATEGORIES, operation_name="getLensCategoryList")
+        c_list = ((cat_res.get("data") or {}).get("getLensCategoryList") or {}).get("lensCategoryList") or {}
+        parent_cats = c_list.get("parentLensCategoriesList") or []
+        print(f"[CATEGORIES] Found {len(parent_cats)} top-level categories on Snapchat.")
+        for pc in parent_cats:
+            if not pc.get("deprecated"):
+                dname = pc.get("displayName", "")
+                print(f"  -> Category: {dname} (ID: {pc.get('id')})")
+                if any(w in dname.lower() for w in ["beauty", "fashion", "entertainment", "style", "fun"]):
+                    if not preferred_primary_cat_id:
+                        preferred_primary_cat_id = pc.get("id")
+    except Exception as ce:
+        print(f"[DIRECT GRAPHQL WARN] Error querying category list: {ce}")
 
     # Discover lenses from COMMUNITY and PROFILE tabs
     for gType in ["COMMUNITY", "PROFILE"]:
@@ -210,25 +279,38 @@ def direct_enroll_lenses(ticket: str, cookie_header: str, target_lens_id: str = 
             for item in l_list:
                 if item and item.get("id"):
                     target_ids.add(item["id"])
-                    print(f"  [DISCOVERED LENS] {item.get('name')} (ID: {item.get('id')}) | Status: {item.get('lensCreatorPayoutEligibility')}")
+                    print(f"  [DISCOVERED LENS] {item.get('name')} (ID: {item.get('id')}) | Payout: {item.get('lensCreatorPayoutEligibility')}")
         except Exception as e:
             print(f"[DIRECT GRAPHQL WARN] Error discovering lenses for {gType}: {e}")
+        time.sleep(1.0)
 
     enrolled = []
     for lid in target_ids:
         print(f"[DIRECT GRAPHQL] Enrolling Lens {lid} into Top Performer & Lens Creator Payouts...")
+        time.sleep(1.2)
         r1 = execute_direct_graphql(
             ticket, cookie_header, GQL_SET_PAYOUT,
             variables={"lensId": lid, "lensCreatorPayoutEnrolled": True},
             operation_name="setLensCreatorPayoutEnrollment"
         )
+        time.sleep(1.2)
         r2 = execute_direct_graphql(
             ticket, cookie_header, GQL_UPDATE_LENS,
             variables={"lensId": lid, "creatorRewardProgramEnrolled": True, "isGameUserProvided": False},
             operation_name="updateLens"
         )
-        print(f"  [RESULT {lid}] setPayout: {json.dumps(r1)} | updateLens: {json.dumps(r2)}")
-        enrolled.append({"id": lid, "setPayoutRes": r1, "updateLensRes": r2})
+
+        cat_res = None
+        if preferred_primary_cat_id:
+            time.sleep(1.0)
+            cat_res = execute_direct_graphql(
+                ticket, cookie_header, GQL_SET_CATEGORY,
+                variables={"lensId": lid, "primaryCategoryId": preferred_primary_cat_id},
+                operation_name="setLensCategory"
+            )
+
+        print(f"  [RESULT {lid}] setPayout: {json.dumps(r1)[:100]} | updateLens: {json.dumps(r2)[:100]}")
+        enrolled.append({"id": lid, "setPayoutRes": r1, "updateLensRes": r2, "setCategoryRes": cat_res})
 
     return {"count": len(enrolled), "lenses": enrolled}
 

@@ -1111,13 +1111,19 @@ def obtain_valid_snap_session(account_id: str = "1", username: str = None, passw
                 update_github_secret(token_secret, fresh_ticket)
                 return {"ticket": fresh_ticket, "cookie_header": existing_cookie, "user": user}
 
-    # 3. Deep-path: Autonomous browser login
+    account_default_users = {
+        "1": "gman21478",
+        "2": "gurination24@gmail.com",
+        "3": "ehwtheh@gmail.com",
+        "4": "galllgil049@gmail.com",
+        "5": "ytnew5911@gmail.com"
+    }
     user_identifier = (
         username
         or os.getenv(f"SNAP_USERNAME_ACC_{aid}")
         or os.getenv(f"SNAP_USERNAME_{aid}")
         or (os.getenv("SNAP_USERNAME") if aid == "1" else None)
-        or "gman21478"
+        or account_default_users.get(aid, "gman21478")
     )
     if user_identifier in ("gurination1@gmail.com", "gurination1"):
         user_identifier = "gman21478"
