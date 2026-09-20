@@ -515,129 +515,153 @@ class LensSimulator:
 
         elif any(w in p_lower for w in ["pearl", "baroque", "filigree", "champagne", "couture", "gold leaf", "diamond", "haute", "luxe", "moonstone", "tiara", "coronal", "heirloom", "emerald"]) or niche == "luxury":
             w, h = 540, 270
-            im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-            d = ImageDraw.Draw(im)
             cx = w // 2
+            try:
+                import numpy as np
+                import cv2
 
-            # 1. Base Arch Rim
-            base_shadow = [
-                (45, 215), (130, 202), (cx, 196), (w - 130, 202), (w - 45, 215),
-                (w - 55, 235), (w - 140, 224), (cx, 218), (140, 224), (55, 235)
-            ]
-            d.polygon(base_shadow, fill=(140, 95, 20, 230))
+                im_base = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+                d_b = ImageDraw.Draw(im_base)
+                arch = [(45, 208), (130, 195), (cx, 189), (w - 130, 195), (w - 45, 208),
+                        (w - 52, 228), (w - 138, 217), (cx, 211), (138, 217), (52, 228)]
+                d_b.polygon(arch, fill=(235, 185, 45, 255))
+                spires = [
+                    [(cx, 32), (cx - 42, 110), (cx - 28, 190), (cx + 28, 190), (cx + 42, 110)],
+                    [(cx - 105, 56), (cx - 138, 125), (cx - 80, 195), (cx - 48, 190)],
+                    [(cx + 105, 56), (cx + 48, 190), (cx + 80, 195), (cx + 138, 125)],
+                    [(cx - 185, 88), (cx - 210, 148), (cx - 142, 202), (cx - 118, 198)],
+                    [(cx + 185, 88), (cx + 118, 198), (cx + 142, 202), (cx + 210, 148)]
+                ]
+                for sp in spires:
+                    d_b.polygon(sp, fill=(245, 195, 55, 255))
 
-            base_gold = [
-                (45, 208), (130, 195), (cx, 189), (w - 130, 195), (w - 45, 208),
-                (w - 52, 228), (w - 138, 217), (cx, 211), (138, 217), (52, 228)
-            ]
-            d.polygon(base_gold, fill=(245, 195, 55, 255), outline=(255, 245, 180, 255), width=2)
-            d.line([(55, 213), (135, 201), (cx, 195), (w - 135, 201), (w - 55, 213)], fill=(255, 250, 220, 220), width=2)
+                arr = np.array(im_base)
+                alpha = arr[:, :, 3]
+                mask = (alpha > 0).astype(np.uint8)
 
-            # 2. Ornate Filigree Spires (100% symmetric about cx)
-            spires = [
-                ([(cx, 32), (cx - 42, 110), (cx - 28, 190), (cx + 28, 190), (cx + 42, 110)], (245, 195, 55), (190, 140, 30)),
-                ([(cx - 105, 56), (cx - 138, 125), (cx - 80, 195), (cx - 48, 190)], (235, 185, 50), (180, 130, 25)),
-                ([(cx + 105, 56), (cx + 48, 190), (cx + 80, 195), (cx + 138, 125)], (235, 185, 50), (180, 130, 25)),
-                ([(cx - 185, 88), (cx - 210, 148), (cx - 142, 202), (cx - 118, 198)], (225, 175, 45), (170, 120, 20)),
-                ([(cx + 185, 88), (cx + 118, 198), (cx + 142, 202), (cx + 210, 148)], (225, 175, 45), (170, 120, 20))
-            ]
-            for sp_pts, gold_col, shade_col in spires:
-                d.polygon(sp_pts, fill=gold_col, outline=(255, 245, 195, 255), width=2)
-                for p_idx in range(len(sp_pts) - 1):
-                    p1, p2 = sp_pts[p_idx], sp_pts[p_idx + 1]
-                    if p1[0] <= cx or p2[0] <= cx:
-                        d.line([p1, p2], fill=(255, 255, 230, 210), width=2)
+                dist = cv2.distanceTransform(mask, cv2.DIST_L2, 5)
+                dist_smooth = cv2.GaussianBlur(dist, (9, 9), 0)
+                dist_norm = np.clip(dist_smooth / 16.0, 0.0, 1.0)
 
-            # 3. Faceted Gemstones with Gold Bezels
+                gx = cv2.Sobel(dist_norm, cv2.CV_32F, 1, 0, ksize=5)
+                gy = cv2.Sobel(dist_norm, cv2.CV_32F, 0, 1, ksize=5)
+                n_len = np.sqrt(gx**2 + gy**2 + 0.25)
+                nx, ny, nz = gx / n_len, gy / n_len, 0.5 / n_len
+
+                l1 = np.array([-0.35, -0.6, 0.7], dtype=np.float32)
+                l1 /= np.linalg.norm(l1)
+                diff1 = np.clip(nx * l1[0] + ny * l1[1] + nz * l1[2], 0.0, 1.0)
+                h1 = (l1 + np.array([0, 0, 1])) / np.linalg.norm(l1 + np.array([0, 0, 1]))
+                spec1 = np.clip(nx * h1[0] + ny * h1[1] + nz * h1[2], 0.0, 1.0) ** 18
+
+                ao = np.clip(dist_norm * 0.65 + 0.35, 0.0, 1.0)
+                gold_base = np.array([195, 140, 30], dtype=np.float32)
+                gold_high = np.array([255, 235, 115], dtype=np.float32)
+
+                rgb = np.zeros((h, w, 3), dtype=np.float32)
+                for c in range(3):
+                    rgb[:, :, c] = (gold_base[c] * 0.35 + gold_high[c] * 0.65 * diff1) * ao + 210 * spec1
+
+                rgb = np.clip(rgb, 0, 255).astype(np.uint8)
+                im = Image.fromarray(np.dstack([rgb, alpha]))
+            except Exception:
+                im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+
+            d = ImageDraw.Draw(im)
+            # 3. Faceted Gemstones with Gold Bezels & Radial Refractive Cores
             gems = [
-                (cx, 128, 18, (30, 180, 90), (15, 110, 50)),
-                (cx - 95, 138, 14, (35, 185, 95), (18, 115, 55)),
-                (cx + 95, 138, 14, (35, 185, 95), (18, 115, 55)),
-                (cx - 168, 155, 11, (40, 190, 100), (20, 120, 60)),
-                (cx + 168, 155, 11, (40, 190, 100), (20, 120, 60))
+                (cx, 128, 18, (30, 210, 90), (10, 100, 40)),
+                (cx - 95, 138, 14, (35, 215, 95), (12, 105, 45)),
+                (cx + 95, 138, 14, (35, 215, 95), (12, 105, 45)),
+                (cx - 168, 155, 11, (40, 220, 100), (15, 110, 50)),
+                (cx + 168, 155, 11, (40, 220, 100), (15, 110, 50))
             ]
             for gx, gy, grad, gem_light, gem_dark in gems:
-                d.ellipse([gx - grad - 3, gy - grad - 3, gx + grad + 3, gy + grad + 3], fill=(255, 220, 80), outline=(160, 110, 25), width=2)
+                d.ellipse([gx - grad - 4, gy - grad - 4, gx + grad + 4, gy + grad + 4], fill=(160, 115, 20), outline=(255, 240, 140), width=2)
                 d.ellipse([gx - grad, gy - grad, gx + grad, gy + grad], fill=gem_dark)
-                d.ellipse([gx - grad + 2, gy - grad + 2, gx + grad - 1, gy + grad - 1], fill=gem_light)
-                d.ellipse([gx - grad//2, gy - grad//2, gx - grad//5, gy - grad//5], fill=(255, 255, 255, 245))
+                d.ellipse([gx - grad + 3, gy - grad + 3, gx + grad - 2, gy + grad - 2], fill=gem_light)
+                d.polygon([(gx, gy - grad + 2), (gx + grad - 3, gy), (gx, gy + grad - 3), (gx - grad + 3, gy)], outline=(255, 255, 255, 170), width=1)
+                d.ellipse([gx - grad // 3, gy - grad // 2, gx + 1, gy - 2], fill=(255, 255, 255, 255))
 
             # 4. Spire Pearlescent Cabochons
             spire_pearls = [
-                (cx, 32, 12),
-                (cx - 105, 56, 10), (cx + 105, 56, 10),
-                (cx - 185, 88, 8), (cx + 185, 88, 8)
+                (cx, 32, 14), (cx - 105, 56, 11), (cx + 105, 56, 11), (cx - 185, 88, 9), (cx + 185, 88, 9)
             ]
             for px, py, prad in spire_pearls:
-                d.ellipse([px - prad - 2, py - prad - 2, px + prad + 2, py + prad + 2], fill=(255, 225, 85))
-                d.ellipse([px - prad, py - prad, px + prad, py + prad], fill=(250, 248, 240), outline=(210, 200, 185), width=1)
-                d.ellipse([px - prad//2, py - prad//2, px - prad//5, py - prad//5], fill=(255, 255, 255, 250))
+                d.ellipse([px - prad - 2, py - prad - 2, px + prad + 2, py + prad + 2], fill=(150, 110, 20))
+                d.ellipse([px - prad, py - prad, px + prad, py + prad], fill=(230, 230, 235))
+                d.ellipse([px - prad + 2, py - prad + 2, px + prad - 1, py + prad - 1], fill=(250, 250, 255))
+                d.ellipse([px - prad // 3, py - prad // 2, px, py - prad // 5], fill=(255, 255, 255, 255))
             return im
 
         elif niche == "mythic" or any(w in p_lower for w in ["crown", "horns", "tiara", "headpiece", "diadem", "helm", "coronet", "circlet", "crest", "valkyrie", "wings", "band"]):
             w, h = 540, 290
-            im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            cx = w // 2
+            try:
+                import numpy as np
+                import cv2
+
+                im_base = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+                d_b = ImageDraw.Draw(im_base)
+                base_arch = [(45, 230), (130, 214), (cx, 208), (w - 130, 214), (w - 45, 230),
+                             (w - 52, 252), (w - 138, 240), (cx, 234), (138, 240), (52, 252)]
+                d_b.polygon(base_arch, fill=(235, 185, 45, 255))
+                spires = [
+                    ([(cx, 18), (cx - 50, 115), (cx - 32, 210), (cx + 32, 210), (cx + 50, 115)], (240, 190, 50)),
+                    ([(cx - 118, 48), (cx - 155, 135), (cx - 90, 214), (cx - 55, 210)], (230, 180, 45)),
+                    ([(cx + 118, 48), (cx + 55, 210), (cx + 90, 214), (cx + 155, 135)], (230, 180, 45)),
+                    ([(cx - 205, 82), (cx - 232, 162), (cx - 155, 220), (cx - 130, 216)], (220, 170, 40)),
+                    ([(cx + 205, 82), (cx + 130, 216), (cx + 155, 220), (cx + 232, 162)], (220, 170, 40))
+                ]
+                for sp_pts, gold_col in spires:
+                    d_b.polygon(sp_pts, fill=gold_col)
+
+                arr = np.array(im_base)
+                alpha = arr[:, :, 3]
+                mask = (alpha > 0).astype(np.uint8)
+
+                dist = cv2.distanceTransform(mask, cv2.DIST_L2, 5)
+                dist_smooth = cv2.GaussianBlur(dist, (9, 9), 0)
+                dist_norm = np.clip(dist_smooth / 18.0, 0.0, 1.0)
+
+                gx = cv2.Sobel(dist_norm, cv2.CV_32F, 1, 0, ksize=5)
+                gy = cv2.Sobel(dist_norm, cv2.CV_32F, 0, 1, ksize=5)
+                n_len = np.sqrt(gx**2 + gy**2 + 0.25)
+                nx, ny, nz = gx / n_len, gy / n_len, 0.5 / n_len
+
+                l1 = np.array([-0.4, -0.6, 0.7], dtype=np.float32)
+                l1 /= np.linalg.norm(l1)
+                diff1 = np.clip(nx * l1[0] + ny * l1[1] + nz * l1[2], 0.0, 1.0)
+                h1 = (l1 + np.array([0, 0, 1])) / np.linalg.norm(l1 + np.array([0, 0, 1]))
+                spec1 = np.clip(nx * h1[0] + ny * h1[1] + nz * h1[2], 0.0, 1.0) ** 20
+
+                ao = np.clip(dist_norm * 0.7 + 0.3, 0.0, 1.0)
+                gold_base = np.array([185, 130, 25], dtype=np.float32)
+                gold_high = np.array([255, 225, 95], dtype=np.float32)
+
+                rgb = np.zeros((h, w, 3), dtype=np.float32)
+                for c in range(3):
+                    rgb[:, :, c] = (gold_base[c] * 0.35 + gold_high[c] * 0.65 * diff1) * ao + 220 * spec1
+
+                rgb = np.clip(rgb, 0, 255).astype(np.uint8)
+                im = Image.fromarray(np.dstack([rgb, alpha]))
+            except Exception:
+                im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+
             d = ImageDraw.Draw(im)
-
-            # 1. Base arch shadow & metallic rim
-            base_shadow = [
-                (45, 238), (130, 222), (w // 2, 216), (w - 130, 222), (w - 45, 238),
-                (w - 55, 260), (w - 140, 248), (w // 2, 242), (140, 248), (55, 260)
-            ]
-            d.polygon(base_shadow, fill=(140, 95, 20, 230))
-
-            base_gold = [
-                (45, 230), (130, 214), (w // 2, 208), (w - 130, 214), (w - 45, 230),
-                (w - 52, 252), (w - 138, 240), (w // 2, 234), (138, 240), (52, 252)
-            ]
-            d.polygon(base_gold, fill=(235, 185, 45, 255), outline=(255, 245, 180, 255), width=2)
-
-            # Beveled headband filigree highlight line
-            d.line([(55, 235), (135, 220), (w // 2, 214), (w - 135, 220), (w - 55, 235)], fill=(255, 250, 220, 220), width=2)
-
-            # 2. Ornate 3D Spires with deep gold shading and specular bevels
-            # (Center towering spire, flanked by 4 symmetric baroque spires)
-            spires = [
-                # Center Spire
-                ([(w//2, 18), (w//2 - 50, 115), (w//2 - 32, 210), (w//2 + 32, 210), (w//2 + 50, 115)], (240, 190, 50), (180, 130, 30)),
-                # Mid-Left Spire
-                ([(w//2 - 118, 48), (w//2 - 155, 135), (w//2 - 90, 214), (w//2 - 55, 210)], (230, 180, 45), (170, 120, 25)),
-                # Mid-Right Spire
-                ([(w//2 + 118, 48), (w//2 + 55, 210), (w//2 + 90, 214), (w//2 + 155, 135)], (230, 180, 45), (170, 120, 25)),
-                # Outer-Left Wing Spire
-                ([(w//2 - 205, 82), (w//2 - 232, 162), (w//2 - 155, 220), (w//2 - 130, 216)], (220, 170, 40), (160, 110, 20)),
-                # Outer-Right Wing Spire
-                ([(w//2 + 205, 82), (w//2 + 130, 216), (w//2 + 155, 220), (w//2 + 232, 162)], (220, 170, 40), (160, 110, 20))
-            ]
-            for sp_pts, gold_col, shade_col in spires:
-                # Shadow/crevice stroke
-                d.polygon(sp_pts, fill=gold_col, outline=(255, 245, 195, 255), width=2)
-                # Left-side specular bevel highlight
-                for p_idx in range(len(sp_pts) - 1):
-                    p1, p2 = sp_pts[p_idx], sp_pts[p_idx + 1]
-                    if p1[0] <= w // 2 or p2[0] <= w // 2:
-                        d.line([p1, p2], fill=(255, 255, 230, 210), width=2)
-
-            # 3. Realistic Faceted Gemstones with Gold Bezels & Specular Facets
             gems = [
-                # Center Grand Ruby
-                (w//2, 138, 20, (220, 25, 65), (150, 10, 40)),
-                # Mid Sapphires
-                (w//2 - 105, 148, 15, (25, 130, 240), (10, 70, 160)),
-                (w//2 + 105, 148, 15, (25, 130, 240), (10, 70, 160)),
-                # Outer Emeralds
-                (w//2 - 185, 168, 12, (30, 200, 100), (15, 120, 60)),
-                (w//2 + 185, 168, 12, (30, 200, 100), (15, 120, 60))
+                (cx, 138, 20, (220, 25, 65), (140, 10, 35)),
+                (cx - 105, 148, 15, (25, 130, 240), (10, 65, 150)),
+                (cx + 105, 148, 15, (25, 130, 240), (10, 65, 150)),
+                (cx - 185, 168, 12, (30, 200, 100), (15, 110, 50)),
+                (cx + 185, 168, 12, (30, 200, 100), (15, 110, 50))
             ]
             for gx, gy, grad, gem_light, gem_dark in gems:
-                # Gold Bezel Mount
-                d.ellipse([gx - grad - 3, gy - grad - 3, gx + grad + 3, gy + grad + 3], fill=(255, 215, 80), outline=(160, 110, 25), width=2)
-                # Gem Base Dark Shadow
+                d.ellipse([gx - grad - 4, gy - grad - 4, gx + grad + 4, gy + grad + 4], fill=(160, 115, 20), outline=(255, 235, 130), width=2)
                 d.ellipse([gx - grad, gy - grad, gx + grad, gy + grad], fill=gem_dark)
-                # Gem Facet Light
-                d.ellipse([gx - grad + 2, gy - grad + 2, gx + grad - 1, gy + grad - 1], fill=gem_light)
-                # Realistic Specular Catchlight
-                d.ellipse([gx - grad//2, gy - grad//2, gx - grad//5, gy - grad//5], fill=(255, 255, 255, 245))
+                d.ellipse([gx - grad + 3, gy - grad + 3, gx + grad - 2, gy + grad - 2], fill=gem_light)
+                d.polygon([(gx, gy - grad + 2), (gx + grad - 3, gy), (gx, gy + grad - 3), (gx - grad + 3, gy)], outline=(255, 255, 255, 180), width=1)
+                d.ellipse([gx - grad // 3, gy - grad // 2, gx + 1, gy - 2], fill=(255, 255, 255, 255))
             return im
 
         else:
