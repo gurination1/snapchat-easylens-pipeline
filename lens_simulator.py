@@ -469,7 +469,7 @@ class LensSimulator:
         if dominant_texture:
             comp_t.alpha_composite(t_resized, dest=pos)
 
-        # 4. Visor / Crown Overdrive Core Bloom & Anamorphic Flares
+        # 4. Visor / Crown Overdrive Core Bloom & Optical Glints
         bloom = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
         b_draw = ImageDraw.Draw(bloom)
 
@@ -482,9 +482,10 @@ class LensSimulator:
 
             flare = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
             f_draw = ImageDraw.Draw(flare)
-            f_draw.line([(0, ev_y), (720, ev_y)], fill=(0, 240, 255, 220), width=6)
-            f_draw.line([(80, ev_y), (640, ev_y)], fill=(220, 255, 255, 255), width=3)
-            flare = flare.filter(ImageFilter.GaussianBlur(3))
+            fw = min(300, int(target_w * 0.8))
+            f_draw.line([(360 - fw, ev_y), (360 + fw, ev_y)], fill=(0, 240, 255, 150), width=4)
+            f_draw.line([(360 - int(fw * 0.5), ev_y), (360 + int(fw * 0.5), ev_y)], fill=(220, 255, 255, 210), width=2)
+            flare = flare.filter(ImageFilter.GaussianBlur(8))
             comp_t = Image.alpha_composite(comp_t, flare)
         else:
             # Warm gold/amber radiant bloom for crowns/headpieces/halos
@@ -494,14 +495,13 @@ class LensSimulator:
             bloom = bloom.filter(ImageFilter.GaussianBlur(18))
             comp_t = Image.alpha_composite(comp_t, bloom)
 
-            # Subtle eye runic sparkles at eye level
+            # Subtle soft eye glints at eye level (pure radial glow, zero crosshair lines)
             eye_sparkle = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
             e_draw = ImageDraw.Draw(eye_sparkle)
             for ex in [280, 440]:
-                e_draw.ellipse([ex - 25, ev_y - 25, ex + 25, ev_y + 25], fill=(255, 225, 120, 180))
-                e_draw.line([(ex - 45, ev_y), (ex + 45, ev_y)], fill=(255, 245, 180, 220), width=2)
-                e_draw.line([(ex, ev_y - 45), (ex, ev_y + 45)], fill=(255, 245, 180, 220), width=2)
-            eye_sparkle = eye_sparkle.filter(ImageFilter.GaussianBlur(5))
+                e_draw.ellipse([ex - 12, ev_y - 12, ex + 12, ev_y + 12], fill=(255, 235, 140, 130))
+                e_draw.ellipse([ex - 5, ev_y - 5, ex + 5, ev_y + 5], fill=(255, 255, 255, 200))
+            eye_sparkle = eye_sparkle.filter(ImageFilter.GaussianBlur(6))
             comp_t = Image.alpha_composite(comp_t, eye_sparkle)
 
         # Apply tailored procedural climax niche effects onto trigger frame
@@ -606,58 +606,45 @@ class LensSimulator:
         anc_y = pos[1] + target_h // 2
 
         if niche == "mythic":
-            for ox, oy, rad, col in [
-                (-160, -60, 5, (255, 180, 40, 220)),
-                (-110, -90, 4, (40, 230, 120, 200)),
-                (-60, -110, 6, (255, 215, 60, 240)),
-                (0, -120, 7, (255, 235, 100, 255)),
-                (60, -110, 6, (255, 215, 60, 240)),
-                (110, -90, 4, (40, 230, 120, 200)),
-                (160, -60, 5, (255, 180, 40, 220)),
-                (-130, -20, 3, (255, 140, 30, 180)),
-                (130, -20, 3, (255, 140, 30, 180)),
-                (-80, -40, 4, (40, 220, 140, 190)),
-                (80, -40, 4, (40, 220, 140, 190)),
-            ]:
-                px, py = cx + ox, anc_y + oy
-                draw.ellipse([px - rad, py - rad, px + rad, py + rad], fill=col)
-            draw.ellipse([cx - 180, anc_y - 40, cx + 180, anc_y + 40], fill=(255, 180, 40, 45))
+            # Soft ethereal golden rim illumination around crown/helm
+            glow = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            g_draw = ImageDraw.Draw(glow)
+            g_draw.ellipse([cx - 200, anc_y - 60, cx + 200, anc_y + 60], fill=(255, 190, 50, 45))
+            g_draw.ellipse([cx - 130, anc_y - 30, cx + 130, anc_y + 30], fill=(255, 225, 100, 65))
+            glow = glow.filter(ImageFilter.GaussianBlur(24))
+            overlay.alpha_composite(glow)
 
         elif niche == "cyber":
-            rx, ry = 475, ev_y
-            draw.ellipse([rx - 28, ry - 28, rx + 28, ry + 28], outline=(0, 245, 255, 200), width=2)
-            draw.line([(rx - 36, ry), (rx - 12, ry)], fill=(0, 245, 255, 220), width=2)
-            draw.line([(rx + 12, ry), (rx + 36, ry)], fill=(0, 245, 255, 220), width=2)
-            draw.line([(rx, ry - 36), (rx, ry - 12)], fill=(0, 245, 255, 220), width=2)
-            draw.line([(rx, ry + 12), (rx, ry + 36)], fill=(0, 245, 255, 220), width=2)
-            lx, ly = 245, ev_y
-            draw.arc([lx - 25, ly - 25, lx + 25, ly + 25], start=45, end=135, fill=(255, 0, 140, 180), width=2)
-            draw.arc([lx - 25, ly - 25, lx + 25, ly + 25], start=225, end=315, fill=(255, 0, 140, 180), width=2)
-            draw.arc([pos[0] + 20, pos[1] + 10, pos[0] + target_w - 20, pos[1] + 45], start=10, end=170, fill=(200, 250, 255, 120), width=2)
+            # Soft cyan photonic rim glow contoured around optics
+            glow = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            g_draw = ImageDraw.Draw(glow)
+            vw = target_w // 2 + 30
+            vh = target_h // 2 + 20
+            g_draw.ellipse([cx - vw, pos[1] + target_h // 2 - vh, cx + vw, pos[1] + target_h // 2 + vh], fill=(0, 230, 255, 45))
+            glow = glow.filter(ImageFilter.GaussianBlur(18))
+            overlay.alpha_composite(glow)
 
         elif niche == "comedy":
-            cloud_y = pos[1] - 40
-            for cox, coy, crad in [(-60, 0, 45), (-25, -20, 55), (25, -15, 50), (60, 5, 40)]:
-                draw.ellipse([cx + cox - crad, cloud_y + coy - crad, cx + cox + crad, cloud_y + coy + crad], fill=(220, 235, 250, 180))
+            # Subtle comic teardrop glints on cheeks
             for ex in [250, 470]:
-                draw.ellipse([ex - 15, ev_y + 12, ex + 15, ev_y + 24], fill=(120, 210, 255, 220))
-                draw.ellipse([ex - 6, ev_y + 15, ex + 6, ev_y + 21], fill=(255, 255, 255, 255))
-            draw.ellipse([180, ev_y - 45, 196, ev_y - 25], fill=(140, 220, 255, 200))
+                draw.ellipse([ex - 10, ev_y + 16, ex + 10, ev_y + 32], fill=(120, 210, 255, 180))
+                draw.ellipse([ex - 4, ev_y + 19, ex + 4, ev_y + 27], fill=(255, 255, 255, 240))
 
         elif niche == "luxury":
-            for px in [-120, -60, 0, 60, 120]:
-                p_x = cx + px
-                p_y = pos[1] + 15
-                draw.ellipse([p_x - 7, p_y - 7, p_x + 7, p_y + 7], fill=(255, 255, 240, 240))
-                draw.ellipse([p_x - 3, p_y - 5, p_x + 1, p_y - 1], fill=(255, 255, 255, 255))
-            draw.ellipse([230, ev_y + 35, 270, ev_y + 65], fill=(255, 215, 120, 60))
-            draw.ellipse([450, ev_y + 35, 490, ev_y + 65], fill=(255, 215, 120, 60))
+            # Warm Portra 400 golden hour ambient glow
+            glow = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            g_draw = ImageDraw.Draw(glow)
+            g_draw.ellipse([cx - 220, pos[1] - 40, cx + 220, pos[1] + 80], fill=(255, 220, 140, 45))
+            glow = glow.filter(ImageFilter.GaussianBlur(24))
+            overlay.alpha_composite(glow)
 
         elif niche == "chrome":
-            for ox, oy, rad in [(-150, -50, 9), (-90, -80, 13), (0, -95, 16), (90, -75, 12), (150, -45, 8)]:
-                px, py = cx + ox, anc_y + oy
-                draw.ellipse([px - rad, py - rad, px + rad, py + rad], fill=(210, 225, 240, 230))
-                draw.ellipse([px - rad + 3, py - rad + 2, px + rad - 4, py + rad - 6], fill=(255, 255, 255, 255))
+            # Fluid zero-G platinum rim highlight
+            glow = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            g_draw = ImageDraw.Draw(glow)
+            g_draw.ellipse([cx - 180, anc_y - 50, cx + 180, anc_y + 50], fill=(220, 235, 255, 55))
+            glow = glow.filter(ImageFilter.GaussianBlur(20))
+            overlay.alpha_composite(glow)
 
         blurred = overlay.filter(ImageFilter.GaussianBlur(3))
         comp = Image.alpha_composite(base_img, blurred)
@@ -672,6 +659,7 @@ class LensSimulator:
         p = max(0.1, min(1.0, progression))
 
         if niche == "mythic":
+            # Volumetric elemental dragon breath / energy discharge with smooth Gaussian blur
             flame = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
             f_draw = ImageDraw.Draw(flame)
             f_len = int(420 * p)
@@ -690,20 +678,27 @@ class LensSimulator:
             flame = flame.filter(ImageFilter.GaussianBlur(14))
             overlay.alpha_composite(flame)
 
+            # Soft radial eye energy glints (zero crosshairs)
+            eye_f = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            ef_draw = ImageDraw.Draw(eye_f)
             for ex in [250, 470]:
-                draw.ellipse([ex - 22, ev_y - 22, ex + 22, ev_y + 22], fill=(255, 215, 60, int(200 * p)))
-                draw.line([(ex - 40, ev_y), (ex + 40, ev_y)], fill=(255, 255, 200, 255), width=3)
-                draw.line([(ex, ev_y - 40), (ex, ev_y + 40)], fill=(255, 255, 200, 255), width=3)
+                ef_draw.ellipse([ex - 18, ev_y - 18, ex + 18, ev_y + 18], fill=(255, 215, 60, int(160 * p)))
+                ef_draw.ellipse([ex - 7, ev_y - 7, ex + 7, ev_y + 7], fill=(255, 255, 220, int(220 * p)))
+            eye_f = eye_f.filter(ImageFilter.GaussianBlur(6))
+            overlay.alpha_composite(eye_f)
 
         elif niche == "cyber":
-            draw.line([(0, ev_y), (720, ev_y)], fill=(0, 245, 255, int(220 * p)), width=6)
-            draw.line([(60, ev_y), (660, ev_y)], fill=(255, 255, 255, 255), width=3)
-            sw_r = int(140 * p)
-            draw.ellipse([cx - sw_r, ev_y - int(sw_r * 0.6), cx + sw_r, ev_y + int(sw_r * 0.6)], outline=(0, 245, 255, int(180 * p)), width=3)
-            font_hud = get_bold_font(13)
-            draw.text((cx - 70, ev_y - 48), "OVERDRIVE // 100%", fill=(0, 245, 255, 240), font=font_hud)
+            # Volumetric cyan EMP particle shockwave ring pulse (zero UI text, zero crosshairs)
+            pulse = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            p_draw = ImageDraw.Draw(pulse)
+            sw_r = int(150 * p)
+            p_draw.ellipse([cx - sw_r, ev_y - int(sw_r * 0.55), cx + sw_r, ev_y + int(sw_r * 0.55)], outline=(0, 245, 255, int(190 * p)), width=4)
+            p_draw.ellipse([cx - int(sw_r * 0.75), ev_y - int(sw_r * 0.42), cx + int(sw_r * 0.75), ev_y + int(sw_r * 0.42)], outline=(200, 255, 255, int(140 * p)), width=2)
+            pulse = pulse.filter(ImageFilter.GaussianBlur(6))
+            overlay.alpha_composite(pulse)
 
         elif niche == "comedy":
+            # Dynamic anime weeping waterfall tears with smooth gradients
             t_len = int(320 * p)
             pts_left = [
                 (250, 435),
@@ -729,23 +724,28 @@ class LensSimulator:
                     draw.ellipse([spx - 8, spy - 8, spx + 8, spy + 8], fill=(140, 220, 255, 210))
 
         elif niche == "luxury":
+            # Delicate champagne caustic sparkle dust (soft radial glints, zero crosshair lines)
+            dust = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            d_draw = ImageDraw.Draw(dust)
             for sx, sy, s_rad in [
-                (225, ev_y + 40, 12), (260, ev_y + 25, 16), (285, ev_y + 55, 10), (245, ev_y + 70, 14),
-                (495, ev_y + 40, 12), (460, ev_y + 25, 16), (435, ev_y + 55, 10), (475, ev_y + 70, 14),
-                (360, pos[1] - 10, 18), (310, pos[1] + 10, 14), (410, pos[1] + 10, 14)
+                (225, ev_y + 40, 14), (260, ev_y + 25, 18), (285, ev_y + 55, 12), (245, ev_y + 70, 16),
+                (495, ev_y + 40, 14), (460, ev_y + 25, 18), (435, ev_y + 55, 12), (475, ev_y + 70, 16),
+                (360, pos[1] - 10, 20), (310, pos[1] + 10, 15), (410, pos[1] + 10, 15)
             ]:
                 s_len = int(s_rad * p)
-                draw.line([(sx - s_len, sy), (sx + s_len, sy)], fill=(255, 240, 180, int(230 * p)), width=3)
-                draw.line([(sx, sy - s_len), (sx, sy + s_len)], fill=(255, 240, 180, int(230 * p)), width=3)
-                draw.ellipse([sx - 3, sy - 3, sx + 3, sy + 3], fill=(255, 255, 255, 255))
-            draw.ellipse([cx - 220, pos[1] - 80, cx + 220, pos[1] + 120], fill=(255, 215, 80, int(75 * p)))
+                d_draw.ellipse([sx - s_len, sy - s_len, sx + s_len, sy + s_len], fill=(255, 230, 140, int(130 * p)))
+                d_draw.ellipse([sx - max(2, s_len // 3), sy - max(2, s_len // 3), sx + max(2, s_len // 3), sy + max(2, s_len // 3)], fill=(255, 255, 255, int(210 * p)))
+            d_draw.ellipse([cx - 220, pos[1] - 80, cx + 220, pos[1] + 120], fill=(255, 215, 80, int(60 * p)))
+            dust = dust.filter(ImageFilter.GaussianBlur(6))
+            overlay.alpha_composite(dust)
 
         elif niche == "chrome":
+            # Liquid chrome surface tension ripples and zero-G mercury reflection
             for tox, toy, tw, th in [(-120, 0, 35, 110), (120, 0, 35, 110), (0, -40, 50, 80)]:
-                draw.ellipse([cx + tox - tw, anc_y + toy - th, cx + tox + tw, anc_y + toy + th], fill=(225, 235, 245, int(210 * p)))
-                draw.ellipse([cx + tox - tw + 6, anc_y + toy - th + 4, cx + tox + tw - 8, anc_y + toy + th - 12], fill=(255, 255, 255, 255))
+                draw.ellipse([cx + tox - tw, anc_y + toy - th, cx + tox + tw, anc_y + toy + th], fill=(225, 235, 245, int(190 * p)))
+                draw.ellipse([cx + tox - tw + 6, anc_y + toy - th + 4, cx + tox + tw - 8, anc_y + toy + th - 12], fill=(255, 255, 255, 240))
             prism_r = int(160 * p)
-            draw.ellipse([cx - prism_r, anc_y - prism_r, cx + prism_r, anc_y + prism_r], outline=(200, 230, 255, int(150 * p)), width=3)
+            draw.ellipse([cx - prism_r, anc_y - prism_r, cx + prism_r, anc_y + prism_r], outline=(200, 230, 255, int(140 * p)), width=3)
 
         blurred = overlay.filter(ImageFilter.GaussianBlur(4))
         comp = Image.alpha_composite(base_img, blurred)
@@ -791,12 +791,9 @@ class LensSimulator:
             rx, ry = int(re_x), int(re_y)
             r_rad = max(10, int(26 * scale))
             draw.ellipse([rx - r_rad, ry - r_rad, rx + r_rad, ry + r_rad], outline=(0, 245, 255, 210), width=2)
-            draw.line([(rx - r_rad - 6, ry), (rx - r_rad + 6, ry)], fill=(0, 245, 255, 220), width=2)
-            draw.line([(rx + r_rad - 6, ry), (rx + r_rad + 6, ry)], fill=(0, 245, 255, 220), width=2)
-            draw.line([(rx, ry - r_rad - 6), (rx, ry - r_rad + 6)], fill=(0, 245, 255, 220), width=2)
-            draw.line([(rx, ry + r_rad - 6), (rx, ry + r_rad + 6)], fill=(0, 245, 255, 220), width=2)
             if t_prog > 0.15:
-                draw.line([(int(le_x - 120 * scale), int(re_y)), (int(re_x + 120 * scale), int(re_y))], fill=(0, 245, 255, int(180 * t_prog)), width=3)
+                sw_rad = int(r_rad * (1.0 + 0.5 * t_prog))
+                draw.ellipse([rx - sw_rad, ry - sw_rad, rx + sw_rad, ry + sw_rad], outline=(0, 245, 255, int(150 * t_prog)), width=2)
 
         elif niche == "mythic":
             if t_prog > 0.08:
@@ -826,9 +823,8 @@ class LensSimulator:
                 (int(re_x + 32 * scale), int(nose_y + 15 * scale)),
                 (int(anc_x), int(anc_y - 45 * scale))
             ]:
-                s_rad = max(4, int(12 * scale * (0.7 + 0.5 * t_prog)))
-                draw.line([(sx - s_rad, sy), (sx + s_rad, sy)], fill=(255, 240, 180, 230), width=2)
-                draw.line([(sx, sy - s_rad), (sx, sy + s_rad)], fill=(255, 240, 180, 230), width=2)
+                s_rad = max(4, int(10 * scale * (0.7 + 0.5 * t_prog)))
+                draw.ellipse([sx - s_rad, sy - s_rad, sx + s_rad, sy + s_rad], fill=(255, 240, 180, int(180 * (0.7 + 0.3 * t_prog))))
                 draw.ellipse([sx - 2, sy - 2, sx + 2, sy + 2], fill=(255, 255, 255, 255))
 
         elif niche == "chrome":
@@ -1578,7 +1574,7 @@ class LensSimulator:
             "Evaluate against these production gates:\n"
             "1. FOREGROUND 3D ASSET: Is there a legitimate 3D wearable asset (visor, helmet, crown, halo, glasses) anchored to the head/face?\n"
             "2. ANATOMICAL PROPORTIONS: Does it fit human head/face proportions naturally (not tiny doll size, not misaligned)?\n"
-            "3. ANTI-CRINGE & ANTI-SLOP: ZERO weird on-screen text, ZERO developer UI sliders, ZERO awkward circular badge cutouts, ZERO cheesy clipart, ZERO 2D canvas loading wheels or equalizer bars.\n"
+            "3. ANTI-CRINGE & ANTI-SLOP: ZERO weird on-screen text, ZERO developer UI sliders, ZERO awkward circular badge cutouts, ZERO cheesy clipart, ZERO 2D canvas loading wheels or equalizer bars. (Note: Soft radiant glows, particle sparkles, and volumetric lighting around headpieces are expected AR visual effects).\n"
             "4. ACTIVE TRIGGER: Does the trigger frame show an active visual reaction (visor overdrive bloom, particle burst, flame, or optical flare)?\n\n"
             "Return ONLY a JSON object with this exact schema:\n"
             "{\n"
