@@ -363,5 +363,28 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/YwDAYle1GCOdGw3T4lNYm?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-20T09:39:04Z",
+    "account_id": "2",
+    "lens_name": "Liquid Alloy Chitin",
+    "lens_id": "2f98fb6e-ae3e-49fa-a3ef-3722a1d20c95",
+    "checkpoint_id": "06aafa96-ecf5-7251-8000-6223a5d04357",
+    "prompt": "Organic polished metallic brow shell with beetle-wing iridescence fitted to forehead. PBR ray-traced shadows. Opening mouth releases expanding toroidal liquid mercury rings surging forward. Smiling triggers radiant rainbow chromatic dispersion wave across face contours. Eyebrow raise flares armor plates outward. Head tilt reflects dynamic iridescent sheen highlights across temples. High-concept Y3K aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "Y3K",
+      "LiquidMetal",
+      "BioSurreal",
+      "FashionTech",
+      "Futurism"
+    ],
+    "visual_hook": "The immediate 0.2s snap of high-gloss, alien-inspired chitin onto the forehead creates a striking, high-fashion silhouette.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/dEdrXuUmcmv1lxXUjUFPn?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/BZ6MO1AwULjNcHW54sTDL?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/rZxiaB1JrMqfZm21slxDk?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
