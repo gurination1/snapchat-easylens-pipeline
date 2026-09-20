@@ -594,7 +594,7 @@ class LensSimulator:
                 d.ellipse([px - prad // 3, py - prad // 2, px, py - prad // 5], fill=(255, 255, 255, 255))
             return im
 
-        elif niche in ["mythic", "greek"] or any(w in p_lower for w in ["crown", "horns", "tiara", "headpiece", "diadem", "helm", "coronet", "circlet", "crest", "valkyrie", "wings", "band", "laurel", "olympus", "zeus", "apollo", "athena", "poseidon"]):
+        elif niche in ["mythic", "greek"] or (niche not in ["space", "randomizer", "gothic", "beauty"] and any(w in p_lower for w in ["crown", "horns", "tiara", "headpiece", "diadem", "helm", "coronet", "circlet", "crest", "valkyrie", "wings", "band", "laurel", "olympus", "zeus", "athena", "poseidon"])):
             w, h = 540, 290
             cx = w // 2
             try:
@@ -662,6 +662,150 @@ class LensSimulator:
                 d.ellipse([gx - grad + 3, gy - grad + 3, gx + grad - 2, gy + grad - 2], fill=gem_light)
                 d.polygon([(gx, gy - grad + 2), (gx + grad - 3, gy), (gx, gy + grad - 3), (gx - grad + 3, gy)], outline=(255, 255, 255, 180), width=1)
                 d.ellipse([gx - grad // 3, gy - grad // 2, gx + 1, gy - 2], fill=(255, 255, 255, 255))
+            return im
+
+        elif niche == "space" or any(w in p_lower for w in ["astronaut", "apollo", "helmet", "spacewalk", "cosmic visor"]):
+            # 3D Apollo Astronaut Gold Visor with Curved PBR Iridescence & Pressurized Collar
+            w, h = 600, 240
+            try:
+                import numpy as np
+                import cv2
+                y_grid, x_grid = np.mgrid[:h, :w]
+                cx, cy = w / 2.0, h / 2.0
+                rx, ry = w * 0.44, h * 0.42
+                dx = (x_grid - cx) / rx
+                dy = (y_grid - cy) / ry
+                dist_sq = dx**2 + dy**2
+                in_visor = dist_sq <= 1.0
+                nz = np.sqrt(np.clip(1.0 - dist_sq, 0.0, 1.0))
+                nx = dx
+                ny = dy
+                light = np.array([0.4, -0.7, 0.6])
+                light /= np.linalg.norm(light)
+                diff = np.clip(nx * light[0] + ny * light[1] + nz * light[2], 0.0, 1.0)
+                half = (light + np.array([0, 0, 1])) / np.linalg.norm(light + np.array([0, 0, 1]))
+                spec = np.clip(nx * half[0] + ny * half[1] + nz * half[2], 0.0, 1.0) ** 36
+                r_ch = np.clip(190 + diff * 50 + spec * 255, 0, 255).astype(np.uint8)
+                g_ch = np.clip(150 + diff * 45 + spec * 255, 0, 255).astype(np.uint8)
+                b_ch = np.clip(35 + diff * 20 + spec * 200, 0, 255).astype(np.uint8)
+                alpha = np.zeros((h, w), dtype=np.uint8)
+                alpha[in_visor] = 235
+                bezel = (dist_sq > 0.88) & (dist_sq <= 1.05)
+                r_ch[bezel] = 40
+                g_ch[bezel] = 45
+                b_ch[bezel] = 55
+                alpha[bezel] = 255
+                alpha = cv2.GaussianBlur(alpha, (5, 5), 0)
+                rgba = np.stack([r_ch, g_ch, b_ch, alpha], axis=-1)
+                return Image.fromarray(rgba)
+            except Exception:
+                im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+                d = ImageDraw.Draw(im)
+                d.ellipse([30, 20, w - 30, h - 20], fill=(220, 175, 45, 230), outline=(255, 225, 90, 255), width=6)
+                d.ellipse([50, 35, w - 50, h - 35], fill=(20, 25, 35, 180))
+                return im
+
+        elif niche == "randomizer" or any(w in p_lower for w in ["randomizer", "tarot", "zodiac", "wheel", "spinner", "fortune", "picker"]):
+            # 3D Ornate Celestial Tarot / Zodiac Decision Dial Wheel with Gold Pointer
+            w, h = 420, 420
+            cx, cy = w // 2, h // 2
+            r_outer = 185
+            im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            d = ImageDraw.Draw(im)
+            d.ellipse([cx - r_outer, cy - r_outer, cx + r_outer, cy + r_outer], fill=(24, 18, 36, 240), outline=(255, 210, 60, 255), width=8)
+            d.ellipse([cx - r_outer + 8, cy - r_outer + 8, cx + r_outer - 8, cy + r_outer - 8], outline=(180, 140, 30, 200), width=2)
+            import math
+            n_segs = 8
+            seg_colors = [(180, 50, 120), (50, 140, 220), (220, 150, 30), (70, 190, 120),
+                          (150, 70, 220), (230, 80, 60), (40, 180, 200), (210, 190, 40)]
+            for i in range(n_segs):
+                a0 = i * (360.0 / n_segs)
+                a1 = (i + 1) * (360.0 / n_segs)
+                col = seg_colors[i % len(seg_colors)]
+                d.pieslice([cx - r_outer + 12, cy - r_outer + 12, cx + r_outer - 12, cy + r_outer - 12],
+                           start=a0, end=a1, fill=(*col, 160), outline=(255, 220, 90, 180), width=2)
+                mid_rad = math.radians((a0 + a1) / 2.0)
+                dot_r = r_outer * 0.68
+                dot_x = int(cx + dot_r * math.cos(mid_rad))
+                dot_y = int(cy + dot_r * math.sin(mid_rad))
+                d.ellipse([dot_x - 5, dot_y - 5, dot_x + 5, dot_y + 5], fill=(255, 245, 200, 240))
+            d.ellipse([cx - 32, cy - 32, cx + 32, cy + 32], fill=(220, 175, 40, 255), outline=(255, 245, 160, 255), width=3)
+            d.ellipse([cx - 16, cy - 16, cx + 16, cy + 16], fill=(40, 25, 60, 255))
+            d.polygon([(cx, cy - r_outer - 12), (cx - 14, cy - r_outer + 18), (cx + 14, cy - r_outer + 18)],
+                      fill=(255, 225, 80, 255), outline=(255, 255, 255, 255))
+            return im
+
+        elif niche == "gothic" or any(w in p_lower for w in ["gothic", "vampire", "fangs", "fang", "blood moon", "wraith", "necromancer"]):
+            # 3D Gothic Obsidian Bat-Wing Diadem with Blood-Red Ruby Core
+            w, h = 540, 290
+            cx = w // 2
+            try:
+                import numpy as np
+                import cv2
+                im_base = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+                d_b = ImageDraw.Draw(im_base)
+                base_arch = [(45, 225), (130, 210), (cx, 204), (w - 130, 210), (w - 45, 225),
+                             (w - 52, 246), (w - 138, 234), (cx, 228), (138, 234), (52, 246)]
+                d_b.polygon(base_arch, fill=(35, 30, 42, 255))
+                spires = [
+                    ([(cx, 12), (cx - 45, 110), (cx - 28, 205), (cx + 28, 205), (cx + 45, 110)], (50, 42, 58)),
+                    ([(cx - 112, 38), (cx - 150, 128), (cx - 85, 210), (cx - 50, 206)], (42, 35, 50)),
+                    ([(cx + 112, 38), (cx + 50, 206), (cx + 85, 210), (cx + 150, 128)], (42, 35, 50)),
+                    ([(cx - 198, 70), (cx - 225, 155), (cx - 148, 214), (cx - 125, 210)], (35, 28, 42)),
+                    ([(cx + 198, 70), (cx + 125, 210), (cx + 148, 214), (cx + 225, 155)], (35, 28, 42))
+                ]
+                for sp_pts, col in spires:
+                    d_b.polygon(sp_pts, fill=col)
+                arr = np.array(im_base)
+                alpha = arr[:, :, 3]
+                mask = (alpha > 0).astype(np.uint8)
+                dist = cv2.distanceTransform(mask, cv2.DIST_L2, 5)
+                dist_smooth = cv2.GaussianBlur(dist, (9, 9), 0)
+                dist_norm = np.clip(dist_smooth / 16.0, 0.0, 1.0)
+                gx = cv2.Sobel(dist_norm, cv2.CV_32F, 1, 0, ksize=5)
+                gy = cv2.Sobel(dist_norm, cv2.CV_32F, 0, 1, ksize=5)
+                n_len = np.sqrt(gx**2 + gy**2 + 0.25)
+                nx, ny, nz = gx / n_len, gy / n_len, 0.5 / n_len
+                l1 = np.array([-0.35, -0.6, 0.7], dtype=np.float32)
+                l1 /= np.linalg.norm(l1)
+                diff1 = np.clip(nx * l1[0] + ny * l1[1] + nz * l1[2], 0.0, 1.0)
+                half = (l1 + np.array([0, 0, 1])) / np.linalg.norm(l1 + np.array([0, 0, 1]))
+                spec1 = np.clip(nx * half[0] + ny * half[1] + nz * half[2], 0.0, 1.0) ** 24
+                ao = np.clip(dist_norm * 0.75 + 0.25, 0.0, 1.0)
+                obs_base = np.array([28, 24, 34], dtype=np.float32)
+                obs_high = np.array([120, 110, 135], dtype=np.float32)
+                rgb = np.zeros((h, w, 3), dtype=np.float32)
+                for c in range(3):
+                    rgb[:, :, c] = (obs_base[c] * 0.4 + obs_high[c] * 0.6 * diff1) * ao + 200 * spec1
+                rgb = np.clip(rgb, 0, 255).astype(np.uint8)
+                im = Image.fromarray(np.dstack([rgb, alpha]))
+            except Exception:
+                im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            d = ImageDraw.Draw(im)
+            d.ellipse([cx - 18, 128, cx + 18, 164], fill=(180, 10, 30), outline=(240, 60, 80), width=2)
+            d.ellipse([cx - 10, 134, cx + 10, 154], fill=(220, 20, 45))
+            d.ellipse([cx - 5, 138, cx + 1, 144], fill=(255, 200, 210))
+            return im
+
+        elif niche == "beauty" or any(w in p_lower for w in ["rhinestone", "rhinestones", "glass skin", "glam", "freckles", "blush", "beauty", "aura"]):
+            # Delicate Euphoria Face Rhinestones & Crystalline Starburst Diadem
+            w, h = 500, 220
+            cx = w // 2
+            im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            d = ImageDraw.Draw(im)
+            rhine_pts = [
+                (cx, 80, 10), (cx - 40, 86, 8), (cx + 40, 86, 8),
+                (cx - 85, 100, 7), (cx + 85, 100, 7),
+                (cx - 135, 122, 6), (cx + 135, 122, 6),
+                (cx - 185, 150, 5), (cx + 185, 150, 5)
+            ]
+            for rx, ry, rrad in rhine_pts:
+                d.ellipse([rx - rrad - 2, ry - rrad - 2, rx + rrad + 2, ry + rrad + 2], fill=(255, 240, 220, 180))
+                d.ellipse([rx - rrad, ry - rrad, rx + rrad, ry + rrad], fill=(255, 255, 255, 245), outline=(255, 215, 180, 255), width=1)
+                d.polygon([(rx, ry - rrad + 1), (rx + rrad - 1, ry), (rx, ry + rrad - 1), (rx - rrad + 1, ry)], outline=(200, 230, 255, 200))
+                d.ellipse([rx - rrad // 2, ry - rrad // 2, rx, ry - rrad // 4], fill=(255, 255, 255, 255))
+            d.line([(cx, 55), (cx, 105)], fill=(255, 235, 180, 220), width=2)
+            d.line([(cx - 25, 80), (cx + 25, 80)], fill=(255, 235, 180, 220), width=2)
             return im
 
         else:
@@ -752,7 +896,7 @@ class LensSimulator:
 
         if video_sync:
             # Sync with exact frame 0 of matching motion video
-            if aid == "2" or niche in ["cyber", "chrome", "retro"]:
+            if aid == "2" or niche in ["cyber", "chrome", "retro", "space"]:
                 cand = "model_blonde.png"
                 target = os.path.join(portraits_dir, cand)
                 if os.path.exists(target):
@@ -770,7 +914,11 @@ class LensSimulator:
                 "chrome": "model_5_chrome.jpg",
                 "game": "model_1_classic.png",
                 "retro": "model_blonde.png",
-                "greek": "model_3_luxe.jpg"
+                "greek": "model_3_luxe.jpg",
+                "beauty": "model_3_luxe.jpg",
+                "space": "model_2_cyber.jpg",
+                "randomizer": "model_1_classic.png",
+                "gothic": "model_5_chrome.jpg"
             }
             cand = niche_map.get(niche, "model_1_classic.png")
 
@@ -787,7 +935,7 @@ class LensSimulator:
         aid = str(account_id or self.lens_data.get("account_id", "1"))
         niche = self.resolve_visual_niche(account_id=aid)
 
-        if aid == "2" or niche in ["cyber", "chrome", "retro"]:
+        if aid == "2" or niche in ["cyber", "chrome", "retro", "space"]:
             cand = os.path.join(self.portrait_dir, "test_portrait_blonde.mp4")
             if os.path.exists(cand):
                 return cand
@@ -801,7 +949,7 @@ class LensSimulator:
         portraits_dir = os.path.join(self.portrait_dir, "portraits")
         aid = str(account_id or self.lens_data.get("account_id", "1"))
         niche = self.resolve_visual_niche(account_id=aid)
-        if aid == "2" or niche in ["cyber", "chrome", "retro"]:
+        if aid == "2" or niche in ["cyber", "chrome", "retro", "space"]:
             cand = os.path.join(portraits_dir, "model_blonde_mouth_open.png")
             if os.path.exists(cand):
                 return cand
@@ -972,10 +1120,10 @@ class LensSimulator:
         niche = self.resolve_visual_niche(account_id=aid)
 
         is_full_helmet = self.asset_scale_info.get("is_full_helmet", False) or any(w in p_text for w in ["helmet", "full-face", "full face", "motorcycle"])
-        is_visor = self.asset_scale_info.get("is_visor", False) or (niche == "cyber") or any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "spectacles", "monocle", "eyewear", "sunglasses", "reticle", "optics"])
+        is_visor = self.asset_scale_info.get("is_visor", False) or (niche in ["cyber", "space"]) or any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "spectacles", "monocle", "eyewear", "sunglasses", "reticle", "optics", "astronaut", "space helmet"])
         is_tear = self.asset_scale_info.get("is_tear", False) or (niche == "comedy" and any(w in p_text for w in ["tear", "crying", "weep", "waterfall", "melodrama"]))
-        is_brow_shell = self.asset_scale_info.get("is_brow_shell", False) or any(w in p_text for w in ["brow", "shell", "circlet", "plate", "forehead", "beetle", "scarab", "crest"])
-        is_halo = self.asset_scale_info.get("is_halo", False) or ((niche == "chrome" or any(w in p_text for w in ["mercury", "zero-g", "mobius", "cumulus", "stormcloud", "cloud crown", "spirit cloud"])) and not is_visor and not is_brow_shell)
+        is_brow_shell = self.asset_scale_info.get("is_brow_shell", False) or (niche == "beauty") or any(w in p_text for w in ["brow", "shell", "circlet", "plate", "forehead", "beetle", "scarab", "crest", "rhinestone", "bindi"])
+        is_halo = self.asset_scale_info.get("is_halo", False) or (niche == "randomizer") or ((niche == "chrome" or any(w in p_text for w in ["mercury", "zero-g", "mobius", "cumulus", "stormcloud", "cloud crown", "spirit cloud", "tarot", "wheel", "spinner"])) and not is_visor and not is_brow_shell)
         is_crown = not is_full_helmet and not is_visor and not is_halo and not is_tear and not is_brow_shell
 
         le = landmarks.get("l_eye", (440.0, 495.0))
@@ -1190,7 +1338,11 @@ class LensSimulator:
             "chrome": (210, 230, 255),
             "game": (255, 220, 30),
             "retro": (255, 60, 180),
-            "greek": (255, 205, 50)
+            "greek": (255, 205, 50),
+            "beauty": (255, 235, 180),
+            "space": (100, 180, 255),
+            "randomizer": (255, 215, 50),
+            "gothic": (220, 20, 60)
         }
         flare_rgb = flare_colors.get(niche, (0, 245, 255))
 
@@ -1602,6 +1754,27 @@ class LensSimulator:
                 "zeus", "olympus", "olympian", "thunderbolt", "medusa", "gorgon",
                 "aphrodite", "apollo", "hades", "stygian", "athena", "poseidon",
                 "artemis", "trident", "pantheon", "greek", "deity", "god", "goddess"
+            ] if w in p_text),
+            "beauty": sum(1 for w in [
+                "glass skin", "golden hour", "rhinestone", "rhinestones", "angel aura",
+                "clean girl", "sakura blush", "blush", "glow", "lip gloss", "dewy",
+                "highlighter", "eyelash", "lashes", "eyeliner", "glam", "aesthetic",
+                "soft glam", "euphoria", "freckles", "radiance", "skincare", "beauty", "cosmetic"
+            ] if w in p_text),
+            "space": sum(1 for w in [
+                "astronaut", "apollo", "helmet", "spacewalk", "planetarium", "nebula",
+                "satellite", "orbit", "orbiting", "black hole", "accretion", "mars",
+                "cosmic", "galaxy", "stellar", "spacesuit", "supernova", "interstellar", "cosmos"
+            ] if w in p_text),
+            "randomizer": sum(1 for w in [
+                "randomizer", "tarot", "zodiac", "wheel", "spinner", "fortune", "vibe",
+                "which vibe", "aura scanner", "this or that", "picker", "spirit animal",
+                "decision", "rotating", "filter wheel", "selector", "oracle", "card draw"
+            ] if w in p_text),
+            "gothic": sum(1 for w in [
+                "gothic", "vampire", "fangs", "fang", "blood moon", "coronet", "phantom",
+                "wraith", "fallen angel", "archangel", "dark fantasy", "gargoyle",
+                "necromancer", "obsidian", "crimson", "bat", "coffin", "dracula", "nosferatu"
             ] if w in p_text)
         }
 
@@ -1613,7 +1786,8 @@ class LensSimulator:
         cid = str(self.lens_data.get("channel_id") or "").strip()
         cid_map = {
             "1": "mythic", "2": "cyber", "3": "comedy", "4": "luxury",
-            "5": "chrome", "6": "game", "7": "retro", "8": "greek"
+            "5": "chrome", "6": "game", "7": "retro", "8": "greek",
+            "9": "beauty", "10": "space", "11": "randomizer", "12": "gothic"
         }
         if cid in cid_map:
             return cid_map[cid]
@@ -1647,7 +1821,21 @@ class LensSimulator:
             "7": "retro",
             "retro_decades": "retro",
             "8": "greek",
-            "greek_pantheon": "greek"
+            "greek_pantheon": "greek",
+            "9": "beauty",
+            "aesthetic_beauty": "beauty",
+            "beauty": "beauty",
+            "10": "space",
+            "cosmic_astronaut": "space",
+            "astronaut": "space",
+            "space": "space",
+            "11": "randomizer",
+            "viral_randomizer": "randomizer",
+            "randomizer": "randomizer",
+            "12": "gothic",
+            "gothic_darkfantasy": "gothic",
+            "gothic": "gothic",
+            "darkfantasy": "gothic"
         }
         return aid_map.get(aid, "cyber")
 
@@ -1731,6 +1919,40 @@ class LensSimulator:
             glow = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
             g_draw = ImageDraw.Draw(glow)
             g_draw.ellipse([cx - int(210 * scale), anc_y - int(60 * scale), cx + int(210 * scale), anc_y + int(60 * scale)], fill=(255, 205, 50, 50))
+            glow = glow.filter(ImageFilter.GaussianBlur(24))
+            overlay.alpha_composite(glow)
+
+        elif niche == "beauty":
+            # Soft warm peach golden-hour ambient glow over forehead & cheekbones
+            glow = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            g_draw = ImageDraw.Draw(glow)
+            g_draw.ellipse([cx - int(210 * scale), anc_y - int(55 * scale), cx + int(210 * scale), anc_y + int(55 * scale)], fill=(255, 220, 190, 45))
+            for ex in [re_x, le_x]:
+                g_draw.ellipse([int(ex - 45 * scale), int(ev_y + 15 * scale), int(ex + 45 * scale), int(ev_y + 60 * scale)], fill=(255, 180, 190, 35))
+            glow = glow.filter(ImageFilter.GaussianBlur(24))
+            overlay.alpha_composite(glow)
+
+        elif niche == "space":
+            # Deep cosmic starlight sapphire halo hugging helmet
+            glow = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            g_draw = ImageDraw.Draw(glow)
+            g_draw.ellipse([cx - int(230 * scale), anc_y - int(70 * scale), cx + int(230 * scale), anc_y + int(70 * scale)], fill=(50, 120, 255, 45))
+            glow = glow.filter(ImageFilter.GaussianBlur(26))
+            overlay.alpha_composite(glow)
+
+        elif niche == "randomizer":
+            # Glowing mystical selector disc halo above forehead
+            glow = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            g_draw = ImageDraw.Draw(glow)
+            g_draw.ellipse([cx - int(120 * scale), anc_y - int(120 * scale), cx + int(120 * scale), anc_y + int(30 * scale)], fill=(200, 120, 255, 45))
+            glow = glow.filter(ImageFilter.GaussianBlur(20))
+            overlay.alpha_composite(glow)
+
+        elif niche == "gothic":
+            # Obsidian shadow aura & crimson blood-moon rim glow
+            glow = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            g_draw = ImageDraw.Draw(glow)
+            g_draw.ellipse([cx - int(220 * scale), anc_y - int(65 * scale), cx + int(220 * scale), anc_y + int(65 * scale)], fill=(180, 20, 40, 45))
             glow = glow.filter(ImageFilter.GaussianBlur(24))
             overlay.alpha_composite(glow)
 
@@ -1896,6 +2118,72 @@ class LensSimulator:
             greek_blur = greek_layer.filter(ImageFilter.GaussianBlur(12))
             overlay.alpha_composite(greek_blur)
 
+        elif niche == "beauty":
+            # Radiant golden hour bloom & floating angel aura shimmer motes
+            beauty_layer = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            b_draw = ImageDraw.Draw(beauty_layer)
+            bw = int(target_w * 0.55)
+            bh = int(target_h * 0.45)
+            b_draw.ellipse(
+                [fh_x - bw, anc_y - int(target_h * 0.5) - bh,
+                 fh_x + bw, anc_y - int(target_h * 0.5) + bh],
+                fill=(255, 225, 175, int(60 * p))
+            )
+            import math
+            for sp_i in range(8):
+                sp_ang = sp_i * (math.pi / 4.0) + (p * 1.2)
+                sx = int(fh_x + math.cos(sp_ang) * (target_w * 0.45))
+                sy = int(anc_y - int(target_h * 0.3) + math.sin(sp_ang) * (target_h * 0.35))
+                s_rad = max(2, int(3 * scale))
+                b_draw.ellipse([sx - s_rad, sy - s_rad, sx + s_rad, sy + s_rad], fill=(255, 245, 220, int(190 * p)))
+            b_blur = beauty_layer.filter(ImageFilter.GaussianBlur(14))
+            overlay.alpha_composite(b_blur)
+
+        elif niche == "space":
+            # Apollo gold-visor optical specular flare & zero-G planetary motes
+            space_layer = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            s_draw = ImageDraw.Draw(space_layer)
+            sw_len = int(170 * p * scale)
+            s_draw.line([(cx - sw_len, ev_y), (cx + sw_len, ev_y)], fill=(255, 215, 60, int(180 * p)), width=3)
+            s_draw.line([(cx - sw_len // 2, ev_y), (cx + sw_len // 2, ev_y)], fill=(255, 255, 240, int(230 * p)), width=1)
+            import math
+            for sp_i in range(6):
+                ang = sp_i * (math.pi / 3.0) + (p * 1.5)
+                sx = int(cx + math.cos(ang) * (target_w * 0.48))
+                sy = int(anc_y - int(target_h * 0.4) + math.sin(ang) * (target_h * 0.35))
+                s_rad = max(2, int(3 * scale))
+                s_draw.ellipse([sx - s_rad, sy - s_rad, sx + s_rad, sy + s_rad], fill=(100, 200, 255, int(180 * p)))
+            s_blur = space_layer.filter(ImageFilter.GaussianBlur(8))
+            overlay.alpha_composite(s_blur)
+
+        elif niche == "randomizer":
+            # Tarot decision reveal burst: pulse rings & floating winning aura
+            rand_layer = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            rd_draw = ImageDraw.Draw(rand_layer)
+            rw = int(110 * scale)
+            rd_draw.ellipse([cx - rw, int(anc_y - 60 * scale) - rw, cx + rw, int(anc_y - 60 * scale) + rw],
+                            outline=(255, 220, 50, int(220 * p)), width=3)
+            rd_draw.ellipse([cx - int(rw * 0.6), int(anc_y - 60 * scale) - int(rw * 0.6),
+                             cx + int(rw * 0.6), int(anc_y - 60 * scale) + int(rw * 0.6)],
+                            fill=(220, 80, 255, int(70 * p)))
+            r_blur = rand_layer.filter(ImageFilter.GaussianBlur(6))
+            overlay.alpha_composite(r_blur)
+
+        elif niche == "gothic":
+            # Elongated 3D ivory vampire fangs emerging from mouth corners + crimson blood glints
+            fang_layer = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            fg_draw = ImageDraw.Draw(fang_layer)
+            f_len = int(32 * p * scale)
+            for mx in [mouth_x - int(24 * scale), mouth_x + int(24 * scale)]:
+                fg_draw.polygon([
+                    (mx - int(4 * scale), mouth_y - int(4 * scale)),
+                    (mx + int(4 * scale), mouth_y - int(4 * scale)),
+                    (mx, mouth_y + f_len)
+                ], fill=(250, 248, 240, int(240 * p)), outline=(220, 215, 200, int(255 * p)))
+                fg_draw.ellipse([mx - 2, mouth_y + f_len - 1, mx + 2, mouth_y + f_len + 4], fill=(210, 20, 40, int(200 * p)))
+            fg_blur = fang_layer.filter(ImageFilter.GaussianBlur(2))
+            overlay.alpha_composite(fg_blur)
+
         blurred = overlay.filter(ImageFilter.GaussianBlur(4))
         comp = Image.alpha_composite(base_img, blurred)
         return Image.alpha_composite(comp, overlay)
@@ -1996,6 +2284,64 @@ class LensSimulator:
                 r_blur = ret_layer.filter(ImageFilter.GaussianBlur(6))
                 ar_layer.alpha_composite(r_blur)
 
+        elif niche == "beauty":
+            if t_prog > 0.05:
+                b_layer = Image.new("RGBA", ar_layer.size, (0, 0, 0, 0))
+                b_draw = ImageDraw.Draw(b_layer)
+                cx = int(anc_x)
+                cw = cur_w if cur_w > 0 else int(232.0 * scale * 2.55)
+                ch = cur_h if cur_h > 0 else int(cw * 0.52)
+                b_draw.ellipse(
+                    [cx - cw // 2, int(anc_y - ch * 0.25) - ch // 2,
+                     cx + cw // 2, int(anc_y - ch * 0.25) + ch // 2],
+                    fill=(255, 220, 180, int(45 * t_prog))
+                )
+                import math
+                for sp_i in range(8):
+                    sp_ang = sp_i * (math.pi / 4.0) + (t_prog * 1.5)
+                    sx = int(cx + math.cos(sp_ang) * (cw * 0.44))
+                    sy = int(anc_y - ch * 0.2 + math.sin(sp_ang) * (ch * 0.32) - t_prog * 15 * scale)
+                    s_rad = max(1, int(2 * scale))
+                    b_draw.ellipse([sx - s_rad, sy - s_rad, sx + s_rad, sy + s_rad], fill=(255, 245, 220, int(150 * t_prog)))
+                b_blur = b_layer.filter(ImageFilter.GaussianBlur(18))
+                ar_layer.alpha_composite(b_blur)
+
+        elif niche == "space":
+            if t_prog > 0.08:
+                sp_layer = Image.new("RGBA", ar_layer.size, (0, 0, 0, 0))
+                s_draw = ImageDraw.Draw(sp_layer)
+                fl_w = int(140 * t_prog * scale)
+                s_draw.line([(anc_x - fl_w, anc_y), (anc_x + fl_w, anc_y)], fill=(255, 215, 60, int(180 * t_prog)), width=2)
+                s_draw.line([(anc_x - fl_w // 2, anc_y), (anc_x + fl_w // 2, anc_y)], fill=(255, 255, 240, int(220 * t_prog)), width=1)
+                sp_blur = sp_layer.filter(ImageFilter.GaussianBlur(6))
+                ar_layer.alpha_composite(sp_blur)
+
+        elif niche == "randomizer":
+            if t_prog > 0.05:
+                rd_layer = Image.new("RGBA", ar_layer.size, (0, 0, 0, 0))
+                rd_draw = ImageDraw.Draw(rd_layer)
+                rw = int(80 * scale)
+                rd_draw.ellipse([int(anc_x - rw), int(anc_y - 50 * scale - rw),
+                                 int(anc_x + rw), int(anc_y - 50 * scale + rw)],
+                                outline=(255, 220, 50, int(200 * t_prog)), width=2)
+                rd_blur = rd_layer.filter(ImageFilter.GaussianBlur(5))
+                ar_layer.alpha_composite(rd_blur)
+
+        elif niche == "gothic":
+            if t_prog > 0.05:
+                gt_layer = Image.new("RGBA", ar_layer.size, (0, 0, 0, 0))
+                gt_draw = ImageDraw.Draw(gt_layer)
+                f_len = int(28 * t_prog * scale)
+                for mx in [mouth_x - int(22 * scale), mouth_x + int(22 * scale)]:
+                    gt_draw.polygon([
+                        (mx - int(3 * scale), mouth_y - int(3 * scale)),
+                        (mx + int(3 * scale), mouth_y - int(3 * scale)),
+                        (mx, mouth_y + f_len)
+                    ], fill=(250, 248, 240, int(230 * t_prog)), outline=(220, 215, 200, int(255 * t_prog)))
+                    gt_draw.ellipse([mx - 2, mouth_y + f_len - 1, mx + 2, mouth_y + f_len + 3], fill=(210, 20, 40, int(190 * t_prog)))
+                gt_blur = gt_layer.filter(ImageFilter.GaussianBlur(2))
+                ar_layer.alpha_composite(gt_blur)
+
         elif is_crown or niche in ["mythic", "greek"]:
             # Soft atmospheric volumetric ambient rim light hugging crown & hairline
             # Strictly ZERO 2D bicycle-spoke line rays, ZERO zombie eyes, ZERO unwanted mouth cones, ZERO unblurred discs
@@ -2043,7 +2389,14 @@ class LensSimulator:
             "cyber": "cyber_pulse.mp3",
             "comedy": "comedy_pop.mp3",
             "luxury": "luxury_shimmer.mp3",
-            "chrome": "mercury_drift.mp3"
+            "chrome": "mercury_drift.mp3",
+            "game": "cyber_pulse.mp3",
+            "retro": "cyber_pulse.mp3",
+            "greek": "mythic_roar.mp3",
+            "beauty": "luxury_shimmer.mp3",
+            "space": "mercury_drift.mp3",
+            "randomizer": "comedy_pop.mp3",
+            "gothic": "mythic_roar.mp3"
         }
         chosen = niche_audio_map.get(niche, "cyber_pulse.mp3")
 
@@ -2085,42 +2438,62 @@ class LensSimulator:
             c_bg, e_bg = (38, 14, 8), (8, 6, 8)
             rim_rgb = (255, 140, 30)
             acc_rgb = (255, 215, 80)
-            badge_text = "👑 3D HELM"
+            badge_text = "3D HELM"
         elif niche == "cyber":
             c_bg, e_bg = (12, 26, 46), (5, 8, 16)
             rim_rgb = (0, 245, 255)
             acc_rgb = (100, 255, 255)
-            badge_text = "⚡ CYBER HUD"
+            badge_text = "CYBER HUD"
         elif niche == "comedy":
             c_bg, e_bg = (38, 12, 42), (14, 6, 18)
             rim_rgb = (60, 255, 120)
             acc_rgb = (255, 40, 160)
-            badge_text = "😭 VIRAL MEME"
+            badge_text = "VIRAL MEME"
         elif niche == "luxury":
             c_bg, e_bg = (36, 28, 16), (12, 10, 8)
             rim_rgb = (255, 215, 60)
             acc_rgb = (255, 245, 180)
-            badge_text = "✨ 35MM LUXE"
+            badge_text = "35MM LUXE"
         elif niche == "game":
             c_bg, e_bg = (14, 30, 48), (6, 12, 20)
             rim_rgb = (255, 210, 40)
             acc_rgb = (100, 255, 120)
-            badge_text = "🕹️ AR GAME"
+            badge_text = "AR GAME"
         elif niche == "retro":
             c_bg, e_bg = (38, 12, 38), (14, 6, 16)
             rim_rgb = (255, 40, 160)
             acc_rgb = (0, 245, 255)
-            badge_text = "📼 RETRO VHS"
+            badge_text = "RETRO VHS"
         elif niche == "greek":
             c_bg, e_bg = (36, 26, 12), (12, 8, 6)
             rim_rgb = (255, 215, 60)
             acc_rgb = (255, 235, 120)
-            badge_text = "⚡ OLYMPUS"
+            badge_text = "OLYMPUS"
+        elif niche == "beauty":
+            c_bg, e_bg = (42, 18, 30), (16, 6, 12)
+            rim_rgb = (255, 180, 210)
+            acc_rgb = (255, 235, 180)
+            badge_text = "SOFT GLAM"
+        elif niche == "space":
+            c_bg, e_bg = (10, 15, 36), (4, 6, 18)
+            rim_rgb = (255, 195, 50)
+            acc_rgb = (100, 200, 255)
+            badge_text = "ASTRONAUT"
+        elif niche == "randomizer":
+            c_bg, e_bg = (28, 14, 44), (10, 5, 20)
+            rim_rgb = (255, 215, 40)
+            acc_rgb = (200, 100, 255)
+            badge_text = "RANDOMIZER"
+        elif niche == "gothic":
+            c_bg, e_bg = (30, 8, 14), (12, 4, 6)
+            rim_rgb = (220, 20, 60)
+            acc_rgb = (255, 70, 90)
+            badge_text = "VAMPIRE"
         else:
             c_bg, e_bg = (24, 22, 38), (8, 7, 14)
             rim_rgb = (210, 230, 255)
             acc_rgb = (150, 120, 255)
-            badge_text = "🌀 CHROME Y3K"
+            badge_text = "CHROME Y3K"
 
         # 1. Base image with radial background gradient
         import numpy as np
@@ -2270,7 +2643,14 @@ class LensSimulator:
             "luxury": (255, 215, 60),
             "comedy": (60, 255, 120),
             "mythic": (255, 140, 30),
-            "chrome": (210, 230, 255)
+            "chrome": (210, 230, 255),
+            "game": (255, 210, 40),
+            "retro": (255, 40, 160),
+            "greek": (255, 215, 60),
+            "beauty": (255, 180, 210),
+            "space": (100, 200, 255),
+            "randomizer": (255, 215, 40),
+            "gothic": (220, 20, 60)
         }
         rim_rgb = rim_map.get(niche, (0, 245, 255))
 

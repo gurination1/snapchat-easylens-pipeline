@@ -750,6 +750,234 @@ CHANNEL_PROMPT_MATRICES = {
                 "visual_hook": "Godly transformation: Artemis Silver Crescent Moon Diadem enchants selfies with ethereal lunar starlight magic."
             }
         ]
+    },
+    "9": {
+        "channel_name": "Aesthetic_Beauty",
+        "genre": "Viral Beautifying, Glass Skin Glow, Golden Hour Sunset, Natural Dewy Glow & Euphoria Rhinestones",
+        "craft_dials": {
+            "design_variance": 0.84,
+            "visual_density": 0.96,
+            "motion_intensity": 0.72
+        },
+        "forbidden_cross_contamination": ['grotesque cartoon memes', 'heavy sci-fi military HUD', 'dark horror fangs', 'monster horns', 'developer UI sliders'],
+        "tag_pool": ['beauty', 'glow', 'glass_skin', 'golden_hour', 'freckles', 'glam', 'aesthetic', 'pbr'],
+        "archetypes": [
+            {
+                "id": "glass_skin_dewy",
+                "name": "Glass Skin Luminous Dewy Glow & Soft Peach Freckles",
+                "signature_tokens": ['glass skin', 'dewy glow', 'peach freckles', 'soft glam', 'ring-light'],
+                "focus": "Ultra-refined soft-focus porcelain skin smoothing with dewy high-fashion cheekbone highlight and subtle micro-freckles across nose bridge. Opening mouth cascades delicate suspended champagne micro-glitter dust; smiling illuminates warm pearlescent facial sheen and glossy lip shine; eyebrow raise sharpens feline winged liner; head tilt reflects realistic studio ring-light eye catches. Pure viral vanity, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Irresistible beauty glow-up: Glass Skin Luminous Dewy Glow delivers flawless studio lighting and dewy highlights in 0.2s."
+            },
+            {
+                "id": "golden_hour_sunset",
+                "name": "Golden Hour Sunset Halation & Amber Sunbeam Flare",
+                "signature_tokens": ['golden hour', 'sunset halation', 'amber sunbeam', 'sun-kissed', 'warm glow'],
+                "focus": "Warm 2800K golden-hour sunset lighting with cinematic lens halation, gentle cheek contour, and warm golden skin tint. Opening mouth releases soft floating golden sunlight specks around temples; smiling ignites brilliant warm sunbeam flare across cheekbones; eyebrow raise enhances dewy golden skin luster; head tilt cascades prismatic sunlight caustics. Timeless beauty aesthetic, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Irresistible beauty glow-up: Golden Hour Sunset Halation bathes facial contours in authentic warm sunset magic."
+            },
+            {
+                "id": "euphoria_crystal_rhinestones",
+                "name": "Euphoria Faceted Crystal Rhinestones & Iridescent Cat-Eye",
+                "signature_tokens": ['rhinestones', 'euphoria crystals', 'faceted gems', 'cat-eye', 'face jewelry'],
+                "focus": "3D precision-cut faceted Swarovski rhinestones contoured along eyebrow arches and upper cheekbones. PBR caustic diamond refractions. Opening mouth sparks dazzling rainbow prismatic starburst glints from crystals; smiling enhances dewy lavender cheek shimmer; eyebrow raise flares crystal brow tips; head tilt catches brilliant diamond fire reflections. Editorial red-carpet glam, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Irresistible beauty glow-up: Euphoria Faceted Crystal Rhinestones turns brow lines into sparkling high-fashion jewelry."
+            },
+            {
+                "id": "angel_aura_ethereal",
+                "name": "Angel Aura Iridescent Dew & Luminous Halo Glow",
+                "signature_tokens": ['angel aura', 'ethereal dew', 'halo glow', 'pastel blush', 'angel wings'],
+                "focus": "Ethereal pearlescent skin filter with pastel cloud blush and floating celestial micro-sparkles. Opening mouth summons gentle floating iridescent pearl orbs orbiting hair; smiling creates luminous high-fashion skin radiance and winged lash lift; eyebrow raise flares delicate pastel rainbow brow corona; head tilt shifts opalescent pink-to-gold cheek sheen. Dreamy aesthetic, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Irresistible beauty glow-up: Angel Aura Iridescent Dew enchants selfies with ethereal heavenly glow."
+            },
+            {
+                "id": "clean_girl_soft_glam",
+                "name": "Clean Girl Minimalist Velvet Skin & Laminated Brow Lift",
+                "signature_tokens": ['clean girl', 'velvet skin', 'laminated brow', 'lip glaze', 'natural glow'],
+                "focus": "Natural no-makeup velvet skin texture with fluffy laminated brow lift and dewy honey lip glaze. Opening mouth floats warm golden shimmer dust; smiling activates soft natural ring-light reflections in pupils; eyebrow raise sharpens defined brow arches; head tilt catches subtle high-point cheekbone glints. Clean minimalist viral luxury, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Irresistible beauty glow-up: Clean Girl Minimalist Velvet Skin perfects natural beauty with effortless elegance."
+            },
+            {
+                "id": "cherry_blossom_blush",
+                "name": "Sakura Petal Blush & Floating Cherry Blossom Motes",
+                "signature_tokens": ['sakura blush', 'cherry blossom', 'floating petals', 'anime blush', 'petal glow'],
+                "focus": "Delicate soft-pink watercolor sakura blush on cheeks and nose tip with floating 3D cherry blossom petals drifting around brow. Opening mouth releases gentle swirl of fluttering sakura petals; smiling deepens soft rosy glow with glass-skin cheek sheen; eyebrow raise lifts petal crown; head tilt sways floating blossoms. Romantic Japanese anime beauty, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Irresistible beauty glow-up: Sakura Petal Blush cascades dreamy cherry blossoms across cheekbones in 0.2s."
+            }
+        ]
+    },
+    "10": {
+        "channel_name": "Cosmic_Astronaut",
+        "genre": "Apollo Gold-Visor Astronaut Helmets, Interstellar Orbiting Planetarium & Deep Space Nebulas",
+        "craft_dials": {
+            "design_variance": 0.92,
+            "visual_density": 0.95,
+            "motion_intensity": 0.90
+        },
+        "forbidden_cross_contamination": ['cartoon crying memes', 'medieval filigree tiaras', 'cheap 2D stickers', 'developer UI sliders'],
+        "tag_pool": ['space', 'astronaut', 'helmet', 'orbiting', 'planetarium', 'nebula', 'cosmic', 'pbr'],
+        "archetypes": [
+            {
+                "id": "apollo_astronaut_helmet",
+                "name": "Apollo Gold-Visor Astronaut Helmet & Lunar Earthrise Reflection",
+                "signature_tokens": ['astronaut helmet', 'gold visor', 'apollo', 'lunar reflection', 'earthrise', 'space helmet'],
+                "focus": "Realistic 3D Apollo astronaut helmet contoured over head with curved reflective 24k gold-coated sun-visor mirroring the Earth and lunar horizon. PBR brushed aerospace composite with micro-thrusters. Opening mouth vents pressurized white nitrogen gas plumes from helmet valves; smiling pulses blue HUD status ring on collar; eyebrow raise flares lunar sunburst off visor; head tilt reflects rotating Earth. Epic space exploration, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Epic cosmic journey: Apollo Gold-Visor Astronaut Helmet locks user into full-fidelity space exploration in 0.2s."
+            },
+            {
+                "id": "interstellar_orbiting_planetarium",
+                "name": "Orbiting Solar Planetarium Crown & Saturn Ice Rings",
+                "signature_tokens": ['planetarium crown', 'orbiting planets', 'saturn rings', 'solar system', 'celestial sphere'],
+                "focus": "Photorealistic 3D celestial planetarium orbiting user head with glowing Sun at crown, ringed Saturn, swirling Jupiter, and Earth traversing smooth elliptical orbits with floating stardust. Opening mouth triggers mini supernova starburst with expanding asteroid ring shockwave; smiling illuminates golden solar flare from brow; eyebrow raise expands planetary orbits; head tilt tilts Saturn ring plane. Kinetic space wonder, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Epic cosmic journey: Orbiting Solar Planetarium Crown turns user into center of the universe with spinning celestial bodies."
+            },
+            {
+                "id": "deep_space_nebula_helmet",
+                "name": "Deep Space Cosmic Nebula Glass Dome & Supernova Sparks",
+                "signature_tokens": ['nebula helmet', 'cosmic dome', 'glass helmet', 'supernova sparks', 'auroral plasma'],
+                "focus": "Transparent spherical astronaut pressure dome filled with swirling violet, cyan, and magenta cosmic nebula gas and twinkling distant star clusters. Opening mouth detonates glowing stellar supernova flash inside helmet releasing star sparks; smiling surges auroral plasma waves through nebula; eyebrow raise flares stellar eye glints; head tilt swirls cosmic gas vortex. Deep space majesty, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Epic cosmic journey: Deep Space Cosmic Nebula Glass Dome captures the swirling majesty of deep interstellar space."
+            },
+            {
+                "id": "zero_g_spacewalk_satellite",
+                "name": "Zero-G Spacewalk Orbital Satellite & Solar Array Wings",
+                "signature_tokens": ['spacewalk satellite', 'zero-g satellite', 'solar arrays', 'space station', 'docking ring'],
+                "focus": "Miniature detailed 3D space station satellite hovering weightlessly over right shoulder with rotating gold photovoltaic solar panels and docking ring. Opening mouth fires blue ion engine thruster pulse with floating space dust motes; smiling pulses solar panel telemetry glints; eyebrow raise activates laser navigation beam; head tilt drifts satellite smoothly in zero-G orbit. Authentic space hardware, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Epic cosmic journey: Zero-G Spacewalk Orbital Satellite orbits head with micro-gravity physics and satellite maneuvers."
+            },
+            {
+                "id": "black_hole_accretion_halo",
+                "name": "Gargantua Black Hole Gravitational Accretion Halo & Relativistic Jets",
+                "signature_tokens": ['black hole', 'accretion halo', 'gravitational lensing', 'event horizon', 'relativistic jets'],
+                "focus": "Curved gravitational light-bending black hole with swirling molten orange accretion disc floating above head. Opening mouth unleashes dual vertical relativistic blue plasma jets shooting upward; smiling bends background stars in gravitational lensing swirl; eyebrow raise accelerates accretion vortex; head tilt distorts event horizon ring. Cosmic astrophysics spectacle, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Epic cosmic journey: Gargantua Black Hole Gravitational Accretion Halo bends light and reality around the creator."
+            },
+            {
+                "id": "mars_rover_explorer_visor",
+                "name": "Mars Perseverance Explorer Helmet & Martian Dust Halo",
+                "signature_tokens": ['mars explorer', 'rover helmet', 'martian dust', 'amber visor', 'searchlights'],
+                "focus": "Rugged carbon-kevlar planetary exploration helmet with polarized amber optic shield and micro-geological scanner. Opening mouth triggers swirling red Martian dust storm vortex with floating basalt particles; smiling activates twin LED searchlights on temples; eyebrow raise flashes terrain telemetry grid; head tilt sways atmospheric dust plumes. Red planet exploration, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Epic cosmic journey: Mars Perseverance Explorer Helmet straps creator into rugged planetary expedition gear."
+            }
+        ]
+    },
+    "11": {
+        "channel_name": "Viral_Randomizer",
+        "genre": "Rotating Tarot Wheels, Which Vibe Are You? Head-Tilt Decision Pickers & Energy Aura Scanners",
+        "craft_dials": {
+            "design_variance": 0.96,
+            "visual_density": 0.90,
+            "motion_intensity": 0.95
+        },
+        "forbidden_cross_contamination": ['solemn historical armor', 'heavy military hardware', 'boring static filters', 'developer UI sliders'],
+        "tag_pool": ['randomizer', 'wheel', 'decision', 'tarot', 'vibe', 'which_are_you', 'interactive', 'viral'],
+        "archetypes": [
+            {
+                "id": "celestial_tarot_wheel",
+                "name": "Rotating Celestial Tarot Wheel & Golden Fortune Reveal",
+                "signature_tokens": ['tarot wheel', 'fortune wheel', 'rotating wheel', 'zodiac cards', 'fortune reveal'],
+                "focus": "Ornate 3D gilded celestial fortune wheel spinning rapidly above forehead with spinning zodiac cards. Head tilt or smiling decisively stops the spinning ticker on the winning card—unleashing giant golden trumpet fanfare confetti and glowing celestial aura; opening mouth re-spins wheel at high speed; eyebrow raise flashes cosmic fortune runes. Highly addictive viral decision game, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Viral interactive game: Rotating Celestial Tarot Wheel hooks viewers with suspenseful spinning fortune reveal in 0.2s."
+            },
+            {
+                "id": "which_vibe_picker",
+                "name": "Which Vibe Are You? Neon Floating Card Carousel",
+                "signature_tokens": ['which vibe', 'card carousel', 'mood cards', 'vibe picker', 'spinning cards'],
+                "focus": "High-energy floating neon cards flipping rapidly above brow with viral mood titles. Blinking or smiling locks the winner in a burst of sparkling neon confetti and celebratory sound chimes; opening mouth spins cards into hyper-speed blur; eyebrow raise resets the shuffle; head tilt tilts cards toward camera. Viral social challenge magnet, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Viral interactive game: Which Vibe Are You? drives massive comment debates and social share velocity."
+            },
+            {
+                "id": "aura_energy_scanner",
+                "name": "Cosmic Energy Aura Scanner & Chromatic Mood Halo",
+                "signature_tokens": ['aura scanner', 'energy scanner', 'mood halo', 'biometric aura', 'chromatic aura'],
+                "focus": "Futuristic holographic biometric scanning bar oscillating across face reading emotional wavelength. Smiling snaps the scanner to reveal the user's authentic vibrant aura color (Royal Violet, Electric Cyan, or Solar Gold) with billowing full-body energy clouds; opening mouth discharges rainbow energy shockwave; eyebrow raise re-scans aura. Viral personality predictor, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Viral interactive game: Cosmic Energy Aura Scanner visualizes personality in dynamic radiant color."
+            },
+            {
+                "id": "this_or_that_decision_spinner",
+                "name": "This or That Dual Neon Decision Pillars & Ticker Arrow",
+                "signature_tokens": ['this or that', 'decision spinner', 'neon pillars', 'ticker arrow', 'choice cards'],
+                "focus": "Floating twin neon decision cards anchored to left and right temples with oscillating center compass needle. Tilting head left or right decisively slams needle into chosen option, detonating winner particle explosions and party horn streamers; opening mouth clears choice for next round; smiling triggers double-win jackpot. Social decision game, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Viral interactive game: This or That Decision Pillars turns everyday dilemmas into high-stakes head-tilt choices."
+            },
+            {
+                "id": "spirit_animal_totem_wheel",
+                "name": "Spinning Spirit Animal Totem Wheel & Mythic Avatar",
+                "signature_tokens": ['totem wheel', 'spirit animal', 'totem disc', 'animal avatar', 'spinning totem'],
+                "focus": "Carved gilded totem disc spinning above hairline showing mythical spirit avatars. Smiling halts the spinner on user's spirit animal, instantly morphing user brow with matching 3D ears/horns and spirit sparkles; opening mouth unleashes animal spirit roar aura; eyebrow raise spins totem again. High viral replayability, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Viral interactive game: Spinning Spirit Animal Totem Wheel reveals user spirit animal with instant 3D metamorphosis."
+            }
+        ]
+    },
+    "12": {
+        "channel_name": "Gothic_DarkFantasy",
+        "genre": "Vampire Sovereign Fangs, Blood Moon Coronets, Phantom Wraiths & Dark Archangel Wings",
+        "craft_dials": {
+            "design_variance": 0.91,
+            "visual_density": 0.95,
+            "motion_intensity": 0.89
+        },
+        "forbidden_cross_contamination": ['cute pastel stickers', 'bubblegum pop', 'neon corporate tech', 'developer UI sliders'],
+        "tag_pool": ['gothic', 'vampire', 'fangs', 'dark_fantasy', 'blood_moon', 'wraith', 'phantom', 'pbr'],
+        "archetypes": [
+            {
+                "id": "vampire_sovereign_fangs",
+                "name": "Vampire Sovereign Bat-Wing Coronet & Blood Moon Fangs",
+                "signature_tokens": ['vampire fangs', 'bat-wing coronet', 'blood moon', 'vampire', 'gothic coronet', 'ruby tears'],
+                "focus": "Sculpted matte obsidian bat-wing gothic coronet set with dripping ruby teardrop gems anchored to brow. Opening mouth reveals gleaming elongated 3D ivory vampire fangs with swirling crimson blood-mist and dark gothic smoke; smiling ignites piercing crimson blood-moon eye glints; eyebrow raise flares gothic bat wings; head tilt catches ruby caustics. Peak dark royalty, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Dark fantasy power: Vampire Sovereign Bat-Wing Coronet transforms selfies into regal gothic royalty in 0.2s."
+            },
+            {
+                "id": "phantom_wraith_shroud",
+                "name": "Phantom Wraith Spectral Shroud & Stygian Blue Flame",
+                "signature_tokens": ['phantom wraith', 'spectral shroud', 'stygian blue', 'soulfire geyser', 'ghostly embers'],
+                "focus": "Translucent tattered ethereal silk shroud floating weightlessly around head with dancing ghostly cyan spirit flames. Opening mouth erupts cryogenic soulfire geyser swirling forward with floating spectral embers; smiling illuminates piercing supernatural white eye glare; eyebrow raise billows ghost shroud; head tilt ripples ectoplasm mist. Haunting supernatural presence, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Dark fantasy power: Phantom Wraith Spectral Shroud creates eerie translucent ghost presence with chilling soulfire."
+            },
+            {
+                "id": "fallen_archangel_halo",
+                "name": "Fallen Archangel Barbed Obsidian Halo & Raven Feather Torrent",
+                "signature_tokens": ['fallen archangel', 'barbed halo', 'raven feathers', 'feather torrent', 'violet lightning'],
+                "focus": "Barbed blackened iron thorn halo hovering weightlessly above head with floating iridescent black raven feathers. Opening mouth unleashes explosive dark feathered shockwave vortex with violet lightning arcs; smiling pulses cold violet rim lighting across cheekbones; eyebrow raise extends thorn spires; head tilt sways floating black feathers. Dramatic dark angel aesthetic, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Dark fantasy power: Fallen Archangel Barbed Obsidian Halo commands solemn gothic majesty with fluttering raven feathers."
+            },
+            {
+                "id": "gargoyle_stone_cursed",
+                "name": "Cursed Gothic Cathedral Gargoyle Crest & Living Marble",
+                "signature_tokens": ['gargoyle crest', 'cathedral gargoyle', 'stone cursed', 'living marble', 'fissures'],
+                "focus": "Chiseled ancient cathedral gargoyle stone crest anchored to brow with living glowing crimson eye fissures. Opening mouth cracks skin into ancient stone texture with billowing gothic incense smoke; smiling restores smooth alabaster marble sheen; eyebrow raise flares stone gargoyle wings; head tilt sways cathedral dust. Monumental stone metamorphosis, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Dark fantasy power: Cursed Gothic Cathedral Gargoyle Crest transforms human features into living mythological stone."
+            },
+            {
+                "id": "necromancer_soul_reaper",
+                "name": "Necromancer Stygian Skull Crown & Swirling Soulfire Orbs",
+                "signature_tokens": ['necromancer', 'skull crown', 'soulfire orbs', 'soul reaper', 'stygian skulls'],
+                "focus": "Intricately carved miniature electrum skulls linked into regal gothic coronet with floating cyan soulfire wisps orbiting temples. Opening mouth commands swirling orbit of ghostly soulfire orbs surging outward; smiling flashes piercing cyan eye luminescence; eyebrow raise flares crown spires in necrotic flame; head tilt trails ghostly soul smoke. Sovereign underworld conjurer, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Dark fantasy power: Necromancer Stygian Skull Crown unleashes swirling necrotic soulfire under creator command."
+            }
+        ]
     }
 }
 
@@ -784,14 +1012,14 @@ def select_channel_archetype(account_id: str, history: list, exclude_archetypes:
     Analyzes publication history across the entire fleet and deterministically selects
     the least-recently-used archetype to guarantee 100% rotating diversity across all
     viral topics without repetition. ALL accounts (1, 2, 3, 4, 5+) have full access to
-    all 8 viral omni-niche categories (Games, Retro 70s/80s/90s, Greek Mythology, Morphs, etc.).
+    all 12 viral omni-niche categories (Beauty, Astronaut/Space, Games, Retro, Greek, Gothic, etc.).
     Supports exclude_archetypes to prevent repeating a failed concept during retry attempts.
     Returns: (selected_archetype_dict, banned_recent_nouns)
     """
     aid = str(account_id)
     excluded = set(exclude_archetypes or [])
 
-    # Aggregate master pool of all archetypes across all 8 channels
+    # Aggregate master pool of all archetypes across all 12 channels
     all_archetypes = []
     for cid, spec in CHANNEL_PROMPT_MATRICES.items():
         for arch in spec["archetypes"]:
@@ -832,7 +1060,7 @@ def select_channel_archetype(account_id: str, history: list, exclude_archetypes:
                 last_acc_channel = a["channel_id"]
                 break
 
-    # Universal Omni-Niche Fleet: ALL accounts cater to ALL 8 top viral genres:
+    # Universal Omni-Niche Fleet: ALL accounts cater to ALL 12 top viral genres:
     # 1. Mythic Beasts & Celestial Crowns (Channel 1)
     # 2. Cyberpunk HUD & 90s Camcorder VHS Glitch Optics (Channel 2)
     # 3. Viral Memes & Kinetic Morphs (Channel 3: Gigachad, crying stormclouds, melodrama waterfall)
@@ -841,6 +1069,10 @@ def select_channel_archetype(account_id: str, history: list, exclude_archetypes:
     # 6. Interactive AR Games & Challenges (Channel 6: Head-tilt speeder, coin-catcher, reaction timing meter)
     # 7. Decades Nostalgia & Retro (Channel 7: 70s Disco, 80s Synthwave grid, 90s Hi-8 VHS, Y2K butterflies)
     # 8. Greek & Ancient Mythology (Channel 8: Zeus thunder laurel, Medusa bronze serpents, Aphrodite pearls)
+    # 9. Aesthetic Beauty & Glow (Channel 9: Glass skin, golden hour sunset, euphoria rhinestones, angel aura)
+    # 10. Cosmic Space & Astronaut (Channel 10: Apollo gold-visor helmet, orbiting planetarium, nebula dome)
+    # 11. Viral Randomizer Wheels (Channel 11: Celestial tarot wheel, which vibe picker, aura scanner)
+    # 12. Gothic Dark Fantasy (Channel 12: Vampire fangs, blood moon coronet, phantom wraith shroud)
     # Enforces strict cross-genre rotation so the same account never publishes the same genre back-to-back,
     # and diversifies away from the fleet's most recently published topic.
     most_recent_other_channel = None
