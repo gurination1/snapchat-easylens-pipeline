@@ -87,8 +87,8 @@ def test_tone_and_hooks_enforcement():
     for tok in a1_tokens:
         assert tok in a1_foci, f"Account 1 missing key mythic token: {tok}"
 
-    # Account 2: SciFi_Optics (hud, visor, scanner, reticle, telemetry - ZERO canvas)
-    a2_tokens = ["visor", "scanner", "reticle", "telemetry", "spectacles", "monocular"]
+    # Account 2: SciFi_Optics (hud, visor, goggles, monocle, spectacles, monocular - ZERO canvas/text)
+    a2_tokens = ["visor", "goggles", "monocle", "spectacles", "monocular", "optic"]
     a2_foci = " ".join([a["focus"].lower() for a in CHANNEL_PROMPT_MATRICES["2"]["archetypes"]])
     for tok in a2_tokens:
         assert tok in a2_foci, f"Account 2 missing scifi optic token: {tok}"

@@ -2,16 +2,18 @@ name: Snapchat EasyLens Autonomous Agent Pipeline
 
 on:
   schedule:
-    # Autonomous 2 lenses per day: 08:00 UTC and 20:00 UTC
-    - cron: '0 8,20 * * *'
+    # Autonomous fleet pacing: runs every 4 hours at minute 27 (avoids :00 queue congestion)
+    # resolve_target_account.py enforces 6.5h cooldown per account & selects longest idle
+    - cron: '27 */4 * * *'
   workflow_dispatch:
     inputs:
       account_id:
-        description: 'Account Persona (1: Beasts, 2: Dance, 3: Meme, 4: Luxury 35mm, 5: Surreal)'
+        description: 'Account Persona (auto: Fair Rotation, 1: Beasts, 2: Cyber/Optics, 3: Meme, 4: Luxury 35mm, 5: Surreal)'
         required: true
-        default: '1'
+        default: 'auto'
         type: choice
         options:
+          - 'auto'
           - '1'
           - '2'
           - '3'
@@ -50,7 +52,21 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Resolve Target Account & Enforce Fleet Pacing
+        id: pacing
+        env:
+          TARGET_ACC: ${{ inputs.account_id }}
+        run: |
+          python resolve_target_account.py
+          if [ "$SHOULD_RUN" = "false" ] && [ "${{ github.event_name }}" = "schedule" ]; then
+            echo "Fleet pacing optimal. Both accounts within cooldown window. Skipping scheduled run."
+            echo "skip_run=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip_run=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Install Dependencies
+        if: steps.pacing.outputs.skip_run != 'true'
         run: |
           echo "=== [1/3] INSTALLING SYSTEM & PYTHON PACKAGES & PLAYWRIGHT BROWSERS ==="
           sudo apt-get update -y
@@ -60,6 +76,7 @@ jobs:
           playwright install --with-deps chromium
 
       - name: Setup Cloudflare WARP Tunnel
+        if: steps.pacing.outputs.skip_run != 'true'
         run: |
           echo "=== [2/3] CONFIGURING OFFICIAL CLOUDFLARE WARP TUNNEL ==="
           sudo apt-get update -y
@@ -91,6 +108,7 @@ jobs:
           head -n 5 /tmp/snap_headers.txt || true
 
       - name: Execute Autonomous Lens Pipeline & Verifier
+        if: steps.pacing.outputs.skip_run != 'true'
         env:
           SNAP_SSO_TOKEN: ${{ secrets.SNAP_SSO_TOKEN }}
           SNAP_COOKIE_HEADER: ${{ secrets.SNAP_COOKIE_HEADER }}
@@ -130,32 +148,20 @@ jobs:
           AUTO_PUBLISH: ${{ github.event_name == 'schedule' || inputs.auto_publish != false }}
           PYTHONUNBUFFERED: "1"
         run: |
-          if [ -n "$TARGET_ACC" ]; then
-            export ACCOUNT_ID="$TARGET_ACC"
-          else
-            # Scheduled cron: alternate between Account 1 (Atelier & Mythic) and Account 2 (Cyber & Kinetic)
-            # 08:00 UTC -> Account 1 | 20:00 UTC -> Account 2 (Strict 1 submission / account / 24h)
-            HOUR=$(date -u +%H)
-            if [ "$HOUR" -lt 14 ]; then
-              SLOT=1
-            else
-              SLOT=2
-            fi
-            echo "Cron triggered: Auto-assigned active Account #$SLOT (Pacing: 1 lens per account per 24h)"
-            export ACCOUNT_ID="$SLOT"
-          fi
+          export ACCOUNT_ID="${TARGET_ACCOUNT:-1}"
+          echo "=== EXECUTING PIPELINE FOR TARGET ACCOUNT #$ACCOUNT_ID ==="
           echo "=== RUNNING PRE-FLIGHT ZERO-DEFECT QUALITY GATES ==="
           python run_tests.py
           echo "=== PRE-FLIGHT VERIFICATION PASSED: LAUNCHING PIPELINE ==="
           python -u pipeline_runner.py
 
       - name: Disconnect WARP Tunnel
-        if: always()
+        if: always() && steps.pacing.outputs.skip_run != 'true'
         run: |
           sudo warp-cli --accept-tos disconnect 2>/dev/null || sudo wg-quick down wg0 2>/dev/null || true
 
       - name: Upload Lens Verification & Artifacts
-        if: always()
+        if: always() && steps.pacing.outputs.skip_run != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: snapchat-lens-verified-data
@@ -168,7 +174,7 @@ jobs:
             *.mp4
 
       - name: Commit Pipeline State (Deduplication History)
-        if: always()
+        if: always() && steps.pacing.outputs.skip_run != 'true'
         run: |
           export GIT_TERMINAL_PROMPT=0
           git config user.name "github-actions[bot]"

@@ -161,33 +161,33 @@ CHANNEL_PROMPT_MATRICES = {
                 "id": "titanium_holo_visor",
                 "name": "Brushed Titanium Holo-Visor & Radial Shockwave",
                 "signature_tokens": ["visor", "holo-visor", "laser shockwave"],
-                "focus": "Ergonomic cyberpunk HUD visor resting strictly across eyes leaving cheeks and mouth clear for tracking. Brushed titanium frame with pulsing cyan neon edge emission, PBR anisotropic reflections, and ray-traced shadows. Opening mouth triggers radial laser particle shockwave; smiling activates bright neon visor HUD telemetry readout. Zero strobing, zero UI sliders, pure 3D assets only.",
-                "primary_trigger": "MouthOpen (Radial cyan laser particle shockwave) / Smile (Neon visor HUD telemetry flare)",
+                "focus": "Ergonomic cyberpunk holo-visor resting strictly across eyes leaving cheeks and mouth clear for tracking. Brushed titanium frame with pulsing cyan neon edge emission, PBR anisotropic reflections, and ray-traced shadows. Opening mouth triggers radial laser particle shockwave; smiling illuminates glowing neon visor frame rim. Zero strobing, zero screen text, zero UI sliders, pure 3D assets only.",
+                "primary_trigger": "MouthOpen (Radial cyan laser particle shockwave) / Smile (Neon visor frame rim glow)",
                 "visual_hook": "Instantaneous snap of high-fidelity brushed titanium and refractive glass catching live reflections in 0.2s."
             },
             {
                 "id": "cybernetic_ocular_scanner",
-                "name": "Cybernetic Ocular Scanner & Retinal Data Stream",
-                "signature_tokens": ["ocular scanner", "retinal scanner", "cybernetic monocle", "targeting reticle", "ocular"],
-                "focus": "Asymmetrical carbon fiber and tungsten ocular scanner anchored firmly over left eye orbital bone and brow, leaving face and mouth unobstructed. Multi-layered refractive cyan targeting lenses with micro-servo details. Opening mouth projects floating 3D tactical holographic wireframe mesh; smiling cycles high-speed green diagnostic data stream through ocular optics. PBR materials, ray-traced shadows.",
-                "primary_trigger": "MouthOpen (3D tactical holographic wireframe projection) / Smile (High-speed green data stream pulse)",
-                "visual_hook": "Elite cyberpunk tactical scanner locks onto eye with animated focal reticles and sharp volumetric telemetry."
+                "name": "Cybernetic Ocular Scanner & Holographic Wireframe",
+                "signature_tokens": ["ocular scanner", "scanner", "monocle", "ocular", "optics"],
+                "focus": "Asymmetrical carbon fiber and tungsten ocular optic anchored over left eye orbital bone and brow, leaving face and mouth unobstructed. Multi-layered refractive cyan glass lenses with micro-servo details. Opening mouth projects floating 3D wireframe mesh orb; smiling pulses glowing emerald light through ocular lenses. PBR materials, ray-traced shadows, zero text.",
+                "primary_trigger": "MouthOpen (Floating 3D wireframe mesh orb) / Smile (Glowing emerald optical pulse)",
+                "visual_hook": "Elite cyberpunk optical scanner locks onto brow with micro-servo detailing and volumetric glow."
             },
             {
                 "id": "neon_speed_goggles",
                 "name": "Neon Speed-Optic Goggles & Chromatic Hyperdrive",
                 "signature_tokens": ["goggles", "speed-optic", "hyperdrive", "racer"],
-                "focus": "Ultra-lightweight matte-black alloy speed-optic goggles fitted across brow and nose bridge. Features illuminated amber and electric blue neon optical rings with internal refractive glass prism elements. PBR metallic shaders with ray-traced contact shadows. Opening mouth triggers hyperdrive chromatic warp streak particle bursts across peripheral vision; smiling flashes dual-frequency optic diagnostic glow. Zero strobing, zero UI.",
-                "primary_trigger": "MouthOpen (Hyperdrive chromatic warp particle streaks) / Smile (Dual-frequency optic diagnostic flash)",
+                "focus": "Ultra-lightweight matte-black alloy speed-optic goggles fitted across brow and nose bridge. Features illuminated amber and electric blue neon optical rings with internal refractive glass prism elements. PBR metallic shaders with ray-traced contact shadows. Opening mouth triggers hyperdrive chromatic warp streak particle bursts across peripheral vision; smiling pulses warm amber glow across goggles frame. Zero strobing, zero text, zero UI.",
+                "primary_trigger": "MouthOpen (Hyperdrive chromatic warp particle streaks) / Smile (Dual-frequency neon frame pulse)",
                 "visual_hook": "Aerodynamic racing goggles snap onto face with glowing neon optical rings catching cinematic light."
             },
             {
-                "id": "mech_pilot_telemetry",
-                "name": "Mech Pilot HUD Frame & Telemetry EMP Ring",
-                "signature_tokens": ["mech pilot", "telemetry glyphs", "emp ring", "target-lock"],
-                "focus": "Anodized cobalt-titanium open-frame pilot HUD glasses fitted securely along upper cheekbones and temples. PBR metallic frame with floating volumetric amber flight telemetry glyphs orbiting brow. Opening mouth discharges sonic cyan EMP wave particle ring expanding outward; smiling activates high-precision tactical target-lock bracket flash across lenses. Fully 3D face anchored, zero UI sliders.",
-                "primary_trigger": "MouthOpen (Cyan sonic EMP particle ring expansion) / Smile (Tactical target-lock bracket flash)",
-                "visual_hook": "Military-grade mech pilot telemetry frame materializes with crisp floating HUD glyphs and dynamic EMP pulse."
+                "id": "mech_pilot_optics",
+                "name": "Mech Pilot Optical Frame & Sonic EMP Ring",
+                "signature_tokens": ["mech pilot", "pilot frame", "emp ring", "sonic pulse"],
+                "focus": "Anodized cobalt-titanium open-frame pilot glasses fitted securely along upper cheekbones and temples. PBR metallic frame with floating amber optical embers orbiting brow. Opening mouth discharges sonic cyan EMP wave particle ring expanding outward; smiling activates warm amber optic frame pulse across lenses. Fully 3D face anchored, zero screen text, zero UI sliders.",
+                "primary_trigger": "MouthOpen (Cyan sonic EMP particle ring expansion) / Smile (Warm amber optic frame pulse)",
+                "visual_hook": "Military-grade mech pilot optical frame materializes with crisp titanium geometry and dynamic EMP pulse."
             },
             {
                 "id": "quantum_neural_monocular",
@@ -198,43 +198,43 @@ CHANNEL_PROMPT_MATRICES = {
                 "visual_hook": "Futuristic neural optic locks into temple with floating holographic focal rings and planetary projection."
             },
             {
-                "id": "tactical_orbital_reticle",
-                "name": "Tactical Orbital Targeting Monocle & Laser Lock",
-                "signature_tokens": ["orbital reticle", "targeting monocle", "laser lock", "ballistic monocle"],
-                "focus": "Matte carbon-fiber ballistic monocle anchored over right eye and brow with micro-aperture ring. Anisotropic PBR reflections, ray-traced shadows. Opening mouth projects 3D floating volumetric targeting reticle grid expanding into space; smiling locks glowing red orbital telemetry beam flare across lens. Pure 3D assets, native mobile AR.",
-                "primary_trigger": "MouthOpen (3D volumetric targeting reticle grid) / Smile (Red orbital telemetry beam lock flare)",
-                "visual_hook": "Carbon-fiber ballistic monocle locks over eye, projecting a crisp volumetric 3D orbital targeting grid in 0.2s."
+                "id": "tactical_orbital_monocle",
+                "name": "Tactical Orbital Monocle & Prismatic Beam",
+                "signature_tokens": ["orbital monocle", "ballistic monocle", "prismatic beam", "tactical optic"],
+                "focus": "Matte carbon-fiber ballistic monocle anchored over right eye and brow with micro-aperture ring. Anisotropic PBR reflections, ray-traced shadows. Opening mouth projects 3D floating volumetric wireframe ring expanding into space; smiling pulses glowing red optic beam flare across lens. Pure 3D assets, zero screen text.",
+                "primary_trigger": "MouthOpen (3D volumetric wireframe ring) / Smile (Red optic beam flare)",
+                "visual_hook": "Carbon-fiber ballistic monocle locks over eye, projecting a crisp volumetric 3D wireframe ring in 0.2s."
             },
             {
                 "id": "apex_spectre_visor",
                 "name": "Stealth Spectre Prismatic Visor & Sonic Burst",
-                "signature_tokens": ["spectre visor", "stealth visor", "prismatic glass", "biometric lock"],
-                "focus": "Faceted obsidian and dichroic glass stealth visor contoured across brow and temples. 3-point contrast lighting with violet rim. Opening mouth emits radial sonic particle shockwave with refractive edge displacement; smiling flashes crisp cyan biometric lock indicators across prismatic glass face. Zero strobing, pure 3D mesh and volumetric particles only.",
-                "primary_trigger": "MouthOpen (Radial sonic particle shockwave) / Smile (Cyan biometric lock indicators on glass)",
+                "signature_tokens": ["spectre visor", "stealth visor", "prismatic glass", "sonic burst"],
+                "focus": "Faceted obsidian and dichroic glass stealth visor contoured across brow and temples. PBR metallic luster with 3-point contrast violet rim highlights and ray-traced contact shadows. Opening mouth emits radial sonic particle shockwave with refractive edge displacement; smiling pulses brilliant violet prismatic reflections across glass face. Zero strobing, zero screen text, pure 3D mesh and volumetric particles only.",
+                "primary_trigger": "MouthOpen (Radial sonic particle shockwave) / Smile (Violet prismatic reflection flare)",
                 "visual_hook": "Angular dichroic glass stealth visor reflects dark violet rim lighting, discharging a sonic particle wave on mouth open."
             },
             {
                 "id": "neural_synapse_cortex",
-                "name": "Cybernetic Synapse Brow Frame & Kinetic EMP",
-                "signature_tokens": ["synapse frame", "brow frame", "optical conduits", "kinetic emp"],
-                "focus": "Brushed aerospace aluminum neural bracket fitted firmly to brow with glowing micro-fiber optical conduits. Anisotropic PBR reflections and baked contact shadows. Opening mouth releases kinetic EMP spark wave surging across temples; smiling surges electric blue volumetric particle pulses through optical conduits. PBR metallic shaders, zero UI sliders.",
-                "primary_trigger": "MouthOpen (Kinetic EMP spark wave surge across temples) / Smile (Electric blue volumetric particle conduit pulse)",
+                "name": "Cybernetic Synapse Brow Frame & Kinetic Pulse",
+                "signature_tokens": ["synapse frame", "brow frame", "optical conduits", "kinetic pulse"],
+                "focus": "Brushed aerospace aluminum neural bracket fitted firmly to brow with glowing micro-fiber optical conduits. Anisotropic PBR reflections and baked contact shadows. Opening mouth releases kinetic spark wave surging across temples; smiling surges electric blue volumetric particle pulses through optical conduits. PBR metallic shaders, zero UI sliders, zero text.",
+                "primary_trigger": "MouthOpen (Kinetic spark wave surge across temples) / Smile (Electric blue volumetric particle conduit pulse)",
                 "visual_hook": "High-tech aluminum neural bracket clamps to brow, pulsing electric blue light through fiber optic channels."
             },
             {
                 "id": "subzero_cryo_optics",
                 "name": "Cryo-Tactical Ballistic Visor & Frost Vent",
                 "signature_tokens": ["cryo optics", "ballistic visor", "subzero vent", "frost jet"],
-                "focus": "Cryogenic frosted polymer and tungsten tactical visor resting across eyes leaving mouth clear. Subsurface refraction with cool 6500K rim light. Opening mouth vents pressurized volumetric sub-zero cryo particle jets sideways from temple mounts; smiling activates laser diagnostic telemetry reticle glow. Pure 3D native AR.",
-                "primary_trigger": "MouthOpen (Volumetric cryo particle jets from temples) / Smile (Laser diagnostic telemetry reticle glow)",
+                "focus": "Cryogenic frosted polymer and tungsten tactical visor resting across eyes leaving mouth clear. PBR materials, subsurface refraction with cool 6500K rim light and ray-traced shadows. Opening mouth vents pressurized volumetric sub-zero cryo particle jets sideways from temple mounts; smiling activates cyan optic lens glow. Pure 3D native AR, zero text.",
+                "primary_trigger": "MouthOpen (Volumetric cryo particle jets from temples) / Smile (Cyan optic lens glow)",
                 "visual_hook": "Frosted tactical visor clamps over eyes, blasting pressurized sub-zero cryo vapor from temples on mouth open."
             },
             {
-                "id": "matrix_overdrive_hud",
-                "name": "Overdrive Telemetry Spectacles & Data Cascade",
-                "signature_tokens": ["overdrive spectacles", "smart spectacles", "wireframe cubes", "telemetry cascade"],
-                "focus": "Precision titanium wireframe smart spectacles docked to face, nose and brow with transparent optical prisms. Anisotropic reflections and ray-traced shadows. Opening mouth discharges floating 3D volumetric wireframe cubes expanding forward; smiling pulses high-speed emerald telemetry photon glints through glass lenses. Pure 3D AR, zero UI sliders.",
-                "primary_trigger": "MouthOpen (3D volumetric wireframe cubes expanding forward) / Smile (High-speed emerald telemetry photon glints)",
+                "id": "matrix_kinetic_spectacles",
+                "name": "Kinetic Titanium Smart Spectacles & Holographic Geometry",
+                "signature_tokens": ["smart spectacles", "titanium spectacles", "wireframe cubes", "holographic geometry"],
+                "focus": "Precision titanium wireframe smart spectacles docked to face, nose and brow with transparent optical prisms. Anisotropic reflections and ray-traced shadows. Opening mouth discharges floating 3D volumetric wireframe cubes expanding forward; smiling pulses high-speed emerald photon glints through glass lenses. Pure 3D AR, zero UI sliders, zero screen text.",
+                "primary_trigger": "MouthOpen (3D volumetric wireframe cubes expanding forward) / Smile (Emerald photon glints through lenses)",
                 "visual_hook": "Ultra-thin titanium smart spectacles project floating 3D holographic wireframe geometry directly in front of the eyes."
             }
         ]
@@ -555,14 +555,16 @@ def load_published_history(history_file="published_lenses.json"):
     return []
 
 
-def select_channel_archetype(account_id: str, history: list) -> tuple:
+def select_channel_archetype(account_id: str, history: list, exclude_archetypes: list = None) -> tuple:
     """
     Analyzes publication history across the entire fleet and deterministically selects
     the least-recently-used archetype to guarantee 100% rotating diversity across all
     viral topics without repetition. Accounts 1 & 2 rotate dynamically across all 5 viral genres.
+    Supports exclude_archetypes to prevent repeating a failed concept during retry attempts.
     Returns: (selected_archetype_dict, banned_recent_nouns)
     """
     aid = str(account_id)
+    excluded = set(exclude_archetypes or [])
 
     # Aggregate master pool of all 50 archetypes across all 5 channels
     all_archetypes = []
@@ -607,12 +609,16 @@ def select_channel_archetype(account_id: str, history: list) -> tuple:
 
     # Accounts 1 & 2 operate in Universal Rotating Fleet mode across all genres
     if aid in ["1", "2"]:
-        candidates = [a for a in all_archetypes if a["channel_id"] != last_acc_channel]
+        candidates = [a for a in all_archetypes if a["channel_id"] != last_acc_channel and a["id"] not in excluded]
+        if not candidates:
+            candidates = [a for a in all_archetypes if a["id"] not in excluded]
         if not candidates:
             candidates = all_archetypes
     else:
         # Accounts 3, 4, 5 anchor to their specific specialized studio
-        candidates = [a for a in all_archetypes if a["channel_id"] == aid]
+        candidates = [a for a in all_archetypes if a["channel_id"] == aid and a["id"] not in excluded]
+        if not candidates:
+            candidates = [a for a in all_archetypes if a["id"] not in excluded]
         if not candidates:
             candidates = all_archetypes
 
@@ -697,6 +703,19 @@ def sanitize_lens_prompt(prompt: str) -> str:
         (r'\brubbery\s+plastic\b', 'anisotropic brushed titanium'),
         (r'\b(?:developer\s+)?ui\s+sliders?\b', 'face event triggers'),
         (r'\btap\s+to\s+start\b', 'automatic face detection'),
+
+        # Toxic HUD & Telemetry tokens (trigger AILC 2D UI text and TWEEN.now crashes)
+        (r'\b(?:biometric\s+)?(?:lock\s+|telemetry\s+)?indicators?\b', 'particle glints'),
+        (r'\b(?:biometric|flight|tactical|orbital|laser)\s+telemetry\b', 'holographic beam flare'),
+        (r'\btelemetry\s+(?:glyphs?|readouts?|cascade)\b', 'volumetric light motes'),
+        (r'\btelemetry\b', 'prismatic light flare'),
+        (r'\b(?:optic\s+|laser\s+)?diagnostic(?:\s+data\s+stream|\s+glow|\s+flare|\s+pulse)?\b', 'neon frame glow'),
+        (r'\b(?:hud\s+)?readouts?\b', 'prism glass flare'),
+        (r'\bdata\s+stream\b', 'photon stream'),
+        (r'\btarget(?:ing)?\s+reticles?\b', 'holographic focus ring'),
+        (r'\btarget-lock\s+brackets?\b', 'optical prism highlights'),
+        (r'\boverdrive\b', 'kinetic surge'),
+        (r'\bcooldowns?\b', 'instant reaction'),
     ]
 
     for pattern, subst in replacements:
@@ -725,7 +744,7 @@ def sanitize_lens_prompt(prompt: str) -> str:
 
 def validate_candidate_concept(candidate: dict, account_id: str, history: list, banned_nouns: list) -> tuple:
     """
-    Validates candidate lens concept against 7 strict quality and anti-repetition rules.
+    Validates candidate lens concept against 8 strict quality and anti-repetition rules.
     Returns: (is_valid: bool, reason: str)
     """
     # Pre-flight sanitization before validation
@@ -779,6 +798,14 @@ def validate_candidate_concept(candidate: dict, account_id: str, history: list, 
     ]
     if any(tok in prompt.lower() for tok in banned_spinner_tokens):
         return False, "Contains banned 2D canvas spinner or frequency bar keywords"
+
+    # Rule 8: Zero HUD Text, Telemetry, Diagnostic, Indicators (Anti-UI text slop)
+    banned_ui_tokens = [
+        "telemetry", "diagnostic", "indicator", "indicators", "readout",
+        "data stream", "reticle grid", "biometric lock", "overdrive"
+    ]
+    if any(tok in prompt.lower() for tok in banned_ui_tokens):
+        return False, "Contains forbidden HUD/telemetry/diagnostic terminology causing 2D UI slop"
 
     return True, "Valid"
 
@@ -835,10 +862,10 @@ def extract_json(raw_text: str) -> dict:
 # ==============================================================================
 # MAIN PROMPT GENERATOR
 # ==============================================================================
-def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -> dict:
+def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "", exclude_archetypes: list = None) -> dict:
     aid = str(account_id)
     history = load_published_history("published_lenses.json")
-    selected_archetype, banned_nouns = select_channel_archetype(aid, history)
+    selected_archetype, banned_nouns = select_channel_archetype(aid, history, exclude_archetypes=exclude_archetypes)
     arch_channel_id = selected_archetype.get("channel_id", aid)
     spec = CHANNEL_PROMPT_MATRICES.get(arch_channel_id, CHANNEL_PROMPT_MATRICES.get(aid, CHANNEL_PROMPT_MATRICES["1"]))
 
@@ -856,7 +883,7 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "") -
         "Your mission is to engineer an insanely high-quality, anti-slop, compliance-verified Lens prompt.\n\n"
         "STRICT PRODUCTION QUALITY & COMPLIANCE RULES:\n"
         "1. ZERO ON-SCREEN DEVELOPER UI, SLIDERS, OR BUTTONS: The lens must be 100% immersive full-screen camera AR. NEVER generate touch sliders, debug menus, or controller UI widgets.\n"
-        "2. ZERO ON-SCREEN TEXT, LABELS, WATERMARKS, OR GREETINGS: Do NOT render any text, subtitles, greetings, watermarks, or score counters on screen.\n"
+        "2. ZERO ON-SCREEN TEXT, LABELS, HUD OVERLAYS, TELEMETRY, OR INDICATORS: Do NOT render any text, subtitles, numbers, percentages, badges, diagnostic telemetry, or status indicators. NEVER use words like 'telemetry', 'diagnostic', 'indicators', 'HUD readout', 'data stream', 'reticle grid', 'biometric lock'. All elements must be 100% pure wearable 3D geometry (visors, crowns, goggles, helms) and volumetric 3D particle systems.\n"
         "3. BANNED SLOP: Generic purple gradients, floating disembodied blobs, rubbery plastic textures, and 2D canvas spinners.\n"
         "4. MANDATORY PBR CRAFT: Physically Based Rendering materials (anisotropic brushed titanium, liquid mercury, 24k gold leaf, refractive optical glass, subsurface scattering).\n"
         "5. MANDATORY 3-POINT CONTRAST LIGHTING: Key light + contrasting 6500K/2800K directional rim lighting + ray-traced contact shadows.\n"

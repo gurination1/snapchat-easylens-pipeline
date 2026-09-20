@@ -72,27 +72,27 @@ STATIC_FALLBACKS = {
     "2": BlueprintPool([
         {
             "lens_name": "Chrono Echo Visor",
-            "prompt": "Sleek ergonomic 3D cyberpunk HUD glasses and visor resting across eyes, leaving cheeks and mouth clear for tracking. Brushed titanium frame with pulsing cyan neon edge emission and refractive optical glass. Floating volumetric cyan neon embers drift around temples. Opening mouth triggers radial laser particle shockwave; smiling activates bright neon visor HUD readout. Zero strobing, zero UI sliders, pure 3D assets only.",
+            "prompt": "Sleek ergonomic 3D cyberpunk glasses and visor resting across eyes, leaving cheeks and mouth clear for tracking. Brushed titanium frame with pulsing cyan neon edge emission and refractive optical glass. Floating volumetric cyan neon embers drift around temples. Opening mouth triggers radial laser particle shockwave; smiling illuminates glowing neon visor frame rim. Zero strobing, zero text, zero UI sliders, pure 3D assets only.",
             "tags": ["cyberpunk", "visor", "optics", "hud", "pbr"]
         },
         {
             "lens_name": "Cybernetic Ocular Scanner",
-            "prompt": "Asymmetrical carbon fiber and tungsten ocular scanner anchored firmly over left eye orbital bone and brow, leaving face and mouth unobstructed. Multi-layered refractive cyan targeting lenses with micro-servo details. Opening mouth projects floating 3D tactical holographic wireframe mesh; smiling cycles high-speed green diagnostic data stream through ocular optics. PBR materials, ray-traced shadows.",
+            "prompt": "Asymmetrical carbon fiber and tungsten ocular optic anchored over left eye orbital bone and brow, leaving face and mouth unobstructed. Multi-layered refractive cyan glass lenses with micro-servo details. Opening mouth projects floating 3D wireframe mesh orb; smiling pulses glowing emerald light through ocular lenses. PBR materials, ray-traced shadows, zero text.",
             "tags": ["cybernetic", "monocle", "scanner", "reticle", "hud"]
         },
         {
             "lens_name": "Neon Speed Goggles",
-            "prompt": "Ultra-lightweight matte-black alloy speed-optic goggles fitted across brow and nose bridge. Features illuminated amber and electric blue neon optical rings with internal refractive glass prism elements. PBR metallic shaders with ray-traced contact shadows. Opening mouth triggers hyperdrive chromatic warp streak particle bursts across peripheral vision; smiling flashes dual-frequency optic diagnostic glow. Zero strobing, zero UI.",
+            "prompt": "Ultra-lightweight matte-black alloy speed-optic goggles fitted across brow and nose bridge. Features illuminated amber and electric blue neon optical rings with internal refractive glass prism elements. PBR metallic shaders with ray-traced contact shadows. Opening mouth triggers hyperdrive chromatic warp streak particle bursts across peripheral vision; smiling pulses warm amber glow across goggles frame. Zero strobing, zero text, zero UI.",
             "tags": ["goggles", "speed", "neon", "racing", "optics"]
         },
         {
-            "lens_name": "Tactical Orbital Reticle",
-            "prompt": "Matte carbon-fiber ballistic monocle anchored over right eye and brow with micro-aperture ring. Anisotropic PBR reflections, ray-traced shadows. Opening mouth projects 3D floating volumetric targeting reticle grid expanding into space; smiling locks glowing red orbital telemetry beam flare across lens. Pure 3D assets, zero canvas.",
+            "lens_name": "Tactical Orbital Monocle",
+            "prompt": "Matte carbon-fiber ballistic monocle anchored over right eye and brow with micro-aperture ring. Anisotropic PBR reflections, ray-traced shadows. Opening mouth projects 3D floating volumetric wireframe ring expanding into space; smiling pulses glowing red optic beam flare across lens. Pure 3D assets, zero screen text.",
             "tags": ["tactical", "orbital", "reticle", "targeting", "hud"]
         },
         {
             "lens_name": "Apex Spectre Visor",
-            "prompt": "Faceted obsidian and dichroic glass stealth visor contoured across brow and temples. PBR metallic luster with 3-point contrast violet rim lighting. Opening mouth emits radial sonic particle shockwave with refractive edge displacement; smiling flashes crisp cyan biometric lock indicators across prismatic glass face. Zero strobing, zero 2D canvas spinners, pure 3D mesh only.",
+            "prompt": "Faceted obsidian and dichroic glass stealth visor contoured across brow and temples. PBR metallic luster with 3-point contrast violet rim lighting. Opening mouth emits radial sonic particle shockwave with refractive edge displacement; smiling pulses brilliant violet prism reflections across glass face. Zero strobing, zero 2D canvas spinners, zero screen text, pure 3D mesh only.",
             "tags": ["spectre", "stealth", "visor", "prismatic", "hud"]
         }
     ]),
@@ -325,6 +325,9 @@ def main():
     tags = None
     cid = None
 
+    failed_archetypes = []
+    curr_archetype_id = None
+
     for attempt in range(1, MAX_ATTEMPTS + 1):
         print(f"\n{'='*60}")
         print(f"=== PIPELINE GENERATION ATTEMPT {attempt}/{MAX_ATTEMPTS} (ACCOUNT #{ACCOUNT_ID}) ===")
@@ -335,20 +338,25 @@ def main():
             err_summary = "; ".join(report.get("errors", []))
             current_instructions = (
                 f"{CUSTOM_INSTRUCTIONS} [STRICT RETRY]: Previous attempt failed verification with errors: {err_summary}. "
-                "CRITICAL: Zero easing curves, zero TWEEN references, zero CanvasAPI / 2D canvas loading wheels, zero UI sliders, pure native 3D mesh and particles only!"
+                "CRITICAL: Zero easing curves, zero TWEEN references, zero CanvasAPI / 2D canvas loading wheels, zero UI sliders, zero screen text, zero numbers, pure native 3D mesh and particles only!"
             ).strip()
 
         # Step 0: Determine Prompt, Lens Name, and Tags
         if USE_GEMINI and attempt < 3:
             print(f"\n=== STEP 0: AUTONOMOUS GEMINI PROMPT ARCHITECT (ACCOUNT #{ACCOUNT_ID}, ATTEMPT {attempt}) ===")
             try:
-                gemini_plan = generate_lens_prompt(account_id=ACCOUNT_ID, custom_instructions=current_instructions)
+                gemini_plan = generate_lens_prompt(
+                    account_id=ACCOUNT_ID,
+                    custom_instructions=current_instructions,
+                    exclude_archetypes=failed_archetypes
+                )
                 prompt = gemini_plan["prompt"]
                 lens_name = gemini_plan["lens_name"]
                 tags = gemini_plan.get("tags", static_tags)
+                curr_archetype_id = gemini_plan.get("archetype")
                 with open("gemini_generation_plan.json", "w") as f:
                     json.dump(gemini_plan, f, indent=2)
-                print(f"[GEMINI SUCCESS] Lens: {lens_name}")
+                print(f"[GEMINI SUCCESS] Lens: {lens_name} (Archetype: {curr_archetype_id})")
                 print(f"[GEMINI SUCCESS] Hook: {gemini_plan.get('visual_hook')}")
             except Exception as e:
                 print(f"[GEMINI WARN] Gemini synthesis failed ({e}), falling back to persona #{ACCOUNT_ID} static prompt...")
@@ -409,8 +417,10 @@ def main():
             break
         else:
             print(f"\n[VERIFICATION WARNING] Attempt {attempt} failed verification: {report.get('errors')}")
+            if curr_archetype_id and curr_archetype_id not in failed_archetypes:
+                failed_archetypes.append(curr_archetype_id)
             if attempt < MAX_ATTEMPTS:
-                print(f"[AUTO-HEAL] Re-attempting generation with strict corrective anti-TWEEN instructions...")
+                print(f"[AUTO-HEAL] Re-attempting generation with strict anti-UI/anti-TWEEN rules and rotating away from archetype '{curr_archetype_id}'...")
 
     if not passed:
         print("\n[FATAL ERROR] All generation attempts failed verification! Aborting publish to protect account catalog.")
