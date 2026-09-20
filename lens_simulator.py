@@ -74,6 +74,7 @@ class LensSimulator:
         self.star_texture = None
         self.orb_texture = None
         self.asset_scale_info = {}
+        self.scene_graph = self.extract_scene_graph()
 
     @staticmethod
     def audit_preview_video(video_path: str, require_audio: bool = False) -> dict:
@@ -537,6 +538,85 @@ class LensSimulator:
             return cand
         return self.resolve_portrait_model(video_sync=True)
 
+    def extract_scene_graph(self) -> dict:
+        """
+        Deep parses Snapchat Lens Studio scene.scn inside the .lns bundle to extract
+        exact 3D transforms, scale, rotation, and facial landmark attachment points.
+        Eliminates heuristic keyword-guessing of asset placement by reading ground truth.
+        """
+        import re
+        import json
+
+        sg = {
+            "attachment_point": "Forehead",
+            "attachment_id": 3,
+            "position_offset": [0.0, 7.3, 0.0],
+            "scale_offset": 10.0,
+            "rotation_offset": [1.57, 0.0, 3.14],
+            "has_scene_graph": False
+        }
+        if not self.bundle_bytes:
+            return sg
+
+        try:
+            with zipfile.ZipFile(io.BytesIO(self.bundle_bytes), "r") as z:
+                names = z.namelist()
+                for name in names:
+                    if name.endswith(".scn"):
+                        data = z.read(name)
+                        sg["has_scene_graph"] = True
+
+                        # Extract positionOffset JSON vec3
+                        m_pos = re.search(rb"\"name\":\"positionOffset\".*?\"default\":\"([^\"]+)\"", data) or \
+                                re.search(rb"\"default\":\"([^\"]+)\".*?\"name\":\"positionOffset\"", data)
+                        if m_pos:
+                            try:
+                                val = json.loads(m_pos.group(1).decode("utf-8"))
+                                if isinstance(val, list) and len(val) >= 3:
+                                    sg["position_offset"] = [float(v) for v in val[:3]]
+                            except Exception:
+                                pass
+
+                        # Extract scaleOffset JSON float
+                        m_sc = re.search(rb"\"name\":\"scaleOffset\".*?\"default\":\"([^\"]+)\"", data) or \
+                               re.search(rb"\"default\":\"([^\"]+)\".*?\"name\":\"scaleOffset\"", data)
+                        if m_sc:
+                            try:
+                                sg["scale_offset"] = float(m_sc.group(1).decode("utf-8"))
+                            except Exception:
+                                pass
+
+                        # Extract rotationOffset JSON vec3
+                        m_rot = re.search(rb"\"name\":\"rotationOffset\".*?\"default\":\"([^\"]+)\"", data) or \
+                                re.search(rb"\"default\":\"([^\"]+)\".*?\"name\":\"rotationOffset\"", data)
+                        if m_rot:
+                            try:
+                                val = json.loads(m_rot.group(1).decode("utf-8"))
+                                if isinstance(val, list) and len(val) >= 3:
+                                    sg["rotation_offset"] = [float(v) for v in val[:3]]
+                            except Exception:
+                                pass
+
+                        # Extract attachmentPointType enum
+                        idx = data.find(b"attachmentPointType")
+                        if idx != -1:
+                            chunk = data[idx:idx+250]
+                            m_enum = re.search(rb"\x02\x00[\x00-\xff]{2}\x04\x00\x00\x00([\x00-\x10])\x00\x00\x00", chunk)
+                            if m_enum:
+                                enum_id = int(m_enum.group(1)[0])
+                                sg["attachment_id"] = enum_id
+                                enum_names = {
+                                    0: "HeadCenter", 1: "CandideCenter", 2: "Chin",
+                                    3: "Forehead", 4: "LeftCheek", 5: "LeftEyeballCenter",
+                                    6: "LeftForehead", 7: "MouthCenter", 8: "RightCheek",
+                                    9: "RightEyeballCenter", 10: "RightForehead", 11: "TriangleBarycentric"
+                                }
+                                sg["attachment_point"] = enum_names.get(enum_id, f"Point_{enum_id}")
+        except Exception as e:
+            sg["error"] = str(e)
+
+        return sg
+
     def inspect_bundle(self) -> dict:
         """Deep inspects scene.scn and archive to detect 3D meshes, bindings, and slop"""
         try:
@@ -576,6 +656,10 @@ class LensSimulator:
             if self.analysis["total_mesh_bytes"] > 50000:
                 self.analysis["has_3d_mesh"] = True
 
+            # Extract scene graph
+            self.scene_graph = self.extract_scene_graph()
+            self.analysis["scene_graph"] = self.scene_graph
+
             # Check if this is merely a flat 2D background replacement
             prefetched = self.lens_data.get("asset_statuses", {}).get("prefetched_assets", {})
             pref_keys = list(prefetched.keys())
@@ -594,6 +678,7 @@ class LensSimulator:
         """
         Unified 1:1 anatomical anchor and scale computer.
         Strictly shared between still screenshots, motion video frames, and Before/After split.
+        Uses exact 3D scene graph transforms from scene.scn when available.
         """
         import math
         try:
@@ -632,41 +717,85 @@ class LensSimulator:
         eye_dist = float(math.hypot(re[0] - le[0], re[1] - le[1]))
         roll_angle = float(math.degrees(math.atan2(le[1] - re[1], le[0] - re[0])))
 
+        sg = getattr(self, "scene_graph", None) or self.extract_scene_graph()
+        has_sg = sg.get("has_scene_graph", False)
+        att_point = sg.get("attachment_point", "Forehead")
+        pos_off = sg.get("position_offset", [0.0, 7.3, 0.0])
+        scale_off = float(sg.get("scale_offset", 10.0))
+
+        # Standard human IPD is 6.3 cm
+        px_per_cm = eye_dist / 6.3
+        scale_mult = max(0.4, min(2.5, scale_off / 10.0))
+
         if is_full_helmet:
-            cur_w = int(eye_dist * 3.60)
-            cur_h = int(cur_w * aspect)
-            anc_x = eye_cx
-            anc_y = float(eye_cy - cur_h * 0.02)
+            base_w = int(eye_dist * 3.60 * scale_mult)
+            base_anc_x = eye_cx
+            base_anc_y = float(eye_cy - (base_w * aspect) * 0.02)
         elif is_visor:
-            cur_w = int(eye_dist * 2.35)
-            cur_h = min(240, int(cur_w * aspect))
-            anc_x = eye_cx
-            anc_y = eye_cy
+            base_w = int(eye_dist * 2.35 * scale_mult)
+            base_anc_x = eye_cx
+            base_anc_y = eye_cy
         elif is_tear:
-            cur_w = int(eye_dist * 2.20)
-            cur_h = min(380, int(cur_w * aspect))
-            anc_x = eye_cx
-            anc_y = float((eye_cy + mouth[1]) / 2.0)
+            base_w = int(eye_dist * 2.20 * scale_mult)
+            base_anc_x = eye_cx
+            base_anc_y = float((eye_cy + mouth[1]) / 2.0)
         elif is_brow_shell:
-            cur_w = int(eye_dist * (1.45 if eye_dist > 180 else 1.95))
-            cur_h = int(cur_w * aspect)
-            anc_x = float(fh[0])
-            anc_y = float(fh[1] - cur_h * 0.20)
+            base_w = int(eye_dist * (1.45 if eye_dist > 180 else 1.95) * scale_mult)
+            base_anc_x = float(fh[0])
+            base_anc_y = float(fh[1] - (base_w * aspect) * 0.20)
         elif is_halo:
-            cur_w = int(eye_dist * 2.50)
-            cur_h = int(cur_w * aspect)
-            anc_x = float(fh[0])
-            anc_y = float(fh[1] - cur_h * 0.65)
+            base_w = int(eye_dist * 2.50 * scale_mult)
+            base_anc_x = float(fh[0])
+            base_anc_y = float(fh[1] - (base_w * aspect) * 0.65)
         elif is_crown:
-            cur_w = int(eye_dist * 2.45)
-            cur_h = int(cur_w * aspect)
-            anc_x = float(fh[0])
-            anc_y = float(fh[1] - cur_h * 0.10)
+            base_w = int(eye_dist * 2.45 * scale_mult)
+            base_anc_x = float(fh[0])
+            base_anc_y = float(fh[1] - (base_w * aspect) * 0.10)
         else:
-            cur_w = int(eye_dist * 2.40)
-            cur_h = int(cur_w * aspect)
-            anc_x = float(fh[0])
-            anc_y = float(fh[1] - cur_h * 0.10)
+            base_w = int(eye_dist * 2.40 * scale_mult)
+            base_anc_x = float(fh[0])
+            base_anc_y = float(fh[1] - (base_w * aspect) * 0.10)
+
+        # Ground-truth scene graph projection
+        if has_sg:
+            # Anchor point translation
+            if att_point in ("MouthCenter", "Mouth"):
+                base_anc_x = float(mouth[0])
+                base_anc_y = float(mouth[1])
+            elif att_point in ("Chin",):
+                base_anc_x = float(mouth[0])
+                base_anc_y = float(mouth[1] + eye_dist * 0.45)
+            elif att_point in ("HeadCenter", "CandideCenter") and not (is_crown or is_halo):
+                base_anc_x = eye_cx
+                base_anc_y = eye_cy
+            elif att_point in ("LeftEyeballCenter",):
+                base_anc_x = float(le[0])
+                base_anc_y = float(le[1])
+            elif att_point in ("RightEyeballCenter",):
+                base_anc_x = float(re[0])
+                base_anc_y = float(re[1])
+
+            # Unit orientation vectors for head roll
+            u_rx = (le[0] - re[0]) / max(1e-5, eye_dist)
+            u_ry = (le[1] - re[1]) / max(1e-5, eye_dist)
+            u_ux = u_ry
+            u_uy = -u_rx
+
+            # Deviations from standard baseline positionOffset [0, 7.3, 0]
+            off_x_cm = pos_off[0]
+            off_y_cm = pos_off[1] - 7.3
+            anc_x = float(base_anc_x + (off_x_cm * px_per_cm * u_rx) + (off_y_cm * px_per_cm * u_ux))
+            anc_y = float(base_anc_y + (off_x_cm * px_per_cm * u_ry) + (off_y_cm * px_per_cm * u_uy))
+        else:
+            anc_x = base_anc_x
+            anc_y = base_anc_y
+
+        cur_w = base_w
+        cur_h = int(cur_w * aspect)
+        if is_visor:
+            cur_h = min(240, cur_h)
+        elif is_tear:
+            cur_h = min(380, cur_h)
 
         pos_x = int(anc_x - cur_w // 2)
         pos_y = int(anc_y - cur_h // 2)
@@ -690,7 +819,10 @@ class LensSimulator:
             "is_halo": is_halo,
             "is_crown": is_crown,
             "niche": niche,
-            "p_text": p_text
+            "p_text": p_text,
+            "scene_graph": sg,
+            "scale_offset": scale_off,
+            "attachment_point": att_point
         }
 
     def composite_ar_frame(self, pil_frame: Image.Image, landmarks: dict, t_prog: float = 0.0, frame_ratio: float = 0.0, draw_ui: bool = False, base_eye_dist: float = None, account_id: str = None) -> Image.Image:

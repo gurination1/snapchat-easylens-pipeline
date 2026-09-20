@@ -2,13 +2,13 @@ name: Snapchat EasyLens Autonomous Agent Pipeline
 
 on:
   schedule:
-    # Autonomous fleet pacing: runs every 4 hours at minute 27 (avoids :00 queue congestion)
-    # resolve_target_account.py enforces 6.5h cooldown per account & selects longest idle
-    - cron: '27 */4 * * *'
+    # Autonomous fleet pacing: runs every 2 hours at minute 27 (services 12 slots across 4 accounts)
+    # resolve_target_account.py enforces 7.0h cooldown per account (up to 3 publishes/day) & selects longest idle
+    - cron: '27 */2 * * *'
   workflow_dispatch:
     inputs:
       account_id:
-        description: 'Account Persona (auto: Fair Rotation, 1: Beasts/Mythic, 2: Cyber/Optics)'
+        description: 'Account Persona (auto: Fair Rotation, 1: Beasts/Mythic, 2: Cyber/Optics, 3: Comedy/Meme, 4: Luxury/Film)'
         required: true
         default: 'auto'
         type: choice
@@ -16,6 +16,8 @@ on:
           - 'auto'
           - '1'
           - '2'
+          - '3'
+          - '4'
       use_gemini:
         description: 'Use Gemini Autonomous Prompt Architect'
         type: boolean
@@ -117,10 +119,22 @@ jobs:
           SNAP_SSO_TOKEN_ACC_2: ${{ secrets.SNAP_SSO_TOKEN_ACC_2 }}
           SNAP_COOKIE_HEADER_ACC_2: ${{ secrets.SNAP_COOKIE_HEADER_ACC_2 }}
           SNAP_ACCOUNTS_COOKIE_ACC_2: ${{ secrets.SNAP_ACCOUNTS_COOKIE_ACC_2 }}
+          SNAP_USERNAME_ACC_3: ${{ secrets.SNAP_USERNAME_ACC_3 }}
+          SNAP_PASSWORD_ACC_3: ${{ secrets.SNAP_PASSWORD_ACC_3 }}
+          SNAP_SSO_TOKEN_ACC_3: ${{ secrets.SNAP_SSO_TOKEN_ACC_3 }}
+          SNAP_COOKIE_HEADER_ACC_3: ${{ secrets.SNAP_COOKIE_HEADER_ACC_3 }}
+          SNAP_ACCOUNTS_COOKIE_ACC_3: ${{ secrets.SNAP_ACCOUNTS_COOKIE_ACC_3 }}
+          SNAP_USERNAME_ACC_4: ${{ secrets.SNAP_USERNAME_ACC_4 }}
+          SNAP_PASSWORD_ACC_4: ${{ secrets.SNAP_PASSWORD_ACC_4 }}
+          SNAP_SSO_TOKEN_ACC_4: ${{ secrets.SNAP_SSO_TOKEN_ACC_4 }}
+          SNAP_COOKIE_HEADER_ACC_4: ${{ secrets.SNAP_COOKIE_HEADER_ACC_4 }}
+          SNAP_ACCOUNTS_COOKIE_ACC_4: ${{ secrets.SNAP_ACCOUNTS_COOKIE_ACC_4 }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS || 'gurination1@gmail.com' }}
           GMAIL_ADDRESS_ACC_2: ${{ secrets.GMAIL_ADDRESS_ACC_2 }}
           GMAIL_APP_PASSWORD_ACC_2: ${{ secrets.GMAIL_APP_PASSWORD_ACC_2 }}
+          GMAIL_ADDRESS_ACC_3: ${{ secrets.GMAIL_ADDRESS_ACC_3 }}
+          GMAIL_ADDRESS_ACC_4: ${{ secrets.GMAIL_ADDRESS_ACC_4 }}
           GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_API_KEYS: ${{ secrets.GEMINI_API_KEYS }}
@@ -131,8 +145,8 @@ jobs:
           PYTHONUNBUFFERED: "1"
         run: |
           export ACCOUNT_ID="${TARGET_ACCOUNT:-1}"
-          if [ "$ACCOUNT_ID" != "1" ] && [ "$ACCOUNT_ID" != "2" ]; then
-            echo "ERROR: Invalid deployment target Account #$ACCOUNT_ID. Fleet strictly enforces 2 accounts (1 or 2)." >&2
+          if [ "$ACCOUNT_ID" != "1" ] && [ "$ACCOUNT_ID" != "2" ] && [ "$ACCOUNT_ID" != "3" ] && [ "$ACCOUNT_ID" != "4" ]; then
+            echo "ERROR: Invalid deployment target Account #$ACCOUNT_ID. Fleet strictly enforces 4 accounts (1, 2, 3, or 4)." >&2
             exit 1
           fi
           echo "=== EXECUTING PIPELINE FOR TARGET ACCOUNT #$ACCOUNT_ID ==="

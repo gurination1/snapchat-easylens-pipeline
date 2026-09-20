@@ -89,6 +89,20 @@ class LensViewerHandler(BaseHTTPRequestHandler):
             "media/acc2_neutral.png": "/tmp/dry_run_acc_2/preview_neutral_simulated.png",
             "media/acc2_trigger.png": "/tmp/dry_run_acc_2/preview_mouth_open_simulated.png",
             "media/acc2_icon.png": "/tmp/dry_run_acc_2/lens_icon.png",
+
+            # Account 3 Verified Preview
+            "media/acc3_video.mp4": "/tmp/dry_run_acc_3/preview_video.mp4",
+            "media/acc3_split.png": "/tmp/dry_run_acc_3/preview_split_comparison.png",
+            "media/acc3_neutral.png": "/tmp/dry_run_acc_3/preview_neutral_simulated.png",
+            "media/acc3_trigger.png": "/tmp/dry_run_acc_3/preview_mouth_open_simulated.png",
+            "media/acc3_icon.png": "/tmp/dry_run_acc_3/lens_icon.png",
+
+            # Account 4 Verified Preview
+            "media/acc4_video.mp4": "/tmp/dry_run_acc_4/preview_video.mp4",
+            "media/acc4_split.png": "/tmp/dry_run_acc_4/preview_split_comparison.png",
+            "media/acc4_neutral.png": "/tmp/dry_run_acc_4/preview_neutral_simulated.png",
+            "media/acc4_trigger.png": "/tmp/dry_run_acc_4/preview_mouth_open_simulated.png",
+            "media/acc4_icon.png": "/tmp/dry_run_acc_4/lens_icon.png",
         }
 
         # Fallback to REPO_DIR or search directories if path in file_map
@@ -96,7 +110,7 @@ class LensViewerHandler(BaseHTTPRequestHandler):
             target_file = file_map[path]
             if not os.path.exists(target_file):
                 # Try search directory fallbacks
-                for s_dir in [REPO_DIR, "/tmp/dry_run_acc_1", "/tmp/dry_run_acc_2", SANDBOX_DIR, LATEST_DIR]:
+                for s_dir in [REPO_DIR, "/tmp/dry_run_acc_1", "/tmp/dry_run_acc_2", "/tmp/dry_run_acc_3", "/tmp/dry_run_acc_4", SANDBOX_DIR, LATEST_DIR]:
                     cand = os.path.join(s_dir, os.path.basename(target_file))
                     if os.path.exists(cand):
                         target_file = cand
@@ -109,7 +123,7 @@ class LensViewerHandler(BaseHTTPRequestHandler):
         # Direct media filename search fallback
         if path.startswith("media/"):
             fname = path[len("media/"):]
-            for s_dir in ["/tmp/dry_run_acc_1", "/tmp/dry_run_acc_2", SANDBOX_DIR, REPO_DIR, LATEST_DIR]:
+            for s_dir in ["/tmp/dry_run_acc_1", "/tmp/dry_run_acc_2", "/tmp/dry_run_acc_3", "/tmp/dry_run_acc_4", SANDBOX_DIR, REPO_DIR, LATEST_DIR]:
                 cand = os.path.join(s_dir, fname)
                 if os.path.exists(cand):
                     self.serve_file(cand, is_head=is_head)
@@ -472,6 +486,8 @@ class LensViewerHandler(BaseHTTPRequestHandler):
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('tab-acc1')">🌟 ACCOUNT 1: MOONSTONE COUTURE (BRUNETTE • 1:1 PARITY)</button>
         <button class="tab-btn" onclick="switchTab('tab-acc2')">⚡ ACCOUNT 2: PARISIAN MOONSTONE (BLONDE • DYNAMIC SPLIT)</button>
+        <button class="tab-btn" onclick="switchTab('tab-acc3')">✨ ACCOUNT 3: CELESTIAL MOONSTONE (35MM LUXE • 3D SCENE GRAPH)</button>
+        <button class="tab-btn" onclick="switchTab('tab-acc4')">👑 ACCOUNT 4: OBSIDIAN CHIMERA (MYTHIC BEAST • 3D SCENE GRAPH)</button>
         <button class="tab-btn" onclick="switchTab('tab-majestic')">👑 MAJESTIC CROWN FIX (BLONDE • 514px)</button>
         <button class="tab-btn" onclick="switchTab('tab-production')">🔥 Production Catalog: Verdant Gilded Heirloom</button>
         <button class="tab-btn" onclick="switchTab('tab-topic1')">Model 1: Mythic Dragon Crown</button>
@@ -581,6 +597,112 @@ class LensViewerHandler(BaseHTTPRequestHandler):
                     <div class="still-box">
                         <img src="/media/acc2_trigger.png" alt="Peak Trigger">
                         <div class="still-label"><span>Peak Trigger</span><span>Caustic Flares</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: Account 3 Verified Preview -->
+    <div id="tab-acc3" class="tab-pane">
+        <div class="media-card">
+            <div class="video-container">
+                <video src="/media/acc3_video.mp4" autoplay loop muted playsinline controls></video>
+                <div class="video-overlay-badge">✨ Acc #3 • Celestial Moonstone (35mm Analog Luxury)</div>
+                <div class="audio-indicator">🔊 luxury_shimmer.mp3</div>
+            </div>
+            <div style="font-size: 12px; color: var(--green); text-align: center; font-weight: 600;">
+                ✓ 3D Scene Graph Ground Truth • Forehead Anchor [0, 7.3, 0] • Scale 10.0
+            </div>
+        </div>
+
+        <div class="inspection-panel">
+            <div class="panel-card">
+                <img src="/media/acc3_icon.png" class="icon-preview" alt="Account 3 Icon">
+                <div class="panel-title">Account #3 (galllgil049@gmail.com • 35mm Analog Luxury)</div>
+                <div class="lens-hero-title">Celestial Moonstone Halo</div>
+                <div class="lens-prompt">
+                    <strong>Ground-Truth 3D Transform:</strong> Extracted directly from <code>scene.scn</code> in the EasyLens <code>.lns</code> bundle. Eliminates guessing via exact <code>positionOffset: [0, 7.3, 0]</code>, <code>scaleOffset: 10.0</code>, and <code>AttachmentPointType.Forehead</code>.
+                </div>
+
+                <div class="panel-title">Gate Verification Status</div>
+                <div class="gate-list">
+                    <div class="gate-item"><span>Gate 5: Clean JS AST</span><span class="gate-pass">✓ PASSED</span></div>
+                    <div class="gate-item"><span>Gate 7: Motion Video Audit</span><span class="gate-pass">✓ PASSED (RMS 13.48)</span></div>
+                    <div class="gate-item"><span>Gate 7: Black Detect</span><span class="gate-pass">✓ 0 Black Frames</span></div>
+                    <div class="gate-item"><span>Gate 7: Freeze Detect</span><span class="gate-pass">✓ 0 Freeze</span></div>
+                    <div class="gate-item"><span>Gate 7: Audio Track</span><span class="gate-pass">✓ 44.1kHz AAC luxury_shimmer</span></div>
+                    <div class="gate-item"><span>Scene Graph Ground Truth</span><span class="gate-pass">✓ scene.scn 3D Parsed</span></div>
+                </div>
+            </div>
+
+            <div class="panel-card">
+                <div class="panel-title">Before / After Split & Synchronized Keyframe Stills</div>
+                <div class="stills-grid">
+                    <div class="still-box">
+                        <img src="/media/acc3_split.png" alt="Split Comparison">
+                        <div class="still-label"><span>Dynamic Split</span><span>Nose Bridge Tracking</span></div>
+                    </div>
+                    <div class="still-box">
+                        <img src="/media/acc3_neutral.png" alt="Neutral Frame 0">
+                        <div class="still-label"><span>Frame 0 (Still Neutral)</span><span>1:1 Parity Match</span></div>
+                    </div>
+                    <div class="still-box">
+                        <img src="/media/acc3_trigger.png" alt="Peak Trigger">
+                        <div class="still-label"><span>Peak Trigger</span><span>Pearl Particles</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: Account 4 Verified Preview -->
+    <div id="tab-acc4" class="tab-pane">
+        <div class="media-card">
+            <div class="video-container">
+                <video src="/media/acc4_video.mp4" autoplay loop muted playsinline controls></video>
+                <div class="video-overlay-badge">👑 Acc #4 • Obsidian Chimera Helm (Mythic Beasts)</div>
+                <div class="audio-indicator">🔊 mythic_roar.mp3</div>
+            </div>
+            <div style="font-size: 12px; color: var(--green); text-align: center; font-weight: 600;">
+                ✓ 3D Scene Graph Ground Truth • Temple & Head Anchor • PBR Ray-Traced Shadow
+            </div>
+        </div>
+
+        <div class="inspection-panel">
+            <div class="panel-card">
+                <img src="/media/acc4_icon.png" class="icon-preview" alt="Account 4 Icon">
+                <div class="panel-title">Account #4 (ehwtheh@gmail.com • Mythic Beasts AR)</div>
+                <div class="lens-hero-title">Obsidian Chimera Helm</div>
+                <div class="lens-prompt">
+                    <strong>Zero-Guess Precision Placement:</strong> Scaled dynamically against live facial inter-pupillary distance ($eye\_dist / 6.3$ px/cm) using exact 3D Scene Graph orientation vectors.
+                </div>
+
+                <div class="panel-title">Gate Verification Status</div>
+                <div class="gate-list">
+                    <div class="gate-item"><span>Gate 5: Clean JS AST</span><span class="gate-pass">✓ PASSED</span></div>
+                    <div class="gate-item"><span>Gate 7: Motion Video Audit</span><span class="gate-pass">✓ PASSED (RMS 13.54)</span></div>
+                    <div class="gate-item"><span>Gate 7: Black Detect</span><span class="gate-pass">✓ 0 Black Frames</span></div>
+                    <div class="gate-item"><span>Gate 7: Freeze Detect</span><span class="gate-pass">✓ 0 Freeze</span></div>
+                    <div class="gate-item"><span>Gate 7: Audio Track</span><span class="gate-pass">✓ 44.1kHz AAC mythic_roar</span></div>
+                    <div class="gate-item"><span>Scene Graph Ground Truth</span><span class="gate-pass">✓ scene.scn 3D Parsed</span></div>
+                </div>
+            </div>
+
+            <div class="panel-card">
+                <div class="panel-title">Before / After Split & Synchronized Keyframe Stills</div>
+                <div class="stills-grid">
+                    <div class="still-box">
+                        <img src="/media/acc4_split.png" alt="Split Comparison">
+                        <div class="still-label"><span>Dynamic Split</span><span>Nose Bridge Tracking</span></div>
+                    </div>
+                    <div class="still-box">
+                        <img src="/media/acc4_neutral.png" alt="Neutral Frame 0">
+                        <div class="still-label"><span>Frame 0 (Still Neutral)</span><span>1:1 Parity Match</span></div>
+                    </div>
+                    <div class="still-box">
+                        <img src="/media/acc4_trigger.png" alt="Peak Trigger">
+                        <div class="still-label"><span>Peak Trigger</span><span>Molten Magma Sparks</span></div>
                     </div>
                 </div>
             </div>

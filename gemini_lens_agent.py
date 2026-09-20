@@ -599,20 +599,21 @@ def select_channel_archetype(account_id: str, history: list, exclude_archetypes:
     # 4. Haute Couture & 35mm Analog Luxury (Channel 4: 24k gold leaf, freshwater pearls, Portra 400 grain)
     # 5. Y3K Zero-G Liquid Chrome & Morphing Mercury (Channel 5: Mercury halos, ferrofluid, fluid ripples)
     # Enforces strict cross-genre rotation so the same account never publishes the same genre back-to-back,
-    # and diversifies away from the other account's most recent published topic.
-    other_aid = "2" if aid == "1" else "1"
-    other_acc_lenses = [x for x in history if str(x.get("account_id")) == other_aid]
-    other_acc_channel = None
-    if other_acc_lenses:
-        other_lens_text = (other_acc_lenses[-1].get("lens_name", "") + " " + other_acc_lenses[-1].get("prompt", "")).lower()
-        for a in all_archetypes:
-            if any(tok in other_lens_text for tok in a["signature_tokens"]):
-                other_acc_channel = a["channel_id"]
+    # and diversifies away from the fleet's most recently published topic.
+    most_recent_other_channel = None
+    for other_x in reversed(history):
+        if str(other_x.get("account_id")) != aid:
+            other_text = (other_x.get("lens_name", "") + " " + other_x.get("prompt", "")).lower()
+            for a in all_archetypes:
+                if any(tok in other_text for tok in a["signature_tokens"]):
+                    most_recent_other_channel = a["channel_id"]
+                    break
+            if most_recent_other_channel:
                 break
 
     candidates = [a for a in all_archetypes if a["channel_id"] != last_acc_channel and a["id"] not in excluded]
-    if other_acc_channel:
-        distinct_candidates = [a for a in candidates if a["channel_id"] != other_acc_channel]
+    if most_recent_other_channel:
+        distinct_candidates = [a for a in candidates if a["channel_id"] != most_recent_other_channel]
         if distinct_candidates:
             candidates = distinct_candidates
     if not candidates:

@@ -20,8 +20,8 @@ from gemini_lens_agent import (
 SSO_TOKEN = os.getenv("SNAP_SSO_TOKEN")
 COOKIE_HEADER = os.getenv("SNAP_COOKIE_HEADER", "")
 ACCOUNT_ID = str(os.getenv("ACCOUNT_ID", "1"))
-if ACCOUNT_ID not in ("1", "2"):
-    raise ValueError(f"Invalid ACCOUNT_ID '{ACCOUNT_ID}'. Snapchat fleet strictly enforces Account 1 and Account 2 only.")
+if ACCOUNT_ID not in ("1", "2", "3", "4", "5"):
+    raise ValueError(f"Invalid ACCOUNT_ID '{ACCOUNT_ID}'. Snapchat fleet strictly enforces Accounts 1, 2, 3, 4, 5.")
 USE_GEMINI = os.getenv("USE_GEMINI", "true").lower() not in ("false", "0", "no")
 CUSTOM_INSTRUCTIONS = os.getenv("CUSTOM_INSTRUCTIONS", "")
 
@@ -228,8 +228,8 @@ AUTO_PUBLISH = os.getenv("AUTO_PUBLISH", "false").lower() in ("true", "1", "yes"
 
 def resolve_account_auth(account_id: str):
     aid = str(account_id)
-    if aid not in ("1", "2"):
-        raise ValueError(f"Invalid account ID '{aid}'. Fleet strictly enforces Account 1 and Account 2 only.")
+    if aid not in ("1", "2", "3", "4", "5"):
+        raise ValueError(f"Invalid account ID '{aid}'. Fleet strictly enforces Accounts 1, 2, 3, 4, 5.")
     sso_token = (
         os.getenv(f"SNAP_SSO_TOKEN_ACC_{aid}")
         or os.getenv(f"SNAP_SSO_TOKEN_{aid}")
@@ -258,9 +258,9 @@ def resolve_account_auth(account_id: str):
     # Check if credentials exist for the targeted account
     has_creds = bool(sso_token or username or (aid == "1" and os.getenv("SNAP_SSO_TOKEN")))
     if not has_creds:
-        # Dynamically discover configured active accounts (strictly 1..2)
+        # Dynamically discover configured active accounts (strictly 1..5)
         active_accounts = []
-        for cand in ["1", "2"]:
+        for cand in ["1", "2", "3", "4", "5"]:
             c_tok = os.getenv(f"SNAP_SSO_TOKEN_ACC_{cand}") or (os.getenv("SNAP_SSO_TOKEN") if cand == "1" else None)
             c_usr = os.getenv(f"SNAP_USERNAME_ACC_{cand}") or (os.getenv("SNAP_USERNAME") if cand == "1" else None)
             if c_tok or c_usr:

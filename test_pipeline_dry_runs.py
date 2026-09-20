@@ -98,11 +98,11 @@ def run_pipeline_dry_run_for_account(acc_id: str, run_index: int):
 
 def main():
     print("=" * 65)
-    print("STARTING SNAPCHAT PIPELINE DRY-RUN SUITE (2 REAL ACCOUNTS: 1 & 2)")
+    print("STARTING SNAPCHAT PIPELINE DRY-RUN SUITE (4 ACCOUNTS: 1, 2, 3, 4)")
     print("=" * 65)
 
     results = {}
-    for acc in ["1", "2"]:
+    for acc in ["1", "2", "3", "4"]:
         try:
             passed = run_pipeline_dry_run_for_account(acc, 1)
             results[acc] = "PASSED"
@@ -111,7 +111,7 @@ def main():
             results[acc] = f"FAILED: {e}"
 
     print("\n" + "=" * 65)
-    print("2-ACCOUNT DRY-RUN SUMMARY:")
+    print("4-ACCOUNT DRY-RUN SUMMARY:")
     for acc, status in results.items():
         print(f"  Account #{acc}: {status}")
     print("=" * 65)
