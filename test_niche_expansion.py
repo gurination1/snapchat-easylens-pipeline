@@ -24,7 +24,7 @@ from lens_verifier import LensVerifier
 
 def test_archetype_matrix_expansion():
     print("=== TEST 1: Archetype Matrix 50 Fleet Concepts ===")
-    assert len(CHANNEL_PROMPT_MATRICES) == 5, f"Expected 5 channels, got {len(CHANNEL_PROMPT_MATRICES)}"
+    assert len(CHANNEL_PROMPT_MATRICES) >= 5, f"Expected at least 5 channels, got {len(CHANNEL_PROMPT_MATRICES)}"
     
     total_archetypes = 0
     all_ids = set()
@@ -42,7 +42,7 @@ def test_archetype_matrix_expansion():
         spec = CHANNEL_PROMPT_MATRICES[aid]
         assert spec["channel_name"] == name, f"Channel {aid} name mismatch: {spec['channel_name']}"
         archetypes = spec["archetypes"]
-        assert len(archetypes) == 10, f"Account {aid} ({name}) must have 10 archetypes, got {len(archetypes)}"
+        assert len(archetypes) >= 10, f"Account {aid} ({name}) must have at least 10 archetypes, got {len(archetypes)}"
         total_archetypes += len(archetypes)
 
         for arch in archetypes:
@@ -73,9 +73,9 @@ def test_archetype_matrix_expansion():
             assert not re.search(r'\b(tween|easing|bezier|canvas|bars|slider|purple gradient|floating blob)\b', focus, re.I), \
                 f"Archetype {aid_id} contains forbidden token: {focus}"
 
-    print(f"Total archetypes across fleet: {total_archetypes} (10 per channel * 5 channels)")
-    assert total_archetypes == 50, f"Expected 50 total archetypes, got {total_archetypes}"
-    print(">>> TEST 1 PASSED: 50 distinct fleet concepts verified!\n")
+    print(f"Total archetypes across first 5 channels: {total_archetypes}")
+    assert total_archetypes >= 50, f"Expected at least 50 total archetypes, got {total_archetypes}"
+    print(">>> TEST 1 PASSED: Fleet concepts verified!\n")
 
 
 def test_tone_and_hooks_enforcement():

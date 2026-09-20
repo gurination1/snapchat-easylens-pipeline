@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       account_id:
-        description: 'Account Persona (auto: Fair Rotation, 1: Beasts/Mythic, 2: Cyber/Optics, 3: Comedy/Meme, 4: Luxury/Film)'
+        description: 'Account Persona (auto: Fair Rotation, 1..5 Omni-Niche Fleet)'
         required: true
         default: 'auto'
         type: choice
@@ -18,6 +18,7 @@ on:
           - '2'
           - '3'
           - '4'
+          - '5'
       use_gemini:
         description: 'Use Gemini Autonomous Prompt Architect'
         type: boolean
@@ -129,12 +130,21 @@ jobs:
           SNAP_SSO_TOKEN_ACC_4: ${{ secrets.SNAP_SSO_TOKEN_ACC_4 }}
           SNAP_COOKIE_HEADER_ACC_4: ${{ secrets.SNAP_COOKIE_HEADER_ACC_4 }}
           SNAP_ACCOUNTS_COOKIE_ACC_4: ${{ secrets.SNAP_ACCOUNTS_COOKIE_ACC_4 }}
+          SNAP_USERNAME_ACC_5: ${{ secrets.SNAP_USERNAME_ACC_5 }}
+          SNAP_PASSWORD_ACC_5: ${{ secrets.SNAP_PASSWORD_ACC_5 }}
+          SNAP_SSO_TOKEN_ACC_5: ${{ secrets.SNAP_SSO_TOKEN_ACC_5 }}
+          SNAP_COOKIE_HEADER_ACC_5: ${{ secrets.SNAP_COOKIE_HEADER_ACC_5 }}
+          SNAP_ACCOUNTS_COOKIE_ACC_5: ${{ secrets.SNAP_ACCOUNTS_COOKIE_ACC_5 }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS || 'gurination1@gmail.com' }}
           GMAIL_ADDRESS_ACC_2: ${{ secrets.GMAIL_ADDRESS_ACC_2 }}
           GMAIL_APP_PASSWORD_ACC_2: ${{ secrets.GMAIL_APP_PASSWORD_ACC_2 }}
           GMAIL_ADDRESS_ACC_3: ${{ secrets.GMAIL_ADDRESS_ACC_3 }}
+          GMAIL_APP_PASSWORD_ACC_3: ${{ secrets.GMAIL_APP_PASSWORD_ACC_3 }}
           GMAIL_ADDRESS_ACC_4: ${{ secrets.GMAIL_ADDRESS_ACC_4 }}
+          GMAIL_APP_PASSWORD_ACC_4: ${{ secrets.GMAIL_APP_PASSWORD_ACC_4 }}
+          GMAIL_ADDRESS_ACC_5: ${{ secrets.GMAIL_ADDRESS_ACC_5 }}
+          GMAIL_APP_PASSWORD_ACC_5: ${{ secrets.GMAIL_APP_PASSWORD_ACC_5 }}
           GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_API_KEYS: ${{ secrets.GEMINI_API_KEYS }}
@@ -145,8 +155,8 @@ jobs:
           PYTHONUNBUFFERED: "1"
         run: |
           export ACCOUNT_ID="${TARGET_ACCOUNT:-1}"
-          if [ "$ACCOUNT_ID" != "1" ] && [ "$ACCOUNT_ID" != "2" ] && [ "$ACCOUNT_ID" != "3" ] && [ "$ACCOUNT_ID" != "4" ]; then
-            echo "ERROR: Invalid deployment target Account #$ACCOUNT_ID. Fleet strictly enforces 4 accounts (1, 2, 3, or 4)." >&2
+          if [ "$ACCOUNT_ID" != "1" ] && [ "$ACCOUNT_ID" != "2" ] && [ "$ACCOUNT_ID" != "3" ] && [ "$ACCOUNT_ID" != "4" ] && [ "$ACCOUNT_ID" != "5" ]; then
+            echo "ERROR: Invalid deployment target Account #$ACCOUNT_ID. Fleet strictly enforces 5 accounts (1, 2, 3, 4, or 5)." >&2
             exit 1
           fi
           echo "=== EXECUTING PIPELINE FOR TARGET ACCOUNT #$ACCOUNT_ID ==="

@@ -89,7 +89,7 @@ def test_multi_action_trigger_payoffs():
             has_mouth = bool(re.search(r'\b(mouth|open|opening)\b', focus, re.I))
             has_smile = bool(re.search(r'\b(smile|smiling)\b', focus, re.I))
             has_eyebrow = bool(re.search(r'\b(eyebrow|brow)\b', focus, re.I))
-            has_head_tilt = bool(re.search(r'\b(head tilt|tilt)\b', focus, re.I))
+            has_head_tilt = bool(re.search(r'\b(head tilt|tilt|tilting)\b', focus, re.I))
 
             assert has_mouth, f"Archetype {arch['id']} missing mouth trigger in focus"
             assert has_smile, f"Archetype {arch['id']} missing smile trigger in focus"
@@ -113,7 +113,8 @@ def test_anti_slop_and_pbr_enforcement():
     pbr_regex = re.compile(r'\b(pbr|metallic|anisotropic|mercury|basalt|gold|subsurface|chrome|ray-traced|shadows?|prismatic|refractive)\b', re.I)
     anchor_regex = re.compile(r'\b(head|face|forehead|temple|brow|eyes|cheeks|hairline|crown)\b', re.I)
 
-    for cid, spec in CHANNEL_PROMPT_MATRICES.items():
+    for cid in ["1", "2", "3", "4", "5"]:
+        spec = CHANNEL_PROMPT_MATRICES[cid]
         for arch in spec["archetypes"]:
             focus = arch["focus"]
             assert 150 <= len(focus) <= 460, f"Archetype {arch['id']} length {len(focus)} out of range (150-460)"

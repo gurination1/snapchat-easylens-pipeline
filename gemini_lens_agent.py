@@ -248,7 +248,7 @@ CHANNEL_PROMPT_MATRICES = {
                 "id": "gigachad_jawline_morph",
                 "name": "Gigachad Sculpted Jawline Morph & Crimson Laser Gaze",
                 "signature_tokens": ['gigachad', 'sculpted jawline', 'laser gaze', 'sigma', 'marble cheekbones'],
-                "focus": "Comedic classical Grecian chiseled marble jawline and high cheekbone morph anchoring seamlessly to face. PBR micro-sculpted stone with dramatic chiaroscuro side lighting. Opening mouth triggers hilarious ultra-chiseled chin flex with flashing red laser beam eye glints and low-bass rumble; smiling triggers gleaming white tooth-twinkle starburst; eyebrow raise sharpens hyper-defined jaw contours; head tilt catches dramatic rim shadows. Viral meme powerhouse, zero UI.",
+                "focus": "Comedic classical Grecian chiseled marble jawline and high cheekbone morph anchoring seamlessly to face. PBR micro-sculpted stone with dramatic chiaroscuro side lighting. Opening mouth triggers hilarious ultra-chiseled chin flex with flashing red laser beam eye glints; smiling triggers gleaming white tooth-twinkle starburst; eyebrow raise sharpens hyper-defined jaw contours; head tilt catches dramatic rim shadows. Viral meme powerhouse, zero UI.",
                 "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
                 "visual_hook": "Viral meme reaction: instant Gigachad Sculpted Jawline morph detonates hilarious sigma transformation on mouth open."
             },
@@ -551,23 +551,23 @@ CHANNEL_PROMPT_MATRICES = {
                 "id": "reaction_timing_meter",
                 "name": "Reaction Reflex Timing Bar & Jackpot Green Zone",
                 "signature_tokens": ['timing bar', 'reaction meter', 'green zone', 'jackpot bullseye'],
-                "focus": "Curved holographic precision reflex timing bar floating across forehead with rapidly oscillating neon laser needle. 3-point contrast lighting. Blinking or smiling freezes needle instantly—nailing the center green zone detonates giant celebratory golden trophy confetti and stadium airhorn particles; opening mouth resets needle with spark shockwave; eyebrow raise speeds up needle oscillation. Viral reflex challenge, zero UI.",
+                "focus": "Curved holographic precision reflex timing bar floating across forehead with rapidly oscillating neon laser needle. 3-point contrast lighting. Smiling freezes needle instantly; head tilt nails the center green zone to detonate giant celebratory golden confetti; opening mouth resets needle with spark shockwave; eyebrow raise speeds up needle oscillation. Viral reflex challenge, zero UI.",
                 "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
                 "visual_hook": "Addictive gamified AR: high-stakes Reaction Reflex Timing Bar hooks competitive players to hit the bullseye in 0.2s."
             },
             {
                 "id": "bunny_cloud_jumper",
                 "name": "Flappy Bunny Cloud Jumper & Pastel Rainbow Trails",
-                "signature_tokens": ['bunny jumper', 'cloud jumper', 'flappy hop', 'marshmallow clouds'],
-                "focus": "Whimsical sculpted 3D pastel bunny avatar hopping across floating marshmallow cloud platforms above brow. Eyebrow raise propels bunny hopping upward with bouncing pastel rainbow trails; opening mouth summons giant golden carrot feast with starburst particles; smiling triggers joyful confetti shower; head tilt steers bunny left or right between cloud platforms. Charming addictive casual AR game, zero UI.",
+                "signature_tokens": ['bunny jumper', 'cloud jumper', 'flappy game', 'rainbow trail'],
+                "focus": "Floating pastel cloud platform game anchored across brow with hopping 3D animated bunny. Head tilt left or right steers bunny between cloud platforms; opening mouth triggers super-jump spring with rainbow sparkles; smiling collects floating golden stars with melodic chime cascades; eyebrow raise changes cloud theme. Addictive retro platformer, zero UI.",
                 "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
-                "visual_hook": "Addictive gamified AR: Flappy Bunny Cloud Jumper delivers irresistible cute casual gameplay with eyebrow-jump physics."
+                "visual_hook": "Addictive gamified AR: Flappy Bunny Cloud Jumper delivers addictive infinite-jumper mechanics with head-tilt steering."
             },
             {
                 "id": "oracle_balance_scales",
                 "name": "Gold Celestial Balance Scales & This-or-That Fortune",
                 "signature_tokens": ['balance scales', 'this or that', 'oracle fortune', 'celestial scale'],
-                "focus": "Ornate beaten 24k gold celestial balance scales resting regally on brow with glowing sun and moon platters. Tilting head left or right tips the scales to choose comedic viral dilemmas, unleashing bursting celestial auras and floating ancient scrolls on the winning side; opening mouth rebalances scales with radiant solar ray burst; smiling rings harmonic brass chimes; eyebrow raise levels scales evenly. Interactive choice game.",
+                "focus": "Ornate beaten 24k gold celestial balance scales resting regally on brow with glowing sun and moon platters. Head tilt left or right tips the scales to choose comedic viral dilemmas, unleashing bursting celestial auras and floating ancient scrolls on the winning side; opening mouth rebalances scales with radiant solar ray burst; smiling rings harmonic brass chimes; eyebrow raise levels scales evenly. Interactive choice game.",
                 "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
                 "visual_hook": "Addictive gamified AR: Gold Celestial Balance Scales turns head tilts into interactive viral decision-making gameplay."
             },
@@ -904,7 +904,7 @@ CHANNEL_PROMPT_MATRICES = {
                 "id": "aura_energy_scanner",
                 "name": "Cosmic Energy Aura Scanner & Chromatic Mood Halo",
                 "signature_tokens": ['aura scanner', 'energy scanner', 'mood halo', 'biometric aura', 'chromatic aura'],
-                "focus": "Futuristic holographic biometric scanning bar oscillating across face reading emotional wavelength. Smiling snaps the scanner to reveal the user's authentic vibrant aura color (Royal Violet, Electric Cyan, or Solar Gold) with billowing full-body energy clouds; opening mouth discharges rainbow energy shockwave; eyebrow raise re-scans aura. Viral personality predictor, zero UI.",
+                "focus": "Futuristic holographic biometric scanning bar oscillating across face reading emotional wavelength. Smiling snaps scanner to reveal user's authentic aura color with billowing energy clouds; head tilt cycles chromatic energy frequencies; opening mouth discharges rainbow energy shockwave; eyebrow raise re-scans aura. Viral personality predictor, zero UI.",
                 "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
                 "visual_hook": "Viral interactive game: Cosmic Energy Aura Scanner visualizes personality in dynamic radiant color."
             },
@@ -912,7 +912,7 @@ CHANNEL_PROMPT_MATRICES = {
                 "id": "this_or_that_decision_spinner",
                 "name": "This or That Dual Neon Decision Pillars & Ticker Arrow",
                 "signature_tokens": ['this or that', 'decision spinner', 'neon pillars', 'ticker arrow', 'choice cards'],
-                "focus": "Floating twin neon decision cards anchored to left and right temples with oscillating center compass needle. Tilting head left or right decisively slams needle into chosen option, detonating winner particle explosions and party horn streamers; opening mouth clears choice for next round; smiling triggers double-win jackpot. Social decision game, zero UI.",
+                "focus": "Floating twin neon decision cards anchored to left and right temples with oscillating center compass needle. Head tilt left or right decisively slams needle into chosen option, detonating winner particle explosions; opening mouth clears choice for next round; smiling triggers jackpot; eyebrow raise flips options. Social decision game, zero UI.",
                 "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
                 "visual_hook": "Viral interactive game: This or That Decision Pillars turns everyday dilemmas into high-stakes head-tilt choices."
             },
@@ -920,7 +920,7 @@ CHANNEL_PROMPT_MATRICES = {
                 "id": "spirit_animal_totem_wheel",
                 "name": "Spinning Spirit Animal Totem Wheel & Mythic Avatar",
                 "signature_tokens": ['totem wheel', 'spirit animal', 'totem disc', 'animal avatar', 'spinning totem'],
-                "focus": "Carved gilded totem disc spinning above hairline showing mythical spirit avatars. Smiling halts the spinner on user's spirit animal, instantly morphing user brow with matching 3D ears/horns and spirit sparkles; opening mouth unleashes animal spirit roar aura; eyebrow raise spins totem again. High viral replayability, zero UI.",
+                "focus": "Carved gilded totem disc spinning above hairline showing mythical spirit avatars. Smiling halts spinner on user's spirit animal, morphing brow with matching 3D ears and sparkles; head tilt rotates camera perspective; opening mouth unleashes animal spirit roar aura; eyebrow raise spins totem again. High viral replayability, zero UI.",
                 "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
                 "visual_hook": "Viral interactive game: Spinning Spirit Animal Totem Wheel reveals user spirit animal with instant 3D metamorphosis."
             }
