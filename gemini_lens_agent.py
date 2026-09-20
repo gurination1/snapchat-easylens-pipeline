@@ -1094,18 +1094,31 @@ def select_channel_archetype(account_id: str, history: list, exclude_archetypes:
     if not candidates:
         candidates = [a for a in all_archetypes if a["id"] not in excluded] or all_archetypes
 
-    # Deterministic LRU selection:
-    # 1. Least used across fleet
-    # 2. Least used by this account
-    # 3. Oldest timestamp ('' is never used, hence oldest)
+    # Calculate category publication counts for account and entire fleet
+    cat_acc_counts = {cid: 0 for cid in CHANNEL_PROMPT_MATRICES}
+    cat_fleet_counts = {cid: 0 for cid in CHANNEL_PROMPT_MATRICES}
+    for a in all_archetypes:
+        cat_acc_counts[a["channel_id"]] += acc_counts[a["id"]]
+        cat_fleet_counts[a["channel_id"]] += fleet_counts[a["id"]]
+
+    # Category-First Deterministic LRU Selection:
+    # 1. Least used CATEGORY by this account (ensures every account rotates through all 12 categories equally)
+    # 2. Least used CATEGORY across entire fleet
+    # 3. Least used archetype across fleet
+    # 4. Least used archetype on this account
+    # 5. Oldest publication timestamp
+    # 6. Uniform hash distribution across remaining candidates
+    import hashlib
     selected = min(
         candidates,
         key=lambda a: (
+            cat_acc_counts[a["channel_id"]],
+            cat_fleet_counts[a["channel_id"]],
             fleet_counts[a["id"]],
             acc_counts[a["id"]],
             fleet_last_ts[a["id"]] != "",
             fleet_last_ts[a["id"]],
-            a["id"]
+            int(hashlib.md5((aid + str(len(history)) + a["id"]).encode()).hexdigest()[:8], 16)
         )
     )
 

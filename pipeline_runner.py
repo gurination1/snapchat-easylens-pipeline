@@ -314,6 +314,22 @@ def main():
 
     print(f"Logged in as: {user.get('displayName')} (@{user.get('username')})")
 
+    # Step 1B: Autonomous Snapchat Monetization & Payout Terms Approval
+    if os.getenv("AUTO_APPROVE_MONETIZATION", "true").lower() in ("true", "1", "yes"):
+        try:
+            from approve_snap_monetization import approve_account_monetization
+            m_res = approve_account_monetization(
+                account_id=ACCOUNT_ID,
+                cookie_str=client.cookie_header or client.accounts_cookie,
+                ticket=client.sso_token,
+                user=user
+            )
+            payout_ok = m_res.get("LENS_CREATOR_PAYOUT_TOS", False)
+            ildg_ok = m_res.get("ILDG_TOS", False)
+            print(f"[MONETIZATION STATUS] Account #{ACCOUNT_ID}: Payout TOS={payout_ok} | ILDG TOS={ildg_ok}")
+        except Exception as m_err:
+            print(f"[MONETIZATION CHECK WARN] Non-fatal monetization approval notice: {m_err}")
+
     # Determine per-account static fallback defaults via LRU rotation against published_lenses.json
     active_fallback = select_lru_fallback(ACCOUNT_ID)
     static_prompt = os.getenv("LENS_PROMPT") or active_fallback["prompt"]
@@ -503,12 +519,15 @@ def main():
         status_data = None
         if checkpoint_id:
             print("\n=== STEP 7: MONITORING SNAPCODE & SUBMISSION STATUS ===")
-            status_data = client.get_publish_status(checkpoint_id)
-            if status_data:
-                print(f"[SUCCESS] Published Lens ID: {status_data.get('lens_central_lens_id')}")
-                print(f"[SUCCESS] Catalog Status: {status_data.get('status')}")
-                with open("publish_status.json", "w") as f:
-                    json.dump(status_data, f, indent=2)
+            try:
+                status_data = client.get_publish_status(checkpoint_id, max_wait_sec=45)
+                if status_data:
+                    print(f"[SUCCESS] Published Lens ID: {status_data.get('lens_central_lens_id')}")
+                    print(f"[SUCCESS] Catalog Status: {status_data.get('status')}")
+                    with open("publish_status.json", "w") as f:
+                        json.dump(status_data, f, indent=2)
+            except Exception as mon_err:
+                print(f"[STATUS MONITOR WARN] Polling timed out or network error ({mon_err}), but lens was already submitted successfully!")
 
         # Record into deduplication state file (persisted in git like yt-auto)
         import time

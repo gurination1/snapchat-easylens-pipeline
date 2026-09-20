@@ -387,17 +387,20 @@ class EasyLensClient:
         print(f"[PUBLISH SUBMITTED] Response: {json.dumps(data)}")
         return data
 
-    def get_publish_status(self, checkpoint_id: str, max_wait_sec: int = 120):
+    def get_publish_status(self, checkpoint_id: str, max_wait_sec: int = 45):
         url = f"{AILC_BASE}/assistant/me/lenses?page_number=1&page_size=20&filter_by=submitted"
         start = time.time()
         while time.time() - start < max_wait_sec:
-            res = self._request_with_retry("GET", url, timeout=15)
-            if res.status_code == 200:
-                data = res.json()
-                for item in data.get("items", []):
-                    if item.get("checkpoint_id") == checkpoint_id:
-                        status = item.get("status")
-                        print(f"[PUBLISH STATUS] Status: {status}, Lens ID: {item.get('lens_central_lens_id')}")
-                        return item
+            try:
+                res = self.session.get(url, timeout=10)
+                if res.status_code == 200:
+                    data = res.json()
+                    for item in data.get("items", []):
+                        if item.get("checkpoint_id") == checkpoint_id:
+                            status = item.get("status")
+                            print(f"[PUBLISH STATUS] Status: {status}, Lens ID: {item.get('lens_central_lens_id')}")
+                            return item
+            except Exception as e:
+                print(f"[STATUS CHECK WARN] Polling transient error: {e}")
             time.sleep(4)
         return None

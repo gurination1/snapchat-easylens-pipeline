@@ -502,15 +502,64 @@ class LensSimulator:
             return im
 
         elif any(w in p_lower for w in ["cloud", "crying", "teardrop", "soap-opera", "ghibli", "cumulus", "stormcloud", "raincloud"]) or niche == "comedy":
-            w, h = 500, 240
-            im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            w, h = 520, 260
+            cx = w // 2
+            try:
+                import numpy as np
+                import cv2
+
+                im_base = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+                d_b = ImageDraw.Draw(im_base)
+                # Volumetric cumulus cloud cluster geometry
+                d_b.ellipse([30, 70, 490, 230], fill=(230, 240, 252, 255))
+                d_b.ellipse([80, 40, 260, 190], fill=(240, 248, 255, 255))
+                d_b.ellipse([210, 25, 410, 185], fill=(245, 250, 255, 255))
+                d_b.ellipse([140, 20, 310, 160], fill=(255, 255, 255, 255))
+                d_b.ellipse([330, 50, 480, 195], fill=(235, 242, 252, 255))
+
+                arr = np.array(im_base)
+                alpha = arr[:, :, 3]
+                mask = (alpha > 0).astype(np.uint8)
+
+                dist = cv2.distanceTransform(mask, cv2.DIST_L2, 5)
+                dist_smooth = cv2.GaussianBlur(dist, (11, 11), 0)
+                dist_norm = np.clip(dist_smooth / 20.0, 0.0, 1.0)
+
+                gx = cv2.Sobel(dist_norm, cv2.CV_32F, 1, 0, ksize=5)
+                gy = cv2.Sobel(dist_norm, cv2.CV_32F, 0, 1, ksize=5)
+                n_len = np.sqrt(gx**2 + gy**2 + 0.35)
+                nx, ny, nz = gx / n_len, gy / n_len, 0.6 / n_len
+
+                # Sunlight lighting (warm 2800K directional key + 6500K cool rim)
+                l1 = np.array([-0.3, -0.6, 0.74], dtype=np.float32)
+                l1 /= np.linalg.norm(l1)
+                diff1 = np.clip(nx * l1[0] + ny * l1[1] + nz * l1[2], 0.0, 1.0)
+                h1 = (l1 + np.array([0, 0, 1])) / np.linalg.norm(l1 + np.array([0, 0, 1]))
+                spec1 = np.clip(nx * h1[0] + ny * h1[1] + nz * h1[2], 0.0, 1.0) ** 14
+
+                ao = np.clip(dist_norm * 0.55 + 0.45, 0.0, 1.0)
+                cloud_base = np.array([195, 215, 240], dtype=np.float32)
+                cloud_high = np.array([255, 255, 255], dtype=np.float32)
+
+                rgb = np.zeros((h, w, 3), dtype=np.float32)
+                for c in range(3):
+                    rgb[:, :, c] = (cloud_base[c] * 0.3 + cloud_high[c] * 0.7 * diff1) * ao + 180 * spec1
+
+                rgb = np.clip(rgb, 0, 255).astype(np.uint8)
+                im = Image.fromarray(np.dstack([rgb, alpha]))
+            except Exception:
+                im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+
             d = ImageDraw.Draw(im)
-            d.ellipse([30, 60, 470, 220], fill=(220, 235, 250, 240), outline=(255, 255, 255, 255), width=3)
-            d.ellipse([90, 30, 270, 180], fill=(235, 245, 255, 245))
-            d.ellipse([230, 20, 410, 175], fill=(240, 248, 255, 245))
-            for tx, ty, trad in [(140, 205, 15), (250, 215, 18), (360, 205, 15)]:
-                d.ellipse([tx - trad, ty - trad, tx + trad, ty + trad], fill=(80, 190, 255, 240), outline=(255, 255, 255, 240), width=2)
-                d.ellipse([tx - trad//3, ty - trad//2, tx, ty - trad//5], fill=(255, 255, 255, 250))
+            # Add caustic teardrop gems and floating golden coin accents
+            for tx, ty, trad in [(140, 210, 16), (cx, 220, 18), (380, 210, 16)]:
+                d.ellipse([tx - trad - 2, ty - trad - 2, tx + trad + 2, ty + trad + 2], fill=(50, 140, 220, 200))
+                d.ellipse([tx - trad, ty - trad, tx + trad, ty + trad], fill=(80, 195, 255, 250), outline=(230, 250, 255, 255), width=2)
+                d.ellipse([tx - trad//3, ty - trad//2, tx, ty - trad//5], fill=(255, 255, 255, 255))
+            # Golden coin stars
+            for cx_c, cy_c, rad in [(cx - 90, 190, 12), (cx + 90, 190, 12)]:
+                d.ellipse([cx_c - rad, cy_c - rad, cx_c + rad, cy_c + rad], fill=(255, 215, 50, 250), outline=(255, 245, 140, 255), width=2)
+                d.ellipse([cx_c - rad//3, cy_c - rad//3, cx_c, cy_c], fill=(255, 255, 255, 230))
             return im
 
         elif any(w in p_lower for w in ["pearl", "baroque", "filigree", "champagne", "couture", "gold leaf", "diamond", "haute", "luxe", "moonstone", "tiara", "coronal", "heirloom", "emerald"]) or niche == "luxury":

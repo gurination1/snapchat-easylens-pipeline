@@ -1,0 +1,415 @@
+#!/usr/bin/env python3
+"""
+Snapchat Autonomous Monetization & Payout Approver
+Automates:
+1. Session authentication for target account(s)
+2. Loading My Lenses (https://my-lenses.snapchat.com)
+3. Executing GraphQL SetTosLatestAcceptedVersion for:
+   - LENS_CREATOR_PAYOUT_TOS (Lens Creator Rewards / Payout Terms)
+   - ILDG_TOS (Interactive Lens Developer Guidelines)
+4. Dismissing / Accepting on-screen Terms Modals & Payout Banners
+5. Verifying acceptance status via GetTos query
+"""
+
+import os
+import sys
+import json
+import time
+import asyncio
+import argparse
+import requests
+from playwright.async_api import async_playwright
+
+try:
+    from playwright_stealth import stealth_async
+except ImportError:
+    stealth_async = None
+
+from snap_auth_automator import (
+    obtain_valid_snap_session,
+    human_type,
+    human_click,
+    get_gemini_api_keys
+)
+
+GQL_SET_TOS = """
+mutation SetTosLatestAcceptedVersion($key: TosKey!) {
+    setTosLatestAcceptedVersion(input: { key: $key }) {
+        tos {
+            key
+            acceptedVersion
+        }
+    }
+}
+"""
+
+GQL_GET_TOS = """
+query GetTos($key: TosKey!) {
+    getTos(input: { key: $key }) {
+        tos {
+            key
+            acceptedVersion
+            metadata {
+                latestVersion
+            }
+        }
+    }
+}
+"""
+
+
+async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: str, exec_path: str) -> dict:
+    results = {
+        "account_id": aid,
+        "username": user.get("username"),
+        "displayName": user.get("displayName"),
+        "LENS_CREATOR_PAYOUT_TOS": False,
+        "ILDG_TOS": False,
+        "ui_modals_accepted": 0,
+        "errors": []
+    }
+
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(
+            executable_path=exec_path,
+            headless=True,
+            args=[
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-gpu",
+                "--disable-blink-features=AutomationControlled",
+                "--window-size=1920,1080"
+            ]
+        )
+
+        context = await browser.new_context(
+            viewport={"width": 1920, "height": 1080},
+            user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+            locale="en-US"
+        )
+
+        # Parse and inject cookies into browser context
+        if cookie_str:
+            cookie_list = []
+            for part in cookie_str.split(";"):
+                part = part.strip()
+                if "=" in part:
+                    cname, cval = part.split("=", 1)
+                    cookie_list.append({
+                        "name": cname.strip(),
+                        "value": cval.strip(),
+                        "domain": ".snapchat.com",
+                        "path": "/"
+                    })
+            if cookie_list:
+                try:
+                    await context.add_cookies(cookie_list)
+                    print(f"[COOKIES] Injected {len(cookie_list)} authenticated cookies into browser context")
+                except Exception as ce:
+                    print(f"[COOKIES WARN] {ce}")
+
+        page = await context.new_page()
+        if stealth_async:
+            await stealth_async(page)
+
+        # Navigate to My Lenses
+        target_url = "https://my-lenses.snapchat.com/"
+        print(f"[NAV] Loading My Lenses portal: {target_url}...")
+        try:
+            await page.goto(target_url, wait_until="domcontentloaded", timeout=45000)
+            await page.wait_for_timeout(4000)
+        except Exception as e:
+            print(f"[NAV WARN] Initial load: {e}")
+
+        # Check if redirected to login; if so, pass through accounts/sso
+        if "accounts.snapchat.com/v2/login" in page.url or "login" in page.url:
+            print("[AUTH REDIRECT] Session redirecting through SSO...")
+            await page.goto(
+                "https://accounts.snapchat.com/accounts/sso?client_id=lens-studio-web&referrer=https%3A%2F%2Fmy-lenses.snapchat.com%2F",
+                wait_until="domcontentloaded",
+                timeout=45000
+            )
+            await page.wait_for_timeout(4000)
+
+        # Screenshot for audit
+        await page.screenshot(path=f"my_lenses_acc_{aid}_loaded.png")
+        print(f"[PORTAL LOADED] Current URL: {page.url[:80]} | Title: '{await page.title()}'")
+
+        # 3. Check for and accept any on-screen TOS modal / Banner
+        modals_accepted = 0
+        tos_btn_selectors = [
+            "button:has-text('Accept')",
+            "button:has-text('I Agree')",
+            "button:has-text('Agree & Continue')",
+            "button:has-text('Agree')",
+            "button:has-text('View Terms')",
+            "[data-testid*='tos-accept']",
+            "[data-testid*='accept-terms']",
+            "button[class*='TosModal']",
+            "button:has-text('Accept All')"
+        ]
+        for sel in tos_btn_selectors:
+            try:
+                btns = await page.query_selector_all(sel)
+                for btn in btns:
+                    if await btn.is_visible() and await btn.is_enabled():
+                        txt = (await btn.inner_text()).strip()
+                        if not any(w in txt.lower() for w in ["cancel", "dismiss", "decline", "close"]):
+                            print(f"[UI MODAL] Clicking on-screen terms button: '{txt}'...")
+                            await human_click(page, btn)
+                            await page.wait_for_timeout(2000)
+                            modals_accepted += 1
+            except Exception:
+                pass
+        results["ui_modals_accepted"] = modals_accepted
+
+        # 4. Programmatic GraphQL Mutation execution directly in browser context
+        print("[GRAPHQL MUTATION] Dispatching SetTosLatestAcceptedVersion for LENS_CREATOR_PAYOUT_TOS & ILDG_TOS...")
+        gql_script = """
+        async () => {
+            const keys = ["LENS_CREATOR_PAYOUT_TOS", "ILDG_TOS"];
+            const out = {};
+            for (const key of keys) {
+                try {
+                    const res = await fetch("/graphql", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            operationName: "SetTosLatestAcceptedVersion",
+                            query: `
+                                mutation SetTosLatestAcceptedVersion($key: TosKey!) {
+                                    setTosLatestAcceptedVersion(input: { key: $key }) {
+                                        tos {
+                                            key
+                                            acceptedVersion
+                                        }
+                                    }
+                                }
+                            `,
+                            variables: { key: key }
+                        })
+                    });
+                    const data = await res.json();
+                    out[key] = data;
+                } catch (err) {
+                    out[key] = { error: err.message };
+                }
+            }
+            return out;
+        }
+        """
+        try:
+            gql_result = await page.evaluate(gql_script)
+            print(f"[GRAPHQL RESPONSE] {json.dumps(gql_result)}")
+
+            for k in ["LENS_CREATOR_PAYOUT_TOS", "ILDG_TOS"]:
+                resp = gql_result.get(k, {})
+                if resp.get("data", {}).get("setTosLatestAcceptedVersion", {}).get("tos", {}).get("acceptedVersion") is not None:
+                    results[k] = True
+                    print(f"  ✓ {k}: ACCEPTED (Version: {resp['data']['setTosLatestAcceptedVersion']['tos']['acceptedVersion']})")
+                elif "errors" in resp:
+                    print(f"  ! {k} response: {resp.get('errors')}")
+                    # Even if error (e.g. already accepted), mark true if message indicates already accepted
+                    err_msg = str(resp.get("errors", ""))
+                    if "already" in err_msg.lower() or "not modified" in err_msg.lower():
+                        results[k] = True
+                        print(f"  ✓ {k}: ALREADY ACCEPTED")
+        except Exception as ge:
+            print(f"[GRAPHQL EVAL WARN] {ge}")
+            results["errors"].append(str(ge))
+
+        # 5. Query verification
+        verify_script = """
+        async () => {
+            const keys = ["LENS_CREATOR_PAYOUT_TOS", "ILDG_TOS"];
+            const out = {};
+            for (const key of keys) {
+                try {
+                    const res = await fetch("/graphql", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            operationName: "GetTos",
+                            query: `
+                                query GetTos($key: TosKey!) {
+                                    getTos(input: { key: $key }) {
+                                        tos {
+                                            key
+                                            acceptedVersion
+                                            metadata {
+                                                latestVersion
+                                            }
+                                        }
+                                    }
+                                }
+                            `,
+                            variables: { key: key }
+                        })
+                    });
+                    const data = await res.json();
+                    out[key] = data;
+                } catch (err) {
+                    out[key] = { error: err.message };
+                }
+            }
+            return out;
+        }
+        """
+        try:
+            verify_res = await page.evaluate(verify_script)
+            print(f"[VERIFICATION QUERY] {json.dumps(verify_res)}")
+            for k in ["LENS_CREATOR_PAYOUT_TOS", "ILDG_TOS"]:
+                t_data = verify_res.get(k, {}).get("data", {}).get("getTos", {}).get("tos", {})
+                acc_ver = t_data.get("acceptedVersion")
+                latest_ver = (t_data.get("metadata") or {}).get("latestVersion")
+                if acc_ver and latest_ver and acc_ver >= latest_ver:
+                    results[k] = True
+                    print(f"  ✓ {k} VERIFIED: acceptedVersion={acc_ver} (latestVersion={latest_ver})")
+        except Exception as ve:
+            print(f"[VERIFY WARN] {ve}")
+
+        # 6. Automatic Enrollment of published lenses into Lens Creator Rewards / Lens+ Payouts
+        enroll_script = """
+        async () => {
+            const out = { enrolled_count: 0, lenses: [] };
+            try {
+                const res = await fetch("/graphql", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        operationName: "getLensesList",
+                        query: `
+                            query getLensesList($limit: Int!, $offset: Int!, $sortBy: SortBy!, $sortDirection: MyLensesSortDirection!, $type: GetLensesType!) {
+                                lenses: getMyLensesLenses(input: { limit: $limit, offset: $offset, sortBy: $sortBy, sortDirection: $sortDirection, type: $type }) {
+                                    lensesList {
+                                        id
+                                        name
+                                        lensCreatorPayoutEligibility
+                                        exclusiveLensStatus
+                                    }
+                                }
+                            }
+                        `,
+                        variables: {
+                            limit: 50,
+                            offset: 0,
+                            sortBy: "SORT_BY_CREATED_AT",
+                            sortDirection: "MY_LENSES_SORT_DIRECTION_DESCENDING",
+                            type: "GET_LENSES_TYPE_USER"
+                        }
+                    })
+                });
+                const data = await res.json();
+                const list = data?.data?.lenses?.lensesList || [];
+                for (const lens of list) {
+                    try {
+                        const enrollRes = await fetch("/graphql", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                operationName: "setLensCreatorPayoutEnrollment",
+                                query: `
+                                    mutation setLensCreatorPayoutEnrollment($lensId: ID!, $lensCreatorPayoutEnrolled: Boolean!) {
+                                        setLensCreatorPayoutEnrollment(input: { lensId: $lensId, lensCreatorPayoutEnrolled: $lensCreatorPayoutEnrolled }) {
+                                            lens {
+                                                id
+                                                lensCreatorPayoutEligibility
+                                                status
+                                            }
+                                        }
+                                    }
+                                `,
+                                variables: { lensId: lens.id, lensCreatorPayoutEnrolled: true }
+                            })
+                        });
+                        const enrollData = await enrollRes.json();
+                        out.enrolled_count++;
+                        out.lenses.push({ id: lens.id, name: lens.name, enrollResult: enrollData?.data?.setLensCreatorPayoutEnrollment });
+                    } catch (err) {
+                        out.lenses.push({ id: lens.id, name: lens.name, error: err.message });
+                    }
+                }
+            } catch (err) {
+                out.error = err.message;
+            }
+            return out;
+        }
+        """
+        try:
+            enroll_res = await page.evaluate(enroll_script)
+            print(f"[LENS ENROLLMENT] Payout enrollment processed for {enroll_res.get('enrolled_count', 0)} lenses")
+            results["enrolled_lenses_count"] = enroll_res.get("enrolled_count", 0)
+        except Exception as ee:
+            print(f"[LENS ENROLLMENT WARN] {ee}")
+
+        await page.screenshot(path=f"my_lenses_acc_{aid}_final.png")
+        await browser.close()
+
+    print(f"\n[MONETIZATION RESULT] Account #{aid} Approval Summary: {results}")
+    return results
+
+
+def approve_account_monetization(account_id: str = "1", cookie_str: str = None, ticket: str = None, user: dict = None) -> dict:
+    aid = str(account_id)
+    print(f"\n{'='*65}\n[AUTONOMOUS MONETIZATION] Processing Account #{aid}...\n{'='*65}")
+    if not cookie_str:
+        session_data = obtain_valid_snap_session(account_id=aid)
+        if not session_data:
+            return {
+                "account_id": aid,
+                "error": "Failed to obtain valid session",
+                "success": False
+            }
+        cookie_str = session_data.get("cookie_header") or session_data.get("cookie_str", "")
+        ticket = ticket or session_data.get("ticket", "")
+        user = user or session_data.get("user") or {}
+
+    if not cookie_str:
+        return {
+            "account_id": aid,
+            "error": "Failed to obtain valid session cookies",
+            "success": False
+        }
+
+    user = user or {}
+    exec_path = os.getenv("PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH")
+    if not exec_path:
+        for candidate in ["/usr/bin/chromium", "/usr/bin/chromium-browser", "/usr/bin/google-chrome"]:
+            if os.path.exists(candidate):
+                exec_path = candidate
+                break
+
+    return asyncio.run(_run_browser_approval(aid, user, cookie_str, ticket or "", exec_path))
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Approve Snapchat Lens Creator Rewards monetization terms.")
+    parser.add_argument("--account", type=str, default="all", choices=["1", "2", "3", "4", "5", "all"], help="Account ID or 'all'")
+    args = parser.parse_args()
+
+    target_accounts = ["1", "2", "3", "4", "5"] if args.account == "all" else [args.account]
+
+    overall_results = {}
+    for aid in target_accounts:
+        try:
+            res = approve_account_monetization(aid)
+            overall_results[aid] = res
+        except Exception as e:
+            print(f"[FATAL APPROVAL ERROR] Account #{aid}: {e}")
+            overall_results[aid] = {"account_id": aid, "error": str(e), "success": False}
+
+    print("\n" + "="*65)
+    print("=== FLEET MONETIZATION APPROVAL SUMMARY ===")
+    print("="*65)
+    for aid, res in overall_results.items():
+        payout_tos = res.get("LENS_CREATOR_PAYOUT_TOS", False)
+        print(f"Account #{aid} (@{res.get('username', 'user')}): Payout TOS Approved = {payout_tos}")
+
+    with open("monetization_approval_status.json", "w") as f:
+        json.dump(overall_results, f, indent=2)
+    print("\nSaved summary to monetization_approval_status.json")
+
+
+if __name__ == "__main__":
+    main()

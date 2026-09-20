@@ -556,6 +556,11 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
         ]
 
         exec_path = os.getenv("PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH")
+        if not exec_path:
+            for candidate in ["/usr/bin/chromium", "/usr/bin/chromium-browser", "/usr/bin/google-chrome"]:
+                if os.path.exists(candidate):
+                    exec_path = candidate
+                    break
         print(f"[BROWSER] Launching Chromium (exec_path: {exec_path or 'playwright-bundled'})...")
         launch_kwargs = {"headless": True, "args": launch_args}
         if exec_path:
