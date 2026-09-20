@@ -321,5 +321,24 @@
     "has_preview_video": true,
     "preview_url": "https://cf-st.sc-cdn.net/d/XfZHoNfaXKN2MeEUmQM39?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-20T04:55:37Z",
+    "account_id": "2",
+    "lens_name": "Verdant Gilded Heirloom",
+    "lens_id": "725b62cb-407d-4acf-9562-1a1bd4574c29",
+    "checkpoint_id": "06aaf66c-5191-76db-8000-ebe75608940d",
+    "prompt": "Art Nouveau floral tiara sculpted from antiqued 24k yellow gold with deep emerald cabochon accents anchored to brow. High-fidelity PBR materials with 6500K/2800K directional rim lighting. 35mm analog film aesthetic with soft warm highlights. Mouth open triggers a semi-translucent golden silk shimmer veil across temples. Smile activates subtle emerald light refraction flares across eye contours. Zero UI, pure Parisian couture craft. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "luxury",
+      "art-nouveau",
+      "couture",
+      "analog",
+      "emerald"
+    ],
+    "visual_hook": "Instant 0.2s snap of ornate gold and emerald geometry creating a high-end, immediate fashion transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/ENGHpRNQOXn2GafEMUyUj?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
