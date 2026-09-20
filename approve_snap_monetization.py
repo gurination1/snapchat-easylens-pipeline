@@ -58,6 +58,59 @@ query GetTos($key: TosKey!) {
 """
 
 
+def sanitize_cookies_for_playwright(cookie_str: str) -> list:
+    """
+    Parses raw cookie strings (from headers or DevTools) into valid Playwright cookie objects.
+    Filters out reserved attributes (Path, Domain, Expires, SameSite, Secure, HttpOnly, etc.)
+    and injects cookies safely without triggering CDP protocol errors.
+    """
+    if not cookie_str:
+        return []
+
+    reserved = {"path", "domain", "expires", "max-age", "samesite", "secure", "httponly", "priority"}
+    cookie_list = []
+    seen = set()
+
+    for line in cookie_str.splitlines():
+        parts = []
+        for p in line.split(";"):
+            p = p.strip()
+            if not p:
+                continue
+            if "," in p:
+                subparts = p.split(",")
+                for sp in subparts:
+                    sp = sp.strip()
+                    if "=" in sp:
+                        parts.append(sp)
+            else:
+                if "=" in p:
+                    parts.append(p)
+
+        for part in parts:
+            if "=" not in part:
+                continue
+            name, val = part.split("=", 1)
+            name = name.strip()
+            val = val.strip()
+
+            if not name or name.lower() in reserved or name in seen:
+                continue
+
+            if any(bad in name for bad in [" ", "\t", ";", ",", "\n", "\r"]):
+                continue
+
+            seen.add(name)
+            cookie_list.append({
+                "name": name,
+                "value": val,
+                "domain": ".snapchat.com",
+                "path": "/"
+            })
+
+    return cookie_list
+
+
 async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: str, exec_path: str, target_lens_id: str = None, target_lens_url: str = None) -> dict:
     results = {
         "account_id": aid,
@@ -88,28 +141,21 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
         context = await browser.new_context(
             viewport={"width": 1920, "height": 1080},
             user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
-            locale="en-US"
+            locale="en-US",
+            extra_http_headers={"Cookie": cookie_str} if cookie_str else {}
         )
 
-        # Parse and inject cookies into browser context
+        # Parse and inject cookies into browser context safely
         if cookie_str:
-            cookie_list = []
-            for part in cookie_str.split(";"):
-                part = part.strip()
-                if "=" in part:
-                    cname, cval = part.split("=", 1)
-                    cookie_list.append({
-                        "name": cname.strip(),
-                        "value": cval.strip(),
-                        "domain": ".snapchat.com",
-                        "path": "/"
-                    })
-            if cookie_list:
+            cookie_list = sanitize_cookies_for_playwright(cookie_str)
+            injected_count = 0
+            for c in cookie_list:
                 try:
-                    await context.add_cookies(cookie_list)
-                    print(f"[COOKIES] Injected {len(cookie_list)} authenticated cookies into browser context")
-                except Exception as ce:
-                    print(f"[COOKIES WARN] {ce}")
+                    await context.add_cookies([c])
+                    injected_count += 1
+                except Exception:
+                    pass
+            print(f"[COOKIES] Injected {injected_count}/{len(cookie_list)} authenticated cookies into browser context")
 
         page = await context.new_page()
         if stealth_async:
@@ -120,19 +166,52 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
         print(f"[NAV] Loading My Lenses portal: {target_url}...")
         try:
             await page.goto(target_url, wait_until="domcontentloaded", timeout=45000)
-            await page.wait_for_timeout(4000)
+            await page.wait_for_timeout(5000)
         except Exception as e:
             print(f"[NAV WARN] Initial load: {e}")
 
-        # Check if redirected to login; if so, pass through accounts/sso
+        # Check if redirected to login; if so, attempt automated browser login
         if "accounts.snapchat.com/v2/login" in page.url or "login" in page.url:
-            print("[AUTH REDIRECT] Session redirecting through SSO...")
-            await page.goto(
-                "https://accounts.snapchat.com/accounts/sso?client_id=lens-studio-web&referrer=https%3A%2F%2Fmy-lenses.snapchat.com%2F",
-                wait_until="domcontentloaded",
-                timeout=45000
-            )
-            await page.wait_for_timeout(4000)
+            print("[AUTH NOTICE] Page redirected to login screen. Attempting automated login flow...")
+            try:
+                login_user = user.get("username") or os.getenv(f"SNAP_USERNAME_ACC_{aid}") or os.getenv("SNAP_USERNAME") or "gman21478"
+                if str(aid) == "1" and ("@" in login_user or "gurination1" in login_user or not login_user):
+                    login_user = "gman21478"
+
+                account_input = await page.wait_for_selector(
+                    "input[name='accountIdentifier'], input#accountIdentifier, input[type='text']",
+                    state="visible",
+                    timeout=8000
+                )
+                if account_input:
+                    print(f"[AUTH LOGIN] Filling username: {login_user}...")
+                    await human_type(page, account_input, login_user)
+                    await page.wait_for_timeout(400)
+                    next_btn = await page.query_selector("button:has-text('Next'), button[type='submit']")
+                    if next_btn:
+                        await human_click(page, next_btn)
+                        await page.wait_for_timeout(3000)
+
+                # Wait for password input
+                pwd_input = await page.wait_for_selector("input[type='password']", state="visible", timeout=12000)
+                if pwd_input:
+                    env_pwd = os.getenv(f"SNAP_PASSWORD_ACC_{aid}") or os.getenv("SNAP_PASSWORD") or "DM id wale1"
+                    print("[AUTH LOGIN] Filling password...")
+                    await human_type(page, pwd_input, env_pwd)
+                    await page.wait_for_timeout(400)
+                    login_btn = await page.query_selector("button:has-text('Log In'), button:has-text('Next'), button[type='submit']")
+                    if login_btn:
+                        await human_click(page, login_btn)
+                        await page.wait_for_timeout(6000)
+
+                # Wait for navigation back to my-lenses
+                if "login" in page.url:
+                    await page.wait_for_timeout(5000)
+                if "my-lenses.snapchat.com" not in page.url:
+                    await page.goto("https://my-lenses.snapchat.com/", wait_until="domcontentloaded", timeout=45000)
+                    await page.wait_for_timeout(4000)
+            except Exception as login_err:
+                print(f"[AUTH LOGIN WARN] In-browser login attempt error: {login_err}")
 
         # Screenshot for audit
         await page.screenshot(path=f"my_lenses_acc_{aid}_loaded.png")
