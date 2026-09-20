@@ -13,7 +13,7 @@ import subprocess
 import shutil
 import time
 import requests
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageEnhance
 from gemini_lens_agent import get_gemini_api_keys, CANDIDATE_MODELS
 
 
@@ -87,6 +87,7 @@ class LensSimulator:
         Extracts 3D hero asset from Snapchat Lens Studio icon.png using radial chroma/luma separation.
         Detects background tone (dark vs light render), strips outer icon frame/bezel rings,
         and isolates authentic 3D Gaussian splat / mesh geometry with smooth alpha.
+        Dynamically adapts to any resolution (256, 320, 512, 1024).
         """
         try:
             import numpy as np
@@ -100,14 +101,23 @@ class LensSimulator:
         y, x = np.ogrid[:h, :w]
         dist = np.sqrt((x - cx) ** 2 + (y - cy) ** 2)
 
-        # Sample background in perimeter zone (radius 122 to 133) inside the outer bezel
-        peri_zone = (dist >= 122) & (dist <= 133)
-        bg_color = np.median(arr[peri_zone, :3], axis=0)
+        # Dynamic radius scaling based on icon dimensions
+        r_max = min(w, h) / 2.0
+        peri_min = r_max * (122.0 / 160.0)
+        peri_max = r_max * (133.0 / 160.0)
+        inside_r = r_max * (134.0 / 160.0)
+
+        # Sample background in perimeter zone inside the outer bezel
+        peri_zone = (dist >= peri_min) & (dist <= peri_max)
+        if np.sum(peri_zone) > 0:
+            bg_color = np.median(arr[peri_zone, :3], axis=0)
+        else:
+            bg_color = np.array([20, 24, 32], dtype=np.float32)
         bg_is_dark = bool(np.mean(bg_color) < 100)
 
-        # Outer bezel ring starts at radius 135
-        inside = dist <= 134
-        c_diff = np.sqrt(np.sum((arr[:, :, :3] - bg_color) ** 2, axis=-1))
+        # Outer bezel ring boundary
+        inside = dist <= inside_r
+        c_diff = np.sqrt(np.sum((arr[:, :, :3].astype(np.float32) - bg_color) ** 2, axis=-1))
 
         if bg_is_dark:
             bright = np.max(arr[:, :, :3], axis=-1)
@@ -127,6 +137,32 @@ class LensSimulator:
         if bbox:
             return clean_im.crop(bbox)
         return clean_im
+
+    @staticmethod
+    def get_video_frame(video_path: str, frame_idx: int = 0, timestamp_sec: float = None) -> tuple:
+        """
+        Extracts exact frame from motion video at frame_idx or timestamp_sec.
+        Guarantees 1:1 pixel match between video stream and still preview compositing.
+        """
+        import cv2
+        cap = cv2.VideoCapture(video_path)
+        fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+        total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) or 1
+
+        target_idx = frame_idx
+        if timestamp_sec is not None:
+            target_idx = int(round(timestamp_sec * fps))
+        target_idx = max(0, min(target_idx, total_frames - 1))
+
+        cap.set(cv2.CAP_PROP_POS_FRAMES, target_idx)
+        ret, frame = cap.read()
+        cap.release()
+        if not ret or frame is None:
+            raise ValueError(f"Failed to read frame {target_idx} from {video_path}")
+
+        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        pil_img = Image.fromarray(rgb).convert("RGBA")
+        return frame, pil_img
 
     @staticmethod
     def detect_face_landmarks(image_input, model_path: str = None) -> dict:
@@ -427,26 +463,43 @@ class LensSimulator:
             d.line([(w - 70, 100), (w // 2 + 25, 85)], fill=accent_line, width=2)
             return im
 
-    def resolve_portrait_model(self) -> str:
-        """Dynamically picks distinct portrait model asset matching the motion video and visual niche"""
+    def resolve_portrait_model(self, video_sync: bool = False) -> str:
+        """
+        Dynamically picks distinct portrait model asset matching the motion video and visual niche.
+        - video_sync=False (default): Returns tailored diverse studio model matching the visual niche:
+          * mythic -> model_1_classic.png
+          * cyber -> model_2_cyber.jpg
+          * comedy -> model_4_meme.jpg
+          * luxury -> model_3_luxe.jpg
+          * chrome -> model_5_chrome.jpg
+        - video_sync=True: Syncs with exact frame 0 of the motion stock video:
+          * Account 2 / cyber / chrome -> model_blonde.png (for test_portrait_blonde.mp4)
+          * Account 1 / mythic / comedy / luxury -> model_1_classic.png (for test_portrait.mp4)
+        """
         portraits_dir = os.path.join(self.portrait_dir, "portraits")
         aid = str(self.lens_data.get("account_id", "1"))
         niche = self.resolve_visual_niche(account_id=aid)
 
-        # Account 2 (Cyber / Chrome / Tech): uses blonde model (exact frame 0 of test_portrait_blonde.mp4)
-        # Account 1 (Mythic / Comedy / Luxury): uses classic brunette model (exact frame 0 of test_portrait.mp4)
-        if aid == "2" or niche in ["cyber", "chrome"]:
-            cand = "model_blonde.png"
-            target = os.path.join(portraits_dir, cand)
-            if os.path.exists(target):
-                return target
-            cand = "model_5_chrome.jpg"
-        elif niche == "comedy":
-            cand = "model_1_classic.png"
-        elif niche == "luxury":
-            cand = "model_1_classic.png"
+        if video_sync:
+            # Sync with exact frame 0 of matching motion video
+            if aid == "2" or niche in ["cyber", "chrome"]:
+                cand = "model_blonde.png"
+                target = os.path.join(portraits_dir, cand)
+                if os.path.exists(target):
+                    return target
+                cand = "model_5_chrome.jpg"
+            else:
+                cand = "model_1_classic.png"
         else:
-            cand = "model_1_classic.png"
+            # Diverse niche studio models for multi-model VFX parity
+            niche_map = {
+                "mythic": "model_1_classic.png",
+                "cyber": "model_2_cyber.jpg",
+                "comedy": "model_4_meme.jpg",
+                "luxury": "model_3_luxe.jpg",
+                "chrome": "model_5_chrome.jpg",
+            }
+            cand = niche_map.get(niche, "model_1_classic.png")
 
         target = os.path.join(portraits_dir, cand)
         if os.path.exists(target):
@@ -469,6 +522,20 @@ class LensSimulator:
         if os.path.exists(cand):
             return cand
         return None
+
+    def resolve_portrait_mouth_model(self, account_id: str = None) -> str:
+        """Picks matching mouth open / trigger frame matching portrait model strictly"""
+        portraits_dir = os.path.join(self.portrait_dir, "portraits")
+        aid = str(account_id or self.lens_data.get("account_id", "1"))
+        niche = self.resolve_visual_niche(account_id=aid)
+        if aid == "2" or niche in ["cyber", "chrome"]:
+            cand = os.path.join(portraits_dir, "model_blonde_mouth_open.png")
+            if os.path.exists(cand):
+                return cand
+        cand = os.path.join(self.portrait_dir, "portrait_mouth_open.png")
+        if os.path.exists(cand):
+            return cand
+        return self.resolve_portrait_model(video_sync=True)
 
     def inspect_bundle(self) -> dict:
         """Deep inspects scene.scn and archive to detect 3D meshes, bindings, and slop"""
@@ -523,45 +590,338 @@ class LensSimulator:
 
         return self.analysis
 
-    def render_simulation_screenshots(self, out_neutral: str = "preview_neutral_simulated.png", out_trigger: str = "preview_mouth_open_simulated.png") -> tuple:
-        """Composites extracted 3D/particle/background assets onto standard test portrait frames with anatomical anchoring"""
+    def compute_asset_geometry(self, landmarks: dict, aspect: float = None) -> dict:
+        """
+        Unified 1:1 anatomical anchor and scale computer.
+        Strictly shared between still screenshots, motion video frames, and Before/After split.
+        """
+        import math
         try:
             import numpy as np
         except ImportError:
             np = None
-        from collections import deque
 
-        neutral_path = self.resolve_portrait_model()
-        mouth_path = os.path.join(self.portrait_dir, "portrait_mouth_open.png")
-        if not os.path.exists(mouth_path):
-            mouth_path = neutral_path
+        if aspect is None:
+            aspect = (self.dominant_texture.height / max(1, self.dominant_texture.width)) if self.dominant_texture else 0.52
 
-        if not neutral_path or not os.path.exists(neutral_path):
-            img_n = Image.new("RGBA", (720, 1280), (45, 48, 56, 255))
+        p_text = (
+            str(self.asset_scale_info.get("p_text", "")) + " " +
+            str(self.lens_data.get("lens_name", "")) + " " +
+            str(self.lens_data.get("prompt", "")) + " " +
+            str(self.lens_data.get("archetype", ""))
+        ).lower()
+
+        aid = str(self.lens_data.get("account_id", "1"))
+        niche = self.resolve_visual_niche(account_id=aid)
+
+        is_full_helmet = self.asset_scale_info.get("is_full_helmet", False) or any(w in p_text for w in ["helmet", "full-face", "full face", "motorcycle"])
+        is_visor = self.asset_scale_info.get("is_visor", False) or (niche == "cyber") or any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "spectacles", "monocle", "eyewear", "sunglasses", "reticle", "optics"])
+        is_tear = self.asset_scale_info.get("is_tear", False) or (niche == "comedy" and any(w in p_text for w in ["tear", "crying", "weep", "waterfall", "melodrama"]))
+        is_brow_shell = self.asset_scale_info.get("is_brow_shell", False) or any(w in p_text for w in ["brow", "shell", "circlet", "plate", "forehead", "beetle", "scarab", "crest"])
+        is_halo = self.asset_scale_info.get("is_halo", False) or ((niche == "chrome" or any(w in p_text for w in ["mercury", "zero-g", "mobius", "cumulus", "stormcloud", "cloud crown", "spirit cloud"])) and not is_visor and not is_brow_shell)
+        is_crown = not is_full_helmet and not is_visor and not is_halo and not is_tear and not is_brow_shell
+
+        le = landmarks.get("l_eye", (440.0, 495.0))
+        re = landmarks.get("r_eye", (280.0, 495.0))
+        nose = landmarks.get("nose", (360.0, 560.0))
+        fh = landmarks.get("forehead_center", (360.0, 390.0))
+        mouth = landmarks.get("mouth_center", (360.0, 670.0))
+
+        eye_cx = float((le[0] + re[0]) / 2.0)
+        eye_cy = float((le[1] + re[1]) / 2.0)
+        eye_dist = float(math.hypot(re[0] - le[0], re[1] - le[1]))
+        roll_angle = float(math.degrees(math.atan2(le[1] - re[1], le[0] - re[0])))
+
+        if is_full_helmet:
+            cur_w = int(eye_dist * 3.60)
+            cur_h = int(cur_w * aspect)
+            anc_x = eye_cx
+            anc_y = float(eye_cy - cur_h * 0.02)
+        elif is_visor:
+            cur_w = int(eye_dist * 2.35)
+            cur_h = min(240, int(cur_w * aspect))
+            anc_x = eye_cx
+            anc_y = eye_cy
+        elif is_tear:
+            cur_w = int(eye_dist * 2.20)
+            cur_h = min(380, int(cur_w * aspect))
+            anc_x = eye_cx
+            anc_y = float((eye_cy + mouth[1]) / 2.0)
+        elif is_brow_shell:
+            cur_w = int(eye_dist * (1.45 if eye_dist > 180 else 1.95))
+            cur_h = int(cur_w * aspect)
+            anc_x = float(fh[0])
+            anc_y = float(fh[1] - cur_h * 0.20)
+        elif is_halo:
+            cur_w = int(eye_dist * 2.50)
+            cur_h = int(cur_w * aspect)
+            anc_x = float(fh[0])
+            anc_y = float(fh[1] - cur_h * 0.65)
+        elif is_crown:
+            cur_w = int(eye_dist * 2.45)
+            cur_h = int(cur_w * aspect)
+            anc_x = float(fh[0])
+            anc_y = float(fh[1] - cur_h * 0.10)
         else:
-            img_n = Image.open(neutral_path).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
+            cur_w = int(eye_dist * 2.40)
+            cur_h = int(cur_w * aspect)
+            anc_x = float(fh[0])
+            anc_y = float(fh[1] - cur_h * 0.10)
 
-        if not mouth_path or not os.path.exists(mouth_path):
-            img_t = img_n.copy()
-        else:
-            img_t = Image.open(mouth_path).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
+        pos_x = int(anc_x - cur_w // 2)
+        pos_y = int(anc_y - cur_h // 2)
+
+        return {
+            "cur_w": cur_w,
+            "cur_h": cur_h,
+            "anc_x": anc_x,
+            "anc_y": anc_y,
+            "pos": (pos_x, pos_y),
+            "pos_x": pos_x,
+            "pos_y": pos_y,
+            "eye_cx": eye_cx,
+            "eye_cy": eye_cy,
+            "eye_dist": eye_dist,
+            "roll_angle": roll_angle,
+            "is_full_helmet": is_full_helmet,
+            "is_visor": is_visor,
+            "is_tear": is_tear,
+            "is_brow_shell": is_brow_shell,
+            "is_halo": is_halo,
+            "is_crown": is_crown,
+            "niche": niche,
+            "p_text": p_text
+        }
+
+    def composite_ar_frame(self, pil_frame: Image.Image, landmarks: dict, t_prog: float = 0.0, frame_ratio: float = 0.0, draw_ui: bool = False, base_eye_dist: float = None, account_id: str = None) -> Image.Image:
+        """
+        Unified 1:1 AR frame compositor.
+        Applies identical grading, geometry, contact shadow, hero texture, and reactive VFX.
+        Strictly shared between preview_neutral, preview_mouth_open, preview_split, and preview_video.
+        """
+        aid = str(account_id or self.lens_data.get("account_id", "1"))
+        niche = self.resolve_visual_niche(account_id=aid)
+
+        flare_colors = {
+            "mythic": (255, 180, 40),
+            "cyber": (0, 245, 255),
+            "comedy": (60, 220, 255),
+            "luxury": (255, 215, 80),
+            "chrome": (210, 230, 255)
+        }
+        flare_rgb = flare_colors.get(niche, (0, 245, 255))
+
+        # 1. Authentic UGC camera grading (identical across still and video)
+        enh_con = ImageEnhance.Contrast(pil_frame)
+        pil_frame = enh_con.enhance(1.08 + 0.08 * t_prog)
+        enh_col = ImageEnhance.Color(pil_frame)
+        pil_frame = enh_col.enhance(1.12)
+
+        # 2. Unified geometry & anchor
+        geom = self.compute_asset_geometry(landmarks)
+        cur_w = geom["cur_w"]
+        cur_h = geom["cur_h"]
+        anc_x = geom["anc_x"]
+        anc_y = geom["anc_y"]
+        pos_x = geom["pos_x"]
+        pos_y = geom["pos_y"]
+        roll_angle = geom["roll_angle"]
+        eye_dist = geom["eye_dist"]
+        is_crown = geom["is_crown"]
+        is_visor = geom["is_visor"]
+
+        ref_eye_dist = base_eye_dist or max(50.0, eye_dist)
+        scale = float(eye_dist / ref_eye_dist)
+
+        # 3. AR Layer Compositing
+        ar_layer = Image.new("RGBA", pil_frame.size, (0, 0, 0, 0))
+
+        # Contact shadow (for crowns only, at hairline)
+        if is_crown:
+            cur_sh_w = max(20, int(cur_w * 0.75))
+            cur_sh_h = max(6, int(cur_h * 0.10))
+            shadow_sprite = Image.new("RGBA", (cur_sh_w, cur_sh_h), (0, 0, 0, 0))
+            s_draw = ImageDraw.Draw(shadow_sprite)
+            s_draw.ellipse([2, 2, cur_sh_w - 2, cur_sh_h - 2], fill=(0, 0, 0, 40))
+            shadow_sprite = shadow_sprite.filter(ImageFilter.GaussianBlur(8))
+            if abs(roll_angle) > 0.3:
+                shadow_sprite = shadow_sprite.rotate(-roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
+            sh_x = int(anc_x - shadow_sprite.width // 2)
+            sh_y = int(anc_y + cur_h // 2 - shadow_sprite.height // 2)
+            ar_layer.alpha_composite(shadow_sprite, dest=(sh_x, sh_y))
+
+        # Foreground 3D Asset
+        if self.dominant_texture:
+            r_tex = self.dominant_texture.resize((cur_w, cur_h), Image.Resampling.BILINEAR)
+            if abs(roll_angle) > 0.3:
+                r_tex = r_tex.rotate(-roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
+            px = int(anc_x - r_tex.width // 2)
+            py = int(anc_y - r_tex.height // 2)
+            ar_layer.alpha_composite(r_tex, dest=(px, py))
+
+        # Reactive Trigger Bloom Flare
+        if t_prog > 0.05:
+            fl_size = max(40, int(220 * scale * (0.8 + 0.4 * t_prog)))
+            flare_sprite = Image.new("RGBA", (fl_size, fl_size), (0, 0, 0, 0))
+            f_draw = ImageDraw.Draw(flare_sprite)
+            for r in [int(fl_size * 0.12), int(fl_size * 0.24), int(fl_size * 0.40), int(fl_size * 0.50)]:
+                f_draw.ellipse(
+                    [fl_size // 2 - r, fl_size // 2 - int(r * 0.55), fl_size // 2 + r, fl_size // 2 + int(r * 0.55)],
+                    fill=(*flare_rgb, int(110 * (1.0 - r / max(1, fl_size * 0.55))))
+                )
+            flare_sprite = flare_sprite.filter(ImageFilter.GaussianBlur(8))
+            fl_x = int(anc_x - flare_sprite.width // 2)
+            fl_y = int(anc_y - flare_sprite.height // 2)
+            ar_layer.alpha_composite(flare_sprite, dest=(fl_x, fl_y))
+
+        # Tailored reactive niche animation
+        lm_list = [
+            landmarks.get("l_eye", (440.0, 495.0)),
+            landmarks.get("r_eye", (280.0, 495.0)),
+            landmarks.get("nose", (360.0, 560.0)),
+            landmarks.get("forehead_center", (360.0, 390.0)),
+            landmarks.get("mouth_center", (360.0, 670.0))
+        ]
+        ar_layer = self.render_niche_video_vfx(
+            ar_layer, niche, lm_list, scale, t_prog, flare_rgb, anc_x, anc_y,
+            cur_w=cur_w, cur_h=cur_h, is_crown=is_crown
+        )
+
+        pil_frame.alpha_composite(ar_layer)
+
+        # Dynamic Climax Shockwave Ring Pulse
+        if (0.38 <= frame_ratio <= 0.65) or (t_prog > 0.85):
+            sw_ratio = (frame_ratio - 0.38) / 0.27 if frame_ratio > 0 else (t_prog - 0.85) / 0.15
+            sw_radius = int(35 + sw_ratio * 160)
+            sw_alpha = int(180 * (1.0 - max(0.0, min(1.0, sw_ratio))))
+            if sw_alpha > 10:
+                shock_img = Image.new("RGBA", pil_frame.size, (0, 0, 0, 0))
+                sk_draw = ImageDraw.Draw(shock_img)
+                sk_draw.ellipse(
+                    [anc_x - sw_radius, anc_y - sw_radius, anc_x + sw_radius, anc_y + sw_radius],
+                    outline=(*flare_rgb, sw_alpha), width=3
+                )
+                sk_blur = shock_img.filter(ImageFilter.GaussianBlur(5))
+                pil_frame.alpha_composite(sk_blur)
+
+        # Native UGC UI Badges Overlay (only if draw_ui is requested)
+        if draw_ui:
+            src_w, src_h = pil_frame.size
+            ui_layer = Image.new("RGBA", (src_w, src_h), (0, 0, 0, 0))
+            ui_draw = ImageDraw.Draw(ui_layer)
+            font_top = get_bold_font(13)
+            font_prompt = get_bold_font(12)
+            font_watermark = get_regular_font(11)
+            lens_name_display = self.lens_data.get("lens_name", "Snapchat AR")
+            if len(lens_name_display) > 18:
+                lens_name_display = lens_name_display[:16] + "..."
+
+            prompt_texts = {
+                "mythic": "👑 TILT HEAD • 3D DRAGON HELM",
+                "cyber": "⚡ OPEN MOUTH • HUD SCAN",
+                "comedy": "😭 OPEN MOUTH • CRYING MEME",
+                "luxury": "✨ SMILE • 35MM GOLD GLOW",
+                "chrome": "🌀 MOVE HEAD • LIQUID CHROME"
+            }
+            prompt_text = prompt_texts.get(niche, "⚡ OPEN MOUTH • HUD SCAN")
+
+            # 1. Top-Left Lens Badge Pill
+            ui_draw.rounded_rectangle([32, 44, 275, 86], radius=21, fill=(12, 16, 24, 185), outline=(255, 255, 255, 110), width=1)
+            ui_draw.ellipse([46, 57, 58, 69], fill=(*flare_rgb, 255))
+            ui_draw.text((66, 54), lens_name_display, fill=(255, 255, 255, 255), font=font_top)
+            ui_draw.ellipse([240, 54, 258, 72], fill=(0, 200, 255, 255))
+            ui_draw.text((245, 54), "✓", fill=(255, 255, 255, 255), font=font_top)
+
+            # 2. Center-Top Action Callout during Trigger
+            if t_prog > 0.15:
+                p_alpha = int(225 * min(1.0, t_prog * 1.5))
+                pw, ph = 260, 36
+                px0, py0 = src_w // 2 - pw // 2, 102
+                ui_draw.rounded_rectangle([px0, py0, px0 + pw, py0 + ph], radius=18, fill=(12, 16, 24, p_alpha), outline=(*flare_rgb, p_alpha), width=2)
+                try:
+                    p_bbox = ui_draw.textbbox((0, 0), prompt_text, font=font_prompt)
+                    ptw, pth = p_bbox[2] - p_bbox[0], p_bbox[3] - p_bbox[1]
+                except Exception:
+                    ptw, pth = 190, 14
+                ui_draw.text((src_w // 2 - ptw // 2, py0 + (ph - pth) // 2 - 1), prompt_text, fill=(255, 255, 255, p_alpha), font=font_prompt)
+
+            # 3. Bottom-Right Subtle Watermark
+            ui_draw.rounded_rectangle([src_w - 180, src_h - 48, src_w - 32, src_h - 22], radius=13, fill=(10, 14, 20, 170), outline=(255, 255, 255, 50), width=1)
+            ui_draw.text((src_w - 168, src_h - 44), "✦ SNAP AR • 60 FPS", fill=(255, 255, 255, 200), font=font_watermark)
+
+            pil_frame.alpha_composite(ui_layer)
+
+        return pil_frame
+
+    def render_simulation_screenshots(self, out_neutral: str = "preview_neutral_simulated.png", out_trigger: str = "preview_mouth_open_simulated.png", motion_video: str = None, account_id: str = None, video_sync: bool = True) -> tuple:
+        """
+        Composites extracted 3D/particle/background assets onto standard test portrait frames with anatomical anchoring.
+        Strictly guarantees: still preview images use EXACT frame 0 and peak frame of the motion video!
+        """
+        try:
+            import numpy as np
+            import cv2
+        except ImportError:
+            np = None
+            cv2 = None
+
+        aid = str(account_id or self.lens_data.get("account_id", "1"))
+        niche = self.resolve_visual_niche(account_id=aid)
+
+        # 1. Resolve source motion video or portrait model
+        video_src = motion_video or self.resolve_portrait_video(account_id=aid)
+        img_n = None
+        img_t = None
+
+        if cv2 is not None and video_src and os.path.exists(video_src):
+            try:
+                cap = cv2.VideoCapture(video_src)
+                fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+                total_f = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) or 108
+                
+                # Frame 0: EXACT frame 0 of video
+                cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+                ret0, f0 = cap.read()
+                if ret0 and f0 is not None:
+                    img_n = Image.fromarray(cv2.cvtColor(f0, cv2.COLOR_BGR2RGB)).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
+                
+                # Frame 60 / t=2.0s
+                trig_idx = min(total_f - 1, int(round(2.0 * fps)))
+                cap.set(cv2.CAP_PROP_POS_FRAMES, trig_idx)
+                rett, ft = cap.read()
+                if rett and ft is not None:
+                    img_t = Image.fromarray(cv2.cvtColor(ft, cv2.COLOR_BGR2RGB)).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
+                cap.release()
+            except Exception as e:
+                print(f"[SIMULATOR WARN] Error extracting video frames from {video_src}: {e}")
+
+        neutral_path = self.resolve_portrait_model(video_sync=video_sync)
+        mouth_path = self.resolve_portrait_mouth_model(account_id=aid)
+
+        if img_n is None:
+            if not neutral_path or not os.path.exists(neutral_path):
+                img_n = Image.new("RGBA", (720, 1280), (45, 48, 56, 255))
+            else:
+                img_n = Image.open(neutral_path).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
+
+        if img_t is None:
+            if not mouth_path or not os.path.exists(mouth_path):
+                img_t = img_n.copy()
+            else:
+                img_t = Image.open(mouth_path).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
 
         # High-precision anatomical facial landmark detection
         lm_n = self.detect_face_landmarks(img_n)
         lm_t = self.detect_face_landmarks(img_t)
 
+        # Extract production hero asset and sprites from bundle
         dominant_texture = None
-        bg_texture = None
         sw_texture = None
         flare_texture = None
-        eq_texture = None
-        star_texture = None
-        orb_texture = None
+        bg_texture = None
 
-        # Cleanly extract production assets and audio from bundle
         try:
             with zipfile.ZipFile(io.BytesIO(self.bundle_bytes), "r") as z:
-                # 1. Extract audio and trigger sprites
                 for name in z.namelist():
                     lower = name.lower()
                     if lower.endswith((".mp3", ".wav")) and not os.path.exists("preview_audio.mp3"):
@@ -575,24 +935,17 @@ class LensSimulator:
                         sw_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
                     elif any(k in lower for k in ["flare", "hud", "beam", "flash"]) and lower.endswith(".png") and not flare_texture:
                         flare_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
-                    elif any(k in lower for k in ["equalizer", "eq", "bar"]) and lower.endswith(".png") and not eq_texture:
-                        eq_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
-                    elif any(k in lower for k in ["star_02", "stars", "sparkle"]) and lower.endswith(".png") and not star_texture:
-                        star_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
-                    elif any(k in lower for k in ["orb", "particle", "glow_orb"]) and lower.endswith(".png") and not orb_texture:
-                        orb_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
                     elif any(k in lower for k in ["bg.png", "background"]) and lower.endswith(".png") and not bg_texture:
                         bg_texture = Image.open(io.BytesIO(z.read(name))).convert("RGBA")
 
-                # 2. Extract 3D asset from icon.png using clean radial chroma/luma separation
+                # Extract 3D hero asset from icon.png
                 if "icon.png" in z.namelist():
                     raw_icon = Image.open(io.BytesIO(z.read("icon.png"))).convert("RGBA")
                     dominant_texture = self.extract_clean_hero(raw_icon)
-
         except Exception as e:
             print(f"[SIMULATOR WARN] Error extracting production assets: {e}")
 
-        # Determine anatomical scale and anchor from metadata & text
+        # Metadata parsing
         labels = []
         for a_data in self.lens_data.get("asset_statuses", {}).get("prefetched_assets", {}).values():
             if isinstance(a_data, dict) and a_data.get("label"):
@@ -605,220 +958,46 @@ class LensSimulator:
             " ".join(self.analysis.get("mesh_files", []))
         ).lower()
 
-        niche = self.resolve_visual_niche(account_id=self.lens_data.get("account_id"))
         if dominant_texture is None:
             dominant_texture = self.synthesize_procedural_hero_asset(p_text, niche=niche)
 
-        # ---------------- ANATOMICAL GEOMETRY & MORPHOMETRIC ANCHORING ----------------
-        eye_cx, eye_cy = lm_n["eye_center"]
-        eye_dist = lm_n["eye_dist"]
-        roll_deg = lm_n["roll_angle"]
-        forehead_cx, forehead_cy = lm_n["forehead_center"]
-        halo_cx, halo_cy = lm_n["halo_center"]
-        mouth_cx, mouth_cy = lm_n["mouth_center"]
-        aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 0.45
-
-        is_full_helmet = any(w in p_text for w in ["helmet", "full-face", "full face", "motorcycle"])
-        is_visor = (niche == "cyber") or any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "spectacles", "monocle", "eyewear", "sunglasses", "reticle", "optics"])
-        is_tear = (niche == "comedy" and any(w in p_text for w in ["tear", "crying", "weep", "waterfall", "melodrama"]))
-        is_brow_shell = any(w in p_text for w in ["brow", "shell", "circlet", "plate", "forehead", "beetle", "scarab", "crest"])
-        is_halo = ((niche == "chrome" or any(w in p_text for w in ["mercury", "zero-g", "mobius", "cumulus", "stormcloud", "cloud crown", "spirit cloud"])) and not is_visor and not is_brow_shell)
-        is_crown = not is_full_helmet and not is_visor and not is_halo and not is_tear and not is_brow_shell
-
-        if is_full_helmet:
-            target_w = int(eye_dist * 3.6)
-            target_h = int(target_w * aspect)
-            pos = (int(eye_cx - target_w // 2), int(eye_cy - target_h * 0.52))
-            ev_y = int(eye_cy)
-        elif is_visor:
-            target_w = int(eye_dist * 2.35)
-            target_h = min(240, int(target_w * aspect))
-            pos = (int(eye_cx - target_w // 2), int(eye_cy - target_h // 2))
-            ev_y = int(eye_cy)
-        elif is_tear:
-            target_w = int(eye_dist * 2.20)
-            target_h = min(360, int(target_w * aspect))
-            mid_y = (eye_cy + mouth_cy) / 2.0
-            pos = (int(eye_cx - target_w // 2), int(mid_y - target_h // 2))
-            ev_y = int(eye_cy)
-        elif is_brow_shell:
-            target_w = int(eye_dist * (1.45 if eye_dist > 180 else 1.95))
-            target_h = int(target_w * aspect)
-            pos = (int(forehead_cx - target_w // 2), int(forehead_cy - target_h * 0.70))
-            ev_y = int(eye_cy)
-        elif is_halo:
-            target_w = int(eye_dist * 2.50)
-            target_h = int(target_w * aspect)
-            pos = (int(halo_cx - target_w // 2), int(halo_cy - target_h // 2))
-            ev_y = int(eye_cy)
-        elif is_crown:
-            target_w = int(eye_dist * 2.45)
-            target_h = int(target_w * aspect)
-            pos = (int(forehead_cx - target_w // 2), int(forehead_cy - target_h * 0.60))
-            ev_y = int(eye_cy)
-        else:
-            target_w = int(eye_dist * 2.40)
-            target_h = int(target_w * aspect)
-            pos = (int(forehead_cx - target_w // 2), int(forehead_cy - target_h * 0.60))
-            ev_y = int(eye_cy)
-
-        # Trigger frame anatomical anchors
-        t_eye_cx, t_eye_cy = lm_t["eye_center"]
-        t_eye_dist = lm_t["eye_dist"]
-        t_roll_deg = lm_t["roll_angle"]
-        t_forehead_cx, t_forehead_cy = lm_t["forehead_center"]
-        t_halo_cx, t_halo_cy = lm_t["halo_center"]
-        t_mouth_cx, t_mouth_cy = lm_t["mouth_center"]
-
-        if is_full_helmet:
-            pos_t = (int(t_eye_cx - target_w // 2), int(t_eye_cy - target_h * 0.52))
-        elif is_visor:
-            pos_t = (int(t_eye_cx - target_w // 2), int(t_eye_cy - target_h // 2))
-        elif is_tear:
-            pos_t = (int(t_eye_cx - target_w // 2), int((t_eye_cy + t_mouth_cy) / 2.0 - target_h // 2))
-        elif is_brow_shell:
-            pos_t = (int(t_forehead_cx - target_w // 2), int(t_forehead_cy - target_h * 0.70))
-        elif is_halo:
-            pos_t = (int(t_halo_cx - target_w // 2), int(t_halo_cy - target_h // 2))
-        elif is_crown:
-            pos_t = (int(t_forehead_cx - target_w // 2), int(t_forehead_cy - target_h * 0.60))
-        else:
-            pos_t = (int(t_forehead_cx - target_w // 2), int(t_forehead_cy - target_h * 0.60))
-
-        # Store for motion video synthesis
         self.dominant_texture = dominant_texture
-        self.bg_texture = bg_texture
         self.sw_texture = sw_texture
         self.flare_texture = flare_texture
-        self.eq_texture = eq_texture
-        self.star_texture = star_texture
-        self.orb_texture = orb_texture
+        self.bg_texture = bg_texture
+
+        # Compute & cache geometry
+        geom = self.compute_asset_geometry(lm_n)
         self.asset_scale_info = {
-            "target_w": target_w,
-            "target_h": target_h,
-            "pos": pos,
-            "ev_y": ev_y,
-            "is_full_helmet": is_full_helmet,
-            "is_visor": is_visor,
-            "is_tear": is_tear,
-            "is_brow_shell": is_brow_shell,
-            "is_halo": is_halo,
-            "is_crown": is_crown,
+            "target_w": geom["cur_w"],
+            "target_h": geom["cur_h"],
+            "pos": geom["pos"],
+            "ev_y": int(geom["eye_cy"]),
+            "is_full_helmet": geom["is_full_helmet"],
+            "is_visor": geom["is_visor"],
+            "is_tear": geom["is_tear"],
+            "is_brow_shell": geom["is_brow_shell"],
+            "is_halo": geom["is_halo"],
+            "is_crown": geom["is_crown"],
             "p_text": p_text
         }
 
-        # 1. Background replacement if present
-        if bg_texture:
-            bg_resized = bg_texture.resize((720, 1280))
-            base_bg_n = bg_resized.copy()
-            base_bg_n.alpha_composite(img_n)
-            img_n = base_bg_n
-            base_bg_t = bg_resized.copy()
-            base_bg_t.alpha_composite(img_t)
-            img_t = base_bg_t
+        # Composite Neutral Frame (1:1 identical to video frame 0)
+        comp_n = self.composite_ar_frame(
+            img_n.copy(), lm_n, t_prog=0.0, frame_ratio=0.0, draw_ui=False, account_id=aid
+        )
 
-        from PIL import ImageEnhance
+        # Composite Trigger Frame (1:1 identical to video frame 60 / t=2s)
+        trig_ratio = float(trig_idx / max(1, total_f - 1)) if total_f > 1 else 0.55
+        comp_t = self.composite_ar_frame(
+            img_t.copy(), lm_t, t_prog=1.0, frame_ratio=trig_ratio, draw_ui=False, account_id=aid
+        )
 
-        # ---------------- NEUTRAL FRAME COMPOSITING ----------------
-        enh_n = ImageEnhance.Contrast(img_n)
-        comp_n = enh_n.enhance(1.12)
-
-        # Subtle contact shadow for forehead-mounted crowns/helms only (never over cheeks/nose/eyes)
-        if is_crown:
-            shadow_n = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
-            s_draw = ImageDraw.Draw(shadow_n)
-            s_draw.ellipse([pos[0] + 50, pos[1] + target_h - 10, pos[0] + target_w - 50, pos[1] + target_h + 10], fill=(0, 0, 0, 45))
-            shadow_n = shadow_n.filter(ImageFilter.GaussianBlur(10))
-            comp_n = Image.alpha_composite(comp_n, shadow_n)
-
-        # Idle Equalizer Bars if present
-        if eq_texture:
-            for bx, by, scale in [(110, ev_y-40, 0.7), (140, ev_y-70, 1.1), (170, ev_y-30, 0.6),
-                                  (550, ev_y-30, 0.6), (580, ev_y-70, 1.1), (610, ev_y-40, 0.7)]:
-                bw, bh = int(24 * scale), int(90 * scale)
-                comp_n.alpha_composite(eq_texture.resize((bw, bh), Image.Resampling.LANCZOS), dest=(bx - bw//2, by - bh//2))
-
-        # 3D Asset on Neutral with Head Roll Rotation
-        if dominant_texture:
-            t_resized_n = dominant_texture.resize((target_w, target_h), Image.Resampling.LANCZOS)
-            if abs(roll_deg) > 0.5:
-                t_rot_n = t_resized_n.rotate(-roll_deg, resample=Image.Resampling.BICUBIC, expand=True)
-                dest_n = (int(pos[0] + target_w // 2 - t_rot_n.width // 2), int(pos[1] + target_h // 2 - t_rot_n.height // 2))
-                comp_n.alpha_composite(t_rot_n, dest=dest_n)
-            else:
-                comp_n.alpha_composite(t_resized_n, dest=pos)
-
-        # Apply tailored procedural idle niche effects onto neutral frame
-        comp_n = self.render_niche_effects_neutral(comp_n, niche, pos, target_w, target_h, ev_y, landmarks=lm_n)
-
-        # ---------------- TRIGGER FRAME COMPOSITING (HIGH IMPACT VIRALITY) ----------------
-        # 1. Atmospheric lighting & rim grading on portrait
-        enh_t = ImageEnhance.Contrast(img_t)
-        comp_t = enh_t.enhance(1.22)
-        tint = Image.new("RGBA", (720, 1280), (5, 30, 55, 75))
-        comp_t = Image.alpha_composite(comp_t, tint)
-
-        # Contact shadow for trigger (crown only)
-        if is_crown:
-            shadow_t = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
-            st_draw = ImageDraw.Draw(shadow_t)
-            st_draw.ellipse([pos_t[0] + 50, pos_t[1] + target_h - 10, pos_t[0] + target_w - 50, pos_t[1] + target_h + 10], fill=(0, 0, 0, 45))
-            shadow_t = shadow_t.filter(ImageFilter.GaussianBlur(10))
-            comp_t = Image.alpha_composite(comp_t, shadow_t)
-
-        # 2. Trigger reaction VFX
-        if sw_texture and not is_full_helmet:
-            sw_size = 560
-            mx, my = int(t_mouth_cx), int(t_mouth_cy)
-            comp_t.alpha_composite(sw_texture.resize((sw_size, sw_size), Image.Resampling.LANCZOS), dest=(mx - sw_size // 2, my - sw_size // 2))
-
-        # 3. 3D Asset Composite on Trigger with Head Roll Rotation
-        if dominant_texture:
-            t_resized_t = dominant_texture.resize((target_w, target_h), Image.Resampling.LANCZOS)
-            if abs(t_roll_deg) > 0.5:
-                t_rot_t = t_resized_t.rotate(-t_roll_deg, resample=Image.Resampling.BICUBIC, expand=True)
-                dest_t = (int(pos_t[0] + target_w // 2 - t_rot_t.width // 2), int(pos_t[1] + target_h // 2 - t_rot_t.height // 2))
-                comp_t.alpha_composite(t_rot_t, dest=dest_t)
-            else:
-                comp_t.alpha_composite(t_resized_t, dest=pos_t)
-
-        # 4. Visor / Crown Overdrive Core Bloom & Optical Glints anchored to true facial landmarks
-        bloom = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
-        b_draw = ImageDraw.Draw(bloom)
-
-        if is_visor:
-            cx_t, cy_t = int(t_eye_cx), int(t_eye_cy)
-            for r, a in [(35, 255), (80, 230), (150, 160), (250, 90), (380, 35)]:
-                b_draw.ellipse([cx_t - r, cy_t - int(r*0.55), cx_t + r, cy_t + int(r*0.55)], fill=(0, 245, 255, a))
-            bloom = bloom.filter(ImageFilter.GaussianBlur(15))
-            comp_t = Image.alpha_composite(comp_t, bloom)
-
-            flare = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
-            f_draw = ImageDraw.Draw(flare)
-            fw = min(300, int(target_w * 0.8))
-            f_draw.line([(cx_t - fw, cy_t), (cx_t + fw, cy_t)], fill=(0, 240, 255, 150), width=4)
-            f_draw.line([(cx_t - int(fw * 0.5), cy_t), (cx_t + int(fw * 0.5), cy_t)], fill=(220, 255, 255, 210), width=2)
-            flare = flare.filter(ImageFilter.GaussianBlur(8))
-            comp_t = Image.alpha_composite(comp_t, flare)
-        else:
-            # Warm gold/amber radiant bloom for crowns/headpieces/halos
-            glow_x, glow_y = int(t_forehead_cx), int(t_forehead_cy)
-            for r, a in [(25, 220), (60, 170), (120, 110), (200, 50), (300, 20)]:
-                b_draw.ellipse([glow_x - r, glow_y - r, glow_x + r, glow_y + r], fill=(255, 215, 80, a))
-            bloom = bloom.filter(ImageFilter.GaussianBlur(18))
-            comp_t = Image.alpha_composite(comp_t, bloom)
-
-
-        # Apply tailored procedural climax niche effects onto trigger frame
-        comp_t = self.render_niche_effects_trigger(comp_t, niche, pos_t, target_w, target_h, int(t_eye_cy), progression=1.0, landmarks=lm_t)
-
-        img_n = comp_n
-        img_t = comp_t
-
-        img_n.convert("RGB").save(out_neutral, "PNG")
-        img_t.convert("RGB").save(out_trigger, "PNG")
+        comp_n.convert("RGB").save(out_neutral, "PNG")
+        comp_t.convert("RGB").save(out_trigger, "PNG")
         self._last_neutral_path = out_neutral
         self._last_trigger_path = out_trigger
+        self._last_raw_neutral_frame = img_n.copy()
         self._last_raw_model_path = neutral_path
         print(f"[SIMULATOR] Rendered production simulation screenshots: {out_neutral} & {out_trigger}")
         return out_neutral, out_trigger
@@ -1420,30 +1599,61 @@ class LensSimulator:
         # Load neutral simulated preview as AR half
         n_path = neutral_path or getattr(self, "_last_neutral_path", None) or "preview_neutral_simulated.png"
         if not os.path.exists(n_path):
-            self.render_simulation_screenshots(out_neutral=n_path)
+            self.render_simulation_screenshots(out_neutral=n_path, account_id=account_id)
 
         ar_img = Image.open(n_path).convert("RGBA")
-        base_portrait = getattr(self, "_last_raw_model_path", None) or self.resolve_portrait_model()
 
-        if base_portrait and os.path.exists(base_portrait):
-            raw_img = Image.open(base_portrait).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
+        # Base portrait for RAW STUDIO half: use exact frame 0 with matching camera grading
+        raw_base = getattr(self, "_last_raw_neutral_frame", None)
+        if raw_base is None:
+            video_src = self.resolve_portrait_video(account_id=account_id)
+            if video_src and os.path.exists(video_src):
+                try:
+                    import cv2
+                    cap = cv2.VideoCapture(video_src)
+                    ret, f0 = cap.read()
+                    cap.release()
+                    if ret and f0 is not None:
+                        raw_base = Image.fromarray(cv2.cvtColor(f0, cv2.COLOR_BGR2RGB)).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
+                except Exception:
+                    pass
+        if raw_base is None:
+            base_portrait = getattr(self, "_last_raw_model_path", None) or self.resolve_portrait_model(video_sync=True)
+            if base_portrait and os.path.exists(base_portrait):
+                raw_base = Image.open(base_portrait).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
+            else:
+                raw_base = ar_img.copy()
+
+        # Camera grade raw image identically to AR frame 0
+        raw_img = ImageEnhance.Contrast(raw_base.copy()).enhance(1.08)
+        raw_img = ImageEnhance.Color(raw_img).enhance(1.12)
+
+        # Anatomical symmetry split: aligns divider directly down user's nose/face axis
+        lm = self.detect_face_landmarks(raw_base)
+        if lm.get("detected", False):
+            face_cx = (lm["l_eye"][0] + lm["r_eye"][0]) / 2.0
+            split_x = int(lm.get("nose", (face_cx, 640))[0])
+            split_y = int(lm.get("nose", (face_cx, 640))[1])
         else:
-            raw_img = ar_img.copy()
+            split_x = 360
+            split_y = 640
+        split_x = max(260, min(460, split_x))
+        split_y = max(450, min(800, split_y))
 
         # Split image: left is raw, right is AR
         split_img = Image.new("RGBA", (720, 1280))
         # Left half from raw
-        left_half = raw_img.crop((0, 0, 360, 1280))
+        left_half = raw_img.crop((0, 0, split_x, 1280))
         split_img.paste(left_half, (0, 0))
         # Right half from AR
-        right_half = ar_img.crop((360, 0, 720, 1280))
-        split_img.paste(right_half, (360, 0))
+        right_half = ar_img.crop((split_x, 0, 720, 1280))
+        split_img.paste(right_half, (split_x, 0))
 
         # Glowing vertical dividing laser beam
         beam = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
         b_draw = ImageDraw.Draw(beam)
-        b_draw.line([(360, 30), (360, 1250)], fill=(*rim_rgb, 255), width=3)
-        b_draw.line([(360, 30), (360, 1250)], fill=(255, 255, 255, 255), width=1)
+        b_draw.line([(split_x, 30), (split_x, 1250)], fill=(*rim_rgb, 255), width=3)
+        b_draw.line([(split_x, 30), (split_x, 1250)], fill=(255, 255, 255, 255), width=1)
         beam_blur = beam.filter(ImageFilter.GaussianBlur(6))
         split_img.alpha_composite(beam_blur)
         split_img.alpha_composite(beam)
@@ -1452,11 +1662,11 @@ class LensSimulator:
         slider_layer = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
         sl_draw = ImageDraw.Draw(slider_layer)
         # Handle outer ring
-        sl_draw.ellipse([360 - 24, 640 - 24, 360 + 24, 640 + 24], fill=(12, 16, 24, 240), outline=(*rim_rgb, 255), width=3)
+        sl_draw.ellipse([split_x - 24, split_y - 24, split_x + 24, split_y + 24], fill=(12, 16, 24, 240), outline=(*rim_rgb, 255), width=3)
         # Left arrow
-        sl_draw.polygon([(360 - 14, 640), (360 - 7, 640 - 7), (360 - 7, 640 + 7)], fill=(255, 255, 255, 255))
+        sl_draw.polygon([(split_x - 14, split_y), (split_x - 7, split_y - 7), (split_x - 7, split_y + 7)], fill=(255, 255, 255, 255))
         # Right arrow
-        sl_draw.polygon([(360 + 14, 640), (360 + 7, 640 - 7), (360 + 7, 640 + 7)], fill=(255, 255, 255, 255))
+        sl_draw.polygon([(split_x + 14, split_y), (split_x + 7, split_y - 7), (split_x + 7, split_y + 7)], fill=(255, 255, 255, 255))
         sl_blur = slider_layer.filter(ImageFilter.GaussianBlur(4))
         split_img.alpha_composite(sl_blur)
         split_img.alpha_composite(slider_layer)
@@ -1584,118 +1794,17 @@ class LensSimulator:
                 num_frames = len(all_frames)
                 print(f"[SIMULATOR] Loaded {num_frames} frames from portrait motion video ({src_w}x{src_h} @ {fps:.1f}fps)")
 
-                # Pre-generate bloom flare sprite tailored to resolved visual niche
-                niche = self.resolve_visual_niche(account_id=account_id)
-                flare_colors = {
-                    "mythic": (255, 180, 40),
-                    "cyber": (0, 245, 255),
-                    "comedy": (60, 220, 255),
-                    "luxury": (255, 215, 80),
-                    "chrome": (210, 230, 255)
-                }
-                flare_rgb = flare_colors.get(niche, (0, 245, 255))
-
-                # Asset geometry configs
-                p_text = (
-                    str(self.asset_scale_info.get("p_text", "")) + " " +
-                    str(self.lens_data.get("lens_name", "")) + " " +
-                    str(self.lens_data.get("prompt", "")) + " " +
-                    str(self.lens_data.get("archetype", ""))
-                ).lower()
-                is_full_helmet = self.asset_scale_info.get("is_full_helmet", False) or any(w in p_text for w in ["helmet", "full-face", "full face", "motorcycle"])
-                is_visor = self.asset_scale_info.get("is_visor", False) or (niche == "cyber") or any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "spectacles", "monocle", "eyewear", "sunglasses", "reticle", "optics"])
-                is_tear = self.asset_scale_info.get("is_tear", False) or (niche == "comedy" and any(w in p_text for w in ["tear", "crying", "weep", "waterfall", "melodrama"]))
-                is_brow_shell = self.asset_scale_info.get("is_brow_shell", False) or any(w in p_text for w in ["brow", "shell", "circlet", "plate", "forehead", "beetle", "scarab", "crest"])
-                is_halo = self.asset_scale_info.get("is_halo", False) or ((niche == "chrome" or any(w in p_text for w in ["mercury", "zero-g", "mobius", "cumulus", "stormcloud", "cloud crown", "spirit cloud"])) and not is_visor and not is_brow_shell)
-                is_crown = not is_full_helmet and not is_visor and not is_halo and not is_tear and not is_brow_shell
-
-                # Pre-generate optimized contact shadow sprite template (resized dynamically per-frame)
-                sh_w, sh_h = 480, 190
-                shadow_sprite = Image.new("RGBA", (sh_w, sh_h), (0, 0, 0, 0))
-                s_draw = ImageDraw.Draw(shadow_sprite)
-                s_draw.ellipse([8, 8, sh_w - 8, sh_h - 8], fill=(0, 0, 0, 40))
-                shadow_sprite = shadow_sprite.filter(ImageFilter.GaussianBlur(8))
-
-                fl_size = 220
-                flare_sprite = Image.new("RGBA", (fl_size, fl_size), (0, 0, 0, 0))
-                f_draw = ImageDraw.Draw(flare_sprite)
-                for r in [25, 50, 85, 105]:
-                    f_draw.ellipse([fl_size//2 - r, fl_size//2 - int(r*0.55), fl_size//2 + r, fl_size//2 + int(r*0.55)],
-                                   fill=(*flare_rgb, int(110 * (1.0 - r/120.0))))
-                flare_sprite = flare_sprite.filter(ImageFilter.GaussianBlur(8))
-
                 temp_frames_dir = f"/tmp/lens_sim_frames_{os.getpid()}_{int(time.time())}"
                 os.makedirs(temp_frames_dir, exist_ok=True)
 
                 aid = str(account_id or self.lens_data.get("account_id", "2"))
-                font_top = get_bold_font(13)
-                font_prompt = get_bold_font(12)
-                font_watermark = get_regular_font(11)
-                lens_name_display = self.lens_data.get("lens_name", "Snapchat AR")
-                if len(lens_name_display) > 18:
-                    lens_name_display = lens_name_display[:16] + "..."
-
-                prompt_texts = {
-                    "mythic": "👑 TILT HEAD • 3D DRAGON HELM",
-                    "cyber": "⚡ OPEN MOUTH • HUD SCAN",
-                    "comedy": "😭 OPEN MOUTH • CRYING MEME",
-                    "luxury": "✨ SMILE • 35MM GOLD GLOW",
-                    "chrome": "🌀 MOVE HEAD • LIQUID CHROME"
-                }
-                prompt_text = prompt_texts.get(niche, "⚡ OPEN MOUTH • HUD SCAN")
+                trig_target_frame = min(num_frames - 1, int(round(2.0 * fps)))
 
                 for idx, (frame_bgr, landmarks) in enumerate(zip(all_frames, trajectory)):
                     le, re, nose, fh, mouth = landmarks
-                    eye_cx = float((le[0] + re[0]) / 2.0)
-                    eye_cy = float((le[1] + re[1]) / 2.0)
                     eye_dist = float(np.linalg.norm(re - le))
                     roll_angle = float(np.degrees(np.arctan2(le[1] - re[1], le[0] - re[0])))
-                    aspect = (self.dominant_texture.height / max(1, self.dominant_texture.width)) if self.dominant_texture else 0.52
 
-                    # Compute precise per-frame asset dimensions directly from video face landmarks
-                    if is_full_helmet:
-                        cur_w = int(eye_dist * 3.60)
-                        cur_h = int(cur_w * aspect)
-                        anc_x = eye_cx
-                        anc_y = float(eye_cy - cur_h * 0.02)
-                    elif is_visor:
-                        # Full temple-to-temple ocular eyewear centered strictly over pupils
-                        cur_w = int(eye_dist * 2.35)
-                        cur_h = min(240, int(cur_w * aspect))
-                        anc_x = eye_cx
-                        anc_y = eye_cy
-                    elif is_tear:
-                        cur_w = int(eye_dist * 2.20)
-                        cur_h = min(380, int(cur_w * aspect))
-                        anc_x = eye_cx
-                        anc_y = float((eye_cy + mouth[1]) / 2.0)
-                    elif is_brow_shell:
-                        cur_w = int(eye_dist * (1.45 if eye_dist > 180 else 1.95))
-                        cur_h = int(cur_w * aspect)
-                        anc_x = float(fh[0])
-                        anc_y = float(fh[1] - cur_h * 0.20)
-                    elif is_halo:
-                        # Floating celestial toroid above skull
-                        cur_w = int(eye_dist * 2.50)
-                        cur_h = int(cur_w * aspect)
-                        anc_x = float(fh[0])
-                        anc_y = float(fh[1] - cur_h * 0.65)
-                    elif is_crown:
-                        # Full temple-to-temple regal crown span resting on forehead hairline
-                        cur_w = int(eye_dist * 2.45)
-                        cur_h = int(cur_w * aspect)
-                        anc_x = float(fh[0])
-                        anc_y = float(fh[1] - cur_h * 0.10)
-                    else:
-                        cur_w = int(eye_dist * 2.40)
-                        cur_h = int(cur_w * aspect)
-                        anc_x = float(fh[0])
-                        anc_y = float(fh[1] - cur_h * 0.10)
-
-                    scale = float(eye_dist / base_eye_dist)  # Normalized dynamically to video base eye distance
-
-                    # Dynamic trigger progression curve (mouth open / smile transition)
-                    # Peak trigger between 35% and 75% of clip duration
                     frame_ratio = idx / max(1, num_frames - 1)
                     if 0.30 <= frame_ratio <= 0.45:
                         t_prog = (frame_ratio - 0.30) / 0.15
@@ -1706,110 +1815,45 @@ class LensSimulator:
                     else:
                         t_prog = 0.0
 
-                    # Convert frame to PIL RGBA
                     rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
                     pil_frame = Image.fromarray(rgb).convert("RGBA")
 
-                    # Skin beauty smoothing & cinematic color grading
-                    enh_con = ImageEnhance.Contrast(pil_frame)
-                    pil_frame = enh_con.enhance(1.08 + 0.08 * t_prog)
-                    enh_col = ImageEnhance.Color(pil_frame)
-                    pil_frame = enh_col.enhance(1.12)
+                    lm_dict = {
+                        "l_eye": (float(le[0]), float(le[1])),
+                        "r_eye": (float(re[0]), float(re[1])),
+                        "nose": (float(nose[0]), float(nose[1])),
+                        "forehead_center": (float(fh[0]), float(fh[1])),
+                        "mouth_center": (float(mouth[0]), float(mouth[1])),
+                        "eye_dist": eye_dist,
+                        "roll_angle": roll_angle
+                    }
 
-                    # Build AR overlay layer
-                    ar_layer = Image.new("RGBA", (src_w, src_h), (0, 0, 0, 0))
-
-                    # Contact shadow composite (subtle hairline contact shadow for crowns only, never on visors/face)
-                    if is_crown:
-                        cur_sh_w = max(20, int(cur_w * 0.75))
-                        cur_sh_h = max(6, int(cur_h * 0.10))
-                        r_sh = shadow_sprite.resize((cur_sh_w, cur_sh_h), Image.Resampling.BILINEAR)
-                        if roll_angle != 0:
-                            r_sh = r_sh.rotate(-roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
-                        sh_x = int(anc_x - r_sh.width // 2)
-                        sh_y = int(anc_y + cur_h // 2 - r_sh.height // 2)
-                        ar_layer.alpha_composite(r_sh, dest=(sh_x, sh_y))
-
-                    # Foreground 3D asset overlay
-                    r_tex = self.dominant_texture.resize((cur_w, cur_h), Image.Resampling.BILINEAR)
-                    if roll_angle != 0:
-                        r_tex = r_tex.rotate(-roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
-                    pos_x = int(anc_x - r_tex.width // 2)
-                    pos_y = int(anc_y - r_tex.height // 2)
-                    ar_layer.alpha_composite(r_tex, dest=(pos_x, pos_y))
-
-                    # Reactive trigger VFX (bloom flare / particle burst)
-                    if t_prog > 0.05:
-                        cur_fl = int(fl_size * scale * (0.8 + 0.4 * t_prog))
-                        r_flare = flare_sprite.resize((cur_fl, cur_fl), Image.Resampling.BILINEAR)
-                        fl_x = int(anc_x - r_flare.width // 2)
-                        fl_y = int(anc_y - r_flare.height // 2)
-                        ar_layer.alpha_composite(r_flare, dest=(fl_x, fl_y))
-
-                    # Render tailored reactive niche animation anchored to moving face landmarks
-                    niche = self.resolve_visual_niche(account_id=aid)
-                    ar_layer = self.render_niche_video_vfx(
-                        ar_layer, niche, landmarks, scale, t_prog, flare_rgb, anc_x, anc_y,
-                        cur_w=cur_w, cur_h=cur_h, is_crown=is_crown
+                    # Clean AR frame without UI (1:1 identical to still screenshots)
+                    clean_ar = self.composite_ar_frame(
+                        pil_frame.copy(), lm_dict, t_prog=t_prog, frame_ratio=frame_ratio,
+                        draw_ui=False, base_eye_dist=base_eye_dist, account_id=aid
                     )
 
-                    # Smooth cinematic asset presence
-                    intro_fade = min(1.0, (idx + 1) / 6.0)
-                    if intro_fade < 1.0:
-                        ar_np = np.array(ar_layer)
-                        ar_np[:, :, 3] = (ar_np[:, :, 3].astype(float) * intro_fade).astype(np.uint8)
-                        ar_layer = Image.fromarray(ar_np)
+                    # Update out_neutral at frame 0
+                    if idx == 0 and out_neutral:
+                        clean_ar.convert("RGB").save(out_neutral, "PNG")
+                        self._last_neutral_path = out_neutral
+                        self._last_raw_neutral_frame = pil_frame.copy()
+                        self._last_raw_model_path = video_src
 
-                    pil_frame.alpha_composite(ar_layer)
+                    # Update out_trigger at peak trigger
+                    if idx == trig_target_frame and out_trigger:
+                        clean_ar.convert("RGB").save(out_trigger, "PNG")
+                        self._last_trigger_path = out_trigger
 
-                    # Dynamic Climax Shockwave Ring Pulse (Peak Trigger)
-                    if 0.38 <= frame_ratio <= 0.65:
-                        sw_ratio = (frame_ratio - 0.38) / 0.27
-                        sw_radius = int(35 + sw_ratio * 160)
-                        sw_alpha = int(180 * (1.0 - sw_ratio))
-                        if sw_alpha > 10:
-                            shock_img = Image.new("RGBA", (src_w, src_h), (0, 0, 0, 0))
-                            sk_draw = ImageDraw.Draw(shock_img)
-                            sk_draw.ellipse(
-                                [anc_x - sw_radius, anc_y - sw_radius, anc_x + sw_radius, anc_y + sw_radius],
-                                outline=(*flare_rgb, sw_alpha), width=3
-                            )
-                            sk_blur = shock_img.filter(ImageFilter.GaussianBlur(5))
-                            pil_frame.alpha_composite(sk_blur)
+                    # Video frame with UGC badges
+                    video_frame = self.composite_ar_frame(
+                        pil_frame, lm_dict, t_prog=t_prog, frame_ratio=frame_ratio,
+                        draw_ui=True, base_eye_dist=base_eye_dist, account_id=aid
+                    )
 
-                    # Native UGC UI Badges Overlay
-                    ui_layer = Image.new("RGBA", (src_w, src_h), (0, 0, 0, 0))
-                    ui_draw = ImageDraw.Draw(ui_layer)
-
-                    # 1. Top-Left Lens Badge Pill
-                    ui_draw.rounded_rectangle([32, 44, 275, 86], radius=21, fill=(12, 16, 24, 185), outline=(255, 255, 255, 110), width=1)
-                    ui_draw.ellipse([46, 57, 58, 69], fill=(*flare_rgb, 255))
-                    ui_draw.text((66, 54), lens_name_display, fill=(255, 255, 255, 255), font=font_top)
-                    ui_draw.ellipse([240, 54, 258, 72], fill=(0, 200, 255, 255))
-                    ui_draw.text((245, 54), "✓", fill=(255, 255, 255, 255), font=font_top)
-
-                    # 2. Center-Top Action Callout during Trigger
-                    if t_prog > 0.15:
-                        p_alpha = int(225 * min(1.0, t_prog * 1.5))
-                        pw, ph = 260, 36
-                        px0, py0 = src_w // 2 - pw // 2, 102
-                        ui_draw.rounded_rectangle([px0, py0, px0 + pw, py0 + ph], radius=18, fill=(12, 16, 24, p_alpha), outline=(*flare_rgb, p_alpha), width=2)
-                        try:
-                            p_bbox = ui_draw.textbbox((0, 0), prompt_text, font=font_prompt)
-                            ptw, pth = p_bbox[2] - p_bbox[0], p_bbox[3] - p_bbox[1]
-                        except Exception:
-                            ptw, pth = 190, 14
-                        ui_draw.text((src_w // 2 - ptw // 2, py0 + (ph - pth) // 2 - 1), prompt_text, fill=(255, 255, 255, p_alpha), font=font_prompt)
-
-                    # 3. Bottom-Right Subtle Watermark
-                    ui_draw.rounded_rectangle([src_w - 180, src_h - 48, src_w - 32, src_h - 22], radius=13, fill=(10, 14, 20, 170), outline=(255, 255, 255, 50), width=1)
-                    ui_draw.text((src_w - 168, src_h - 44), "✦ SNAP AR • 60 FPS", fill=(255, 255, 255, 200), font=font_watermark)
-
-                    pil_frame.alpha_composite(ui_layer)
-
-                    # Write frame to temporary JPEG
                     frame_path = os.path.join(temp_frames_dir, f"{idx:04d}.jpg")
-                    cv2.imwrite(frame_path, cv2.cvtColor(np.array(pil_frame), cv2.COLOR_RGBA2BGR), [cv2.IMWRITE_JPEG_QUALITY, 93])
+                    cv2.imwrite(frame_path, cv2.cvtColor(np.array(video_frame), cv2.COLOR_RGBA2BGR), [cv2.IMWRITE_JPEG_QUALITY, 93])
 
                 # Encode frame sequence with FFmpeg
                 enc_cmd = [

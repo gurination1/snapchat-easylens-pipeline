@@ -21,6 +21,8 @@ def resolve_fleet_target(
     now = datetime.now(timezone.utc)
 
     if forced_account:
+        if str(forced_account) not in ["1", "2"]:
+            raise ValueError(f"Invalid account target '{forced_account}'. Fleet strictly enforces Account 1 and Account 2 only.")
         print(f"[RESOLVER DECISION] Target: Account #{forced_account} | Forced: True")
         return {
             "account_id": str(forced_account),
@@ -95,7 +97,7 @@ def resolve_fleet_target(
 
 def main():
     parser = argparse.ArgumentParser(description="Resolve target Snapchat account for scheduled run.")
-    parser.add_argument("--force-account", type=str, default=None, help="Force specific account ID (1 or 2)")
+    parser.add_argument("--force-account", type=str, default=None, choices=["1", "2"], help="Force specific account ID (1 or 2)")
     parser.add_argument("--min-hours", type=float, default=6.5, help="Minimum cooldown hours between publishes per account")
     parser.add_argument("--env-file", type=str, default=None, help="File path to write export commands")
     args = parser.parse_args()

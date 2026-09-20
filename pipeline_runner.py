@@ -19,7 +19,9 @@ from gemini_lens_agent import (
 
 SSO_TOKEN = os.getenv("SNAP_SSO_TOKEN")
 COOKIE_HEADER = os.getenv("SNAP_COOKIE_HEADER", "")
-ACCOUNT_ID = os.getenv("ACCOUNT_ID", "1")
+ACCOUNT_ID = str(os.getenv("ACCOUNT_ID", "1"))
+if ACCOUNT_ID not in ("1", "2"):
+    raise ValueError(f"Invalid ACCOUNT_ID '{ACCOUNT_ID}'. Snapchat fleet strictly enforces Account 1 and Account 2 only.")
 USE_GEMINI = os.getenv("USE_GEMINI", "true").lower() not in ("false", "0", "no")
 CUSTOM_INSTRUCTIONS = os.getenv("CUSTOM_INSTRUCTIONS", "")
 
@@ -221,11 +223,13 @@ def select_lru_fallback(account_id: str, history: list = None) -> dict:
         "prompt": sanitize_lens_prompt(selected["prompt"]),
         "tags": selected["tags"]
     }
-AUTO_PUBLISH = os.getenv("AUTO_PUBLISH", "true").lower() not in ("false", "0", "no")
+AUTO_PUBLISH = os.getenv("AUTO_PUBLISH", "false").lower() in ("true", "1", "yes")
 
 
 def resolve_account_auth(account_id: str):
     aid = str(account_id)
+    if aid not in ("1", "2"):
+        raise ValueError(f"Invalid account ID '{aid}'. Fleet strictly enforces Account 1 and Account 2 only.")
     sso_token = (
         os.getenv(f"SNAP_SSO_TOKEN_ACC_{aid}")
         or os.getenv(f"SNAP_SSO_TOKEN_{aid}")
@@ -254,9 +258,9 @@ def resolve_account_auth(account_id: str):
     # Check if credentials exist for the targeted account
     has_creds = bool(sso_token or username or (aid == "1" and os.getenv("SNAP_SSO_TOKEN")))
     if not has_creds:
-        # Dynamically discover configured active accounts (1..5)
+        # Dynamically discover configured active accounts (strictly 1..2)
         active_accounts = []
-        for cand in ["1", "2", "3", "4", "5"]:
+        for cand in ["1", "2"]:
             c_tok = os.getenv(f"SNAP_SSO_TOKEN_ACC_{cand}") or (os.getenv("SNAP_SSO_TOKEN") if cand == "1" else None)
             c_usr = os.getenv(f"SNAP_USERNAME_ACC_{cand}") or (os.getenv("SNAP_USERNAME") if cand == "1" else None)
             if c_tok or c_usr:
@@ -434,6 +438,7 @@ def main():
         print("\n=== STEP 6: PUBLISHING VERIFIED LENS TO SNAPCHAT CATALOG ===")
         actual_lens_name = (lens_data.get("lens_name") or "").strip()
         final_lens_name = actual_lens_name if actual_lens_name else (lens_name or "Obsidian Pyrodrake 3D")
+        print(f"[METADATA BINDING] Bound final_lens_name strictly to EasyLens 3D bundle: '{final_lens_name}'")
 
         # Check for simulated preview video from Gate 7
         preview_url = None
