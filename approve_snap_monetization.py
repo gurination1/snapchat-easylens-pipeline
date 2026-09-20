@@ -217,6 +217,13 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
         await page.screenshot(path=f"my_lenses_acc_{aid}_loaded.png")
         print(f"[PORTAL LOADED] Current URL: {page.url[:80]} | Title: '{await page.title()}'")
 
+        # Inject SSO ticket into localStorage for Apollo Client
+        if ticket:
+            try:
+                await page.evaluate("(t) => { if (t) { localStorage.setItem('sc-sso-auth-ticket', t); console.log('SSO ticket stored in localStorage'); } }", ticket)
+            except Exception:
+                pass
+
         # 3. Check for and accept any on-screen TOS modal / Banner
         modals_accepted = 0
         tos_btn_selectors = [
@@ -248,14 +255,18 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
         # 4. Programmatic GraphQL Mutation execution directly in browser context
         print("[GRAPHQL MUTATION] Dispatching SetTosLatestAcceptedVersion for LENS_CREATOR_PAYOUT_TOS & ILDG_TOS...")
         gql_script = """
-        async () => {
+        async (fallbackTicket) => {
+            const token = localStorage.getItem("sc-sso-auth-ticket") || fallbackTicket;
+            const headers = { "Content-Type": "application/json" };
+            if (token) headers["Authorization"] = `Bearer ${token}`;
+
             const keys = ["LENS_CREATOR_PAYOUT_TOS", "ILDG_TOS"];
             const out = {};
             for (const key of keys) {
                 try {
                     const res = await fetch("/graphql", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: headers,
                         body: JSON.stringify({
                             operationName: "SetTosLatestAcceptedVersion",
                             query: `
@@ -281,7 +292,7 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
         }
         """
         try:
-            gql_result = await page.evaluate(gql_script)
+            gql_result = await page.evaluate(gql_script, ticket)
             print(f"[GRAPHQL RESPONSE] {json.dumps(gql_result)}")
 
             for k in ["LENS_CREATOR_PAYOUT_TOS", "ILDG_TOS"]:
@@ -302,14 +313,18 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
 
         # 5. Query verification
         verify_script = """
-        async () => {
+        async (fallbackTicket) => {
+            const token = localStorage.getItem("sc-sso-auth-ticket") || fallbackTicket;
+            const headers = { "Content-Type": "application/json" };
+            if (token) headers["Authorization"] = `Bearer ${token}`;
+
             const keys = ["LENS_CREATOR_PAYOUT_TOS", "ILDG_TOS"];
             const out = {};
             for (const key of keys) {
                 try {
                     const res = await fetch("/graphql", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: headers,
                         body: JSON.stringify({
                             operationName: "GetTos",
                             query: `
@@ -338,7 +353,7 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
         }
         """
         try:
-            verify_res = await page.evaluate(verify_script)
+            verify_res = await page.evaluate(verify_script, ticket)
             print(f"[VERIFICATION QUERY] {json.dumps(verify_res)}")
             for k in ["LENS_CREATOR_PAYOUT_TOS", "ILDG_TOS"]:
                 t_data = verify_res.get(k, {}).get("data", {}).get("getTos", {}).get("tos", {})
@@ -352,7 +367,13 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
 
         # 6. Automatic Enrollment of published lenses into Lens Creator Rewards / Lens+ Payouts
         enroll_script = """
-        async (specificLensId) => {
+        async (args) => {
+            const specificLensId = args.specificLensId;
+            const fallbackTicket = args.fallbackTicket;
+            const token = localStorage.getItem("sc-sso-auth-ticket") || fallbackTicket;
+            const headers = { "Content-Type": "application/json" };
+            if (token) headers["Authorization"] = `Bearer ${token}`;
+
             const out = { enrolled_count: 0, lenses: [] };
             const targetIds = new Set();
             if (specificLensId) targetIds.add(specificLensId);
@@ -362,7 +383,7 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                 try {
                     const res = await fetch("/graphql", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: headers,
                         body: JSON.stringify({
                             operationName: "getLensesList",
                             query: `
@@ -401,7 +422,7 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                     // 1. setLensCreatorPayoutEnrollment
                     const r1 = await fetch("/graphql", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: headers,
                         body: JSON.stringify({
                             operationName: "setLensCreatorPayoutEnrollment",
                             query: `
@@ -423,7 +444,7 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                     // 2. updateLens (creatorRewardProgramEnrolled: true)
                     const r2 = await fetch("/graphql", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: headers,
                         body: JSON.stringify({
                             operationName: "updateLens",
                             query: `
@@ -452,7 +473,7 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
         }
         """
         try:
-            enroll_res = await page.evaluate(enroll_script, target_lens_id)
+            enroll_res = await page.evaluate(enroll_script, {"specificLensId": target_lens_id, "fallbackTicket": ticket})
             print(f"[LENS ENROLLMENT] Payout & Top Performer enrollment processed for {enroll_res.get('enrolled_count', 0)} lenses: {json.dumps(enroll_res)}")
             results["enrolled_lenses_count"] = enroll_res.get("enrolled_count", 0)
         except Exception as ee:
@@ -466,45 +487,74 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                 await page.goto(nav_target, wait_until="domcontentloaded", timeout=45000)
                 await page.wait_for_timeout(6000)
 
-                # Look for Top Performer Payouts switch or green checkmark
-                switches = await page.query_selector_all("#toggle-lens-creator-payout-enrolled, [id*='creator-payout'], .sds-switch, [role='switch']")
-                switch_toggled = False
-                for sw in switches:
+                # Step A: Check for and accept any blocking TOS modal on the lens page first
+                for _ in range(3):
+                    tos_modal_btn = await page.query_selector("[data-testid='tos-modal'] button:has-text('Accept'), [data-testid='tos-modal'] button:has-text('I Agree'), button:has-text('Accept'), button:has-text('I Agree')")
+                    if tos_modal_btn and await tos_modal_btn.is_visible() and await tos_modal_btn.is_enabled():
+                        print("[TOS MODAL] Clicking on-screen TOS acceptance button on lens page...")
+                        await human_click(page, tos_modal_btn)
+                        await page.wait_for_timeout(2500)
+                    else:
+                        break
+
+                # Step B: Locate the Top Performer switch
+                try:
+                    payout_container = await page.query_selector("#creator-payout-container, [data-testid*='creator-payout']")
+                    if payout_container:
+                        await payout_container.scroll_into_view_if_needed()
+                except Exception:
+                    pass
+
+                switch_elem = await page.wait_for_selector(
+                    "#toggle-lens-creator-payout-enrolled, [id*='creator-payout'], .sds-switch, [role='switch']",
+                    timeout=10000
+                )
+                if switch_elem:
                     is_checked = (
-                        await sw.get_attribute("aria-checked") == "true"
-                        or "checked" in (await sw.get_attribute("class") or "").lower()
+                        await switch_elem.get_attribute("aria-checked") == "true"
+                        or "checked" in (await switch_elem.get_attribute("class") or "").lower()
                     )
                     if not is_checked:
                         print("[TOGGLE] Found unchecked Top Performer Payouts switch. Clicking switch...")
-                        await human_click(page, sw)
+                        await human_click(page, switch_elem)
                         await page.wait_for_timeout(2000)
-                        switch_toggled = True
                         results["top_performer_toggled"] = True
-                        break
+
+                        # Check if clicking switch triggered a TOS modal
+                        tos_btn_after = await page.query_selector("[data-testid='tos-modal'] button:has-text('Accept'), [data-testid='tos-modal'] button:has-text('I Agree'), button:has-text('Accept'), button:has-text('I Agree')")
+                        if tos_btn_after and await tos_btn_after.is_visible() and await tos_btn_after.is_enabled():
+                            print("[TOS MODAL] Clicking TOS acceptance modal triggered by switch...")
+                            await human_click(page, tos_btn_after)
+                            await page.wait_for_timeout(2000)
                     else:
                         print("[TOGGLE] Top Performer Payouts switch is ALREADY CHECKED!")
                         results["top_performer_toggled"] = True
 
-                # Check if TOS acceptance modal popped up after toggle
-                tos_modal_btn = await page.query_selector("[data-testid='tos-modal'] button:has-text('Accept'), [data-testid='tos-modal'] button:has-text('I Agree'), button:has-text('Accept'), button:has-text('I Agree')")
-                if tos_modal_btn and await tos_modal_btn.is_visible() and await tos_modal_btn.is_enabled():
-                    print("[TOS MODAL] Clicking on-screen TOS acceptance button...")
-                    await human_click(page, tos_modal_btn)
-                    await page.wait_for_timeout(2000)
-
-                # Click header Save Changes button
+                # Step C: Click Save Changes in header
                 save_btn = await page.query_selector("button[data-testid='save-changes-button'], button:has-text('Save Changes'), button:has-text('Save'), button:has-text('Update')")
                 if save_btn and await save_btn.is_visible() and await save_btn.is_enabled():
-                    print("[SAVE] Clicking Save Changes button...")
+                    print("[SAVE] Clicking Save Changes button in header...")
                     await human_click(page, save_btn)
                     await page.wait_for_timeout(2000)
 
-                    # Click confirmation inside SaveChangesModal if present
+                    # Step D: Confirm inside SaveChangesModal
                     confirm_btn = await page.query_selector("[data-testid='save-changes-modal'] button:has-text('Save Changes'), .sds-modal button:has-text('Save Changes'), [role='dialog'] button:has-text('Save Changes')")
                     if confirm_btn and await confirm_btn.is_visible() and await confirm_btn.is_enabled():
                         print("[SAVE MODAL] Clicking Save Changes confirmation button...")
                         await human_click(page, confirm_btn)
-                        await page.wait_for_timeout(4000)
+                        await page.wait_for_timeout(5000)
+                        print("[SAVE MODAL] Changes confirmed and submitted successfully!")
+
+                # Step E: Final verification of toggle state
+                final_switch = await page.query_selector("#toggle-lens-creator-payout-enrolled, .sds-switch")
+                if final_switch:
+                    final_checked = (
+                        await final_switch.get_attribute("aria-checked") == "true"
+                        or "checked" in (await final_switch.get_attribute("class") or "").lower()
+                    )
+                    print(f"[FINAL VERIFICATION] Top Performer Payout switch checked state: {final_checked}")
+                    if final_checked:
+                        results["top_performer_toggled"] = True
 
                 await page.screenshot(path=f"lens_{aid}_payout_toggled.png")
             except Exception as le:
