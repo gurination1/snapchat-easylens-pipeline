@@ -1,0 +1,29 @@
+{
+  "1": {
+    "account_id": "1",
+    "username": "gman21478",
+    "displayName": "Gur Man",
+    "LENS_CREATOR_PAYOUT_TOS": false,
+    "ILDG_TOS": false,
+    "ui_modals_accepted": 0,
+    "enrolled_lenses_count": 1,
+    "top_performer_toggled": true,
+    "direct_graphql_details": {
+      "count": 1,
+      "lenses": [
+        {
+          "id": "3d4a4ea8-3aa5-4ed8-8b1c-8f729b20945f",
+          "setPayoutRes": {
+            "error": "unauthorized",
+            "status_code": 403
+          },
+          "updateLensRes": {
+            "error": "unauthorized",
+            "status_code": 403
+          }
+        }
+      ]
+    },
+    "success": true
+  }
+}
