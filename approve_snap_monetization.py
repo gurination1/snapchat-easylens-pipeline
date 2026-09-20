@@ -148,35 +148,46 @@ def execute_direct_graphql(ticket: str, cookie_header: str, query: str, variable
 
 
 def direct_approve_tos(ticket: str, cookie_header: str) -> dict:
-    """Submits SetTosLatestAcceptedVersion for LENS_CREATOR_PAYOUT_TOS and ILDG_TOS."""
+    """Submits SetTosLatestAcceptedVersion for LENS_CREATOR_PAYOUT_TOS."""
     results = {}
-    keys = ["LENS_CREATOR_PAYOUT_TOS", "ILDG_TOS"]
+    keys = ["LENS_CREATOR_PAYOUT_TOS"]
     for key in keys:
-        print(f"[DIRECT GRAPHQL] Setting TOS acceptance for {key}...")
-        res = execute_direct_graphql(ticket, cookie_header, GQL_SET_TOS, variables={"key": key}, operation_name="SetTosLatestAcceptedVersion")
-        print(f"  -> Response: {json.dumps(res)}")
-        if res.get("data", {}).get("setTosLatestAcceptedVersion", {}).get("tos", {}).get("acceptedVersion") is not None:
-            results[key] = True
-            print(f"  ✓ {key}: ACCEPTED (Version: {res['data']['setTosLatestAcceptedVersion']['tos']['acceptedVersion']})")
-        elif "errors" in res:
-            err_msg = str(res.get("errors", ""))
-            if "already" in err_msg.lower() or "not modified" in err_msg.lower():
+        try:
+            print(f"[DIRECT GRAPHQL] Setting TOS acceptance for {key}...")
+            res = execute_direct_graphql(ticket, cookie_header, GQL_SET_TOS, variables={"key": key}, operation_name="SetTosLatestAcceptedVersion")
+            print(f"  -> Response: {json.dumps(res)}")
+            data = res.get("data") or {}
+            tos_data = (data.get("setTosLatestAcceptedVersion") or {}).get("tos") or {}
+            acc_ver = tos_data.get("acceptedVersion")
+            if acc_ver is not None:
                 results[key] = True
-                print(f"  ✓ {key}: ALREADY ACCEPTED")
+                print(f"  ✓ {key}: ACCEPTED (Version: {acc_ver})")
+            elif "errors" in res:
+                err_msg = str(res.get("errors", ""))
+                if "already" in err_msg.lower() or "not modified" in err_msg.lower():
+                    results[key] = True
+                    print(f"  ✓ {key}: ALREADY ACCEPTED")
+                else:
+                    results[key] = False
             else:
                 results[key] = False
-        else:
+        except Exception as te:
+            print(f"[DIRECT GRAPHQL WARN] Error setting {key}: {te}")
             results[key] = False
 
     # Verification query
     for key in keys:
-        v_res = execute_direct_graphql(ticket, cookie_header, GQL_GET_TOS, variables={"key": key}, operation_name="GetTos")
-        t_data = v_res.get("data", {}).get("getTos", {}).get("tos", {})
-        acc_ver = t_data.get("acceptedVersion")
-        latest_ver = (t_data.get("metadata") or {}).get("latestVersion")
-        if acc_ver and latest_ver and acc_ver >= latest_ver:
-            results[key] = True
-            print(f"  ✓ {key} VERIFIED: acceptedVersion={acc_ver} (latestVersion={latest_ver})")
+        try:
+            v_res = execute_direct_graphql(ticket, cookie_header, GQL_GET_TOS, variables={"key": key}, operation_name="GetTos")
+            v_data = v_res.get("data") or {}
+            t_data = (v_data.get("getTos") or {}).get("tos") or {}
+            acc_ver = t_data.get("acceptedVersion")
+            latest_ver = (t_data.get("metadata") or {}).get("latestVersion")
+            if acc_ver and latest_ver and acc_ver >= latest_ver:
+                results[key] = True
+                print(f"  ✓ {key} VERIFIED: acceptedVersion={acc_ver} (latestVersion={latest_ver})")
+        except Exception as ve:
+            print(f"[DIRECT GRAPHQL WARN] Error verifying {key}: {ve}")
     return results
 
 
@@ -194,7 +205,8 @@ def direct_enroll_lenses(ticket: str, cookie_header: str, target_lens_id: str = 
                 variables={"limit": 50, "offset": 0, "sortBy": "SORT_BY_DATE", "sortDirection": "SORT_DIRECTION_DESC", "type": gType},
                 operation_name="getLensesList"
             )
-            l_list = res.get("data", {}).get("lenses", {}).get("lensesList", [])
+            data = res.get("data") or {}
+            l_list = (data.get("lenses") or {}).get("lensesList") or []
             for item in l_list:
                 if item and item.get("id"):
                     target_ids.add(item["id"])
