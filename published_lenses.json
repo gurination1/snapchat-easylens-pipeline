@@ -386,5 +386,28 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/rZxiaB1JrMqfZm21slxDk?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-20T17:34:06Z",
+    "account_id": "1",
+    "lens_name": "Pearl Arch Magic",
+    "lens_id": "e94e980b-8401-4257-91b5-654cc0bd73f9",
+    "checkpoint_id": "06ab018b-3835-7432-8000-9a1f0a65bd08",
+    "prompt": "An iridescent mother-of-pearl scallop shell arching over the brow with suspended baroque freshwater pearls. Mouth open triggers a torrent of translucent sea-mist and floating bubbles. Smile initiates a soft Aegean glow on skin. Eyebrow raise expands the shell silhouette. Head tilt causes pearls to drift. 3-point lighting with 6500K rim highlights and ray-traced shadows on PBR shell surfaces. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "mythology",
+      "oceanic",
+      "goddess",
+      "beauty",
+      "aesthetic"
+    ],
+    "visual_hook": "The immediate emergence of a massive, shimmering seashell silhouette framing the face with high-contrast pearlescent light.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/V8ldfYyifi9NdEIUJREf6?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/wj7fduVfYIJ6h73PE0gdR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/JD2HrQemzlYB390LPv8zP?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
