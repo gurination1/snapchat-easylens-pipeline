@@ -81,7 +81,16 @@ def audit_video_frames_visual_defects(video_path: str) -> dict:
 
                 # Synthetic AR rays have high saturation and high luminance (golden or emissive glow)
                 if (16 <= mean_h <= 40 or mean_s > 140) and mean_s > 120 and mean_v > 160:
+                    # Disambiguate isolated thin line rays (background on both sides) from solid 3D mesh contours (interior on one side)
+                    nx, ny = -dy / line_len, dx / line_len
                     mx, my = (x1 + x2) / 2.0, (y1 + y2) / 2.0
+                    ax, ay = int(np.clip(mx + 8 * nx, 0, w - 1)), int(np.clip(my + 8 * ny, 0, sky_crop.shape[0] - 1))
+                    bx, by = int(np.clip(mx - 8 * nx, 0, w - 1)), int(np.clip(my - 8 * ny, 0, sky_crop.shape[0] - 1))
+                    sa = sky_hsv[ay, ax, 1]
+                    sb = sky_hsv[by, bx, 1]
+                    if sa > 80 or sb > 80:
+                        continue  # Solid wearable mesh interior, not an isolated ray
+
                     vx, vy = mx - cx, my - cy
                     v_len = np.hypot(vx, vy)
                     if v_len > 25:
@@ -111,6 +120,9 @@ def audit_video_frames_visual_defects(video_path: str) -> dict:
             contours, _ = cv2.findContours(eye_defect_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
             for cnt in contours:
                 area = cv2.contourArea(cnt)
+                x, y, cw, ch = cv2.boundingRect(cnt)
+                if cw > 180:
+                    continue  # Legitimate wearable eyewear/visor spanning across both temples
                 if area > 350:
                     defects.append(f"Detected unnatural zombie/discolored eye fill (blob area {area:.0f}px) at frame {f_idx}")
                     break

@@ -215,7 +215,7 @@ class LensSimulator:
         from PIL import ImageFilter
 
         p_lower = p_text.lower()
-        if any(w in p_lower for w in ["crown", "horns", "tiara", "headpiece", "diadem", "helm", "coronet"]):
+        if niche == "mythic" or any(w in p_lower for w in ["crown", "horns", "tiara", "headpiece", "diadem", "helm", "coronet", "circlet", "crest", "valkyrie", "wings", "band"]):
             w, h = 540, 290
             im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
             d = ImageDraw.Draw(im)
@@ -306,22 +306,52 @@ class LensSimulator:
             return im
 
         else:
+            # Cyber HUD Visor / Goggles / Optics
             w, h = 520, 190
             im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
             d = ImageDraw.Draw(im)
+
+            # Dynamic cyber colorway matching prompt (polarized dark lens with vibrant neon frame)
+            if any(c in p_lower for c in ["amber", "gold", "orange", "yellow", "solar"]):
+                frame_outline = (255, 175, 20, 255)
+                lens_fill = (30, 32, 40, 165)
+                lens_outline = (255, 190, 40, 220)
+                accent_line = (255, 220, 80, 220)
+            elif any(c in p_lower for c in ["red", "crimson", "ruby", "scarlet"]):
+                frame_outline = (255, 45, 65, 255)
+                lens_fill = (35, 22, 28, 165)
+                lens_outline = (255, 80, 100, 220)
+                accent_line = (255, 120, 140, 220)
+            elif any(c in p_lower for c in ["purple", "violet", "magenta", "neon purple"]):
+                frame_outline = (210, 50, 255, 255)
+                lens_fill = (30, 22, 42, 165)
+                lens_outline = (220, 100, 255, 220)
+                accent_line = (240, 150, 255, 220)
+            elif any(c in p_lower for c in ["green", "matrix", "emerald", "lime"]):
+                frame_outline = (0, 255, 130, 255)
+                lens_fill = (20, 35, 28, 165)
+                lens_outline = (50, 255, 160, 220)
+                accent_line = (150, 255, 200, 220)
+            else:
+                # Default high-tech cyan
+                frame_outline = (0, 245, 255, 255)
+                lens_fill = (18, 30, 44, 165)
+                lens_outline = (0, 220, 255, 220)
+                accent_line = (180, 255, 255, 220)
+
             frame_pts = [
                 (35, 75), (140, 50), (w // 2, 60), (w - 140, 50), (w - 35, 75),
                 (w - 45, 145), (w - 130, 130), (w // 2, 105), (130, 130), (45, 145)
             ]
-            d.polygon(frame_pts, fill=(15, 25, 45, 235), outline=(0, 245, 255, 255), width=4)
+            d.polygon(frame_pts, fill=(15, 25, 45, 235), outline=frame_outline, width=4)
             d.polygon([
                 (55, 85), (135, 65), (w // 2 - 10, 72), (w // 2 - 10, 100), (125, 120), (60, 135)
-            ], fill=(0, 210, 255, 160), outline=(180, 255, 255, 220), width=2)
+            ], fill=lens_fill, outline=lens_outline, width=2)
             d.polygon([
                 (w - 55, 85), (w - 135, 65), (w // 2 + 10, 72), (w // 2 + 10, 100), (w - 125, 120), (w - 60, 135)
-            ], fill=(0, 210, 255, 160), outline=(180, 255, 255, 220), width=2)
-            d.line([(70, 100), (w // 2 - 25, 85)], fill=(255, 255, 255, 220), width=2)
-            d.line([(w - 70, 100), (w // 2 + 25, 85)], fill=(255, 255, 255, 220), width=2)
+            ], fill=lens_fill, outline=lens_outline, width=2)
+            d.line([(70, 100), (w // 2 - 25, 85)], fill=accent_line, width=2)
+            d.line([(w - 70, 100), (w // 2 + 25, 85)], fill=accent_line, width=2)
             return im
 
     def resolve_portrait_model(self) -> str:
@@ -558,7 +588,7 @@ class LensSimulator:
         aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 0.45
 
         is_full_helmet = any(w in p_text for w in ["helmet", "full-face", "full face", "motorcycle"])
-        is_crown = any(w in p_text for w in ["crown", "horns", "tiara", "headpiece", "diadem", "horn", "antlers", "coronet", "wreath", "circlet", "halo crown", "headband"])
+        is_crown = (niche == "mythic" and not is_full_helmet) or any(w in p_text for w in ["crown", "horns", "tiara", "headpiece", "diadem", "helm", "coronet", "circlet", "crest", "valkyrie", "wings", "band", "halo crown", "headband", "horn", "antlers", "wreath"])
         is_visor = any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "spectacles", "monocle", "eyewear", "sunglasses", "reticle", "optics"])
         is_halo = any(w in p_text for w in ["cloud", "halo", "floating", "above", "sky", "mercury halo"])
         is_tear = any(w in p_text for w in ["tear", "crying", "weep", "waterfall", "melodrama", "makeup", "blush"])
@@ -653,22 +683,13 @@ class LensSimulator:
         enh_n = ImageEnhance.Contrast(img_n)
         comp_n = enh_n.enhance(1.12)
 
-        # Realistic contact shadow
-        shadow_n = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
-        s_draw = ImageDraw.Draw(shadow_n)
+        # Subtle contact shadow for forehead-mounted crowns/helms only (never over cheeks/nose/eyes)
         if is_crown:
-            s_draw.ellipse([pos[0] + 40, pos[1] + target_h - 15, pos[0] + target_w - 40, pos[1] + target_h + 25], fill=(0, 0, 0, 90))
-            shadow_n = shadow_n.filter(ImageFilter.GaussianBlur(15))
-        elif is_visor:
-            s_draw.ellipse([pos[0] + 30, pos[1] + int(target_h * 0.7), pos[0] + target_w - 30, pos[1] + target_h + 15], fill=(0, 0, 0, 80))
-            shadow_n = shadow_n.filter(ImageFilter.GaussianBlur(12))
-        elif is_halo:
-            s_draw.ellipse([int(halo_cx - 100), int(halo_cy + 50), int(halo_cx + 100), int(halo_cy + 100)], fill=(0, 0, 0, 75))
-            shadow_n = shadow_n.filter(ImageFilter.GaussianBlur(18))
-        else:
-            s_draw.ellipse([pos[0] + 40, pos[1] + target_h - 15, pos[0] + target_w - 40, pos[1] + target_h + 25], fill=(0, 0, 0, 80))
-            shadow_n = shadow_n.filter(ImageFilter.GaussianBlur(15))
-        comp_n = Image.alpha_composite(comp_n, shadow_n)
+            shadow_n = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+            s_draw = ImageDraw.Draw(shadow_n)
+            s_draw.ellipse([pos[0] + 50, pos[1] + target_h - 10, pos[0] + target_w - 50, pos[1] + target_h + 10], fill=(0, 0, 0, 45))
+            shadow_n = shadow_n.filter(ImageFilter.GaussianBlur(10))
+            comp_n = Image.alpha_composite(comp_n, shadow_n)
 
         # Idle Equalizer Bars if present
         if eq_texture:
@@ -697,22 +718,13 @@ class LensSimulator:
         tint = Image.new("RGBA", (720, 1280), (5, 30, 55, 75))
         comp_t = Image.alpha_composite(comp_t, tint)
 
-        # Contact shadow for trigger
-        shadow_t = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
-        st_draw = ImageDraw.Draw(shadow_t)
+        # Contact shadow for trigger (crown only)
         if is_crown:
-            st_draw.ellipse([pos_t[0] + 40, pos_t[1] + target_h - 15, pos_t[0] + target_w - 40, pos_t[1] + target_h + 25], fill=(0, 0, 0, 90))
-            shadow_t = shadow_t.filter(ImageFilter.GaussianBlur(15))
-        elif is_visor:
-            st_draw.ellipse([pos_t[0] + 30, pos_t[1] + int(target_h * 0.7), pos_t[0] + target_w - 30, pos_t[1] + target_h + 15], fill=(0, 0, 0, 80))
-            shadow_t = shadow_t.filter(ImageFilter.GaussianBlur(12))
-        elif is_halo:
-            st_draw.ellipse([int(t_halo_cx - 100), int(t_halo_cy + 50), int(t_halo_cx + 100), int(t_halo_cy + 100)], fill=(0, 0, 0, 75))
-            shadow_t = shadow_t.filter(ImageFilter.GaussianBlur(18))
-        else:
-            st_draw.ellipse([pos_t[0] + 40, pos_t[1] + target_h - 15, pos_t[0] + target_w - 40, pos_t[1] + target_h + 25], fill=(0, 0, 0, 80))
-            shadow_t = shadow_t.filter(ImageFilter.GaussianBlur(15))
-        comp_t = Image.alpha_composite(comp_t, shadow_t)
+            shadow_t = Image.new("RGBA", (720, 1280), (0, 0, 0, 0))
+            st_draw = ImageDraw.Draw(shadow_t)
+            st_draw.ellipse([pos_t[0] + 50, pos_t[1] + target_h - 10, pos_t[0] + target_w - 50, pos_t[1] + target_h + 10], fill=(0, 0, 0, 45))
+            shadow_t = shadow_t.filter(ImageFilter.GaussianBlur(10))
+            comp_t = Image.alpha_composite(comp_t, shadow_t)
 
         # 2. Trigger reaction VFX
         if sw_texture and not is_full_helmet:
@@ -1532,26 +1544,6 @@ class LensSimulator:
                 num_frames = len(all_frames)
                 print(f"[SIMULATOR] Loaded {num_frames} frames from portrait motion video ({src_w}x{src_h} @ {fps:.1f}fps)")
 
-                # Asset geometry configs
-                p_text = (
-                    str(self.asset_scale_info.get("p_text", "")) + " " +
-                    str(self.lens_data.get("lens_name", "")) + " " +
-                    str(self.lens_data.get("prompt", "")) + " " +
-                    str(self.lens_data.get("archetype", ""))
-                ).lower()
-                is_full_helmet = self.asset_scale_info.get("is_full_helmet", False) or any(w in p_text for w in ["helmet", "full-face", "full face", "motorcycle"])
-                is_crown = self.asset_scale_info.get("is_crown", False) or any(w in p_text for w in ["crown", "horns", "tiara", "headpiece", "diadem", "horn", "antlers", "coronet", "wreath", "circlet", "halo crown", "headband"])
-                is_visor = self.asset_scale_info.get("is_visor", False) or any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "spectacles", "monocle", "eyewear", "sunglasses", "reticle", "optics"])
-                is_halo = self.asset_scale_info.get("is_halo", False) or any(w in p_text for w in ["cloud", "halo", "floating", "above", "sky", "mercury halo"])
-                is_tear = self.asset_scale_info.get("is_tear", False) or any(w in p_text for w in ["tear", "crying", "weep", "waterfall", "melodrama", "makeup", "blush"])
-
-                # Pre-generate optimized contact shadow sprite template (resized dynamically per-frame)
-                sh_w, sh_h = 480, 190
-                shadow_sprite = Image.new("RGBA", (sh_w, sh_h), (0, 0, 0, 0))
-                s_draw = ImageDraw.Draw(shadow_sprite)
-                s_draw.ellipse([8, 8, sh_w - 8, sh_h - 8], fill=(0, 0, 0, 85))
-                shadow_sprite = shadow_sprite.filter(ImageFilter.GaussianBlur(8))
-
                 # Pre-generate bloom flare sprite tailored to resolved visual niche
                 niche = self.resolve_visual_niche(account_id=account_id)
                 flare_colors = {
@@ -1562,6 +1554,26 @@ class LensSimulator:
                     "chrome": (210, 230, 255)
                 }
                 flare_rgb = flare_colors.get(niche, (0, 245, 255))
+
+                # Asset geometry configs
+                p_text = (
+                    str(self.asset_scale_info.get("p_text", "")) + " " +
+                    str(self.lens_data.get("lens_name", "")) + " " +
+                    str(self.lens_data.get("prompt", "")) + " " +
+                    str(self.lens_data.get("archetype", ""))
+                ).lower()
+                is_full_helmet = self.asset_scale_info.get("is_full_helmet", False) or any(w in p_text for w in ["helmet", "full-face", "full face", "motorcycle"])
+                is_crown = self.asset_scale_info.get("is_crown", False) or (niche == "mythic" and not is_full_helmet) or any(w in p_text for w in ["crown", "horns", "tiara", "headpiece", "diadem", "helm", "coronet", "circlet", "crest", "valkyrie", "wings", "band", "halo crown", "headband", "horn", "antlers", "wreath"])
+                is_visor = self.asset_scale_info.get("is_visor", False) or any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "spectacles", "monocle", "eyewear", "sunglasses", "reticle", "optics"])
+                is_halo = self.asset_scale_info.get("is_halo", False) or any(w in p_text for w in ["cloud", "halo", "floating", "above", "sky", "mercury halo"])
+                is_tear = self.asset_scale_info.get("is_tear", False) or any(w in p_text for w in ["tear", "crying", "weep", "waterfall", "melodrama", "makeup", "blush"])
+
+                # Pre-generate optimized contact shadow sprite template (resized dynamically per-frame)
+                sh_w, sh_h = 480, 190
+                shadow_sprite = Image.new("RGBA", (sh_w, sh_h), (0, 0, 0, 0))
+                s_draw = ImageDraw.Draw(shadow_sprite)
+                s_draw.ellipse([8, 8, sh_w - 8, sh_h - 8], fill=(0, 0, 0, 40))
+                shadow_sprite = shadow_sprite.filter(ImageFilter.GaussianBlur(8))
 
                 fl_size = 220
                 flare_sprite = Image.new("RGBA", (fl_size, fl_size), (0, 0, 0, 0))
@@ -1661,15 +1673,16 @@ class LensSimulator:
                     # Build AR overlay layer
                     ar_layer = Image.new("RGBA", (src_w, src_h), (0, 0, 0, 0))
 
-                    # Contact shadow composite
-                    cur_sh_w = max(20, int(cur_w * 0.85))
-                    cur_sh_h = max(20, int(cur_h * 0.40))
-                    r_sh = shadow_sprite.resize((cur_sh_w, cur_sh_h), Image.Resampling.BILINEAR)
-                    if roll_angle != 0:
-                        r_sh = r_sh.rotate(-roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
-                    sh_x = int(anc_x - r_sh.width // 2)
-                    sh_y = int(anc_y + cur_h // 2 - r_sh.height // 2)
-                    ar_layer.alpha_composite(r_sh, dest=(sh_x, sh_y))
+                    # Contact shadow composite (subtle hairline contact shadow for crowns only, never on visors/face)
+                    if is_crown:
+                        cur_sh_w = max(20, int(cur_w * 0.75))
+                        cur_sh_h = max(6, int(cur_h * 0.10))
+                        r_sh = shadow_sprite.resize((cur_sh_w, cur_sh_h), Image.Resampling.BILINEAR)
+                        if roll_angle != 0:
+                            r_sh = r_sh.rotate(-roll_angle, resample=Image.Resampling.BILINEAR, expand=True)
+                        sh_x = int(anc_x - r_sh.width // 2)
+                        sh_y = int(anc_y + cur_h // 2 - r_sh.height // 2)
+                        ar_layer.alpha_composite(r_sh, dest=(sh_x, sh_y))
 
                     # Foreground 3D asset overlay
                     r_tex = self.dominant_texture.resize((cur_w, cur_h), Image.Resampling.BILINEAR)

@@ -592,20 +592,15 @@ def select_channel_archetype(account_id: str, history: list, exclude_archetypes:
                 last_acc_channel = a["channel_id"]
                 break
 
-    # Accounts 1 & 2 operate in Universal Rotating Fleet mode across all genres
-    if aid in ["1", "2"]:
-        candidates = [a for a in all_archetypes if a["channel_id"] != last_acc_channel and a["id"] not in excluded]
-        if not candidates:
-            candidates = [a for a in all_archetypes if a["id"] not in excluded]
-        if not candidates:
-            candidates = all_archetypes
-    else:
-        # Accounts 3, 4, 5 anchor to their specific specialized studio
+    # Strictly enforce account-to-niche specialization:
+    # Account 1 = Channel 1 (MythicBeasts_AR: dragons, phoenixes, valkyrie helms, celestial crowns)
+    # Account 2 = Channel 2 (SciFi_Optics: titanium visors, cyberpunk HUD, ocular scanners, speed goggles)
+    if aid in CHANNEL_PROMPT_MATRICES:
         candidates = [a for a in all_archetypes if a["channel_id"] == aid and a["id"] not in excluded]
         if not candidates:
-            candidates = [a for a in all_archetypes if a["id"] not in excluded]
-        if not candidates:
-            candidates = all_archetypes
+            candidates = [a for a in all_archetypes if a["channel_id"] == aid]
+    else:
+        candidates = [a for a in all_archetypes if a["id"] not in excluded] or all_archetypes
 
     # Deterministic LRU selection:
     # 1. Least used across fleet
