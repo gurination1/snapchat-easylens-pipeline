@@ -195,7 +195,7 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                 # Wait for password input
                 pwd_input = await page.wait_for_selector("input[type='password']", state="visible", timeout=12000)
                 if pwd_input:
-                    env_pwd = os.getenv(f"SNAP_PASSWORD_ACC_{aid}") or os.getenv("SNAP_PASSWORD") or "DM id wale1"
+                    env_pwd = os.getenv(f"SNAP_PASSWORD_ACC_{aid}") or os.getenv("SNAP_PASSWORD") or ""
                     print("[AUTH LOGIN] Filling password...")
                     await human_type(page, pwd_input, env_pwd)
                     await page.wait_for_timeout(400)
@@ -204,8 +204,46 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                         await human_click(page, login_btn)
                         await page.wait_for_timeout(6000)
 
+                # Check for Snapchat TIV (Two-step Identity Verification email approval)
+                await page.wait_for_timeout(4000)
+                if "/v2/tiv" in page.url or "tiv" in page.url.lower():
+                    print("[TIV DETECTED] Snapchat requested Email Sign-In Verification. Launching autonomous IMAP solver...")
+                    from snap_auth_automator import fetch_latest_snap_tiv_url
+                    gmail_addr = os.getenv(f"GMAIL_ADDRESS_ACC_{aid}") or os.getenv("GMAIL_ADDRESS") or "gurination1@gmail.com"
+                    gmail_pwd = os.getenv(f"GMAIL_APP_PASSWORD_ACC_{aid}") or os.getenv("GMAIL_APP_PASSWORD") or ""
+                    tiv_start = time.time() - 90
+                    approved = False
+                    for tiv_step in range(35):
+                        await page.wait_for_timeout(3000)
+                        if "tiv" not in page.url.lower() and "login" not in page.url.lower():
+                            approved = True
+                            print("[TIV REDIRECT] Session transitioned off TIV page automatically!")
+                            break
+                        if gmail_pwd:
+                            tiv_url = fetch_latest_snap_tiv_url(gmail_addr, gmail_pwd, tiv_start)
+                            if tiv_url:
+                                print(f"[TIV URL FOUND] Discovered verification link: {tiv_url[:80]}...")
+                                approval_page = await context.new_page()
+                                try:
+                                    await approval_page.goto(tiv_url, wait_until="domcontentloaded", timeout=30000)
+                                    await approval_page.wait_for_timeout(3000)
+                                    btn = await approval_page.query_selector("button:has-text('Approve'), button:has-text('Yes'), button#approve-btn")
+                                    if btn and await btn.is_visible():
+                                        await human_click(approval_page, btn)
+                                        await approval_page.wait_for_timeout(3000)
+                                        print("[TIV APPROVED] Clicked approval button on TIV landing page!")
+                                    await approval_page.close()
+                                except Exception as tiv_err:
+                                    print(f"[TIV APPROVE WARN] {tiv_err}")
+                                approved = True
+                                break
+
+                    if approved:
+                        print("[TIV SUCCESS] Verification completed! Waiting for session redirect...")
+                        await page.wait_for_timeout(6000)
+
                 # Wait for navigation back to my-lenses
-                if "login" in page.url:
+                if "login" in page.url or "tiv" in page.url:
                     await page.wait_for_timeout(5000)
                 if "my-lenses.snapchat.com" not in page.url:
                     await page.goto("https://my-lenses.snapchat.com/", wait_until="domcontentloaded", timeout=45000)
