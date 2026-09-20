@@ -58,7 +58,7 @@ query GetTos($key: TosKey!) {
 """
 
 
-async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: str, exec_path: str) -> dict:
+async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: str, exec_path: str, target_lens_id: str = None, target_lens_url: str = None) -> dict:
     results = {
         "account_id": aid,
         "username": user.get("username"),
@@ -66,6 +66,8 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
         "LENS_CREATOR_PAYOUT_TOS": False,
         "ILDG_TOS": False,
         "ui_modals_accepted": 0,
+        "enrolled_lenses_count": 0,
+        "top_performer_toggled": False,
         "errors": []
     }
 
@@ -271,77 +273,163 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
 
         # 6. Automatic Enrollment of published lenses into Lens Creator Rewards / Lens+ Payouts
         enroll_script = """
-        async () => {
+        async (specificLensId) => {
             const out = { enrolled_count: 0, lenses: [] };
-            try {
-                const res = await fetch("/graphql", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        operationName: "getLensesList",
-                        query: `
-                            query getLensesList($limit: Int!, $offset: Int!, $sortBy: SortBy!, $sortDirection: MyLensesSortDirection!, $type: GetLensesType!) {
-                                lenses: getMyLensesLenses(input: { limit: $limit, offset: $offset, sortBy: $sortBy, sortDirection: $sortDirection, type: $type }) {
-                                    lensesList {
-                                        id
-                                        name
-                                        lensCreatorPayoutEligibility
-                                        exclusiveLensStatus
-                                    }
-                                }
-                            }
-                        `,
-                        variables: {
-                            limit: 50,
-                            offset: 0,
-                            sortBy: "SORT_BY_CREATED_AT",
-                            sortDirection: "MY_LENSES_SORT_DIRECTION_DESCENDING",
-                            type: "GET_LENSES_TYPE_USER"
-                        }
-                    })
-                });
-                const data = await res.json();
-                const list = data?.data?.lenses?.lensesList || [];
-                for (const lens of list) {
-                    try {
-                        const enrollRes = await fetch("/graphql", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                                operationName: "setLensCreatorPayoutEnrollment",
-                                query: `
-                                    mutation setLensCreatorPayoutEnrollment($lensId: ID!, $lensCreatorPayoutEnrolled: Boolean!) {
-                                        setLensCreatorPayoutEnrollment(input: { lensId: $lensId, lensCreatorPayoutEnrolled: $lensCreatorPayoutEnrolled }) {
-                                            lens {
-                                                id
-                                                lensCreatorPayoutEligibility
-                                                status
-                                            }
+            const targetIds = new Set();
+            if (specificLensId) targetIds.add(specificLensId);
+
+            // Fetch lenses from GraphQL using valid enum types
+            for (const gType of ["COMMUNITY", "PROFILE"]) {
+                try {
+                    const res = await fetch("/graphql", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            operationName: "getLensesList",
+                            query: `
+                                query getLensesList($limit: Int!, $offset: Int!, $sortBy: SortBy!, $sortDirection: MyLensesSortDirection!, $type: GetLensesType!) {
+                                    lenses: getMyLensesLenses(input: { limit: $limit, offset: $offset, sortBy: $sortBy, sortDirection: $sortDirection, type: $type }) {
+                                        lensesList {
+                                            id
+                                            name
+                                            lensCreatorPayoutEligibility
+                                            exclusiveLensStatus
                                         }
                                     }
-                                `,
-                                variables: { lensId: lens.id, lensCreatorPayoutEnrolled: true }
-                            })
-                        });
-                        const enrollData = await enrollRes.json();
-                        out.enrolled_count++;
-                        out.lenses.push({ id: lens.id, name: lens.name, enrollResult: enrollData?.data?.setLensCreatorPayoutEnrollment });
-                    } catch (err) {
-                        out.lenses.push({ id: lens.id, name: lens.name, error: err.message });
+                                }
+                            `,
+                            variables: {
+                                limit: 50,
+                                offset: 0,
+                                sortBy: "SORT_BY_DATE",
+                                sortDirection: "SORT_DIRECTION_DESC",
+                                type: gType
+                            }
+                        })
+                    });
+                    const data = await res.json();
+                    const list = data?.data?.lenses?.lensesList || [];
+                    for (const l of list) {
+                        if (l && l.id) targetIds.add(l.id);
                     }
+                } catch (err) {
+                    out["fetch_error_" + gType] = err.message;
                 }
-            } catch (err) {
-                out.error = err.message;
+            }
+
+            for (const lid of targetIds) {
+                try {
+                    // 1. setLensCreatorPayoutEnrollment
+                    const r1 = await fetch("/graphql", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            operationName: "setLensCreatorPayoutEnrollment",
+                            query: `
+                                mutation setLensCreatorPayoutEnrollment($lensId: ID!, $lensCreatorPayoutEnrolled: Boolean!) {
+                                    setLensCreatorPayoutEnrollment(input: { lensId: $lensId, lensCreatorPayoutEnrolled: $lensCreatorPayoutEnrolled }) {
+                                        lens {
+                                            id
+                                            lensCreatorPayoutEligibility
+                                            status
+                                        }
+                                    }
+                                }
+                            `,
+                            variables: { lensId: lid, lensCreatorPayoutEnrolled: true }
+                        })
+                    });
+                    const d1 = await r1.json();
+
+                    // 2. updateLens (creatorRewardProgramEnrolled: true)
+                    const r2 = await fetch("/graphql", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            operationName: "updateLens",
+                            query: `
+                                mutation updateLens($lensId: ID!, $creatorRewardProgramEnrolled: Boolean!, $isGameUserProvided: Boolean!) {
+                                    updateLens(input: { lensId: $lensId, creatorRewardProgramEnrolled: $creatorRewardProgramEnrolled, isGameUserProvided: $isGameUserProvided }) {
+                                        lens {
+                                            id
+                                            lensCreatorPayoutEligibility
+                                            status
+                                        }
+                                    }
+                                }
+                            `,
+                            variables: { lensId: lid, creatorRewardProgramEnrolled: true, isGameUserProvided: false }
+                        })
+                    });
+                    const d2 = await r2.json();
+
+                    out.enrolled_count++;
+                    out.lenses.push({ id: lid, setPayoutRes: d1, updateLensRes: d2 });
+                } catch (err) {
+                    out.lenses.push({ id: lid, error: err.message });
+                }
             }
             return out;
         }
         """
         try:
-            enroll_res = await page.evaluate(enroll_script)
-            print(f"[LENS ENROLLMENT] Payout enrollment processed for {enroll_res.get('enrolled_count', 0)} lenses")
+            enroll_res = await page.evaluate(enroll_script, target_lens_id)
+            print(f"[LENS ENROLLMENT] Payout & Top Performer enrollment processed for {enroll_res.get('enrolled_count', 0)} lenses: {json.dumps(enroll_res)}")
             results["enrolled_lenses_count"] = enroll_res.get("enrolled_count", 0)
         except Exception as ee:
             print(f"[LENS ENROLLMENT WARN] {ee}")
+
+        # 7. Direct UI Navigation to target lens page to ensure toggle-lens-creator-payout-enrolled is verified & toggled
+        nav_target = target_lens_url or (f"https://my-lenses.snapchat.com/lens/{target_lens_id}" if target_lens_id else None)
+        if nav_target:
+            print(f"[NAV LENS] Navigating directly to target lens page: {nav_target}...")
+            try:
+                await page.goto(nav_target, wait_until="domcontentloaded", timeout=45000)
+                await page.wait_for_timeout(6000)
+
+                # Look for Top Performer Payouts switch or green checkmark
+                switches = await page.query_selector_all("#toggle-lens-creator-payout-enrolled, [id*='creator-payout'], .sds-switch, [role='switch']")
+                switch_toggled = False
+                for sw in switches:
+                    is_checked = (
+                        await sw.get_attribute("aria-checked") == "true"
+                        or "checked" in (await sw.get_attribute("class") or "").lower()
+                    )
+                    if not is_checked:
+                        print("[TOGGLE] Found unchecked Top Performer Payouts switch. Clicking switch...")
+                        await human_click(page, sw)
+                        await page.wait_for_timeout(2000)
+                        switch_toggled = True
+                        results["top_performer_toggled"] = True
+                        break
+                    else:
+                        print("[TOGGLE] Top Performer Payouts switch is ALREADY CHECKED!")
+                        results["top_performer_toggled"] = True
+
+                # Check if TOS acceptance modal popped up after toggle
+                tos_modal_btn = await page.query_selector("[data-testid='tos-modal'] button:has-text('Accept'), [data-testid='tos-modal'] button:has-text('I Agree'), button:has-text('Accept'), button:has-text('I Agree')")
+                if tos_modal_btn and await tos_modal_btn.is_visible() and await tos_modal_btn.is_enabled():
+                    print("[TOS MODAL] Clicking on-screen TOS acceptance button...")
+                    await human_click(page, tos_modal_btn)
+                    await page.wait_for_timeout(2000)
+
+                # Click header Save Changes button
+                save_btn = await page.query_selector("button[data-testid='save-changes-button'], button:has-text('Save Changes'), button:has-text('Save'), button:has-text('Update')")
+                if save_btn and await save_btn.is_visible() and await save_btn.is_enabled():
+                    print("[SAVE] Clicking Save Changes button...")
+                    await human_click(page, save_btn)
+                    await page.wait_for_timeout(2000)
+
+                    # Click confirmation inside SaveChangesModal if present
+                    confirm_btn = await page.query_selector("[data-testid='save-changes-modal'] button:has-text('Save Changes'), .sds-modal button:has-text('Save Changes'), [role='dialog'] button:has-text('Save Changes')")
+                    if confirm_btn and await confirm_btn.is_visible() and await confirm_btn.is_enabled():
+                        print("[SAVE MODAL] Clicking Save Changes confirmation button...")
+                        await human_click(page, confirm_btn)
+                        await page.wait_for_timeout(4000)
+
+                await page.screenshot(path=f"lens_{aid}_payout_toggled.png")
+            except Exception as le:
+                print(f"[NAV LENS WARN] Direct navigation error: {le}")
 
         await page.screenshot(path=f"my_lenses_acc_{aid}_final.png")
         await browser.close()
@@ -350,7 +438,7 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
     return results
 
 
-def approve_account_monetization(account_id: str = "1", cookie_str: str = None, ticket: str = None, user: dict = None) -> dict:
+def approve_account_monetization(account_id: str = "1", cookie_str: str = None, ticket: str = None, user: dict = None, target_lens_id: str = None, target_lens_url: str = None) -> dict:
     aid = str(account_id)
     print(f"\n{'='*65}\n[AUTONOMOUS MONETIZATION] Processing Account #{aid}...\n{'='*65}")
     if not cookie_str:
@@ -380,12 +468,14 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
                 exec_path = candidate
                 break
 
-    return asyncio.run(_run_browser_approval(aid, user, cookie_str, ticket or "", exec_path))
+    return asyncio.run(_run_browser_approval(aid, user, cookie_str, ticket or "", exec_path, target_lens_id=target_lens_id, target_lens_url=target_lens_url))
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Approve Snapchat Lens Creator Rewards monetization terms.")
+    parser = argparse.ArgumentParser(description="Approve Snapchat Lens Creator Rewards & Top Performer Payouts.")
     parser.add_argument("--account", type=str, default="all", choices=["1", "2", "3", "4", "5", "all"], help="Account ID or 'all'")
+    parser.add_argument("--lens-id", type=str, default=None, help="Specific Lens ID to enroll in Top Performer Payouts")
+    parser.add_argument("--lens-url", type=str, default=None, help="Direct URL to Lens page on my-lenses.snapchat.com")
     args = parser.parse_args()
 
     target_accounts = ["1", "2", "3", "4", "5"] if args.account == "all" else [args.account]
@@ -393,7 +483,7 @@ def main():
     overall_results = {}
     for aid in target_accounts:
         try:
-            res = approve_account_monetization(aid)
+            res = approve_account_monetization(aid, target_lens_id=args.lens_id, target_lens_url=args.lens_url)
             overall_results[aid] = res
         except Exception as e:
             print(f"[FATAL APPROVAL ERROR] Account #{aid}: {e}")
@@ -404,7 +494,9 @@ def main():
     print("="*65)
     for aid, res in overall_results.items():
         payout_tos = res.get("LENS_CREATOR_PAYOUT_TOS", False)
-        print(f"Account #{aid} (@{res.get('username', 'user')}): Payout TOS Approved = {payout_tos}")
+        enrolled_count = res.get("enrolled_lenses_count", 0)
+        toggled = res.get("top_performer_toggled", False)
+        print(f"Account #{aid} (@{res.get('username', 'user')}): Payout TOS = {payout_tos} | Enrolled Lenses = {enrolled_count} | Top Performer Toggled = {toggled}")
 
     with open("monetization_approval_status.json", "w") as f:
         json.dump(overall_results, f, indent=2)

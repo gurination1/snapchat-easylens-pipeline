@@ -529,6 +529,26 @@ def main():
             except Exception as mon_err:
                 print(f"[STATUS MONITOR WARN] Polling timed out or network error ({mon_err}), but lens was already submitted successfully!")
 
+        # Step 7B: Autonomous Top Performer Payouts & Lens+ Program Enrollment
+        pub_lens_id = (status_data or {}).get("lens_central_lens_id") or pub_res.get("lens_central_lens_id")
+        payout_enrolled = False
+        if pub_lens_id and os.getenv("AUTO_APPROVE_MONETIZATION", "true").lower() in ("true", "1", "yes"):
+            print(f"\n=== STEP 7B: ENROLLING PUBLISHED LENS ({pub_lens_id}) INTO TOP PERFORMER PAYOUTS ===")
+            try:
+                from approve_snap_monetization import approve_account_monetization
+                enroll_res = approve_account_monetization(
+                    account_id=ACCOUNT_ID,
+                    cookie_str=client.cookie_header or client.accounts_cookie,
+                    ticket=client.sso_token,
+                    user=user,
+                    target_lens_id=pub_lens_id,
+                    target_lens_url=f"https://my-lenses.snapchat.com/lens/{pub_lens_id}"
+                )
+                payout_enrolled = enroll_res.get("enrolled_lenses_count", 0) > 0 or enroll_res.get("top_performer_toggled", False)
+                print(f"[STEP 7B OK] Top Performer Payout Enrollment processed for {pub_lens_id}: enrolled={payout_enrolled}")
+            except Exception as enroll_err:
+                print(f"[STEP 7B WARN] Non-fatal per-lens payout enrollment notice: {enroll_err}")
+
         # Record into deduplication state file (persisted in git like yt-auto)
         import time
         history_file = "published_lenses.json"
@@ -544,7 +564,7 @@ def main():
             "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "account_id": str(ACCOUNT_ID),
             "lens_name": final_lens_name,
-            "lens_id": (status_data or {}).get("lens_central_lens_id") or pub_res.get("lens_central_lens_id"),
+            "lens_id": pub_lens_id,
             "checkpoint_id": checkpoint_id,
             "prompt": prompt,
             "tags": tags,
@@ -555,12 +575,13 @@ def main():
             "preview_image_url": preview_img_url,
             "has_lens_icon": bool(icon_url),
             "icon_url": icon_url,
+            "creator_rewards_enrolled": payout_enrolled,
             "status": (status_data or {}).get("status", "pending")
         }
         history.append(entry)
         with open(history_file, "w") as f:
             json.dump(history, f, indent=2)
-        print(f"[STATE] Recorded '{final_lens_name}' to {history_file} (Total fleet lenses: {len(history)})")
+        print(f"[STATE] Recorded '{final_lens_name}' to {history_file} (Total fleet lenses: {len(history)}, Payout Enrolled: {payout_enrolled})")
 
     print("\n=== PIPELINE FINISHED SUCCESSFULLY WITH 100% VERIFICATION ===")
 

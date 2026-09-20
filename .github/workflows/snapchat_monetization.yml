@@ -1,0 +1,158 @@
+name: Snapchat Autonomous Monetization & Payout Approver
+
+on:
+  workflow_dispatch:
+    inputs:
+      account_id:
+        description: 'Target Account ID (1, 2, 3, 4, 5, or all)'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - 'all'
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+      lens_id:
+        description: 'Specific Lens ID to enroll in Top Performer Payouts (optional)'
+        required: false
+        default: ''
+        type: string
+      lens_url:
+        description: 'Direct Lens URL on my-lenses.snapchat.com (optional)'
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  approve-monetization:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          echo "=== [1/3] INSTALLING SYSTEM & PYTHON PACKAGES & PLAYWRIGHT BROWSERS ==="
+          sudo apt-get update -y
+          python3 -m pip install --upgrade pip
+          pip install requests pillow playwright playwright-stealth cryptography
+          playwright install --with-deps chromium
+
+      - name: Setup Cloudflare WARP Tunnel
+        run: |
+          echo "=== [2/3] CONFIGURING OFFICIAL CLOUDFLARE WARP TUNNEL ==="
+          sudo apt-get update -y
+          curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+          sudo apt-get update -y
+          sudo apt-get install -y --no-install-recommends cloudflare-warp
+          sudo warp-cli --accept-tos registration new || true
+          sudo warp-cli --accept-tos mode warp+doh || true
+          sudo warp-cli --accept-tos connect || true
+
+          echo "=== [3/3] VERIFYING CLOUDFLARE WARP EGRESS & SNAPCHAT CONNECTIVITY ==="
+          for i in $(seq 1 12); do
+            TRACE=$(curl -s --max-time 4 https://www.cloudflare.com/cdn-cgi/trace || true)
+            if echo "$TRACE" | grep -q "warp="; then
+              echo "Cloudflare WARP successfully connected (attempt $i):"
+              echo "$TRACE" | grep -E "warp|ip|loc"
+              break
+            fi
+            sleep 1
+          done
+
+      - name: Execute Autonomous Monetization & Payout Approver
+        env:
+          SNAP_SSO_TOKEN: ${{ secrets.SNAP_SSO_TOKEN }}
+          SNAP_COOKIE_HEADER: ${{ secrets.SNAP_COOKIE_HEADER }}
+          SNAP_ACCOUNTS_COOKIE: ${{ secrets.SNAP_ACCOUNTS_COOKIE }}
+          SNAP_USERNAME: ${{ secrets.SNAP_USERNAME }}
+          SNAP_PASSWORD: ${{ secrets.SNAP_PASSWORD }}
+          SNAP_USERNAME_ACC_2: ${{ secrets.SNAP_USERNAME_ACC_2 }}
+          SNAP_PASSWORD_ACC_2: ${{ secrets.SNAP_PASSWORD_ACC_2 }}
+          SNAP_SSO_TOKEN_ACC_2: ${{ secrets.SNAP_SSO_TOKEN_ACC_2 }}
+          SNAP_COOKIE_HEADER_ACC_2: ${{ secrets.SNAP_COOKIE_HEADER_ACC_2 }}
+          SNAP_ACCOUNTS_COOKIE_ACC_2: ${{ secrets.SNAP_ACCOUNTS_COOKIE_ACC_2 }}
+          SNAP_USERNAME_ACC_3: ${{ secrets.SNAP_USERNAME_ACC_3 }}
+          SNAP_PASSWORD_ACC_3: ${{ secrets.SNAP_PASSWORD_ACC_3 }}
+          SNAP_SSO_TOKEN_ACC_3: ${{ secrets.SNAP_SSO_TOKEN_ACC_3 }}
+          SNAP_COOKIE_HEADER_ACC_3: ${{ secrets.SNAP_COOKIE_HEADER_ACC_3 }}
+          SNAP_ACCOUNTS_COOKIE_ACC_3: ${{ secrets.SNAP_ACCOUNTS_COOKIE_ACC_3 }}
+          SNAP_USERNAME_ACC_4: ${{ secrets.SNAP_USERNAME_ACC_4 }}
+          SNAP_PASSWORD_ACC_4: ${{ secrets.SNAP_PASSWORD_ACC_4 }}
+          SNAP_SSO_TOKEN_ACC_4: ${{ secrets.SNAP_SSO_TOKEN_ACC_4 }}
+          SNAP_COOKIE_HEADER_ACC_4: ${{ secrets.SNAP_COOKIE_HEADER_ACC_4 }}
+          SNAP_ACCOUNTS_COOKIE_ACC_4: ${{ secrets.SNAP_ACCOUNTS_COOKIE_ACC_4 }}
+          SNAP_USERNAME_ACC_5: ${{ secrets.SNAP_USERNAME_ACC_5 }}
+          SNAP_PASSWORD_ACC_5: ${{ secrets.SNAP_PASSWORD_ACC_5 }}
+          SNAP_SSO_TOKEN_ACC_5: ${{ secrets.SNAP_SSO_TOKEN_ACC_5 }}
+          SNAP_COOKIE_HEADER_ACC_5: ${{ secrets.SNAP_COOKIE_HEADER_ACC_5 }}
+          SNAP_ACCOUNTS_COOKIE_ACC_5: ${{ secrets.SNAP_ACCOUNTS_COOKIE_ACC_5 }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS || 'gurination1@gmail.com' }}
+          GMAIL_ADDRESS_ACC_2: ${{ secrets.GMAIL_ADDRESS_ACC_2 }}
+          GMAIL_APP_PASSWORD_ACC_2: ${{ secrets.GMAIL_APP_PASSWORD_ACC_2 }}
+          GMAIL_ADDRESS_ACC_3: ${{ secrets.GMAIL_ADDRESS_ACC_3 }}
+          GMAIL_APP_PASSWORD_ACC_3: ${{ secrets.GMAIL_APP_PASSWORD_ACC_3 }}
+          GMAIL_ADDRESS_ACC_4: ${{ secrets.GMAIL_ADDRESS_ACC_4 }}
+          GMAIL_APP_PASSWORD_ACC_4: ${{ secrets.GMAIL_APP_PASSWORD_ACC_4 }}
+          GMAIL_ADDRESS_ACC_5: ${{ secrets.GMAIL_ADDRESS_ACC_5 }}
+          GMAIL_APP_PASSWORD_ACC_5: ${{ secrets.GMAIL_APP_PASSWORD_ACC_5 }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
+          PYTHONUNBUFFERED: "1"
+        run: |
+          CMD="python3 approve_snap_monetization.py --account ${{ inputs.account_id }}"
+          if [ -n "${{ inputs.lens_id }}" ]; then
+            CMD="$CMD --lens-id ${{ inputs.lens_id }}"
+          fi
+          if [ -n "${{ inputs.lens_url }}" ]; then
+            CMD="$CMD --lens-url ${{ inputs.lens_url }}"
+          fi
+          echo "Executing: $CMD"
+          eval $CMD
+
+      - name: Disconnect WARP Tunnel
+        if: always()
+        run: |
+          sudo warp-cli --accept-tos disconnect 2>/dev/null || true
+
+      - name: Upload Approval Screenshots & Status
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: monetization-approval-artifacts
+          path: |
+            monetization_approval_status.json
+            *.png
+          retention-days: 14
+
+      - name: Commit & Persist Monetization Status
+        if: always()
+        run: |
+          git config --global user.name "Antigravity Autonomous Agent"
+          git config --global user.email "antigravity-agent@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B main origin/main
+          if [ -f monetization_approval_status.json ]; then
+            git add monetization_approval_status.json || true
+          fi
+          if git status --porcelain | grep -q 'monetization_approval_status.json'; then
+            git commit -m "chore(monetization): record updated TOS & Top Performer payout approvals [skip ci]"
+            git push origin main || true
+          fi
