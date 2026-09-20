@@ -340,5 +340,28 @@
     "has_preview_video": true,
     "preview_url": "https://cf-st.sc-cdn.net/d/ENGHpRNQOXn2GafEMUyUj?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-20T09:26:08Z",
+    "account_id": "1",
+    "lens_name": "Vermilion Kitsune Crest",
+    "lens_id": "8af4feb6-84ab-4c68-bf57-b6dc49935852",
+    "checkpoint_id": "06aafa64-580e-7360-8000-51c0f4a7b57b",
+    "prompt": "Carved white porcelain and vermilion lacquer fox forehead crest anchored to brow. Shimmering brass bells and twin floating foxfire tails contour jawline. Mouth open triggers swirling azure spirit flame orbs with volumetric embers. Smile reveals ethereal golden spirit eye reflections. Eyebrow raise flashes crimson runes. Head tilt sways foxfire tails. PBR materials, 3-point 6500K/2800K lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "kitsune",
+      "spirit",
+      "foxfire",
+      "mythic",
+      "porcelain"
+    ],
+    "visual_hook": "High-contrast vermilion lacquer against porcelain instantly frames the forehead, creating a bold, recognizable silhouette.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/lkclKe4KM4qH4TT4i7D2u?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/1gH3ryCTPVggolKWBaxB5?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/YwDAYle1GCOdGw3T4lNYm?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
