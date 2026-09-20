@@ -194,7 +194,25 @@ jobs:
           export GIT_TERMINAL_PROMPT=0
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          python3 -c '
+          import json, subprocess, os
+          try:
+              subprocess.run(["git", "fetch", "origin", "main"], check=True)
+              remote_content = subprocess.check_output(["git", "show", "origin/main:published_lenses.json"]).decode()
+              remote_data = json.loads(remote_content)
+              if os.path.exists("published_lenses.json"):
+                  with open("published_lenses.json", "r") as f:
+                      local_data = json.load(f)
+              else:
+                  local_data = []
+              merged = {x.get("lens_id") or x.get("checkpoint_id"): x for x in remote_data + local_data if x.get("lens_id") or x.get("checkpoint_id")}
+              final_list = sorted(merged.values(), key=lambda x: x.get("timestamp", ""))
+              with open("published_lenses.json", "w") as f:
+                  json.dump(final_list, f, indent=2)
+          except Exception as e:
+              print(f"Merge helper fallback: {e}")
+          '
           git add published_lenses.json 2>/dev/null || true
           git diff --staged --quiet || git commit -m "chore: update published lenses history [skip ci]"
-          git pull --rebase origin main 2>/dev/null || true
+          git pull --rebase -X ours origin main 2>/dev/null || true
           git push origin main 2>/dev/null || true

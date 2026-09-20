@@ -409,5 +409,26 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/JD2HrQemzlYB390LPv8zP?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-20T17:40:12Z",
+    "account_id": "3",
+    "lens_name": "Ghibli Watercolor Cloud Crown",
+    "lens_id": "df5949af-42c5-487f-b4e4-29a075d1fc12",
+    "checkpoint_id": "06ab01a1-ab35-71d5-8000-a180fe80325e",
+    "prompt": "Hand-painted Ghibli watercolor cumulus cloud crown resting above hairline with floating soot spirit dust and celestial spirit serpent coils. Soft cel-shaded gouache textures with warm 2800K sunlight ray-traced highlights. Opening mouth erupts swirling sakura petal cyclone; smiling spawns cheerful soot sprites around temples; head tilt shifts floating spirit dust. Pure 3D PBR fantasy, zero strobing, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "ghibli",
+      "watercolor",
+      "anime",
+      "clouds",
+      "spirit",
+      "pbr"
+    ],
+    "visual_hook": "Hand-painted Ghibli watercolor cumulus cloud crown resting above hairline with floating soot spirit dust and celestial spirit serpent coils.",
+    "has_preview_video": true,
+    "has_preview_image": true,
+    "has_lens_icon": true,
+    "status": "pending"
   }
 ]
