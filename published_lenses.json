@@ -302,5 +302,24 @@
     "has_preview_video": true,
     "preview_url": "https://cf-st.sc-cdn.net/d/cuT8wDTnMAIfMgXqczhQP?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-20T04:04:58Z",
+    "account_id": "1",
+    "lens_name": "Spectre Prism Visor",
+    "lens_id": "123450e7-fd1c-450b-8a5a-d8e53cef5d8b",
+    "checkpoint_id": "06aaf5b1-b66d-7b44-8000-ce62ad74190f",
+    "prompt": "Faceted obsidian and dichroic glass stealth visor contoured across the brow. Premium PBR metallic luster, 3-point contrast violet rim highlights, and ray-traced contact shadows. Opening mouth triggers a radial sonic particle shockwave with refractive edge displacement. Smiling pulses brilliant violet prismatic reflections across the glass face. 100% pure 3D geometry and volumetric particle systems. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "cyberpunk",
+      "visor",
+      "prismatic",
+      "spectre",
+      "face-trigger"
+    ],
+    "visual_hook": "Instant 0.2s snap of faceted obsidian and dichroic glass casting sharp violet rim reflections across the temples.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/XfZHoNfaXKN2MeEUmQM39?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "status": "pending"
   }
 ]
