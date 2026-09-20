@@ -215,7 +215,52 @@ class LensSimulator:
         from PIL import ImageFilter
 
         p_lower = p_text.lower()
-        if niche == "mythic" or any(w in p_lower for w in ["crown", "horns", "tiara", "headpiece", "diadem", "helm", "coronet", "circlet", "crest", "valkyrie", "wings", "band"]):
+        if any(w in p_lower for w in ["mercury", "chrome", "mobius", "zero-g", "liquid metal", "ferrofluid", "liquid platinum", "y3k"]) or niche == "chrome":
+            w, h = 500, 200
+            im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            d = ImageDraw.Draw(im)
+            d.ellipse([40, 40, w - 40, h - 40], outline=(225, 235, 250, 245), width=18)
+            d.ellipse([45, 45, w - 45, h - 45], outline=(255, 255, 255, 240), width=4)
+            for angle in [0.4, 1.2, 2.3, 3.6, 4.8]:
+                ox = int(w // 2 + (w // 2 - 40) * math.cos(angle))
+                oy = int(h // 2 + (h // 2 - 40) * math.sin(angle))
+                d.ellipse([ox - 10, oy - 10, ox + 10, oy + 10], fill=(235, 245, 255, 250), outline=(255, 255, 255, 255), width=2)
+            return im
+
+        elif any(w in p_lower for w in ["cloud", "crying", "teardrop", "soap-opera", "ghibli", "cumulus", "stormcloud", "raincloud"]) or niche == "comedy":
+            w, h = 500, 240
+            im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            d = ImageDraw.Draw(im)
+            d.ellipse([30, 60, 470, 220], fill=(220, 235, 250, 240), outline=(255, 255, 255, 255), width=3)
+            d.ellipse([90, 30, 270, 180], fill=(235, 245, 255, 245))
+            d.ellipse([230, 20, 410, 175], fill=(240, 248, 255, 245))
+            for tx, ty, trad in [(140, 205, 15), (250, 215, 18), (360, 205, 15)]:
+                d.ellipse([tx - trad, ty - trad, tx + trad, ty + trad], fill=(80, 190, 255, 240), outline=(255, 255, 255, 240), width=2)
+                d.ellipse([tx - trad//3, ty - trad//2, tx, ty - trad//5], fill=(255, 255, 255, 250))
+            return im
+
+        elif any(w in p_lower for w in ["pearl", "baroque", "filigree", "champagne", "couture", "gold leaf", "diamond", "haute", "luxe"]) or niche == "luxury":
+            w, h = 530, 240
+            im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            d = ImageDraw.Draw(im)
+            base_pts = [
+                (50, 195), (140, 180), (w // 2, 172), (w - 140, 180), (w - 50, 195),
+                (w - 58, 212), (w - 145, 198), (w // 2, 190), (145, 198), (58, 212)
+            ]
+            d.polygon(base_pts, fill=(230, 185, 55, 255), outline=(255, 240, 160, 255), width=2)
+            pearl_coords = [
+                (w // 2, 110, 16),
+                (w // 2 - 75, 125, 13), (w // 2 + 75, 125, 13),
+                (w // 2 - 145, 145, 11), (w // 2 + 145, 145, 11),
+                (w // 2 - 205, 170, 9), (w // 2 + 205, 170, 9),
+            ]
+            for px, py, prad in pearl_coords:
+                d.line([(px, py + prad), (px, py + prad + 25)], fill=(225, 180, 50), width=3)
+                d.ellipse([px - prad, py - prad, px + prad, py + prad], fill=(245, 240, 230, 255), outline=(220, 205, 185, 255), width=1)
+                d.ellipse([px - prad // 2, py - prad // 2, px - prad // 5, py - prad // 5], fill=(255, 255, 255, 250))
+            return im
+
+        elif niche == "mythic" or any(w in p_lower for w in ["crown", "horns", "tiara", "headpiece", "diadem", "helm", "coronet", "circlet", "crest", "valkyrie", "wings", "band"]):
             w, h = 540, 290
             im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
             d = ImageDraw.Draw(im)
@@ -279,30 +324,6 @@ class LensSimulator:
                 d.ellipse([gx - grad + 2, gy - grad + 2, gx + grad - 1, gy + grad - 1], fill=gem_light)
                 # Realistic Specular Catchlight
                 d.ellipse([gx - grad//2, gy - grad//2, gx - grad//5, gy - grad//5], fill=(255, 255, 255, 245))
-            return im
-
-        elif any(w in p_lower for w in ["cloud", "crying", "teardrop", "soap-opera", "comedy", "weep"]):
-            w, h = 500, 240
-            im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-            d = ImageDraw.Draw(im)
-            d.ellipse([30, 60, 470, 220], fill=(220, 235, 250, 240), outline=(255, 255, 255, 255), width=3)
-            d.ellipse([90, 30, 270, 180], fill=(235, 245, 255, 245))
-            d.ellipse([230, 20, 410, 175], fill=(240, 248, 255, 245))
-            for tx, ty, trad in [(140, 205, 15), (250, 215, 18), (360, 205, 15)]:
-                d.ellipse([tx - trad, ty - trad, tx + trad, ty + trad], fill=(80, 190, 255, 240), outline=(255, 255, 255, 240), width=2)
-                d.ellipse([tx - trad//3, ty - trad//2, tx, ty - trad//5], fill=(255, 255, 255, 250))
-            return im
-
-        elif any(w in p_lower for w in ["halo", "floating", "mercury", "chrome", "mobius", "zero-g"]):
-            w, h = 500, 200
-            im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-            d = ImageDraw.Draw(im)
-            d.ellipse([40, 40, w - 40, h - 40], outline=(225, 235, 250, 245), width=18)
-            d.ellipse([45, 45, w - 45, h - 45], outline=(255, 255, 255, 240), width=4)
-            for angle in [0.4, 1.2, 2.3, 3.6, 4.8]:
-                ox = int(w // 2 + (w // 2 - 40) * math.cos(angle))
-                oy = int(h // 2 + (h // 2 - 40) * math.sin(angle))
-                d.ellipse([ox - 10, oy - 10, ox + 10, oy + 10], fill=(235, 245, 255, 250), outline=(255, 255, 255, 255), width=2)
             return im
 
         else:
@@ -588,36 +609,36 @@ class LensSimulator:
         aspect = (dominant_texture.height / max(1, dominant_texture.width)) if dominant_texture else 0.45
 
         is_full_helmet = any(w in p_text for w in ["helmet", "full-face", "full face", "motorcycle"])
-        is_crown = (niche == "mythic" and not is_full_helmet) or any(w in p_text for w in ["crown", "horns", "tiara", "headpiece", "diadem", "helm", "coronet", "circlet", "crest", "valkyrie", "wings", "band", "halo crown", "headband", "horn", "antlers", "wreath"])
-        is_visor = any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "spectacles", "monocle", "eyewear", "sunglasses", "reticle", "optics"])
-        is_halo = any(w in p_text for w in ["cloud", "halo", "floating", "above", "sky", "mercury halo"])
-        is_tear = any(w in p_text for w in ["tear", "crying", "weep", "waterfall", "melodrama", "makeup", "blush"])
+        is_visor = (niche == "cyber") or any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "spectacles", "monocle", "eyewear", "sunglasses", "reticle", "optics"])
+        is_tear = (niche == "comedy" and any(w in p_text for w in ["tear", "crying", "weep", "waterfall", "melodrama"]))
+        is_halo = ((niche == "chrome" or any(w in p_text for w in ["mercury", "zero-g", "mobius", "cumulus", "stormcloud", "cloud crown", "spirit cloud"])) and not is_visor)
+        is_crown = not is_full_helmet and not is_visor and not is_halo and not is_tear
 
         if is_full_helmet:
             target_w = int(eye_dist * 3.6)
             target_h = int(target_w * aspect)
             pos = (int(eye_cx - target_w // 2), int(eye_cy - target_h * 0.52))
             ev_y = int(eye_cy)
-        elif is_crown:
-            target_w = int(eye_dist * 2.55)
-            target_h = int(target_w * aspect)
-            pos = (int(forehead_cx - target_w // 2), int(forehead_cy - target_h * 0.85))
-            ev_y = int(eye_cy)
         elif is_visor:
             target_w = int(eye_dist * 2.35)
             target_h = min(220, int(target_w * aspect))
             pos = (int(eye_cx - target_w // 2), int(eye_cy - target_h // 2))
-            ev_y = int(eye_cy)
-        elif is_halo:
-            target_w = int(eye_dist * 2.50)
-            target_h = int(target_w * aspect)
-            pos = (int(halo_cx - target_w // 2), int(halo_cy - target_h // 2))
             ev_y = int(eye_cy)
         elif is_tear:
             target_w = int(eye_dist * 2.20)
             target_h = min(360, int(target_w * aspect))
             mid_y = (eye_cy + mouth_cy) / 2.0
             pos = (int(eye_cx - target_w // 2), int(mid_y - target_h // 2))
+            ev_y = int(eye_cy)
+        elif is_halo:
+            target_w = int(eye_dist * 2.50)
+            target_h = int(target_w * aspect)
+            pos = (int(halo_cx - target_w // 2), int(halo_cy - target_h // 2))
+            ev_y = int(eye_cy)
+        elif is_crown:
+            target_w = int(eye_dist * 2.55)
+            target_h = int(target_w * aspect)
+            pos = (int(forehead_cx - target_w // 2), int(forehead_cy - target_h * 0.85))
             ev_y = int(eye_cy)
         else:
             target_w = int(eye_dist * 2.40)
@@ -635,14 +656,14 @@ class LensSimulator:
 
         if is_full_helmet:
             pos_t = (int(t_eye_cx - target_w // 2), int(t_eye_cy - target_h * 0.52))
-        elif is_crown:
-            pos_t = (int(t_forehead_cx - target_w // 2), int(t_forehead_cy - target_h * 0.85))
         elif is_visor:
             pos_t = (int(t_eye_cx - target_w // 2), int(t_eye_cy - target_h // 2))
-        elif is_halo:
-            pos_t = (int(t_halo_cx - target_w // 2), int(t_halo_cy - target_h // 2))
         elif is_tear:
             pos_t = (int(t_eye_cx - target_w // 2), int((t_eye_cy + t_mouth_cy) / 2.0 - target_h // 2))
+        elif is_halo:
+            pos_t = (int(t_halo_cx - target_w // 2), int(t_halo_cy - target_h // 2))
+        elif is_crown:
+            pos_t = (int(t_forehead_cx - target_w // 2), int(t_forehead_cy - target_h * 0.85))
         else:
             pos_t = (int(t_forehead_cx - target_w // 2), int(t_forehead_cy - target_h * 0.65))
 
@@ -796,30 +817,24 @@ class LensSimulator:
             " ".join(str(t) for t in self.lens_data.get("tags", []))
         ).lower()
 
-        # Check explicit channel_id / genre metadata first if present
-        cid = str(self.lens_data.get("channel_id") or "").strip()
-        cid_map = {"1": "mythic", "2": "cyber", "3": "comedy", "4": "luxury", "5": "chrome"}
-        if cid in cid_map:
-            return cid_map[cid]
-
-        # Score each niche based on content keywords
+        # Score each niche based on content keywords first
         niche_scores = {
             "mythic": sum(1 for w in [
                 "dragon", "wyvern", "pyrodrake", "phoenix", "firebird", "valkyrie",
                 "kitsune", "foxfire", "anubis", "jackal", "leviathan", "ouroboros",
                 "gorgon", "chimera", "garuda", "mythic", "mythology", "breath weapon",
-                "flame torrent", "elemental", "helm"
+                "flame torrent", "elemental", "helm", "ghibli", "spirit"
             ] if w in p_text),
             "cyber": sum(1 for w in [
                 "cyber", "cyberpunk", "visor", "hud", "scanner", "retinal", "ocular",
                 "monocular", "titanium", "optic", "telemetry", "goggles", "hyperdrive",
-                "targeting", "reticle", "emp", "spectacles", "overdrive"
+                "targeting", "reticle", "emp", "spectacles", "overdrive", "camcorder", "vhs"
             ] if w in p_text),
             "comedy": sum(1 for w in [
                 "comedy", "meme", "crying", "stormcloud", "teardrop", "tear", "soap-opera",
                 "melodrama", "steam-whistle", "steam", "boiler valve", "laughing skull",
                 "confetti", "hypno", "cartoon", "bouncy", "spring", "jaw-drop", "jawdrop",
-                "weep", "sobbing", "anime tears"
+                "weep", "sobbing", "anime tears", "karaoke"
             ] if w in p_text),
             "luxury": sum(1 for w in [
                 "luxury", "couture", "haute", "baroque", "pearl", "art nouveau", "tiara",
@@ -838,6 +853,12 @@ class LensSimulator:
         best_niche, best_score = max(niche_scores.items(), key=lambda x: x[1])
         if best_score > 0:
             return best_niche
+
+        # Check explicit channel_id / genre metadata fallback if no keywords matched
+        cid = str(self.lens_data.get("channel_id") or "").strip()
+        cid_map = {"1": "mythic", "2": "cyber", "3": "comedy", "4": "luxury", "5": "chrome"}
+        if cid in cid_map:
+            return cid_map[cid]
 
         # Fallback to account_id if no keywords matched
         aid = str(
@@ -1053,44 +1074,7 @@ class LensSimulator:
         mouth_x, mouth_y = float(mouth[0]), float(mouth[1])
         nose_x, nose_y = float(nose[0]), float(nose[1])
 
-        if is_crown or niche == "mythic":
-            # Soft atmospheric volumetric ambient rim light hugging crown & hairline
-            # Strictly ZERO 2D bicycle-spoke line rays, ZERO zombie eyes, ZERO unwanted mouth cones, ZERO unblurred discs
-            if t_prog > 0.05:
-                aura_layer = Image.new("RGBA", ar_layer.size, (0, 0, 0, 0))
-                a_draw = ImageDraw.Draw(aura_layer)
-                cx, cy = int(anc_x), int(anc_y)
-                cw = cur_w if cur_w > 0 else int(232.0 * scale * 2.55)
-                ch = cur_h if cur_h > 0 else int(cw * 0.52)
-                import math
-
-                # 1. Subtle, deeply diffused atmospheric ambient backlight (Gaussian blur 24, zero hard disc borders)
-                halo_w = int(cw * 0.85)
-                halo_h = int(ch * 0.70)
-                halo_cy = int(anc_y - ch * 0.20)
-                a_draw.ellipse(
-                    [cx - halo_w // 2, halo_cy - halo_h // 2, cx + halo_w // 2, halo_cy + halo_h // 2],
-                    fill=(255, 205, 90, int(45 * t_prog))
-                )
-
-                # 2. Organic ascending celestial ember motes (delicate tiny soft points, ZERO harsh spikes)
-                for p_i in range(10):
-                    p_phase = p_i * (math.pi / 5.0)
-                    p_speed = 0.7 + (p_i % 3) * 0.25
-                    p_ox = math.sin(p_phase + t_prog * 2.5 * p_speed) * (cw * 0.38)
-                    p_oy = -abs(math.cos(p_phase)) * (ch * 0.40) - (t_prog * 45.0 * p_speed)
-                    px = int(anc_x + p_ox)
-                    py = int(anc_y + p_oy)
-                    p_rad = max(1, int(2 * scale))
-                    p_alpha = int(140 * t_prog * max(0.0, 1.0 - abs(p_oy) / (ch * 1.2)))
-                    if p_alpha > 10:
-                        a_draw.ellipse([px - p_rad, py - p_rad, px + p_rad, py + p_rad], fill=(255, 235, 160, p_alpha))
-
-                # Pure diffused atmospheric blur, NEVER composite unblurred layer with hard disc borders
-                aura_blur = aura_layer.filter(ImageFilter.GaussianBlur(24))
-                ar_layer.alpha_composite(aura_blur)
-
-        elif niche == "comedy":
+        if niche == "comedy":
             if t_prog > 0.08:
                 t_len = int(240 * t_prog * scale)
                 tear_layer = Image.new("RGBA", ar_layer.size, (0, 0, 0, 0))
@@ -1150,6 +1134,43 @@ class LensSimulator:
                 drop_r = max(2, int(4 * scale))
                 draw.ellipse([ox - drop_r, oy - drop_r, ox + drop_r, oy + drop_r], fill=(220, 235, 245, 200))
                 draw.ellipse([ox - 1, oy - 1, ox + 1, oy + 1], fill=(255, 255, 255, 240))
+
+        elif is_crown or niche == "mythic":
+            # Soft atmospheric volumetric ambient rim light hugging crown & hairline
+            # Strictly ZERO 2D bicycle-spoke line rays, ZERO zombie eyes, ZERO unwanted mouth cones, ZERO unblurred discs
+            if t_prog > 0.05:
+                aura_layer = Image.new("RGBA", ar_layer.size, (0, 0, 0, 0))
+                a_draw = ImageDraw.Draw(aura_layer)
+                cx, cy = int(anc_x), int(anc_y)
+                cw = cur_w if cur_w > 0 else int(232.0 * scale * 2.55)
+                ch = cur_h if cur_h > 0 else int(cw * 0.52)
+                import math
+
+                # 1. Subtle, deeply diffused atmospheric ambient backlight (Gaussian blur 24, zero hard disc borders)
+                halo_w = int(cw * 0.85)
+                halo_h = int(ch * 0.70)
+                halo_cy = int(anc_y - ch * 0.20)
+                a_draw.ellipse(
+                    [cx - halo_w // 2, halo_cy - halo_h // 2, cx + halo_w // 2, halo_cy + halo_h // 2],
+                    fill=(255, 205, 90, int(45 * t_prog))
+                )
+
+                # 2. Organic ascending celestial ember motes (delicate tiny soft points, ZERO harsh spikes)
+                for p_i in range(10):
+                    p_phase = p_i * (math.pi / 5.0)
+                    p_speed = 0.7 + (p_i % 3) * 0.25
+                    p_ox = math.sin(p_phase + t_prog * 2.5 * p_speed) * (cw * 0.38)
+                    p_oy = -abs(math.cos(p_phase)) * (ch * 0.40) - (t_prog * 45.0 * p_speed)
+                    px = int(anc_x + p_ox)
+                    py = int(anc_y + p_oy)
+                    p_rad = max(1, int(2 * scale))
+                    p_alpha = int(140 * t_prog * max(0.0, 1.0 - abs(p_oy) / (ch * 1.2)))
+                    if p_alpha > 10:
+                        a_draw.ellipse([px - p_rad, py - p_rad, px + p_rad, py + p_rad], fill=(255, 235, 160, p_alpha))
+
+                # Pure diffused atmospheric blur, NEVER composite unblurred layer with hard disc borders
+                aura_blur = aura_layer.filter(ImageFilter.GaussianBlur(24))
+                ar_layer.alpha_composite(aura_blur)
 
         return ar_layer
 
@@ -1563,10 +1584,10 @@ class LensSimulator:
                     str(self.lens_data.get("archetype", ""))
                 ).lower()
                 is_full_helmet = self.asset_scale_info.get("is_full_helmet", False) or any(w in p_text for w in ["helmet", "full-face", "full face", "motorcycle"])
-                is_crown = self.asset_scale_info.get("is_crown", False) or (niche == "mythic" and not is_full_helmet) or any(w in p_text for w in ["crown", "horns", "tiara", "headpiece", "diadem", "helm", "coronet", "circlet", "crest", "valkyrie", "wings", "band", "halo crown", "headband", "horn", "antlers", "wreath"])
-                is_visor = self.asset_scale_info.get("is_visor", False) or any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "spectacles", "monocle", "eyewear", "sunglasses", "reticle", "optics"])
-                is_halo = self.asset_scale_info.get("is_halo", False) or any(w in p_text for w in ["cloud", "halo", "floating", "above", "sky", "mercury halo"])
-                is_tear = self.asset_scale_info.get("is_tear", False) or any(w in p_text for w in ["tear", "crying", "weep", "waterfall", "melodrama", "makeup", "blush"])
+                is_visor = self.asset_scale_info.get("is_visor", False) or (niche == "cyber") or any(w in p_text for w in ["visor", "glasses", "goggles", "hud", "shades", "spectacles", "monocle", "eyewear", "sunglasses", "reticle", "optics"])
+                is_tear = self.asset_scale_info.get("is_tear", False) or (niche == "comedy" and any(w in p_text for w in ["tear", "crying", "weep", "waterfall", "melodrama"]))
+                is_halo = self.asset_scale_info.get("is_halo", False) or ((niche == "chrome" or any(w in p_text for w in ["mercury", "zero-g", "mobius", "cumulus", "stormcloud", "cloud crown", "spirit cloud"])) and not is_visor)
+                is_crown = not is_full_helmet and not is_visor and not is_halo and not is_tear
 
                 # Pre-generate optimized contact shadow sprite template (resized dynamically per-frame)
                 sh_w, sh_h = 480, 190
@@ -1617,29 +1638,29 @@ class LensSimulator:
                         cur_h = int(cur_w * aspect)
                         anc_x = eye_cx
                         anc_y = float(eye_cy - cur_h * 0.05)
-                    elif is_crown:
-                        # Full temple-to-temple regal crown span resting on forehead hairline
-                        cur_w = max(550, int(eye_dist * 2.55))
-                        cur_h = max(280, int(cur_w * aspect))
-                        anc_x = float(fh[0])
-                        anc_y = float(fh[1] - cur_h * 0.35)
                     elif is_visor:
                         # Full temple-to-temple ocular eyewear centered strictly over pupils
                         cur_w = int(eye_dist * 2.35)
                         cur_h = min(220, int(cur_w * aspect))
                         anc_x = eye_cx
                         anc_y = eye_cy
+                    elif is_tear:
+                        cur_w = int(eye_dist * 2.20)
+                        cur_h = min(380, int(cur_w * aspect))
+                        anc_x = eye_cx
+                        anc_y = float((eye_cy + mouth[1]) / 2.0)
                     elif is_halo:
                         # Floating celestial toroid above skull
                         cur_w = int(eye_dist * 2.50)
                         cur_h = int(cur_w * aspect)
                         anc_x = float(fh[0])
                         anc_y = float(fh[1] - cur_h * 0.65)
-                    elif is_tear:
-                        cur_w = int(eye_dist * 2.20)
-                        cur_h = min(380, int(cur_w * aspect))
-                        anc_x = eye_cx
-                        anc_y = float((eye_cy + mouth[1]) / 2.0)
+                    elif is_crown:
+                        # Full temple-to-temple regal crown span resting on forehead hairline
+                        cur_w = max(550, int(eye_dist * 2.55))
+                        cur_h = max(280, int(cur_w * aspect))
+                        anc_x = float(fh[0])
+                        anc_y = float(fh[1] - cur_h * 0.35)
                     else:
                         cur_w = int(eye_dist * 2.45)
                         cur_h = max(240, int(cur_w * aspect))

@@ -14,36 +14,44 @@ from lens_verifier import LensVerifier
 
 TEST_LENSES = [
     {
-        "id": "acc1_valkyrie",
+        "id": "acc1_ghibli",
         "account_id": "1",
-        "lens_name": "Valkyrie Frost Circlet",
-        "prompt": "Ethereal valkyrie frost circlet with cold blue crystal gems, silver wings, and soft shimmering rim glow",
-        "archetype": "circlet",
-        "tags": ["mythic", "valkyrie", "circlet", "fantasy", "crystals"]
+        "lens_name": "Ghibli Watercolor Cloud Crown",
+        "prompt": "Hand-painted Ghibli watercolor cumulus cloud crown resting above hairline with floating soot spirit dust and celestial spirit serpent coils. Soft cel-shaded gouache textures with warm 2800K sunlight ray-traced highlights. Opening mouth erupts swirling sakura petal cyclone; smiling spawns cheerful soot sprites around temples; head tilt shifts floating spirit dust. Pure 3D PBR fantasy, zero strobing, zero UI.",
+        "archetype": "cloud",
+        "tags": ["ghibli", "watercolor", "anime", "clouds", "spirit"]
     },
     {
-        "id": "acc1_phoenix",
-        "account_id": "1",
-        "lens_name": "Phoenix Flame Diadem",
-        "prompt": "Ancient phoenix flame diadem with 24k gold filigree spires, faceted rubies, and ambient ember aura",
-        "archetype": "diadem",
-        "tags": ["mythic", "phoenix", "gold", "diadem", "fire"]
-    },
-    {
-        "id": "acc2_chrono_visor",
+        "id": "acc2_vhs_camcorder",
         "account_id": "2",
-        "lens_name": "Chrono HUD Visor",
-        "prompt": "Cyberpunk titanium ocular visor with holographic targeting reticle, telemetry readout, and neon cyan glass",
+        "lens_name": "90s Cyber Camcorder Visor",
+        "prompt": "Retro-futuristic 90s cyber camcorder visor frame contoured across brow and temples with holographic rec timestamp and magnetic phosphor glass. PBR brushed titanium, cathode-ray scanline reflections. Opening mouth discharges magnetic tape-rip glitch shockwave and RGB chromatic particle split; smiling pulses neon REC battery flare; head tilt shifts scanlines. Zero strobing, pure 3D AR craft, zero UI.",
         "archetype": "visor",
-        "tags": ["cyber", "visor", "hud", "sci-fi", "cyan"]
+        "tags": ["camcorder", "vhs", "glitch", "cyberpunk", "visor"]
     },
     {
-        "id": "acc2_speed_goggles",
+        "id": "acc1_crying_meme",
+        "account_id": "1",
+        "lens_name": "Fluffy Crying Stormcloud",
+        "prompt": "Floating expressive cartoon crying stormcloud anchored above user head with shimmering rain and soft volume lighting. Opening mouth triggers dramatic geyser of liquid mercury teardrops and bouncing 24k gold coins; smiling parts the cloud with bright rainbow sunburst rays; eyebrow raise sends comic thunderbolt flashes through cloud rim. Pure 3D mesh, zero text.",
+        "archetype": "cloud",
+        "tags": ["meme", "crying", "funny", "cloud", "cartoon"]
+    },
+    {
+        "id": "acc2_haute_luxe",
         "account_id": "2",
-        "lens_name": "Hyperdrive Speed Goggles",
-        "prompt": "High-octane neon amber racing spectacles with asymmetric holographic lenses, HUD telemetry, and carbon fiber temples",
-        "archetype": "goggles",
-        "tags": ["cyber", "goggles", "speed", "hud", "amber"]
+        "lens_name": "Haute Baroque Gold & Pearls",
+        "prompt": "Sculpted 24k gold leaf baroque crown fitted strictly to hairline and temples with pale champagne crystal halo and luminous freshwater pearls. Warm Kodak Portra 35mm film halation with Golden Glow and grain. Anisotropic PBR reflections, ray-traced shadows. Opening mouth parts delicate golden veil; smiling unleashes rich golden sparkle dust cascading across cheekbones. Photosensitive safe, zero strobing.",
+        "archetype": "tiara",
+        "tags": ["film", "35mm", "crown", "gold", "luxury", "couture"]
+    },
+    {
+        "id": "acc1_liquid_chrome",
+        "account_id": "1",
+        "lens_name": "Y3K Liquid Mercury Halo",
+        "prompt": "Weightless Y3K zero-G liquid mercury halo crown morphing above head with sculpted chrome cheekbone armor. Anisotropic mirror PBR reflections with fluid surface tension and ray-traced contact shadows. Opening mouth erupts orbiting refractive liquid chrome spheres into expanding toroidal shockwave; smiling triggers fluid ripple normal-map distortion across armor; head tilt shifts mercury droplets. Zero strobing, zero UI.",
+        "archetype": "halo",
+        "tags": ["y3k", "liquidmercury", "chrome", "zerog", "surreal"]
     }
 ]
 

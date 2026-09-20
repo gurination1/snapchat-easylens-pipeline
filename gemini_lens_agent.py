@@ -592,14 +592,30 @@ def select_channel_archetype(account_id: str, history: list, exclude_archetypes:
                 last_acc_channel = a["channel_id"]
                 break
 
-    # Strictly enforce account-to-niche specialization:
-    # Account 1 = Channel 1 (MythicBeasts_AR: dragons, phoenixes, valkyrie helms, celestial crowns)
-    # Account 2 = Channel 2 (SciFi_Optics: titanium visors, cyberpunk HUD, ocular scanners, speed goggles)
-    if aid in CHANNEL_PROMPT_MATRICES:
-        candidates = [a for a in all_archetypes if a["channel_id"] == aid and a["id"] not in excluded]
-        if not candidates:
-            candidates = [a for a in all_archetypes if a["channel_id"] == aid]
-    else:
+    # Universal Diverse Fleet: Accounts 1 & 2 cater to ALL viral genres:
+    # 1. Mythic Beasts & Celestial Crowns (Channel 1)
+    # 2. Cyberpunk HUD & 90s Camcorder VHS Glitch Optics (Channel 2)
+    # 3. Viral Memes & Kinetic Reactions (Channel 3: Crying stormclouds, soap-opera melodrama, cartoon jaw-drop)
+    # 4. Haute Couture & 35mm Analog Luxury (Channel 4: 24k gold leaf, freshwater pearls, Portra 400 grain)
+    # 5. Y3K Zero-G Liquid Chrome & Morphing Mercury (Channel 5: Mercury halos, ferrofluid, fluid ripples)
+    # Enforces strict cross-genre rotation so the same account never publishes the same genre back-to-back,
+    # and diversifies away from the other account's most recent published topic.
+    other_aid = "2" if aid == "1" else "1"
+    other_acc_lenses = [x for x in history if str(x.get("account_id")) == other_aid]
+    other_acc_channel = None
+    if other_acc_lenses:
+        other_lens_text = (other_acc_lenses[-1].get("lens_name", "") + " " + other_acc_lenses[-1].get("prompt", "")).lower()
+        for a in all_archetypes:
+            if any(tok in other_lens_text for tok in a["signature_tokens"]):
+                other_acc_channel = a["channel_id"]
+                break
+
+    candidates = [a for a in all_archetypes if a["channel_id"] != last_acc_channel and a["id"] not in excluded]
+    if other_acc_channel:
+        distinct_candidates = [a for a in candidates if a["channel_id"] != other_acc_channel]
+        if distinct_candidates:
+            candidates = distinct_candidates
+    if not candidates:
         candidates = [a for a in all_archetypes if a["id"] not in excluded] or all_archetypes
 
     # Deterministic LRU selection:

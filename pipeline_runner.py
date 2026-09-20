@@ -182,37 +182,40 @@ STATIC_FALLBACKS = {
 
 def select_lru_fallback(account_id: str, history: list = None) -> dict:
     """
-    Selects the least-recently-used (LRU) static blueprint for the account from the 5-blueprint pool
-    by cross-referencing published_lenses.json, guaranteeing zero repetition even during API outages.
+    Selects the least-recently-used (LRU) static blueprint across ALL 25 verified blueprints
+    from all 5 genres (Mythic, Cyber, Comedy, Luxury, Chrome), guaranteeing cross-genre rotation.
     """
     aid = str(account_id)
-    pool = STATIC_FALLBACKS.get(aid, STATIC_FALLBACKS["1"])
     if history is None:
         history = load_published_history("published_lenses.json")
 
+    # Master pool of all 25 blueprints across all 5 genres
+    all_blueprints = []
+    for gid, b_pool in STATIC_FALLBACKS.items():
+        for bp in b_pool:
+            item = dict(bp)
+            item["genre_id"] = gid
+            all_blueprints.append(item)
+
     acc_lenses = [x for x in history if str(x.get("account_id")) == aid]
+    last_genre = None
+    if acc_lenses:
+        last_name = acc_lenses[-1].get("lens_name", "").lower()
+        for bp in all_blueprints:
+            if bp["lens_name"].lower() in last_name:
+                last_genre = bp["genre_id"]
+                break
 
-    counts = {i: 0 for i in range(len(pool))}
-    last_timestamps = {i: "" for i in range(len(pool))}
+    candidates = [bp for bp in all_blueprints if bp["genre_id"] != last_genre] or all_blueprints
 
-    for lens in acc_lenses:
-        l_name = lens.get("lens_name", "").lower()
-        l_prompt = lens.get("prompt", "").lower()
-        ts = lens.get("timestamp", "")
-        for i, bp in enumerate(pool):
-            bp_name = bp.get("lens_name", "").lower()
-            if (
-                bp_name in l_name
-                or l_name in bp_name
-                or (len(l_prompt) > 20 and compute_token_jaccard(l_prompt, bp.get("prompt", "")) > 0.35)
-            ):
-                counts[i] += 1
-                if ts > last_timestamps[i]:
-                    last_timestamps[i] = ts
+    def bp_score(bp):
+        bp_name = bp["lens_name"].lower()
+        count = sum(1 for x in history if bp_name in x.get("lens_name", "").lower())
+        acc_count = sum(1 for x in acc_lenses if bp_name in x.get("lens_name", "").lower())
+        last_ts = max([x.get("timestamp", "") for x in history if bp_name in x.get("lens_name", "").lower()] or [""])
+        return (last_ts != "", last_ts, count, acc_count)
 
-    # Pure LRU: pick blueprint with oldest timestamp ('' is oldest / never used)
-    best_index = min(range(len(pool)), key=lambda i: (last_timestamps[i] != "", last_timestamps[i], counts[i], i))
-    selected = pool[best_index]
+    selected = min(candidates, key=bp_score)
     return {
         "lens_name": selected["lens_name"],
         "prompt": sanitize_lens_prompt(selected["prompt"]),
@@ -446,12 +449,29 @@ def main():
             except Exception as e:
                 print(f"[PREVIEW VIDEO WARN] Bolt upload failed ({e}). Proceeding without preview video.")
 
+        # Check for high-impact preview image with full lens effect from Gate 7
+        preview_img_url = None
+        preview_img_key = None
+        preview_img_path = g7.get("trigger_preview") or g7.get("neutral_preview") or "preview_mouth_open_simulated.png"
+        if not os.path.exists(preview_img_path):
+            preview_img_path = "preview_neutral_simulated.png"
+        if os.path.exists(preview_img_path):
+            print("\n=== STEP 5.6: UPLOADING HIGH-IMPACT PREVIEW IMAGE (FULL AR EFFECT) TO BOLT CDN ===")
+            try:
+                with open(preview_img_path, "rb") as f:
+                    pi_bytes = f.read()
+                preview_img_url, preview_img_key = client.upload_preview_video(pi_bytes)
+                print(f"[PREVIEW IMAGE OK] CDN URL: {preview_img_url}")
+                print(f"[PREVIEW IMAGE OK] AES Key: {preview_img_key[:10]}...")
+            except Exception as e:
+                print(f"[PREVIEW IMAGE WARN] Bolt upload failed ({e}). Proceeding without preview image.")
+
         # Check for viral lens icon from Gate 7
         icon_url = None
         icon_key = None
         icon_path = g7.get("lens_icon") or "lens_icon.png"
         if os.path.exists(icon_path):
-            print("\n=== STEP 5.6: UPLOADING HIGH-CTR VIRAL LENS ICON ('THE PICK') TO BOLT CDN ===")
+            print("\n=== STEP 5.7: UPLOADING HIGH-CTR VIRAL LENS ICON ('THE PICK') TO BOLT CDN ===")
             try:
                 with open(icon_path, "rb") as f:
                     i_bytes = f.read()
@@ -468,7 +488,9 @@ def main():
             preview_url=preview_url,
             preview_encryption_key=preview_key,
             icon_url=icon_url,
-            icon_encryption_key=icon_key
+            icon_encryption_key=icon_key,
+            preview_image_url=preview_img_url,
+            preview_image_encryption_key=preview_img_key
         )
         print("Publish response:", pub_res)
 
@@ -504,6 +526,10 @@ def main():
             "visual_hook": (gemini_plan or {}).get("visual_hook", "") if USE_GEMINI else "",
             "has_preview_video": bool(preview_url),
             "preview_url": preview_url,
+            "has_preview_image": bool(preview_img_url),
+            "preview_image_url": preview_img_url,
+            "has_lens_icon": bool(icon_url),
+            "icon_url": icon_url,
             "status": (status_data or {}).get("status", "pending")
         }
         history.append(entry)

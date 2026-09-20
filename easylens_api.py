@@ -340,7 +340,18 @@ class EasyLensClient:
         print(f"[BOLT SUCCESS] Video uploaded successfully to: {content_url}")
         return content_url, b64_key
 
-    def publish_lens(self, conversation_id: str, lens_name: str, tags: list, preview_url: str = None, preview_encryption_key: str = None, icon_url: str = None, icon_encryption_key: str = None):
+    def publish_lens(
+        self,
+        conversation_id: str,
+        lens_name: str,
+        tags: list,
+        preview_url: str = None,
+        preview_encryption_key: str = None,
+        icon_url: str = None,
+        icon_encryption_key: str = None,
+        preview_image_url: str = None,
+        preview_image_encryption_key: str = None
+    ):
         url = f"{AILC_BASE}/assistant/publish"
         payload = {
             "conversation_id": conversation_id,
@@ -352,12 +363,23 @@ class EasyLensClient:
         }
         if preview_url:
             payload["lens_preview_url"] = preview_url
+            payload["preview_video_url"] = preview_url
         if preview_encryption_key:
             payload["lens_preview_encryption_key"] = preview_encryption_key
+            payload["preview_video_encryption_key"] = preview_encryption_key
         if icon_url:
             payload["lens_icon_url"] = icon_url
+            payload["icon_url"] = icon_url
         if icon_encryption_key:
             payload["lens_icon_encryption_key"] = icon_encryption_key
+            payload["icon_encryption_key"] = icon_encryption_key
+        if preview_image_url:
+            payload["lens_preview_image_url"] = preview_image_url
+            payload["preview_image_url"] = preview_image_url
+            payload["web_lens_preview_url"] = preview_image_url
+        if preview_image_encryption_key:
+            payload["lens_preview_image_encryption_key"] = preview_image_encryption_key
+            payload["preview_image_encryption_key"] = preview_image_encryption_key
 
         res = self._request_with_retry("POST", url, json=payload, timeout=25)
         res.raise_for_status()
