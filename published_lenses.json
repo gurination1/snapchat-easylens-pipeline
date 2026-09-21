@@ -454,5 +454,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/ZGRxiUuIaVqOd27xRhcSC?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-21T01:18:25Z",
+    "account_id": "4",
+    "lens_name": "Runic Avatar Shift",
+    "lens_id": "e404d727-4726-4e91-98f9-491c509bd77e",
+    "checkpoint_id": "06ab0857-a98d-7291-8000-733b2e9c79f0",
+    "prompt": "A carved obsidian disc floats above the hairline, etched with glowing runes. Smile to halt the rapid rotation, locking onto a mythical creature avatar that manifests as 3D ears and brow horns. Open mouth to release a vibrant, stylized energy aura. Raise eyebrows to reset the spin. Use high-contrast 6500K rim lighting, ray-traced shadows, and brushed basalt textures for a premium, heavy-set physical presence. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "totem",
+      "spirit",
+      "avatar",
+      "vibe",
+      "runes"
+    ],
+    "visual_hook": "The sudden appearance of a rotating 3D obsidian disc creates an immediate, high-contrast silhouette that compels users to interact.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/s0YCbhbqkI4SwhnBOGlE2?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/pc77YMcw7HK2PxKlmtZdx?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/xCWSA7QQrfjRUDoyofSC0?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
