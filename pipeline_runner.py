@@ -68,7 +68,7 @@ STATIC_FALLBACKS = {
         {
             "lens_name": "Celestial Kitsune Crest",
             "prompt": "Carved porcelain and polished vermilion lacquer kitsune forehead crest anchored strictly to brow, leaving eyes and mouth clear. Shimmering spirit bells and twin floating foxfire tails contouring jawline. Opening mouth erupts swirling azure spirit flame orbs with dynamic volumetric embers; smiling reveals ethereal golden fox spirit eye reflections. Pure PBR craft, zero UI.",
-            "tags": ["kitsune", "foxfire", "spirit", "mask", "pbr"]
+            "tags": ["kitsune", "foxfire", "spirit", "crest", "pbr"]
         }
     ]),
     "2": BlueprintPool([

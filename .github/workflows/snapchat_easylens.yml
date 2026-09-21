@@ -30,7 +30,7 @@ on:
       auto_publish:
         description: 'Publish lens if 100% verified (explicit authorization required)'
         type: boolean
-        default: false
+        default: true
 
 permissions:
   contents: write

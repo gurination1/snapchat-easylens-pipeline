@@ -1201,6 +1201,14 @@ def sanitize_lens_prompt(prompt: str) -> str:
         (r'\btarget-lock\s+brackets?\b', 'optical prism highlights'),
         (r'\boverdrive\b', 'kinetic surge'),
         (r'\bcooldowns?\b', 'instant reaction'),
+
+        # Facial obstruction & veil/mist patterns (strictly scrubbed to protect Gate 7 & Vision Judge)
+        (r'\b(?:delicate\s+|golden\s+|gossamer\s+|silk\s+|starlight\s+)?veils?\b', 'particle aura'),
+        (r'\b(?:arctic\s+|frosted\s+|dense\s+|thick\s+)?mists?\b', 'auroral sparkles'),
+        (r'\b(?:dense\s+|thick\s+)?fogs?\b', 'ambient lighting'),
+        (r'\b(?:dense\s+|toxic\s+)?hazes?\b', 'subtle bloom'),
+        (r'\b(?:face\s+)?masks?\b', 'forehead crest'),
+        (r'\bface\s+paint\b', 'forehead jewel'),
     ]
 
     for pattern, subst in replacements:
@@ -1291,6 +1299,14 @@ def validate_candidate_concept(candidate: dict, account_id: str, history: list, 
     ]
     if any(tok in prompt.lower() for tok in banned_ui_tokens):
         return False, "Contains forbidden HUD/telemetry/diagnostic terminology causing 2D UI slop"
+
+    # Rule 9: Zero Facial Obstruction / Veils / Mist (Anti-Gate-7-reject)
+    banned_face_obstruction_tokens = [
+        "veil", "gossamer veil", "silk veil", "face mask", "full mask",
+        "frosted mist", "arctic mist", "dense fog", "face paint"
+    ]
+    if any(tok in prompt.lower() for tok in banned_face_obstruction_tokens):
+        return False, "Contains forbidden facial obstruction terminology (veil/mist/mask) causing Gate 7 failure"
 
     return True, "Valid"
 
