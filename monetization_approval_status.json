@@ -1,25 +1,30 @@
 {
-  "5": {
-    "account_id": "5",
-    "username": "yt_new2026",
-    "displayName": "Yt New",
+  "3": {
+    "account_id": "3",
+    "username": "marvelengeneer",
+    "displayName": "Eh Ehwth",
     "LENS_CREATOR_PAYOUT_TOS": true,
     "ILDG_TOS": false,
     "ui_modals_accepted": 0,
     "enrolled_lenses_count": 1,
     "top_performer_toggled": true,
+    "target_lens_verified": true,
+    "sweep_results": {
+      "found": 0,
+      "remedied": 0
+    },
     "direct_graphql_details": {
       "count": 1,
       "attempted": 1,
       "lenses": [
         {
-          "id": "1aa1f533-d86e-4fd1-872a-b3f915e7732d",
+          "id": "9e85cbf0-c3c9-4176-abf9-d2936f2b63a4",
           "enrolled": true,
           "setPayoutRes": {
             "data": {
               "setLensCreatorPayoutEnrollment": {
                 "lens": {
-                  "id": "1aa1f533-d86e-4fd1-872a-b3f915e7732d",
+                  "id": "9e85cbf0-c3c9-4176-abf9-d2936f2b63a4",
                   "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_PENDING",
                   "status": "LENS_STATUS_PROCESSING"
                 }
@@ -30,7 +35,7 @@
             "data": {
               "updateLens": {
                 "lens": {
-                  "id": "1aa1f533-d86e-4fd1-872a-b3f915e7732d",
+                  "id": "9e85cbf0-c3c9-4176-abf9-d2936f2b63a4",
                   "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_PENDING",
                   "status": "LENS_STATUS_IN_REVIEW"
                 }
