@@ -157,8 +157,11 @@ class LensSimulator:
         clean_im = Image.fromarray(out_arr)
         bbox = clean_im.split()[-1].getbbox()
         if bbox:
-            return clean_im.crop(bbox)
-        return clean_im
+            cropped = clean_im.crop(bbox)
+            if cropped.width >= 100 and cropped.height >= 40:
+                return cropped
+            print(f"[SIMULATOR] Extracted crop too small ({cropped.width}x{cropped.height}); discarding fragment")
+        return None
 
     @staticmethod
     def get_video_frame(video_path: str, frame_idx: int = 0, timestamp_sec: float = None) -> tuple:
@@ -1682,7 +1685,7 @@ class LensSimulator:
                 try:
                     raw_icon = Image.open(explicit_icon).convert("RGBA")
                     extracted = self.extract_clean_hero(raw_icon)
-                    if extracted and extracted.size[0] > 20 and extracted.size[1] > 20:
+                    if extracted and extracted.size[0] >= 100 and extracted.size[1] >= 40:
                         dominant_texture = extracted
                         print(f"[SIMULATOR] Extracted authentic 3D hero asset from {explicit_icon}")
                 except Exception:
