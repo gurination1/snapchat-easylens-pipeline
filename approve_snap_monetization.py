@@ -389,7 +389,7 @@ def mark_lens_enrolled_in_history(lens_id: str):
         print(f"  [STATE SYNC WARN] Failed to update {history_file}: {e}")
 
 
-def wait_for_lens_ready(ticket: str, cookie_header: str, lens_id: str, max_wait_sec: int = 240) -> dict:
+def wait_for_lens_ready(ticket: str, cookie_header: str, lens_id: str, max_wait_sec: int = 360) -> dict:
     """Polls getLens until status exits LENS_STATUS_PROCESSING and is ready for mutations."""
     start = time.time()
     print(f"[POLL LENS {lens_id}] Waiting for Snapchat catalog ingestion to complete (max {max_wait_sec}s)...")
@@ -840,6 +840,22 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                     else:
                         break
 
+                # Step A3: If lens is still processing in UI, wait and reload
+                for proc_wait in range(6):
+                    status_badge = await page.query_selector("div:has-text('Processing'), span:has-text('Processing')")
+                    if status_badge and await status_badge.is_visible():
+                        txt = (await status_badge.inner_text() or "").strip()
+                        if "processing" in txt.lower():
+                            print(f"[UI STATUS] Lens is still 'Processing' in UI (attempt {proc_wait+1}/6); waiting 15s before reload...")
+                            await page.wait_for_timeout(15000)
+                            try:
+                                await page.reload(wait_until="domcontentloaded", timeout=30000)
+                                await page.wait_for_timeout(3000)
+                            except Exception:
+                                pass
+                            continue
+                    break
+
                 # Step B: Locate the Top Performer switch
                 try:
                     payout_container = await page.query_selector("#creator-payout-container, [data-testid*='creator-payout'], div:has-text('Top Performer Payouts Program')")
@@ -853,26 +869,26 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
 
                 async def is_switch_active():
                     try:
-                        # Check primary locator
-                        if await switch_locator.count() > 0:
-                            sw = switch_locator
-                            aria = await sw.get_attribute("aria-checked")
-                            cls = (await sw.get_attribute("class") or "").lower()
-                            inp = await sw.evaluate("el => el.checked || (el.querySelector('input') && el.querySelector('input').checked) || false")
-                            bg = await sw.evaluate("el => window.getComputedStyle(el).backgroundColor || (el.querySelector('.sds-switch__slider') && window.getComputedStyle(el.querySelector('.sds-switch__slider')).backgroundColor) || ''")
-                            has_svg_check = await sw.evaluate("el => !! (el.querySelector('svg[data-testid*=\"check\"], svg polyline') || (el.innerHTML && el.innerHTML.includes('check')))")
-                            if aria == "true" or "checked" in cls or inp or "green" in bg.lower() or "rgb(0, 224" in bg or "#00e054" in bg or has_svg_check:
-                                return True
-                        # Check fallback ID
-                        fb = await page.query_selector("#toggle-lens-creator-payout-enrolled, .sds-switch")
-                        if fb:
-                            aria = await fb.get_attribute("aria-checked")
-                            cls = (await fb.get_attribute("class") or "").lower()
-                            inp = await fb.evaluate("el => el.checked || (el.querySelector('input') && el.querySelector('input').checked) || false")
-                            bg = await fb.evaluate("el => window.getComputedStyle(el).backgroundColor || ''")
-                            has_svg_check = await fb.evaluate("el => !! (el.querySelector('svg[data-testid*=\"check\"], svg polyline') || (el.innerHTML && el.innerHTML.includes('check')))")
-                            if aria == "true" or "checked" in cls or inp or "green" in bg.lower() or "rgb(0, 224" in bg or "#00e054" in bg or has_svg_check:
-                                return True
+                        for loc in [switch_locator, page.locator("#toggle-lens-creator-payout-enrolled, .sds-switch")]:
+                            if await loc.count() > 0:
+                                sw = loc.first
+                                aria = await sw.get_attribute("aria-checked")
+                                if aria == "true":
+                                    return True
+                                if aria == "false":
+                                    return False
+                                inp = await sw.evaluate("el => el.checked || (el.querySelector('input') && el.querySelector('input').checked) || false")
+                                if inp:
+                                    return True
+                                cls = (await sw.get_attribute("class") or "").lower()
+                                if "sds-switch--checked" in cls or "is-checked" in cls:
+                                    return True
+                                bg = await sw.evaluate("el => window.getComputedStyle(el).backgroundColor || (el.querySelector('.sds-switch__slider, .sds-switch__track') && window.getComputedStyle(el.querySelector('.sds-switch__slider, .sds-switch__track')).backgroundColor) || ''")
+                                if "rgb(0, 224" in bg or "#00e054" in bg or "green" in bg.lower():
+                                    return True
+                                has_svg_check = await sw.evaluate("el => !! (el.querySelector('svg polyline') || el.querySelector('[data-testid*=\"check-icon\"]') || el.querySelector('.sds-icon--check') || el.querySelector('.sds-switch__icon--check'))")
+                                if has_svg_check:
+                                    return True
                     except Exception:
                         pass
                     return False
@@ -947,8 +963,8 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                 # Step D: Final verification of toggle state
                 final_checked = await is_switch_active()
                 print(f"[FINAL VERIFICATION] Top Performer Payout switch checked state: {final_checked}")
-                if final_checked:
-                    results["top_performer_toggled"] = True
+                results["top_performer_toggled"] = bool(final_checked)
+                results["final_checked"] = bool(final_checked)
 
                 await page.screenshot(path=f"lens_{aid}_payout_toggled.png")
             except Exception as le:

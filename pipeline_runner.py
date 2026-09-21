@@ -543,7 +543,7 @@ def main():
                     )
                     payout_enrolled = bool(
                         enroll_res.get("target_lens_verified", False)
-                        or enroll_res.get("top_performer_toggled", False)
+                        or (enroll_res.get("top_performer_toggled", False) and enroll_res.get("final_checked", False))
                     )
                     print(f"[STEP 7B ATTEMPT {enroll_try+1}] Payout Enrollment result: enrolled={payout_enrolled}")
                     if payout_enrolled:
