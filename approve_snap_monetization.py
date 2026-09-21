@@ -312,11 +312,12 @@ def direct_enroll_lenses(ticket: str, cookie_header: str, target_lens_id: str = 
 
     enrolled = []
     success_count = 0
+    target_lens_verified = False
     for lid in target_ids:
         print(f"[DIRECT GRAPHQL] Enrolling Lens {lid} into Top Performer & Lens Creator Payouts...")
         r1 = {}
         r2 = {}
-        for retry_i in range(4):
+        for retry_i in range(6):
             time.sleep(1.2)
             r1 = execute_direct_graphql(
                 ticket, cookie_header, GQL_SET_PAYOUT,
@@ -330,8 +331,8 @@ def direct_enroll_lenses(ticket: str, cookie_header: str, target_lens_id: str = 
                 operation_name="updateLens"
             )
             r_str = json.dumps(r1) + json.dumps(r2)
-            if "is currently processing" in r_str and retry_i < 3:
-                print(f"  [WAIT] Lens {lid} is currently processing on Snapchat backend. Waiting 20s (retry {retry_i+1}/3)...")
+            if "is currently processing" in r_str and retry_i < 5:
+                print(f"  [WAIT] Lens {lid} is currently processing on Snapchat backend. Waiting 20s (retry {retry_i+1}/5)...")
                 time.sleep(20)
             else:
                 break
@@ -341,12 +342,16 @@ def direct_enroll_lenses(ticket: str, cookie_header: str, target_lens_id: str = 
         is_enrolled = bool(
             r1_lens.get("lensCreatorPayoutEligibility") in ("LENS_CREATOR_PAYOUT_ELIGIBILITY_PENDING", "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE")
             or r2_lens.get("lensCreatorPayoutEligibility") in ("LENS_CREATOR_PAYOUT_ELIGIBILITY_PENDING", "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE")
+            or "already enrolled" in str(r1.get("errors", "")).lower()
             or (not r1.get("errors") and r1.get("data"))
             or (not r2.get("errors") and r2.get("data"))
         )
         if is_enrolled:
             success_count += 1
             print(f"  [SUCCESS {lid}] Verified enrolled in payout program via direct GraphQL!")
+            mark_lens_enrolled_in_history(lid)
+            if target_lens_id and lid == target_lens_id:
+                target_lens_verified = True
 
         cat_res = None
         if preferred_primary_cat_id:
@@ -360,10 +365,31 @@ def direct_enroll_lenses(ticket: str, cookie_header: str, target_lens_id: str = 
         print(f"  [RESULT {lid}] setPayout: {json.dumps(r1)[:100]} | updateLens: {json.dumps(r2)[:100]}")
         enrolled.append({"id": lid, "enrolled": is_enrolled, "setPayoutRes": r1, "updateLensRes": r2, "setCategoryRes": cat_res})
 
-    return {"count": success_count, "attempted": len(target_ids), "lenses": enrolled}
+    return {"count": success_count, "attempted": len(target_ids), "lenses": enrolled, "target_lens_verified": target_lens_verified}
 
 
-def wait_for_lens_ready(ticket: str, cookie_header: str, lens_id: str, max_wait_sec: int = 90) -> dict:
+def mark_lens_enrolled_in_history(lens_id: str):
+    """Updates published_lenses.json to mark creator_rewards_enrolled = True for the given lens ID."""
+    history_file = "published_lenses.json"
+    if not os.path.exists(history_file):
+        return
+    try:
+        with open(history_file, "r") as f:
+            data = json.load(f)
+        updated = False
+        for item in data:
+            if item.get("lens_id") == lens_id and not item.get("creator_rewards_enrolled"):
+                item["creator_rewards_enrolled"] = True
+                updated = True
+        if updated:
+            with open(history_file, "w") as f:
+                json.dump(data, f, indent=2)
+            print(f"  [STATE SYNC] Marked lens {lens_id} as enrolled in {history_file}")
+    except Exception as e:
+        print(f"  [STATE SYNC WARN] Failed to update {history_file}: {e}")
+
+
+def wait_for_lens_ready(ticket: str, cookie_header: str, lens_id: str, max_wait_sec: int = 240) -> dict:
     """Polls getLens until status exits LENS_STATUS_PROCESSING and is ready for mutations."""
     start = time.time()
     print(f"[POLL LENS {lens_id}] Waiting for Snapchat catalog ingestion to complete (max {max_wait_sec}s)...")
@@ -375,8 +401,9 @@ def wait_for_lens_ready(ticket: str, cookie_header: str, lens_id: str, max_wait_
             payout = lens.get("lensCreatorPayoutEligibility", "")
             print(f"  [POLL STATUS] Lens {lens_id} -> Status: '{status}', Payout Eligibility: '{payout}'")
             if status and "PROCESSING" not in status.upper():
+                print(f"  ✓ [POLL READY] Lens {lens_id} transitioned to '{status}'! Ready for monetization.")
                 return lens
-        time.sleep(6)
+        time.sleep(5)
     print(f"  [POLL WARN] Lens {lens_id} polling reached {max_wait_sec}s limit; proceeding to enroll.")
     return None
 
@@ -404,6 +431,7 @@ def sweep_unenrolled_fleet_lenses(ticket: str, cookie_header: str) -> dict:
                     unenrolled_ids.append(lid)
                 else:
                     print(f"  [ENROLLED OK] '{name}' ({lid}) -> Eligibility: '{elig}'")
+                    mark_lens_enrolled_in_history(lid)
         except Exception as e:
             print(f"[FLEET SWEEP WARN] Error discovering lenses for {gType}: {e}")
         time.sleep(1.0)
@@ -412,12 +440,18 @@ def sweep_unenrolled_fleet_lenses(ticket: str, cookie_header: str) -> dict:
     for lid in unenrolled_ids:
         print(f"[FLEET SWEEP ENROLL] Remedying lens {lid}...")
         try:
-            execute_direct_graphql(ticket, cookie_header, GQL_SET_PAYOUT, variables={"lensId": lid, "lensCreatorPayoutEnrolled": True}, operation_name="setLensCreatorPayoutEnrollment")
+            s_res = execute_direct_graphql(ticket, cookie_header, GQL_SET_PAYOUT, variables={"lensId": lid, "lensCreatorPayoutEnrolled": True}, operation_name="setLensCreatorPayoutEnrollment")
             time.sleep(1.0)
             u_res = execute_direct_graphql(ticket, cookie_header, GQL_UPDATE_LENS, variables={"lensId": lid, "creatorRewardProgramEnrolled": True, "isGameUserProvided": False}, operation_name="updateLens")
-            if (u_res.get("data") or {}).get("updateLens", {}).get("lens"):
+            is_ok = bool(
+                (s_res.get("data") or {}).get("setLensCreatorPayoutEnrollment")
+                or (u_res.get("data") or {}).get("updateLens")
+                or "already enrolled" in str(s_res.get("errors", "")).lower()
+            )
+            if is_ok:
                 remedied += 1
                 print(f"  ✓ [FLEET SWEEP SUCCESS] Lens {lid} successfully enrolled in Top Performer Payouts!")
+                mark_lens_enrolled_in_history(lid)
         except Exception as err:
             print(f"  X [FLEET SWEEP WARN] Failed to remedy {lid}: {err}")
         time.sleep(1.0)
@@ -464,20 +498,18 @@ def sanitize_cookies_for_playwright(cookie_str: str) -> list:
                 continue
 
             seen.add(name)
-            # RFC 6265bis: __Host- cookies must NOT have domain specified; use url instead
+            # RFC 6265bis: __Host- cookies must NOT have domain or path specified in Playwright when url is given
             if name.startswith("__Host-"):
                 cookie_list.append({
                     "name": name,
                     "value": val,
                     "url": "https://accounts.snapchat.com",
-                    "path": "/",
                     "secure": True
                 })
                 cookie_list.append({
                     "name": name,
                     "value": val,
                     "url": "https://my-lenses.snapchat.com",
-                    "path": "/",
                     "secure": True
                 })
             elif name.startswith("__Secure-"):
@@ -723,18 +755,36 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
         await page.screenshot(path=f"my_lenses_acc_{aid}_loaded.png")
         print(f"[PORTAL LOADED] Current URL: {page.url[:80]} | Title: '{await page.title()}'")
 
-        # 3. Check for and accept any on-screen TOS modal / Banner
+        # Step 0: Check for and dismiss any CookieModal / Cookie Banner
+        for cookie_sel in [
+            "button:has-text('Accept Cookies')",
+            "button:has-text('Accept cookies')",
+            "[data-testid*='cookie'] button",
+            "button[class*='CookieModal']",
+            ".cookie-modal button"
+        ]:
+            try:
+                c_btn = await page.query_selector(cookie_sel)
+                if c_btn and await c_btn.is_visible():
+                    print("[COOKIE BANNER] Dismissing cookie banner...")
+                    await human_click(page, c_btn)
+                    await page.wait_for_timeout(1500)
+                    break
+            except Exception:
+                pass
+
+        # 3. Check for and accept any on-screen TOS modal / Banner (Strictly excluding cookie buttons!)
         modals_accepted = 0
         tos_btn_selectors = [
-            "button:has-text('Accept')",
-            "button:has-text('I Agree')",
-            "button:has-text('Agree & Continue')",
-            "button:has-text('Agree')",
-            "button:has-text('View Terms')",
-            "[data-testid*='tos-accept']",
+            "[data-testid*='tos-modal'] button",
             "[data-testid*='accept-terms']",
             "button[class*='TosModal']",
-            "button:has-text('Accept All')"
+            "button:has-text('I Agree')",
+            "button:has-text('Agree & Continue')",
+            "button:has-text('View Terms')",
+            "button:has-text('Agree')",
+            "button:has-text('Accept All')",
+            "button:has-text('Accept')"
         ]
         for sel in tos_btn_selectors:
             try:
@@ -742,11 +792,12 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                 for btn in btns:
                     if await btn.is_visible() and await btn.is_enabled():
                         txt = (await btn.inner_text()).strip()
-                        if not any(w in txt.lower() for w in ["cancel", "dismiss", "decline", "close"]):
-                            print(f"[UI MODAL] Clicking on-screen terms button: '{txt}'...")
-                            await human_click(page, btn)
-                            await page.wait_for_timeout(2000)
-                            modals_accepted += 1
+                        if any(w in txt.lower() for w in ["cancel", "dismiss", "decline", "close", "cookie", "cookies"]):
+                            continue
+                        print(f"[UI MODAL] Clicking on-screen terms button: '{txt}'...")
+                        await human_click(page, btn)
+                        await page.wait_for_timeout(2000)
+                        modals_accepted += 1
             except Exception:
                 pass
         results["ui_modals_accepted"] = modals_accepted
@@ -760,11 +811,30 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                 await page.goto(full_nav, wait_until="domcontentloaded", timeout=45000)
                 await page.wait_for_timeout(6000)
 
-                # Step A: Check for and accept any blocking TOS modal on the lens page first
+                # Step A: Dismiss cookie banner on lens page if present
+                for cookie_sel in [
+                    "button:has-text('Accept Cookies')",
+                    "button:has-text('Accept cookies')",
+                    "[data-testid*='cookie'] button"
+                ]:
+                    try:
+                        c_btn = await page.query_selector(cookie_sel)
+                        if c_btn and await c_btn.is_visible():
+                            print("[COOKIE BANNER LENS] Dismissing cookie banner on lens page...")
+                            await human_click(page, c_btn)
+                            await page.wait_for_timeout(1500)
+                            break
+                    except Exception:
+                        pass
+
+                # Step A2: Check for and accept any blocking TOS modal on the lens page
                 for _ in range(3):
-                    tos_modal_btn = await page.query_selector("[data-testid='tos-modal'] button:has-text('Accept'), [data-testid='tos-modal'] button:has-text('I Agree'), button:has-text('Accept'), button:has-text('I Agree')")
+                    tos_modal_btn = await page.query_selector("[data-testid='tos-modal'] button:has-text('Accept'), [data-testid='tos-modal'] button:has-text('I Agree'), [role='dialog'] button:has-text('Accept'), [role='dialog'] button:has-text('I Agree')")
                     if tos_modal_btn and await tos_modal_btn.is_visible() and await tos_modal_btn.is_enabled():
-                        print("[TOS MODAL] Clicking on-screen TOS acceptance button on lens page...")
+                        btn_text = (await tos_modal_btn.inner_text()).strip()
+                        if any(w in btn_text.lower() for w in ["cookie", "cookies", "cancel", "dismiss"]):
+                            continue
+                        print(f"[TOS MODAL] Clicking on-screen TOS acceptance button on lens page: '{btn_text}'...")
                         await human_click(page, tos_modal_btn)
                         await page.wait_for_timeout(2500)
                     else:
@@ -772,15 +842,14 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
 
                 # Step B: Locate the Top Performer switch
                 try:
-                    payout_container = await page.query_selector("#creator-payout-container, [data-testid*='creator-payout']")
+                    payout_container = await page.query_selector("#creator-payout-container, [data-testid*='creator-payout'], div:has-text('Top Performer Payouts Program')")
                     if payout_container:
                         await payout_container.scroll_into_view_if_needed()
                 except Exception:
                     pass
 
-                # Step B: Locate the Top Performer switch specifically within the rewards container
                 target_section = page.locator("div, section, tr").filter(has_text="Top Performer Payouts Program").last
-                switch_locator = target_section.locator("button[role='switch'], .sds-switch, input[type='checkbox'], [role='switch'], label").first
+                switch_locator = target_section.locator("button[role='switch'], [role='switch'], input[type='checkbox'], .sds-switch").first
 
                 async def is_switch_active():
                     try:
@@ -791,7 +860,8 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                             cls = (await sw.get_attribute("class") or "").lower()
                             inp = await sw.evaluate("el => el.checked || (el.querySelector('input') && el.querySelector('input').checked) || false")
                             bg = await sw.evaluate("el => window.getComputedStyle(el).backgroundColor || (el.querySelector('.sds-switch__slider') && window.getComputedStyle(el.querySelector('.sds-switch__slider')).backgroundColor) || ''")
-                            if aria == "true" or "checked" in cls or inp or "green" in bg.lower() or "rgb(0, 224" in bg or "#00e054" in bg:
+                            has_svg_check = await sw.evaluate("el => !! (el.querySelector('svg[data-testid*=\"check\"], svg polyline') || (el.innerHTML && el.innerHTML.includes('check')))")
+                            if aria == "true" or "checked" in cls or inp or "green" in bg.lower() or "rgb(0, 224" in bg or "#00e054" in bg or has_svg_check:
                                 return True
                         # Check fallback ID
                         fb = await page.query_selector("#toggle-lens-creator-payout-enrolled, .sds-switch")
@@ -800,7 +870,8 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                             cls = (await fb.get_attribute("class") or "").lower()
                             inp = await fb.evaluate("el => el.checked || (el.querySelector('input') && el.querySelector('input').checked) || false")
                             bg = await fb.evaluate("el => window.getComputedStyle(el).backgroundColor || ''")
-                            if aria == "true" or "checked" in cls or inp or "green" in bg.lower() or "rgb(0, 224" in bg or "#00e054" in bg:
+                            has_svg_check = await fb.evaluate("el => !! (el.querySelector('svg[data-testid*=\"check\"], svg polyline') || (el.innerHTML && el.innerHTML.includes('check')))")
+                            if aria == "true" or "checked" in cls or inp or "green" in bg.lower() or "rgb(0, 224" in bg or "#00e054" in bg or has_svg_check:
                                 return True
                     except Exception:
                         pass
@@ -828,12 +899,13 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                             for tb in tos_btns:
                                 if await tb.is_visible() and await tb.is_enabled():
                                     t_txt = (await tb.inner_text()).strip()
-                                    if not any(w in t_txt.lower() for w in ["cancel", "dismiss", "decline", "close", "back"]):
-                                        print(f"[TOS MODAL PASS {pass_num}] Terms modal appeared! Clicking '{t_txt}'...")
-                                        await human_click(page, tb)
-                                        await page.wait_for_timeout(2500)
-                                        clicked_modal = True
-                                        break
+                                    if any(w in t_txt.lower() for w in ["cancel", "dismiss", "decline", "close", "back", "cookie", "cookies"]):
+                                        continue
+                                    print(f"[TOS MODAL PASS {pass_num}] Terms modal appeared! Clicking '{t_txt}'...")
+                                    await human_click(page, tb)
+                                    await page.wait_for_timeout(2500)
+                                    clicked_modal = True
+                                    break
                             if not clicked_modal:
                                 break
 
@@ -928,7 +1000,7 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
 
     # Permanent fix: If a target lens was just published, wait for Snapchat catalog ingestion to exit PROCESSING state
     if target_lens_id:
-        wait_for_lens_ready(my_lenses_ticket, cookie_str, target_lens_id, max_wait_sec=90)
+        wait_for_lens_ready(my_lenses_ticket, cookie_str, target_lens_id, max_wait_sec=240)
 
     enroll_results = direct_enroll_lenses(my_lenses_ticket, cookie_str, target_lens_id=target_lens_id)
 
@@ -959,6 +1031,20 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
         target_lens_id=target_lens_id, target_lens_url=target_lens_url
     ))
 
+    target_verified = False
+    if target_lens_id:
+        target_verified = bool(
+            verified_payout
+            or browser_results.get("top_performer_toggled", False)
+            or enroll_results.get("target_lens_verified", False)
+        )
+    else:
+        target_verified = bool(
+            browser_results.get("top_performer_toggled", False)
+            or (enroll_results.get("count", 0) > 0)
+            or (sweep_results.get("remedied", 0) > 0)
+        )
+
     # Merge results
     final_result = {
         "account_id": aid,
@@ -968,8 +1054,8 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
         "ILDG_TOS": tos_results.get("ILDG_TOS", False) or browser_results.get("ILDG_TOS", False),
         "ui_modals_accepted": browser_results.get("ui_modals_accepted", 0),
         "enrolled_lenses_count": enroll_results.get("count", 0) + sweep_results.get("remedied", 0),
-        "top_performer_toggled": browser_results.get("top_performer_toggled", False) or verified_payout or (enroll_results.get("count", 0) > 0),
-        "target_lens_verified": verified_payout,
+        "top_performer_toggled": target_verified,
+        "target_lens_verified": target_verified,
         "sweep_results": sweep_results,
         "direct_graphql_details": enroll_results,
         "success": True

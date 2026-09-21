@@ -544,12 +544,12 @@ def main():
                     payout_enrolled = bool(
                         enroll_res.get("target_lens_verified", False)
                         or enroll_res.get("top_performer_toggled", False)
-                        or (enroll_res.get("enrolled_lenses_count", 0) > 0)
                     )
                     print(f"[STEP 7B ATTEMPT {enroll_try+1}] Payout Enrollment result: enrolled={payout_enrolled}")
                     if payout_enrolled:
                         break
-                    time.sleep(15)
+                    print(f"[STEP 7B ATTEMPT {enroll_try+1}] Lens not yet verified enrolled; waiting 25s for catalog ingestion...")
+                    time.sleep(25)
                 except Exception as enroll_err:
                     print(f"[STEP 7B WARN] Payout enrollment notice (attempt {enroll_try+1}): {enroll_err}")
                     time.sleep(10)

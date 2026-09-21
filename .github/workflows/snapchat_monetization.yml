@@ -149,10 +149,13 @@ jobs:
           git config --global user.email "antigravity-agent@users.noreply.github.com"
           git fetch origin main
           git checkout -B main origin/main
+          if [ -f published_lenses.json ]; then
+            git add -f published_lenses.json || true
+          fi
           if [ -f monetization_approval_status.json ]; then
             git add -f monetization_approval_status.json || true
           fi
-          if git status --porcelain | grep -q 'monetization_approval_status.json'; then
+          if git status --porcelain | grep -E 'monetization_approval_status.json|published_lenses.json'; then
             git commit -m "chore(monetization): record updated TOS & Top Performer payout approvals [skip ci]"
             git push origin main || true
           fi
