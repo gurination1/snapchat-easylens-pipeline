@@ -478,5 +478,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/xCWSA7QQrfjRUDoyofSC0?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-21T01:57:25Z",
+    "account_id": "3",
+    "lens_name": "Polaroid Burn FX",
+    "lens_id": "9e85cbf0-c3c9-4176-abf9-d2936f2b63a4",
+    "checkpoint_id": "06ab08e5-84cb-79fd-8000-e5fd93b424dc",
+    "prompt": "Distressed 35mm Polaroid frame locks to hairline. High-contrast Portra 400 aesthetic, analog light leaks, and heavy film bloom. MouthOpen triggers explosive amber film burn and floating dust. Smile softens exposure into warm indie cinema glow. EyebrowRaise flashes intense xenon strobe burst. HeadTilt pulses magenta light leaks. Authentic weathered paper textures, zero UI, pure 90s grunge film aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "90s",
+      "vintage",
+      "grunge",
+      "polaroid",
+      "retro"
+    ],
+    "visual_hook": "The instant appearance of a weathered, physical polaroid frame creates an immediate nostalgic silhouette.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/4W3uawEnXWRcjrC6L6tU2?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/LePDUgEU0IohmF7lRcKkT?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Le9qEDd6hb3IKct6uT9XT?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
