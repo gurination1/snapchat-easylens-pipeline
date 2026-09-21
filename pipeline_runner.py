@@ -530,6 +530,8 @@ def main():
         payout_enrolled = False
         if pub_lens_id and os.getenv("AUTO_APPROVE_MONETIZATION", "true").lower() in ("true", "1", "yes"):
             print(f"\n=== STEP 7B: ENROLLING PUBLISHED LENS ({pub_lens_id}) INTO TOP PERFORMER PAYOUTS ===")
+            import time
+            time.sleep(10)
             try:
                 from approve_snap_monetization import approve_account_monetization
                 enroll_res = approve_account_monetization(

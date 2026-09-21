@@ -285,20 +285,42 @@ def direct_enroll_lenses(ticket: str, cookie_header: str, target_lens_id: str = 
         time.sleep(1.0)
 
     enrolled = []
+    success_count = 0
     for lid in target_ids:
         print(f"[DIRECT GRAPHQL] Enrolling Lens {lid} into Top Performer & Lens Creator Payouts...")
-        time.sleep(1.2)
-        r1 = execute_direct_graphql(
-            ticket, cookie_header, GQL_SET_PAYOUT,
-            variables={"lensId": lid, "lensCreatorPayoutEnrolled": True},
-            operation_name="setLensCreatorPayoutEnrollment"
+        r1 = {}
+        r2 = {}
+        for retry_i in range(4):
+            time.sleep(1.2)
+            r1 = execute_direct_graphql(
+                ticket, cookie_header, GQL_SET_PAYOUT,
+                variables={"lensId": lid, "lensCreatorPayoutEnrolled": True},
+                operation_name="setLensCreatorPayoutEnrollment"
+            )
+            time.sleep(1.2)
+            r2 = execute_direct_graphql(
+                ticket, cookie_header, GQL_UPDATE_LENS,
+                variables={"lensId": lid, "creatorRewardProgramEnrolled": True, "isGameUserProvided": False},
+                operation_name="updateLens"
+            )
+            r_str = json.dumps(r1) + json.dumps(r2)
+            if "is currently processing" in r_str and retry_i < 3:
+                print(f"  [WAIT] Lens {lid} is currently processing on Snapchat backend. Waiting 20s (retry {retry_i+1}/3)...")
+                time.sleep(20)
+            else:
+                break
+
+        r1_lens = (r1.get("data") or {}).get("setLensCreatorPayoutEnrollment", {}).get("lens") or {}
+        r2_lens = (r2.get("data") or {}).get("updateLens", {}).get("lens") or {}
+        is_enrolled = bool(
+            r1_lens.get("lensCreatorPayoutEligibility") in ("LENS_CREATOR_PAYOUT_ELIGIBILITY_PENDING", "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE")
+            or r2_lens.get("lensCreatorPayoutEligibility") in ("LENS_CREATOR_PAYOUT_ELIGIBILITY_PENDING", "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE")
+            or (not r1.get("errors") and r1.get("data"))
+            or (not r2.get("errors") and r2.get("data"))
         )
-        time.sleep(1.2)
-        r2 = execute_direct_graphql(
-            ticket, cookie_header, GQL_UPDATE_LENS,
-            variables={"lensId": lid, "creatorRewardProgramEnrolled": True, "isGameUserProvided": False},
-            operation_name="updateLens"
-        )
+        if is_enrolled:
+            success_count += 1
+            print(f"  [SUCCESS {lid}] Verified enrolled in payout program via direct GraphQL!")
 
         cat_res = None
         if preferred_primary_cat_id:
@@ -310,9 +332,9 @@ def direct_enroll_lenses(ticket: str, cookie_header: str, target_lens_id: str = 
             )
 
         print(f"  [RESULT {lid}] setPayout: {json.dumps(r1)[:100]} | updateLens: {json.dumps(r2)[:100]}")
-        enrolled.append({"id": lid, "setPayoutRes": r1, "updateLensRes": r2, "setCategoryRes": cat_res})
+        enrolled.append({"id": lid, "enrolled": is_enrolled, "setPayoutRes": r1, "updateLensRes": r2, "setCategoryRes": cat_res})
 
-    return {"count": len(enrolled), "lenses": enrolled}
+    return {"count": success_count, "attempted": len(target_ids), "lenses": enrolled}
 
 
 def sanitize_cookies_for_playwright(cookie_str: str) -> list:
@@ -518,7 +540,19 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
 
                     if approved:
                         print("[TIV SUCCESS] Verification completed! Waiting for session redirect...")
-                        await page.wait_for_timeout(6000)
+                        for wait_sso in range(25):
+                            await page.wait_for_timeout(1000)
+                            if "tiv" not in page.url.lower() and "login" not in page.url.lower():
+                                print(f"[TIV REDIRECT OK] Successfully transitioned to: {page.url[:80]}")
+                                break
+                            if wait_sso == 8 and "accounts.snapchat.com" in page.url:
+                                sso_bridge = f"https://accounts.snapchat.com/accounts/sso?client_id=lens-studio-web&continue={portal_url}"
+                                print(f"[TIV SSO BRIDGE] Navigating through SSO bridge: {sso_bridge[:80]}...")
+                                try:
+                                    await page.goto(sso_bridge, wait_until="domcontentloaded", timeout=30000)
+                                    await page.wait_for_timeout(3000)
+                                except Exception as sso_err:
+                                    print(f"[TIV SSO BRIDGE WARN] {sso_err}")
 
                 # Wait for navigation back to my-lenses portal
                 for _ in range(30):
@@ -527,8 +561,28 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                     await page.wait_for_timeout(1000)
 
                 if "my-lenses.snapchat.com" not in page.url:
-                    await page.goto(portal_url, wait_until="domcontentloaded", timeout=45000)
-                    await page.wait_for_timeout(4000)
+                    sso_target = f"https://accounts.snapchat.com/accounts/sso?client_id=lens-studio-web&continue={portal_url}"
+                    print(f"[AUTH SSO] Passing through Snapchat SSO bridge: {sso_target[:80]}...")
+                    try:
+                        await page.goto(sso_target, wait_until="domcontentloaded", timeout=30000)
+                        await page.wait_for_timeout(4000)
+                    except Exception:
+                        pass
+                    if "my-lenses.snapchat.com" not in page.url:
+                        await page.goto(portal_url, wait_until="domcontentloaded", timeout=45000)
+                        await page.wait_for_timeout(4000)
+
+                # Extract and persist fresh browser cookies to GitHub Secrets
+                try:
+                    fresh_cookies = await context.cookies()
+                    cookie_header_parts = [f"{c['name']}={c['value']}" for c in fresh_cookies]
+                    fresh_cookie_str = "; ".join(cookie_header_parts)
+                    if "sc-a-nonce" in fresh_cookie_str or "xsrf_token" in fresh_cookie_str:
+                        update_github_secret(f"SNAP_ACCOUNTS_COOKIE_ACC_{aid}", fresh_cookie_str)
+                        update_github_secret(f"SNAP_COOKIE_HEADER_ACC_{aid}", fresh_cookie_str)
+                        print(f"[COOKIE PERSIST] Saved {len(fresh_cookies)} fresh session cookies for Account #{aid}")
+                except Exception as ce:
+                    print(f"[COOKIE PERSIST WARN] {ce}")
             except Exception as login_err:
                 print(f"[AUTH LOGIN WARN] In-browser login attempt error: {login_err}")
 
