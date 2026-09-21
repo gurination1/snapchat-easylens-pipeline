@@ -62,7 +62,7 @@ STATIC_FALLBACKS = {
         },
         {
             "lens_name": "Valkyrie Frost Circlet",
-            "prompt": "Brushed silver and iridescent mother-of-pearl Valkyrie winged circlet fitted firmly to forehead. Photorealistic PBR metal reflections with frosted runic engravings and cool 6500K Nordic key lighting. Opening mouth summons ethereal soaring spectral raven aura and frosted arctic mist; smiling ignites crystalline glacial eye glints. Seamless head tracking, zero strobing.",
+            "prompt": "Brushed silver and iridescent mother-of-pearl Valkyrie winged circlet fitted firmly to forehead. Photorealistic PBR metal reflections with frosted runic engravings and cool 6500K Nordic key lighting. Opening mouth summons ethereal soaring spectral raven aura; smiling ignites crystalline glacial eye glints. Seamless head tracking, zero strobing.",
             "tags": ["valkyrie", "winged", "circlet", "aurora", "pbr"]
         },
         {
@@ -128,12 +128,12 @@ STATIC_FALLBACKS = {
     "4": BlueprintPool([
         {
             "lens_name": "High-Fashion Parisian Couture",
-            "prompt": "High-fashion Parisian couture 24k gold leaf baroque crown fitted to hairline with draped raw freshwater pearls and caustic crystal prisms. Warm Kodak Portra 400 film grain and analog halation bloom. Opening mouth parts delicate golden gossamer veil with champagne spark motes; smiling cascades radiant golden sparkle dust across cheekbones; head tilt catches prismatic diamond dispersion. Pure Parisian luxury, zero UI.",
+            "prompt": "High-fashion Parisian couture 24k gold leaf baroque crown fitted to hairline with draped raw freshwater pearls and caustic crystal prisms. Warm Kodak Portra 400 film grain and analog halation bloom. Opening mouth triggers radiant champagne spark motes orbiting crown; smiling cascades radiant golden sparkle dust across cheekbones; head tilt catches prismatic diamond dispersion. Pure Parisian luxury, zero UI.",
             "tags": ["parisian", "couture", "goldleaf", "pearls", "portra400", "luxury"]
         },
         {
             "lens_name": "Haute Baroque Gold",
-            "prompt": "Sculpted 24k gold leaf baroque crown fitted strictly to hairline and temples with pale champagne crystal halo and caustic crystal prisms. Warm Kodak Portra 35mm film halation with colorCorrection 10 Golden Glow and grain. Anisotropic PBR reflections, ray-traced shadows. Opening mouth parts delicate golden veil; smiling unleashes rich golden sparkle dust cascading across cheekbones. Photosensitive safe, zero strobing.",
+            "prompt": "Sculpted 24k gold leaf baroque crown fitted strictly to hairline and temples with pale champagne crystal halo and caustic crystal prisms. Warm Kodak Portra 35mm film halation with colorCorrection 10 Golden Glow and grain. Anisotropic PBR reflections, ray-traced shadows. Opening mouth triggers orbiting pale champagne diamond prisms; smiling unleashes rich golden sparkle dust cascading across cheekbones. Photosensitive safe, zero strobing.",
             "tags": ["film", "35mm", "crown", "gold", "luxury"]
         },
         {
@@ -143,7 +143,7 @@ STATIC_FALLBACKS = {
         },
         {
             "lens_name": "Art Nouveau Emerald Tiara",
-            "prompt": "Art Nouveau floral tiara sculpted from antiqued yellow gold with deep emerald cabochon accents anchored securely to brow. Soft 35mm analog vignette with delicate warm highlights. Opening mouth floats a semi-translucent golden silk shimmer veil across temples; smiling activates subtle emerald light refraction flares across eye contours. Pure Parisian couture craft, zero UI.",
+            "prompt": "Art Nouveau floral tiara sculpted from antiqued yellow gold with deep emerald cabochon accents anchored securely to brow. Soft 35mm analog vignette with delicate warm highlights. Opening mouth pulses radiant emerald crystal prism halo above crown; smiling activates subtle emerald light refraction flares across eye contours. Pure Parisian couture craft, zero UI.",
             "tags": ["artnouveau", "tiara", "emerald", "luxury", "gold"]
         },
         {

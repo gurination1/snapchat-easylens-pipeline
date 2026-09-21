@@ -111,8 +111,8 @@ def audit_video_frames_visual_defects(video_path: str) -> dict:
                 defects.append(f"Detected unnatural yellow veil/polygon covering subject nose/face ({yellow_ratio*100:.1f}% area) at frame {f_idx}")
                 break
 
-        # 3. Zombie Eye Anomaly Detector (eye horizontal band: y 0.33-0.43, x 0.28-0.72)
-        eye_band = frame[int(h * 0.33):int(h * 0.43), int(w * 0.28):int(w * 0.72)]
+        # 3. Zombie Eye Anomaly Detector (actual eye socket band: y 0.375-0.425, x 0.28-0.72)
+        eye_band = frame[int(h * 0.375):int(h * 0.425), int(w * 0.28):int(w * 0.72)]
         if eye_band.size > 0:
             hsv_eye = cv2.cvtColor(eye_band, cv2.COLOR_BGR2HSV)
             eye_yellow = cv2.inRange(hsv_eye, np.array([18, 120, 140]), np.array([36, 255, 255]))
@@ -121,9 +121,11 @@ def audit_video_frames_visual_defects(video_path: str) -> dict:
             for cnt in contours:
                 area = cv2.contourArea(cnt)
                 x, y, cw, ch = cv2.boundingRect(cnt)
-                if cw > 180:
+                if cw > 160:
                     continue  # Legitimate wearable eyewear/visor spanning across both temples
-                if area > 350:
+                if y <= 1:
+                    continue  # Headpiece or brow adornment extending down from above eye band
+                if area > 600:
                     defects.append(f"Detected unnatural zombie/discolored eye fill (blob area {area:.0f}px) at frame {f_idx}")
                     break
             if defects:

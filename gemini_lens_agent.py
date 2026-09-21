@@ -349,7 +349,7 @@ CHANNEL_PROMPT_MATRICES = {
                 "id": "haute_baroque_gold",
                 "name": "High-Fashion Parisian Couture 24k Gold Leaf Crown & Freshwater Pearls",
                 "signature_tokens": ['baroque', '24k gold leaf', 'freshwater pearl', 'crystal prisms', 'parisian couture', 'portra 400'],
-                "focus": "High-fashion Parisian couture 24k gold leaf baroque crown fitted to hairline with draped raw freshwater pearls and caustic crystal prisms. Warm Kodak Portra 400 film grain with halation bloom. Opening mouth parts golden gossamer veil with champagne spark motes; smiling cascades rich golden sparkle dust across cheekbones; eyebrow raise triggers luminous dewy skin sheen; head tilt catches prismatic diamond dispersion. Pure Parisian luxury, zero UI.",
+                "focus": "High-fashion Parisian couture 24k gold leaf baroque crown fitted to hairline with draped raw freshwater pearls and caustic crystal prisms. Warm Kodak Portra 400 film grain with halation bloom. Opening mouth triggers radiant champagne spark motes orbiting crown; smiling cascades rich golden sparkle dust across cheekbones; eyebrow raise triggers luminous dewy skin sheen; head tilt catches prismatic diamond dispersion. Pure Parisian luxury, zero UI.",
                 "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
                 "visual_hook": "Parisian haute couture glamour: opulent High-Fashion Parisian Couture 24k Gold Leaf Crown elevates portrait with 35mm film halation."
             },
@@ -363,9 +363,9 @@ CHANNEL_PROMPT_MATRICES = {
             },
             {
                 "id": "art_nouveau_tiara",
-                "name": "Art Nouveau Emerald Tiara & Shimmering Gossamer Veil",
-                "signature_tokens": ['art nouveau', 'emerald cabochon', 'gossamer veil', 'paris couture'],
-                "focus": "Art Nouveau floral tiara sculpted from antiqued yellow gold with deep emerald cabochon accents anchored securely to brow. Soft 35mm analog vignette with delicate warm highlights. Opening mouth floats semi-translucent golden silk shimmer veil across temples; smiling activates emerald light refraction flares across eye contours; eyebrow raise blooms golden floral petals; head tilt glints emerald cabochons. Parisian couture, zero UI.",
+                "name": "Art Nouveau Emerald Tiara & Prismatic Crystals",
+                "signature_tokens": ['art nouveau', 'emerald cabochon', 'prismatic crystal', 'paris couture'],
+                "focus": "Art Nouveau floral tiara sculpted from antiqued yellow gold with deep emerald cabochon accents anchored securely to brow. Soft 35mm analog vignette with delicate warm highlights. Opening mouth pulses radiant emerald crystal prism halo above crown; smiling activates emerald light refraction flares across eye contours; eyebrow raise blooms golden floral petals; head tilt glints emerald cabochons. Parisian couture, zero UI.",
                 "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
                 "visual_hook": "Parisian haute couture glamour: opulent Art Nouveau Emerald Tiara elevates portrait with 35mm film halation."
             },
@@ -412,8 +412,8 @@ CHANNEL_PROMPT_MATRICES = {
             {
                 "id": "rose_gold_astral_tiara",
                 "name": "Rose Gold Astral Starburst Tiara & Starlight Glints",
-                "signature_tokens": ['rose gold tiara', 'astral starburst', 'morganite', 'starlight veil'],
-                "focus": "Hand-forged 18k rose gold astral starburst tiara anchored along brow with inset morganite gemstones. Portra film warmth with soft halation. Opening mouth releases cascading micro-glitter starlight veil; smiling triggers dazzling rose-gold starburst flares across eyes; eyebrow raise pulses blushing astral starlight halo; head tilt cascades warm morganite gemstone reflections across temples. Pure vanity elegance, zero UI.",
+                "signature_tokens": ['rose gold tiara', 'astral starburst', 'morganite', 'starlight aura'],
+                "focus": "Hand-forged 18k rose gold astral starburst tiara anchored along brow with inset morganite gemstones. Portra film warmth with soft halation. Opening mouth releases cascading micro-glitter starlight aura; smiling triggers dazzling rose-gold starburst flares across eyes; eyebrow raise pulses blushing astral starlight halo; head tilt cascades warm morganite gemstone reflections across temples. Pure vanity elegance, zero UI.",
                 "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
                 "visual_hook": "Parisian haute couture glamour: opulent Rose Gold Astral Starburst Tiara elevates portrait with 35mm film halation."
             },
@@ -1369,7 +1369,7 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "", e
         "STRICT PRODUCTION QUALITY, VIRALITY & COMPLIANCE RULES:\n"
         "1. MASSIVE VISUAL IMPACT & BOLD SILHOUETTE DEFINITION: Instantaneous 0.2s silhouette read on Snapchat carousel. Primary 3D asset must have bold, recognizable structural geometry framing the face (sculpted crowns, retro cyber visors, weightless zero-g halos, hand-painted cloud crowns). High contrast lighting, unmistakable visual hook that compels users to tap, favorite, and subscribe.\n"
         "2. MULTI-ACTION INTERACTIVE TRIGGER MATRIX: Prompts MUST specify dynamic payoffs for multiple face events:\n"
-        "   - MouthOpen: Explosive high-energy climax (particle torrent, geyser, glitch shockwave, veil parting, expanding shockwave rings).\n"
+        "   - MouthOpen: Explosive high-energy climax (particle torrent, geyser, glitch shockwave, crystal prism burst, expanding shockwave rings).\n"
         "   - Smile: Harmonic positive payoff (golden sparkle dust, auroral eye glints, cheerful mascot reaction, rainbow confetti).\n"
         "   - EyebrowRaise / HeadTilt: Dynamic secondary reaction (spire extension, night-vision beam flare, scanline shift, fluid inertia drift).\n"
         "3. ZERO ON-SCREEN DEVELOPER UI, SLIDERS, OR BUTTONS: 100% immersive full-screen camera AR. NEVER generate touch sliders, debug menus, or controller UI widgets.\n"
