@@ -47,6 +47,7 @@ class EasyLensClient:
         self.account_id = str(account_id)
         self.sso_token = sso_token
         self.accounts_cookie = accounts_cookie or cookie_header
+        self.cookie_header = self.accounts_cookie
         self.session = requests.Session()
         self.session.headers.update({
             "Authorization": f"Bearer {sso_token}" if sso_token else "",

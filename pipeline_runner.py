@@ -316,7 +316,7 @@ def main():
             from approve_snap_monetization import approve_account_monetization
             m_res = approve_account_monetization(
                 account_id=ACCOUNT_ID,
-                cookie_str=client.cookie_header or client.accounts_cookie,
+                cookie_str=getattr(client, "accounts_cookie", "") or getattr(client, "cookie_header", "") or (client.session.headers.get("Cookie", "") if hasattr(client, "session") else ""),
                 ticket=client.sso_token,
                 user=user
             )
@@ -534,7 +534,7 @@ def main():
                 from approve_snap_monetization import approve_account_monetization
                 enroll_res = approve_account_monetization(
                     account_id=ACCOUNT_ID,
-                    cookie_str=client.cookie_header or client.accounts_cookie,
+                    cookie_str=getattr(client, "accounts_cookie", "") or getattr(client, "cookie_header", "") or (client.session.headers.get("Cookie", "") if hasattr(client, "session") else ""),
                     ticket=client.sso_token,
                     user=user,
                     target_lens_id=pub_lens_id,
