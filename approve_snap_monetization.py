@@ -38,8 +38,19 @@ from snap_auth_automator import (
     human_click,
     get_gemini_api_keys
 )
+from easylens_api import update_github_secret
 
 GRAPHQL_URL = "https://my-lenses.snapchat.com/graphql"
+
+GQL_INTROSPECT_TOS = """
+query IntrospectTos {
+    __type(name: "TosKey") {
+        enumValues {
+            name
+        }
+    }
+}
+"""
 
 GQL_SET_TOS = """
 mutation SetTosLatestAcceptedVersion($key: TosKey!) {
@@ -198,9 +209,24 @@ def execute_direct_graphql(ticket: str, cookie_header: str, query: str, variable
 
 
 def direct_approve_tos(ticket: str, cookie_header: str) -> dict:
-    """Submits SetTosLatestAcceptedVersion for LENS_CREATOR_PAYOUT_TOS."""
+    """Submits SetTosLatestAcceptedVersion for all payout, reward, and monetization TOS keys."""
     results = {}
-    keys = ["LENS_CREATOR_PAYOUT_TOS"]
+    keys = ["LENS_CREATOR_PAYOUT_TOS", "LENS_PLUS_PAYOUT_TOS", "ILDG_TOS"]
+
+    # Dynamic introspection of TosKey enums directly from Snapchat schema
+    try:
+        i_res = execute_direct_graphql(ticket, cookie_header, GQL_INTROSPECT_TOS, operation_name="IntrospectTos")
+        enum_vals = (((i_res.get("data") or {}).get("__type") or {}).get("enumValues") or [])
+        if enum_vals:
+            for ev in enum_vals:
+                k_name = ev.get("name")
+                if k_name and any(w in k_name.upper() for w in ["PAYOUT", "REWARD", "LENS", "MONETIZ", "PLUS", "ILDG", "CREATOR"]):
+                    if k_name not in keys:
+                        keys.append(k_name)
+            print(f"[DIRECT GRAPHQL] Discovered and targeted {len(keys)} monetization TosKey enums: {keys}")
+    except Exception as ie:
+        print(f"[DIRECT GRAPHQL WARN] TosKey introspection failed: {ie}")
+
     for key in keys:
         try:
             print(f"[DIRECT GRAPHQL] Setting TOS acceptance for {key}...")
@@ -438,13 +464,38 @@ def sanitize_cookies_for_playwright(cookie_str: str) -> list:
                 continue
 
             seen.add(name)
-            cookie_list.append({
-                "name": name,
-                "value": val,
-                "domain": ".snapchat.com",
-                "path": "/",
-                "secure": True
-            })
+            # RFC 6265bis: __Host- cookies must NOT have domain specified; use url instead
+            if name.startswith("__Host-"):
+                cookie_list.append({
+                    "name": name,
+                    "value": val,
+                    "url": "https://accounts.snapchat.com",
+                    "path": "/",
+                    "secure": True
+                })
+                cookie_list.append({
+                    "name": name,
+                    "value": val,
+                    "url": "https://my-lenses.snapchat.com",
+                    "path": "/",
+                    "secure": True
+                })
+            elif name.startswith("__Secure-"):
+                cookie_list.append({
+                    "name": name,
+                    "value": val,
+                    "domain": ".snapchat.com",
+                    "path": "/",
+                    "secure": True
+                })
+            else:
+                cookie_list.append({
+                    "name": name,
+                    "value": val,
+                    "domain": ".snapchat.com",
+                    "path": "/",
+                    "secure": True
+                })
 
     return cookie_list
 
@@ -500,13 +551,24 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                 try:
                     await context.add_cookies([c])
                     injected_count += 1
-                except Exception:
-                    pass
+                except Exception as ce:
+                    print(f"[COOKIE INJECT WARN] Failed to inject {c.get('name')}: {ce}")
             print(f"[COOKIES] Injected {injected_count}/{len(cookie_list)} authenticated cookies into browser context")
 
         page = await context.new_page()
         if stealth_async:
             await stealth_async(page)
+
+        # Network sniffer for GraphQL operations to monitor real-time mutations
+        async def on_graphql_response(res):
+            if "graphql" in res.url:
+                try:
+                    op_name = res.request.headers.get("x-apollo-operation-name", "unknown")
+                    body_snippet = (await res.text())[:300]
+                    print(f"[BROWSER GRAPHQL {res.status}] Op: {op_name} -> {body_snippet}")
+                except Exception:
+                    pass
+        page.on("response", on_graphql_response)
 
         # Target portal URL with ?ticket={ticket} query parameter for SSOService
         base_target = target_lens_url or (f"https://my-lenses.snapchat.com/lens/{target_lens_id}" if target_lens_id else "https://my-lenses.snapchat.com/")
@@ -576,46 +638,56 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                     gmail_pwd = os.getenv(f"GMAIL_APP_PASSWORD_ACC_{aid}") or os.getenv("GMAIL_APP_PASSWORD") or ""
                     tiv_start = time.time() - 90
                     approved = False
-                    for tiv_step in range(35):
+                    for tiv_step in range(40):
                         await page.wait_for_timeout(3000)
                         if "tiv" not in page.url.lower() and "login" not in page.url.lower():
                             approved = True
-                            print("[TIV REDIRECT] Session transitioned off TIV page automatically!")
+                            print(f"[TIV REDIRECT] Session transitioned off TIV page automatically! (URL: {page.url[:80]})")
                             break
-                        if gmail_pwd:
+                        if gmail_pwd and not approved:
                             tiv_url = fetch_latest_snap_tiv_url(gmail_addr, gmail_pwd, tiv_start)
                             if tiv_url:
                                 print(f"[TIV URL FOUND] Discovered verification link: {tiv_url[:80]}...")
                                 approval_page = await context.new_page()
                                 try:
                                     await approval_page.goto(tiv_url, wait_until="domcontentloaded", timeout=30000)
-                                    await approval_page.wait_for_timeout(3000)
-                                    btn = await approval_page.query_selector("button:has-text('Approve'), button:has-text('Yes'), button#approve-btn")
-                                    if btn and await btn.is_visible():
-                                        await human_click(approval_page, btn)
-                                        await approval_page.wait_for_timeout(3000)
-                                        print("[TIV APPROVED] Clicked approval button on TIV landing page!")
-                                    await approval_page.close()
+                                    await approval_page.wait_for_timeout(2000)
+                                    # Execute direct landing API approval
+                                    post_res = await approval_page.evaluate("""async () => {
+                                        const root = document.getElementById('tiv-landing-root');
+                                        if (!root) return { ok: false, err: 'no_root' };
+                                        const xsrf = root.getAttribute('data-xsrf') || '';
+                                        const nonce = root.getAttribute('data-nonce') || '';
+                                        try {
+                                            const r = await fetch('/accounts/tiv/landing' + window.location.search, {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                                    'X-XSRF-TOKEN': xsrf
+                                                },
+                                                body: new URLSearchParams({'xsrf_token': xsrf, 'n': nonce, 's': '1'})
+                                            });
+                                            return { ok: r.ok || r.status === 302 || r.status === 200, status: r.status };
+                                        } catch (e) {
+                                            return { ok: false, err: String(e) };
+                                        }
+                                    }""")
+                                    print(f"[TIV LANDING RESULT] Direct API response: {post_res}")
+                                    await approval_page.wait_for_timeout(1500)
+                                    appr_btn = await approval_page.query_selector("button:has-text('Approve'), div[role='button']:has-text('Approve'), button#approve-btn")
+                                    if appr_btn and await appr_btn.is_visible():
+                                        await human_click(approval_page, appr_btn)
+                                        await approval_page.wait_for_timeout(2000)
+                                        print("[TIV APPROVED] Clicked Approve button on landing page!")
                                 except Exception as tiv_err:
                                     print(f"[TIV APPROVE WARN] {tiv_err}")
+                                finally:
+                                    try:
+                                        await approval_page.close()
+                                    except Exception:
+                                        pass
                                 approved = True
-                                break
-
-                    if approved:
-                        print("[TIV SUCCESS] Verification completed! Waiting for session redirect...")
-                        for wait_sso in range(25):
-                            await page.wait_for_timeout(1000)
-                            if "tiv" not in page.url.lower() and "login" not in page.url.lower():
-                                print(f"[TIV REDIRECT OK] Successfully transitioned to: {page.url[:80]}")
-                                break
-                            if wait_sso == 8 and "accounts.snapchat.com" in page.url:
-                                sso_bridge = f"https://accounts.snapchat.com/accounts/sso?client_id=lens-studio-web&continue={portal_url}"
-                                print(f"[TIV SSO BRIDGE] Navigating through SSO bridge: {sso_bridge[:80]}...")
-                                try:
-                                    await page.goto(sso_bridge, wait_until="domcontentloaded", timeout=30000)
-                                    await page.wait_for_timeout(3000)
-                                except Exception as sso_err:
-                                    print(f"[TIV SSO BRIDGE WARN] {sso_err}")
+                                print("[TIV WAITING] Awaiting natural session redirect on main page...")
 
                 # Wait for navigation back to my-lenses portal
                 for _ in range(30):
@@ -624,16 +696,12 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                     await page.wait_for_timeout(1000)
 
                 if "my-lenses.snapchat.com" not in page.url:
-                    sso_target = f"https://accounts.snapchat.com/accounts/sso?client_id=lens-studio-web&continue={portal_url}"
-                    print(f"[AUTH SSO] Passing through Snapchat SSO bridge: {sso_target[:80]}...")
+                    print(f"[AUTH TRANSITION] Transitioning to portal URL: {portal_url[:80]}...")
                     try:
-                        await page.goto(sso_target, wait_until="domcontentloaded", timeout=30000)
-                        await page.wait_for_timeout(4000)
-                    except Exception:
-                        pass
-                    if "my-lenses.snapchat.com" not in page.url:
                         await page.goto(portal_url, wait_until="domcontentloaded", timeout=45000)
                         await page.wait_for_timeout(4000)
+                    except Exception as nav_e:
+                        print(f"[AUTH TRANSITION WARN] {nav_e}")
 
                 # Extract and persist fresh browser cookies to GitHub Secrets
                 try:
@@ -641,9 +709,11 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                     cookie_header_parts = [f"{c['name']}={c['value']}" for c in fresh_cookies]
                     fresh_cookie_str = "; ".join(cookie_header_parts)
                     if "sc-a-nonce" in fresh_cookie_str or "xsrf_token" in fresh_cookie_str:
-                        update_github_secret(f"SNAP_ACCOUNTS_COOKIE_ACC_{aid}", fresh_cookie_str)
-                        update_github_secret(f"SNAP_COOKIE_HEADER_ACC_{aid}", fresh_cookie_str)
-                        print(f"[COOKIE PERSIST] Saved {len(fresh_cookies)} fresh session cookies for Account #{aid}")
+                        sec_acc = f"SNAP_ACCOUNTS_COOKIE_ACC_{aid}" if aid != "1" else "SNAP_ACCOUNTS_COOKIE"
+                        sec_hdr = f"SNAP_COOKIE_HEADER_ACC_{aid}" if aid != "1" else "SNAP_COOKIE_HEADER"
+                        update_github_secret(sec_acc, fresh_cookie_str)
+                        update_github_secret(sec_hdr, fresh_cookie_str)
+                        print(f"[COOKIE PERSIST] Saved {len(fresh_cookies)} fresh session cookies for Account #{aid} to {sec_acc}")
                 except Exception as ce:
                     print(f"[COOKIE PERSIST WARN] {ce}")
             except Exception as login_err:
@@ -720,15 +790,17 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                             aria = await sw.get_attribute("aria-checked")
                             cls = (await sw.get_attribute("class") or "").lower()
                             inp = await sw.evaluate("el => el.checked || (el.querySelector('input') && el.querySelector('input').checked) || false")
-                            if aria == "true" or "checked" in cls or inp:
+                            bg = await sw.evaluate("el => window.getComputedStyle(el).backgroundColor || (el.querySelector('.sds-switch__slider') && window.getComputedStyle(el.querySelector('.sds-switch__slider')).backgroundColor) || ''")
+                            if aria == "true" or "checked" in cls or inp or "green" in bg.lower() or "rgb(0, 224" in bg or "#00e054" in bg:
                                 return True
                         # Check fallback ID
-                        fb = await page.query_selector("#toggle-lens-creator-payout-enrolled")
+                        fb = await page.query_selector("#toggle-lens-creator-payout-enrolled, .sds-switch")
                         if fb:
                             aria = await fb.get_attribute("aria-checked")
                             cls = (await fb.get_attribute("class") or "").lower()
                             inp = await fb.evaluate("el => el.checked || (el.querySelector('input') && el.querySelector('input').checked) || false")
-                            if aria == "true" or "checked" in cls or inp:
+                            bg = await fb.evaluate("el => window.getComputedStyle(el).backgroundColor || ''")
+                            if aria == "true" or "checked" in cls or inp or "green" in bg.lower() or "rgb(0, 224" in bg or "#00e054" in bg:
                                 return True
                     except Exception:
                         pass
@@ -750,11 +822,20 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                         await page.wait_for_timeout(2000)
 
                         # Check if clicking switch triggered an on-screen Terms of Service modal
-                        tos_btn_after = await page.query_selector("[data-testid='tos-modal'] button:has-text('Accept'), [data-testid='tos-modal'] button:has-text('I Agree'), [role='dialog'] button:has-text('Accept'), [role='dialog'] button:has-text('I Agree'), button:has-text('Agree & Continue')")
-                        if tos_btn_after and await tos_btn_after.is_visible() and await tos_btn_after.is_enabled():
-                            print(f"[TOS MODAL PASS {pass_num}] Terms modal appeared! Clicking Accept/I Agree...")
-                            await human_click(page, tos_btn_after)
-                            await page.wait_for_timeout(2500)
+                        for _ in range(3):
+                            tos_btns = await page.query_selector_all("[data-testid*='tos-modal'] button, [role='dialog'] button, button:has-text('Accept'), button:has-text('I Agree'), button:has-text('Agree & Continue'), button:has-text('Enroll'), button:has-text('Confirm'), button:has-text('Yes')")
+                            clicked_modal = False
+                            for tb in tos_btns:
+                                if await tb.is_visible() and await tb.is_enabled():
+                                    t_txt = (await tb.inner_text()).strip()
+                                    if not any(w in t_txt.lower() for w in ["cancel", "dismiss", "decline", "close", "back"]):
+                                        print(f"[TOS MODAL PASS {pass_num}] Terms modal appeared! Clicking '{t_txt}'...")
+                                        await human_click(page, tb)
+                                        await page.wait_for_timeout(2500)
+                                        clicked_modal = True
+                                        break
+                            if not clicked_modal:
+                                break
 
                         # Check if active now
                         if await is_switch_active():
@@ -784,7 +865,7 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                         print(f"[SAVE] Clicking '{await save_btn.inner_text()}' button...")
                         await human_click(page, save_btn)
                         await page.wait_for_timeout(2000)
-                        confirm_btn = await page.query_selector("[data-testid='save-changes-modal'] button:has-text('Save Changes'), [role='dialog'] button:has-text('Save Changes')")
+                        confirm_btn = await page.query_selector("[data-testid='save-changes-modal'] button:has-text('Save Changes'), [role='dialog'] button:has-text('Save Changes'), [role='dialog'] button:has-text('Confirm'), [role='dialog'] button:has-text('Save')")
                         if confirm_btn and await confirm_btn.is_visible() and await confirm_btn.is_enabled():
                             print("[SAVE MODAL] Confirming Save Changes dialog...")
                             await human_click(page, confirm_btn)
