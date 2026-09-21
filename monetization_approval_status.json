@@ -1,16 +1,1839 @@
 {
-  "5": {
-    "account_id": "5",
-    "username": "yt_new2026",
-    "displayName": "Yt New",
+  "1": {
+    "account_id": "1",
+    "username": "gman21478",
+    "displayName": "Gur Man",
     "LENS_CREATOR_PAYOUT_TOS": true,
     "ILDG_TOS": false,
     "ui_modals_accepted": 0,
-    "enrolled_lenses_count": 0,
-    "top_performer_toggled": false,
+    "enrolled_lenses_count": 21,
+    "top_performer_toggled": true,
     "direct_graphql_details": {
-      "count": 0,
-      "lenses": []
+      "count": 21,
+      "lenses": [
+        {
+          "id": "a5710040-c03f-4fb8-b3fe-dc2862109b76",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens a5710040-c03f-4fb8-b3fe-dc2862109b76 is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens a5710040-c03f-4fb8-b3fe-dc2862109b76 is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "a5710040-c03f-4fb8-b3fe-dc2862109b76",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "681b5cb4-84c9-4bc0-82c0-3f1c1ef32834",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens 681b5cb4-84c9-4bc0-82c0-3f1c1ef32834 is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens 681b5cb4-84c9-4bc0-82c0-3f1c1ef32834 is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "681b5cb4-84c9-4bc0-82c0-3f1c1ef32834",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "14b84a20-14e0-4394-842f-1a435fe39110",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens 14b84a20-14e0-4394-842f-1a435fe39110 is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens 14b84a20-14e0-4394-842f-1a435fe39110 is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "14b84a20-14e0-4394-842f-1a435fe39110",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "123450e7-fd1c-450b-8a5a-d8e53cef5d8b",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens 123450e7-fd1c-450b-8a5a-d8e53cef5d8b is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens 123450e7-fd1c-450b-8a5a-d8e53cef5d8b is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "123450e7-fd1c-450b-8a5a-d8e53cef5d8b",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "bb2f7b67-d8e4-4318-91bd-75639d9d7ad1",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens bb2f7b67-d8e4-4318-91bd-75639d9d7ad1 is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens bb2f7b67-d8e4-4318-91bd-75639d9d7ad1 is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "bb2f7b67-d8e4-4318-91bd-75639d9d7ad1",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "df5949af-42c5-487f-b4e4-29a075d1fc12",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens df5949af-42c5-487f-b4e4-29a075d1fc12 is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens df5949af-42c5-487f-b4e4-29a075d1fc12 is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "df5949af-42c5-487f-b4e4-29a075d1fc12",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "8af4feb6-84ab-4c68-bf57-b6dc49935852",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens 8af4feb6-84ab-4c68-bf57-b6dc49935852 is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens 8af4feb6-84ab-4c68-bf57-b6dc49935852 is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "8af4feb6-84ab-4c68-bf57-b6dc49935852",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "6712310e-c636-4c6d-9128-9fa83867de23",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens 6712310e-c636-4c6d-9128-9fa83867de23 is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens 6712310e-c636-4c6d-9128-9fa83867de23 is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "6712310e-c636-4c6d-9128-9fa83867de23",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "b70c1424-004c-4eee-aafb-c8a80f1e3bd3",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens b70c1424-004c-4eee-aafb-c8a80f1e3bd3 is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens b70c1424-004c-4eee-aafb-c8a80f1e3bd3 is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "b70c1424-004c-4eee-aafb-c8a80f1e3bd3",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "61eb29fe-6bd6-4a00-ab42-1f7dcb9073fe",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens 61eb29fe-6bd6-4a00-ab42-1f7dcb9073fe is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens 61eb29fe-6bd6-4a00-ab42-1f7dcb9073fe is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "61eb29fe-6bd6-4a00-ab42-1f7dcb9073fe",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "d948ca56-c58c-4904-8167-19a29175dc1a",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens d948ca56-c58c-4904-8167-19a29175dc1a is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens d948ca56-c58c-4904-8167-19a29175dc1a is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "d948ca56-c58c-4904-8167-19a29175dc1a",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "f4634fd8-5d47-4698-999a-dc8ffcbbeec6",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens f4634fd8-5d47-4698-999a-dc8ffcbbeec6 is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens f4634fd8-5d47-4698-999a-dc8ffcbbeec6 is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "f4634fd8-5d47-4698-999a-dc8ffcbbeec6",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "0ad4547a-02ea-4cab-9e75-139fc1163d7a",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens 0ad4547a-02ea-4cab-9e75-139fc1163d7a is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens 0ad4547a-02ea-4cab-9e75-139fc1163d7a is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "0ad4547a-02ea-4cab-9e75-139fc1163d7a",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "5d6a3f36-75fe-4e91-8b63-b81fff530d8a",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens 5d6a3f36-75fe-4e91-8b63-b81fff530d8a is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens 5d6a3f36-75fe-4e91-8b63-b81fff530d8a is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "5d6a3f36-75fe-4e91-8b63-b81fff530d8a",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "e94942b5-3a72-471e-81d7-186151cf74fe",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens e94942b5-3a72-471e-81d7-186151cf74fe is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens e94942b5-3a72-471e-81d7-186151cf74fe is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "e94942b5-3a72-471e-81d7-186151cf74fe",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "4b8fb271-5bf6-4a3d-8a41-014a4d4efe87",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens 4b8fb271-5bf6-4a3d-8a41-014a4d4efe87 is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens 4b8fb271-5bf6-4a3d-8a41-014a4d4efe87 is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "4b8fb271-5bf6-4a3d-8a41-014a4d4efe87",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "c073bb5e-b524-47f1-bfb3-8957b12ac6ee",
+          "setPayoutRes": {
+            "data": {
+              "setLensCreatorPayoutEnrollment": {
+                "lens": {
+                  "id": "c073bb5e-b524-47f1-bfb3-8957b12ac6ee",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_PENDING",
+                  "status": "LENS_STATUS_PROCESSING"
+                }
+              }
+            }
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "c073bb5e-b524-47f1-bfb3-8957b12ac6ee",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_PENDING",
+                  "status": "LENS_STATUS_IN_REVIEW"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "e94e980b-8401-4257-91b5-654cc0bd73f9",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens e94e980b-8401-4257-91b5-654cc0bd73f9 is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens e94e980b-8401-4257-91b5-654cc0bd73f9 is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "e94e980b-8401-4257-91b5-654cc0bd73f9",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "3be35fa6-204c-4964-8f46-f52f481d70b8",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens 3be35fa6-204c-4964-8f46-f52f481d70b8 is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens 3be35fa6-204c-4964-8f46-f52f481d70b8 is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "3be35fa6-204c-4964-8f46-f52f481d70b8",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "083295b2-1d8b-4a65-8168-ddb853d13396",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens 083295b2-1d8b-4a65-8168-ddb853d13396 is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens 083295b2-1d8b-4a65-8168-ddb853d13396 is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "083295b2-1d8b-4a65-8168-ddb853d13396",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        },
+        {
+          "id": "cd5936f2-ae32-4ef8-9f99-8f0a1b8537c5",
+          "setPayoutRes": {
+            "errors": [
+              {
+                "message": "3 INVALID_ARGUMENT: Lens cd5936f2-ae32-4ef8-9f99-8f0a1b8537c5 is already enrolled in Creator Payout.",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCreatorPayoutEnrollment"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 3 INVALID_ARGUMENT: Lens cd5936f2-ae32-4ef8-9f99-8f0a1b8537c5 is already enrolled in Creator Payout.",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          },
+          "updateLensRes": {
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "cd5936f2-ae32-4ef8-9f99-8f0a1b8537c5",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE",
+                  "status": "LENS_STATUS_AVAILABLE"
+                }
+              }
+            }
+          },
+          "setCategoryRes": {
+            "errors": [
+              {
+                "message": "12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                "locations": [
+                  {
+                    "line": 3,
+                    "column": 5
+                  }
+                ],
+                "path": [
+                  "setLensCategory"
+                ],
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: 12 UNIMPLEMENTED: Method com.snapchat.lenscentral.v2.MyLensesV2/SetLensCategory is unimplemented",
+                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
+                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
+                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
+                    "for call at",
+                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
+                    "    at ServiceClientImpl.setLensCategory (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
+                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
+                    "    at new Promise (<anonymous>)",
+                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
+                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                    "    at async MyLensesV2DataSource.setLensCategory (/app/server/my-lenses-v2/MyLensesV2DataSource.js:271:45)"
+                  ]
+                }
+              }
+            ],
+            "data": null
+          }
+        }
+      ]
     },
     "success": true
   }
