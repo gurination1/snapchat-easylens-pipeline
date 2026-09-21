@@ -337,6 +337,69 @@ def direct_enroll_lenses(ticket: str, cookie_header: str, target_lens_id: str = 
     return {"count": success_count, "attempted": len(target_ids), "lenses": enrolled}
 
 
+def wait_for_lens_ready(ticket: str, cookie_header: str, lens_id: str, max_wait_sec: int = 90) -> dict:
+    """Polls getLens until status exits LENS_STATUS_PROCESSING and is ready for mutations."""
+    start = time.time()
+    print(f"[POLL LENS {lens_id}] Waiting for Snapchat catalog ingestion to complete (max {max_wait_sec}s)...")
+    while time.time() - start < max_wait_sec:
+        res = execute_direct_graphql(ticket, cookie_header, GQL_GET_LENS, variables={"lensId": lens_id}, operation_name="getLens")
+        lens = ((res.get("data") or {}).get("getLens") or {}).get("lens")
+        if lens:
+            status = lens.get("status", "")
+            payout = lens.get("lensCreatorPayoutEligibility", "")
+            print(f"  [POLL STATUS] Lens {lens_id} -> Status: '{status}', Payout Eligibility: '{payout}'")
+            if status and "PROCESSING" not in status.upper():
+                return lens
+        time.sleep(6)
+    print(f"  [POLL WARN] Lens {lens_id} polling reached {max_wait_sec}s limit; proceeding to enroll.")
+    return None
+
+
+def sweep_unenrolled_fleet_lenses(ticket: str, cookie_header: str) -> dict:
+    """Scans all published lenses under the account and auto-enrolls any lens with unset payout eligibility."""
+    print("\n[FLEET SWEEP] Scanning account lenses for unset Top Performer Payout eligibility...")
+    unenrolled_ids = []
+    for gType in ["COMMUNITY", "PROFILE"]:
+        try:
+            res = execute_direct_graphql(
+                ticket, cookie_header, GQL_GET_LENSES,
+                variables={"limit": 100, "offset": 0, "sortBy": "SORT_BY_DATE", "sortDirection": "SORT_DIRECTION_DESC", "type": gType},
+                operation_name="getLensesList"
+            )
+            l_list = (((res.get("data") or {}).get("lenses") or {}).get("lensesList") or [])
+            for item in l_list:
+                if not item or not item.get("id"):
+                    continue
+                elig = item.get("lensCreatorPayoutEligibility", "")
+                lid = item["id"]
+                name = item.get("name", "Unnamed")
+                if elig in ("LENS_CREATOR_PAYOUT_ELIGIBILITY_UNSET", "UNSET", "", None):
+                    print(f"  [UNENROLLED DETECTED] '{name}' ({lid}) -> Eligibility: '{elig}'. Queued for auto-enrollment.")
+                    unenrolled_ids.append(lid)
+                else:
+                    print(f"  [ENROLLED OK] '{name}' ({lid}) -> Eligibility: '{elig}'")
+        except Exception as e:
+            print(f"[FLEET SWEEP WARN] Error discovering lenses for {gType}: {e}")
+        time.sleep(1.0)
+
+    remedied = 0
+    for lid in unenrolled_ids:
+        print(f"[FLEET SWEEP ENROLL] Remedying lens {lid}...")
+        try:
+            execute_direct_graphql(ticket, cookie_header, GQL_SET_PAYOUT, variables={"lensId": lid, "lensCreatorPayoutEnrolled": True}, operation_name="setLensCreatorPayoutEnrollment")
+            time.sleep(1.0)
+            u_res = execute_direct_graphql(ticket, cookie_header, GQL_UPDATE_LENS, variables={"lensId": lid, "creatorRewardProgramEnrolled": True, "isGameUserProvided": False}, operation_name="updateLens")
+            if (u_res.get("data") or {}).get("updateLens", {}).get("lens"):
+                remedied += 1
+                print(f"  ✓ [FLEET SWEEP SUCCESS] Lens {lid} successfully enrolled in Top Performer Payouts!")
+        except Exception as err:
+            print(f"  X [FLEET SWEEP WARN] Failed to remedy {lid}: {err}")
+        time.sleep(1.0)
+
+    print(f"[FLEET SWEEP DONE] Total unenrolled found: {len(unenrolled_ids)}, Remedied: {remedied}\n")
+    return {"found": len(unenrolled_ids), "remedied": remedied}
+
+
 def sanitize_cookies_for_playwright(cookie_str: str) -> list:
     """Parses raw cookie strings into valid Playwright cookie dicts with secure=True."""
     if not cookie_str:
@@ -743,7 +806,25 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
     # 1. Execute direct GraphQL operations first (highest reliability, runs in ~200ms)
     print("\n--- PHASE 1: DIRECT GRAPHQL MONETIZATION ENROLLMENT ---")
     tos_results = direct_approve_tos(my_lenses_ticket, cookie_str)
+
+    # Permanent fix: If a target lens was just published, wait for Snapchat catalog ingestion to exit PROCESSING state
+    if target_lens_id:
+        wait_for_lens_ready(my_lenses_ticket, cookie_str, target_lens_id, max_wait_sec=90)
+
     enroll_results = direct_enroll_lenses(my_lenses_ticket, cookie_str, target_lens_id=target_lens_id)
+
+    # Permanent fix: Fleet sweep to find and heal ANY unenrolled lenses on the account
+    sweep_results = sweep_unenrolled_fleet_lenses(my_lenses_ticket, cookie_str)
+
+    # Permanent verification: Query getLens on target to confirm eligibility status
+    verified_payout = False
+    if target_lens_id:
+        v_res = execute_direct_graphql(my_lenses_ticket, cookie_str, GQL_GET_LENS, variables={"lensId": target_lens_id}, operation_name="getLens")
+        v_lens = ((v_res.get("data") or {}).get("getLens") or {}).get("lens") or {}
+        v_elig = v_lens.get("lensCreatorPayoutEligibility", "")
+        print(f"[FINAL GRAPHQL VERIFICATION {target_lens_id}] Status: {v_lens.get('status')} | Payout: '{v_elig}'")
+        if v_elig in ("LENS_CREATOR_PAYOUT_ELIGIBILITY_PENDING", "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE"):
+            verified_payout = True
 
     # 2. Execute browser UI automation for visual proof and on-screen toggle
     print("\n--- PHASE 2: HEADLESS BROWSER UI VERIFICATION & TOGGLE ---")
@@ -767,8 +848,10 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
         "LENS_CREATOR_PAYOUT_TOS": tos_results.get("LENS_CREATOR_PAYOUT_TOS", False) or browser_results.get("LENS_CREATOR_PAYOUT_TOS", False),
         "ILDG_TOS": tos_results.get("ILDG_TOS", False) or browser_results.get("ILDG_TOS", False),
         "ui_modals_accepted": browser_results.get("ui_modals_accepted", 0),
-        "enrolled_lenses_count": enroll_results.get("count", 0),
-        "top_performer_toggled": browser_results.get("top_performer_toggled", False) or (enroll_results.get("count", 0) > 0),
+        "enrolled_lenses_count": enroll_results.get("count", 0) + sweep_results.get("remedied", 0),
+        "top_performer_toggled": browser_results.get("top_performer_toggled", False) or verified_payout or (enroll_results.get("count", 0) > 0),
+        "target_lens_verified": verified_payout,
+        "sweep_results": sweep_results,
         "direct_graphql_details": enroll_results,
         "success": True
     }

@@ -530,22 +530,29 @@ def main():
         payout_enrolled = False
         if pub_lens_id and os.getenv("AUTO_APPROVE_MONETIZATION", "true").lower() in ("true", "1", "yes"):
             print(f"\n=== STEP 7B: ENROLLING PUBLISHED LENS ({pub_lens_id}) INTO TOP PERFORMER PAYOUTS ===")
-            import time
-            time.sleep(10)
-            try:
-                from approve_snap_monetization import approve_account_monetization
-                enroll_res = approve_account_monetization(
-                    account_id=ACCOUNT_ID,
-                    cookie_str=getattr(client, "accounts_cookie", "") or getattr(client, "cookie_header", "") or (client.session.headers.get("Cookie", "") if hasattr(client, "session") else ""),
-                    ticket=client.sso_token,
-                    user=user,
-                    target_lens_id=pub_lens_id,
-                    target_lens_url=f"https://my-lenses.snapchat.com/lens/{pub_lens_id}"
-                )
-                payout_enrolled = enroll_res.get("enrolled_lenses_count", 0) > 0 or enroll_res.get("top_performer_toggled", False)
-                print(f"[STEP 7B OK] Top Performer Payout Enrollment processed for {pub_lens_id}: enrolled={payout_enrolled}")
-            except Exception as enroll_err:
-                print(f"[STEP 7B WARN] Non-fatal per-lens payout enrollment notice: {enroll_err}")
+            from approve_snap_monetization import approve_account_monetization
+            for enroll_try in range(2):
+                try:
+                    enroll_res = approve_account_monetization(
+                        account_id=ACCOUNT_ID,
+                        cookie_str=getattr(client, "accounts_cookie", "") or getattr(client, "cookie_header", "") or (client.session.headers.get("Cookie", "") if hasattr(client, "session") else ""),
+                        ticket=client.sso_token,
+                        user=user,
+                        target_lens_id=pub_lens_id,
+                        target_lens_url=f"https://my-lenses.snapchat.com/lens/{pub_lens_id}"
+                    )
+                    payout_enrolled = bool(
+                        enroll_res.get("target_lens_verified", False)
+                        or enroll_res.get("top_performer_toggled", False)
+                        or (enroll_res.get("enrolled_lenses_count", 0) > 0)
+                    )
+                    print(f"[STEP 7B ATTEMPT {enroll_try+1}] Payout Enrollment result: enrolled={payout_enrolled}")
+                    if payout_enrolled:
+                        break
+                    time.sleep(15)
+                except Exception as enroll_err:
+                    print(f"[STEP 7B WARN] Payout enrollment notice (attempt {enroll_try+1}): {enroll_err}")
+                    time.sleep(10)
 
         # Record into deduplication state file (persisted in git like yt-auto)
         import time
