@@ -57,9 +57,15 @@ jobs:
         env:
           TARGET_ACC: ${{ inputs.account_id }}
         run: |
-          python3 resolve_target_account.py
+          python3 resolve_target_account.py --env-file /tmp/pacing.env
+          if [ -f /tmp/pacing.env ]; then
+            source /tmp/pacing.env
+            echo "TARGET_ACCOUNT=$TARGET_ACCOUNT" >> $GITHUB_ENV
+            echo "target_account=$TARGET_ACCOUNT" >> $GITHUB_OUTPUT
+            echo "should_run=$SHOULD_RUN" >> $GITHUB_OUTPUT
+          fi
           if [ "$SHOULD_RUN" = "false" ] && [ "${{ github.event_name }}" = "schedule" ]; then
-            echo "Fleet pacing optimal. Both accounts within cooldown window. Skipping scheduled run."
+            echo "Fleet pacing optimal. All accounts within cooldown window. Skipping scheduled run."
             echo "skip_run=true" >> $GITHUB_OUTPUT
           else
             echo "skip_run=false" >> $GITHUB_OUTPUT
@@ -154,7 +160,11 @@ jobs:
           AUTO_PUBLISH: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.auto_publish == true) }}
           PYTHONUNBUFFERED: "1"
         run: |
-          export ACCOUNT_ID="${TARGET_ACCOUNT:-1}"
+          ACTUAL_TARGET="${TARGET_ACC}"
+          if [ "$ACTUAL_TARGET" = "auto" ] || [ -z "$ACTUAL_TARGET" ]; then
+            ACTUAL_TARGET="${TARGET_ACCOUNT:-1}"
+          fi
+          export ACCOUNT_ID="$ACTUAL_TARGET"
           if [ "$ACCOUNT_ID" != "1" ] && [ "$ACCOUNT_ID" != "2" ] && [ "$ACCOUNT_ID" != "3" ] && [ "$ACCOUNT_ID" != "4" ] && [ "$ACCOUNT_ID" != "5" ]; then
             echo "ERROR: Invalid deployment target Account #$ACCOUNT_ID. Fleet strictly enforces 5 accounts (1, 2, 3, 4, or 5)." >&2
             exit 1

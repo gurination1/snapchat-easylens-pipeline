@@ -242,36 +242,27 @@ def resolve_account_auth(account_id: str):
     )
     accounts_cookie = (
         os.getenv(f"SNAP_ACCOUNTS_COOKIE_ACC_{aid}")
-        or os.getenv(f"SNAP_ACCOUNTS_COOKIE_{aid}")
+        or os.getenv(f"SNAP_ACCOUNTS_COOKIE_ACC_{aid}")
         or (os.getenv("SNAP_ACCOUNTS_COOKIE") if aid == "1" else cookie_header)
     )
+    account_default_users = {
+        "1": "gman21478",
+        "2": "gurination24@gmail.com",
+        "3": "ehwtheh@gmail.com",
+        "4": "galllgil049@gmail.com",
+        "5": "ytnew5911@gmail.com"
+    }
     username = (
         os.getenv(f"SNAP_USERNAME_ACC_{aid}")
         or os.getenv(f"SNAP_USERNAME_{aid}")
         or (os.getenv("SNAP_USERNAME") if aid == "1" else None)
+        or account_default_users.get(aid)
     )
     password = (
         os.getenv(f"SNAP_PASSWORD_ACC_{aid}")
         or os.getenv(f"SNAP_PASSWORD_{aid}")
-        or (os.getenv("SNAP_PASSWORD") if aid == "1" else None)
+        or os.getenv("SNAP_PASSWORD", "")
     )
-    # Check if credentials exist for the targeted account
-    has_creds = bool(sso_token or username or (aid == "1" and os.getenv("SNAP_SSO_TOKEN")))
-    if not has_creds:
-        # Dynamically discover configured active accounts (strictly 1..5)
-        active_accounts = []
-        for cand in ["1", "2", "3", "4", "5"]:
-            c_tok = os.getenv(f"SNAP_SSO_TOKEN_ACC_{cand}") or (os.getenv("SNAP_SSO_TOKEN") if cand == "1" else None)
-            c_usr = os.getenv(f"SNAP_USERNAME_ACC_{cand}") or (os.getenv("SNAP_USERNAME") if cand == "1" else None)
-            if c_tok or c_usr:
-                active_accounts.append(cand)
-
-        if active_accounts:
-            fallback_aid = active_accounts[(int(aid) - 1) % len(active_accounts)]
-            print(f"[ACCOUNT RELIABILITY GUARD] Account #{aid} credentials not yet in secrets.")
-            print(f"[ACCOUNT RELIABILITY GUARD] Auto-routing to active Account #{fallback_aid} (out of active: {active_accounts}) to prevent missed shift!")
-            return resolve_account_auth(fallback_aid)
-
     return sso_token, cookie_header, accounts_cookie, username, password
 
 
@@ -286,9 +277,13 @@ def main():
 
     print(f"\n=== STEP 1: VERIFYING SNAPCHAT AUTHENTICATION (ACCOUNT #{ACCOUNT_ID}) ===")
     user = None
+    from snap_auth_automator import is_user_matching_account
     try:
         if sso_token or accounts_cookie:
             user = client.verify_auth()
+            if user and not is_user_matching_account(user, ACCOUNT_ID):
+                print(f"[AUTH MISMATCH] Active session for Account #{ACCOUNT_ID} belongs to @{user.get('username')}, NOT Account #{ACCOUNT_ID}! Discarding.")
+                user = None
     except Exception as e:
         print(f"[AUTH EXPIRED / 401] Initial auth check failed ({e}). Triggering autonomous recovery...")
 
@@ -308,6 +303,7 @@ def main():
                 account_id=ACCOUNT_ID
             )
             user = fresh_session.get("user") or client.verify_auth()
+            print(f"[AUTO-AUTH SUCCESS] Fresh session verified for Account #{ACCOUNT_ID}: {user.get('displayName')} (@{user.get('username')})")
         except Exception as auth_err:
             print(f"[FATAL AUTH ERROR] Autonomous auth failed: {auth_err}")
             sys.exit(1)
