@@ -708,56 +708,94 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                 except Exception:
                     pass
 
-                switch_elem = await page.wait_for_selector(
-                    "#toggle-lens-creator-payout-enrolled, [id*='creator-payout'], .sds-switch, [role='switch']",
-                    timeout=12000
-                )
-                if switch_elem:
-                    is_checked = (
-                        await switch_elem.get_attribute("aria-checked") == "true"
-                        or "checked" in (await switch_elem.get_attribute("class") or "").lower()
-                    )
-                    if not is_checked:
-                        print("[TOGGLE] Found unchecked Top Performer Payouts switch. Clicking switch...")
-                        await human_click(page, switch_elem)
+                # Step B: Locate the Top Performer switch specifically within the rewards container
+                target_section = page.locator("div, section, tr").filter(has_text="Top Performer Payouts Program").last
+                switch_locator = target_section.locator("button[role='switch'], .sds-switch, input[type='checkbox'], [role='switch'], label").first
+
+                async def is_switch_active():
+                    try:
+                        # Check primary locator
+                        if await switch_locator.count() > 0:
+                            sw = switch_locator
+                            aria = await sw.get_attribute("aria-checked")
+                            cls = (await sw.get_attribute("class") or "").lower()
+                            inp = await sw.evaluate("el => el.checked || (el.querySelector('input') && el.querySelector('input').checked) || false")
+                            if aria == "true" or "checked" in cls or inp:
+                                return True
+                        # Check fallback ID
+                        fb = await page.query_selector("#toggle-lens-creator-payout-enrolled")
+                        if fb:
+                            aria = await fb.get_attribute("aria-checked")
+                            cls = (await fb.get_attribute("class") or "").lower()
+                            inp = await fb.evaluate("el => el.checked || (el.querySelector('input') && el.querySelector('input').checked) || false")
+                            if aria == "true" or "checked" in cls or inp:
+                                return True
+                    except Exception:
+                        pass
+                    return False
+
+                active_before = await is_switch_active()
+                print(f"[TOGGLE INSPECT] Top Performer switch active before click: {active_before}")
+
+                if not active_before:
+                    for pass_num in range(1, 4):
+                        print(f"[TOGGLE PASS {pass_num}] Clicking Top Performer Payouts switch...")
+                        if await switch_locator.count() > 0:
+                            try:
+                                await switch_locator.click(force=True)
+                            except Exception:
+                                sw_el = await page.query_selector("#toggle-lens-creator-payout-enrolled, .sds-switch")
+                                if sw_el:
+                                    await human_click(page, sw_el)
                         await page.wait_for_timeout(2000)
-                        results["top_performer_toggled"] = True
 
-                        # Check if clicking switch triggered a TOS modal
-                        tos_btn_after = await page.query_selector("[data-testid='tos-modal'] button:has-text('Accept'), [data-testid='tos-modal'] button:has-text('I Agree'), button:has-text('Accept'), button:has-text('I Agree')")
+                        # Check if clicking switch triggered an on-screen Terms of Service modal
+                        tos_btn_after = await page.query_selector("[data-testid='tos-modal'] button:has-text('Accept'), [data-testid='tos-modal'] button:has-text('I Agree'), [role='dialog'] button:has-text('Accept'), [role='dialog'] button:has-text('I Agree'), button:has-text('Agree & Continue')")
                         if tos_btn_after and await tos_btn_after.is_visible() and await tos_btn_after.is_enabled():
-                            print("[TOS MODAL] Clicking TOS acceptance modal triggered by switch...")
+                            print(f"[TOS MODAL PASS {pass_num}] Terms modal appeared! Clicking Accept/I Agree...")
                             await human_click(page, tos_btn_after)
+                            await page.wait_for_timeout(2500)
+
+                        # Check if active now
+                        if await is_switch_active():
+                            print(f"✓ [TOGGLE OK PASS {pass_num}] Switch successfully toggled ON!")
+                            results["top_performer_toggled"] = True
+                            break
+                        else:
+                            print(f"[TOGGLE PASS {pass_num}] Switch still OFF after modal; clicking switch second time to activate...")
+                            if await switch_locator.count() > 0:
+                                try:
+                                    await switch_locator.click(force=True)
+                                except Exception:
+                                    pass
                             await page.wait_for_timeout(2000)
-                    else:
-                        print("[TOGGLE] Top Performer Payouts switch is ALREADY CHECKED!")
-                        results["top_performer_toggled"] = True
+                            if await is_switch_active():
+                                print(f"✓ [TOGGLE OK PASS {pass_num}] Switch successfully toggled ON on second click!")
+                                results["top_performer_toggled"] = True
+                                break
+                else:
+                    print("[TOGGLE] Top Performer Payouts switch is ALREADY CHECKED!")
+                    results["top_performer_toggled"] = True
 
-                # Step C: Click Save Changes in header if active
-                save_btn = await page.query_selector("button[data-testid='save-changes-button'], button:has-text('Save Changes'), button:has-text('Save'), button:has-text('Update')")
-                if save_btn and await save_btn.is_visible() and await save_btn.is_enabled():
-                    print("[SAVE] Clicking Save Changes button in header...")
-                    await human_click(page, save_btn)
-                    await page.wait_for_timeout(2000)
+                # Step C: Check for any Save Changes button
+                for save_sel in ["button:has-text('Save Changes')", "button:has-text('Save')", "[data-testid='save-changes-button']"]:
+                    save_btn = await page.query_selector(save_sel)
+                    if save_btn and await save_btn.is_visible() and await save_btn.is_enabled():
+                        print(f"[SAVE] Clicking '{await save_btn.inner_text()}' button...")
+                        await human_click(page, save_btn)
+                        await page.wait_for_timeout(2000)
+                        confirm_btn = await page.query_selector("[data-testid='save-changes-modal'] button:has-text('Save Changes'), [role='dialog'] button:has-text('Save Changes')")
+                        if confirm_btn and await confirm_btn.is_visible() and await confirm_btn.is_enabled():
+                            print("[SAVE MODAL] Confirming Save Changes dialog...")
+                            await human_click(page, confirm_btn)
+                            await page.wait_for_timeout(4000)
+                        break
 
-                    # Step D: Confirm inside SaveChangesModal
-                    confirm_btn = await page.query_selector("[data-testid='save-changes-modal'] button:has-text('Save Changes'), .sds-modal button:has-text('Save Changes'), [role='dialog'] button:has-text('Save Changes')")
-                    if confirm_btn and await confirm_btn.is_visible() and await confirm_btn.is_enabled():
-                        print("[SAVE MODAL] Clicking Save Changes confirmation button...")
-                        await human_click(page, confirm_btn)
-                        await page.wait_for_timeout(5000)
-                        print("[SAVE MODAL] Changes confirmed and submitted successfully!")
-
-                # Step E: Final verification of toggle state
-                final_switch = await page.query_selector("#toggle-lens-creator-payout-enrolled, .sds-switch")
-                if final_switch:
-                    final_checked = (
-                        await final_switch.get_attribute("aria-checked") == "true"
-                        or "checked" in (await final_switch.get_attribute("class") or "").lower()
-                    )
-                    print(f"[FINAL VERIFICATION] Top Performer Payout switch checked state: {final_checked}")
-                    if final_checked:
-                        results["top_performer_toggled"] = True
+                # Step D: Final verification of toggle state
+                final_checked = await is_switch_active()
+                print(f"[FINAL VERIFICATION] Top Performer Payout switch checked state: {final_checked}")
+                if final_checked:
+                    results["top_performer_toggled"] = True
 
                 await page.screenshot(path=f"lens_{aid}_payout_toggled.png")
             except Exception as le:
