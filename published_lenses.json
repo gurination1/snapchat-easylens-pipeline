@@ -595,5 +595,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/ejIWv8SajgT1LaaFDbk4K?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-21T16:19:13Z",
+    "account_id": "4",
+    "lens_name": "Gilded Fortune",
+    "lens_id": "be09d710-8143-4b90-afca-c8262b13656a",
+    "checkpoint_id": "06ab1576-bc80-7486-8000-d43db1e90ef8",
+    "prompt": "Ornate 3D gilded fortune wheel hovering above forehead. High-contrast 24k gold leaf finish, ray-traced reflections. MouthOpen triggers rapid wheel spin. Smile stops wheel on winning card with golden trumpet fanfare and auroral dust burst. HeadTilt/EyebrowRaise executes cosmic rune flash with 6500K rim lighting. No HUD. Pure wearable 3D geometry anchored to head. Immersive, high-energy fortune reveal. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "fortune",
+      "celestial",
+      "tarot",
+      "gold",
+      "interactive"
+    ],
+    "visual_hook": "Instantaneous 0.2s snap of a massive, rotating gold wheel framing the forehead creates an high-impact silhouette.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/V5eYYMo8Gb2gm8PXQ51A4?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/dZyE6DJAy8xHZTcLszOOC?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/EOUtUqJD6uYcd2hWx1GHO?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
