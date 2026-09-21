@@ -502,5 +502,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/Le9qEDd6hb3IKct6uT9XT?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-21T02:32:55Z",
+    "account_id": "5",
+    "lens_name": "Gargoyle Crest",
+    "lens_id": "1aa1f533-d86e-4fd1-872a-b3f915e7732d",
+    "checkpoint_id": "06ab0968-8356-7c63-8000-c3839bd32232",
+    "prompt": "Ancient weathered limestone gargoyle crest anchored to brow. High-fidelity 3D etched stone texture with deep caustic shadows and 6500K rim lighting. MouthOpen cracks face into fissures releasing thick gray incense smoke. Smile restores polished alabaster sheen. EyebrowRaise extends jagged stone wing blades. HeadTilt triggers cathedral dust motes. Pure physical geometry, zero UI, no occlusion. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "gothic",
+      "vampire",
+      "dark",
+      "sentry",
+      "monumental"
+    ],
+    "visual_hook": "The sudden transformation into a weathered, ancient cathedral sculpture creates an immediate, high-contrast silhouette.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/hs6KNpvSqMTvfUc0h92VG?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Qoak39SCkIVQ5BfhMZ1jf?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/QE2fd2cRlShii6rnjB87F?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
