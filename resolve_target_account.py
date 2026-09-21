@@ -12,11 +12,14 @@ import argparse
 from datetime import datetime, timezone
 
 def resolve_fleet_target(
-    history_file: str = "published_lenses.json",
+    history_file: str = None,
     active_accounts: list = None,
     min_cooldown_hours: float = 7.0,
     forced_account: str = None
 ) -> dict:
+    if not history_file:
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        history_file = os.path.join(script_dir, "published_lenses.json")
     active_accounts = active_accounts or ["1", "2", "3", "4", "5"]
     now = datetime.now(timezone.utc)
 

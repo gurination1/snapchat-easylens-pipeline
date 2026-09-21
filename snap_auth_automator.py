@@ -1078,6 +1078,26 @@ async def browser_login_flow(username: str, passwords: list, existing_cookie: st
     }
 
 
+def is_user_matching_account(user: dict, aid: str) -> bool:
+    """Verifies that the authenticated user actually belongs to the target account ID."""
+    if not user:
+        return False
+    uname = (user.get("username") or "").lower()
+    dname = (user.get("displayName") or "").lower()
+    if aid == "1":
+        return uname == "gman21478" or "gur man" in dname
+    elif aid == "2":
+        return uname == "edufunlearning" or "guri nation" in dname
+    elif aid == "5":
+        return uname == "yt_new2026" or "yt new" in dname
+    elif aid in ("3", "4"):
+        # Accounts 3 and 4 MUST NOT be gman21478, edufunlearning, or yt_new2026
+        if uname in ("gman21478", "edufunlearning", "yt_new2026"):
+            return False
+        return True
+    return True
+
+
 def obtain_valid_snap_session(account_id: str = "1", username: str = None, password: str = None) -> dict:
     """
     Main entry point:
@@ -1096,20 +1116,28 @@ def obtain_valid_snap_session(account_id: str = "1", username: str = None, passw
     if existing_token:
         print(f"[AUTH CHECK] Testing existing {token_secret} for Account #{aid}...")
         user = test_bearer_token(existing_token, existing_cookie)
-        if user:
+        if user and is_user_matching_account(user, aid):
             print(f"[AUTH READY] Existing token is 100% valid! User: {user.get('displayName')} (@{user.get('username')})")
             return {"ticket": existing_token, "cookie_header": existing_cookie, "user": user}
-        print(f"[AUTH CHECK] Existing token for Account #{aid} is expired (401).")
+        elif user:
+            print(f"[AUTH MISMATCH] Token for Account #{aid} belongs to @{user.get('username')}, NOT Account #{aid}! Discarding.")
+            existing_token = ""
+            existing_cookie = ""
+        else:
+            print(f"[AUTH CHECK] Existing token for Account #{aid} is expired (401).")
 
     # 2. Try fast-path minting using existing session cookies
     if existing_cookie:
         fresh_ticket = mint_sso_ticket_from_cookies(existing_cookie)
         if fresh_ticket:
             user = test_bearer_token(fresh_ticket, existing_cookie)
-            if user:
+            if user and is_user_matching_account(user, aid):
                 print(f"[AUTH READY] Fast-path refreshed token! User: {user.get('displayName')} (@{user.get('username')})")
                 update_github_secret(token_secret, fresh_ticket)
                 return {"ticket": fresh_ticket, "cookie_header": existing_cookie, "user": user}
+            elif user:
+                print(f"[AUTH MISMATCH] Minted ticket for Account #{aid} belongs to @{user.get('username')}, NOT Account #{aid}! Discarding.")
+                existing_cookie = ""
 
     account_default_users = {
         "1": "gman21478",
@@ -1152,6 +1180,8 @@ def obtain_valid_snap_session(account_id: str = "1", username: str = None, passw
     if ticket:
         user = test_bearer_token(ticket, cookie_header)
         if user:
+            if not is_user_matching_account(user, aid):
+                raise RuntimeError(f"Browser login for Account #{aid} unexpectedly authenticated as @{user.get('username')}, NOT Account #{aid}!")
             print(f"\n[AUTH COMPLETE SUCCESS] Authenticated as {user.get('displayName')} (@{user.get('username')})")
             # Update GitHub Secrets for permanent persistence across runs
             update_github_secret(token_secret, ticket)
