@@ -797,5 +797,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/Ktk1CkDNEZmtMYPBf6IaG?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-22T17:47:46Z",
+    "account_id": "1",
+    "lens_name": "Volt Laurel Crown",
+    "lens_id": "8584f477-5494-471e-b704-109eb07405ca",
+    "checkpoint_id": "06ab2bb5-0c93-7f1e-8000-b5597846c89d",
+    "prompt": "Sculpted beaten 24k gold lightning-bolt laurel wreath resting on brow with crackling electric blue plasma arcs. Opening mouth summons blinding celestial thunderbolt shockwave with booming lightning bolts arcing across temples; smiling illuminates glowing electric blue gaze; eyebrow raise sparks crackling plasma crown; head tilt discharges golden lightning sparks. Supreme deity power, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "greek",
+      "mythology",
+      "olympus",
+      "zeus",
+      "medusa",
+      "aphrodite",
+      "apollo",
+      "hades",
+      "gods",
+      "deity"
+    ],
+    "visual_hook": "Godly transformation: Zeus Olympian Thunderbolt Laurel crowns user with crackling divine authority in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/V5TY724YwTfMADINqwzP3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/xtlq4IJIZnW72UB8gSzHQ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Nq3Pn4ueTinFNXwnhlE6H?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
