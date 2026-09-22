@@ -749,5 +749,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/1YgMXceRuDMBtJwukYCwy?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-22T13:44:18Z",
+    "account_id": "5",
+    "lens_name": "Pearl Aura Tiara",
+    "lens_id": "f4cae480-ff29-4122-9015-a2eaf490f495",
+    "checkpoint_id": "06ab2825-a64e-71eb-8000-23167770953c",
+    "prompt": "High-fashion 3D iridescent pearl tiara anchored to forehead. PBR material with caustic refraction. Mouth open triggers orbiting sphere swarm. Smile invokes soft-focus radiance and winged lash extension. Eyebrow raise flares pastel rainbow coronal light. Head tilt shifts opalescent cheek sheen. 6500K rim lighting. Zero UI, zero text, pure metallic luster and fluid pearlescent skin enhancement. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "ethereal",
+      "luxury",
+      "fashion",
+      "aura"
+    ],
+    "visual_hook": "The immediate silhouette of a structural, iridescent pearl tiara creates an instant, high-fashion, mythical identity.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/VWzkVLIA3u5PlJTXtJUYb?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/uNtAg4EAbcmvQAfwgL8MD?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/IrUVsXf0zEdrySmBlmXpV?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
