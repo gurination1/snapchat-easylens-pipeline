@@ -1197,7 +1197,10 @@ class LensSimulator:
 
         # Standard human IPD is 6.3 cm
         px_per_cm = eye_dist / 6.3
-        scale_mult = max(0.4, min(2.5, scale_off / 10.0))
+        if scale_off <= 3.0:
+            scale_mult = max(0.85, min(1.8, scale_off * 0.65))
+        else:
+            scale_mult = max(0.85, min(1.8, scale_off / 10.0))
 
         if is_full_helmet:
             base_w = int(eye_dist * 2.60 * scale_mult)
@@ -1212,19 +1215,19 @@ class LensSimulator:
             base_anc_x = eye_cx
             base_anc_y = float((eye_cy + mouth[1]) / 2.0)
         elif is_brow_shell:
-            base_w = int(eye_dist * 1.45 * scale_mult)
+            base_w = int(eye_dist * 1.55 * scale_mult)
             base_anc_x = float(fh[0])
-            base_anc_y = float(fh[1] - (base_w * aspect) * 0.20)
+            base_anc_y = float(fh[1] - (base_w * aspect) * 0.18)
         elif is_halo:
-            base_w = int(eye_dist * 2.00 * scale_mult)
+            base_w = int(eye_dist * 2.10 * scale_mult)
             base_anc_x = float(fh[0])
-            base_anc_y = float(fh[1] - (base_w * aspect) * 0.55)
+            base_anc_y = float(fh[1] - (base_w * aspect) * 0.50)
         elif is_crown:
-            base_w = int(eye_dist * 1.70 * scale_mult)
+            base_w = int(eye_dist * 1.95 * scale_mult)
             base_anc_x = float(fh[0])
             base_anc_y = float(fh[1] - (base_w * aspect) * 0.15)
         else:
-            base_w = int(eye_dist * 1.70 * scale_mult)
+            base_w = int(eye_dist * 1.95 * scale_mult)
             base_anc_x = float(fh[0])
             base_anc_y = float(fh[1] - (base_w * aspect) * 0.15)
 
@@ -1257,11 +1260,11 @@ class LensSimulator:
             off_x_cm = pos_off[0]
             # For Forehead/brow/crown attachment, pos_off[1] is already relative to forehead
             if att_point in ("Forehead", "LeftForehead", "RightForehead"):
-                off_y_cm = pos_off[1]
+                off_y_cm = pos_off[1] if abs(pos_off[1]) < 3.0 else 0.0
             elif att_point in ("HeadCenter", "CandideCenter") and (is_crown or is_halo or is_brow_shell):
                 off_y_cm = pos_off[1] - 7.3 if pos_off[1] > 3.0 else pos_off[1]
             else:
-                off_y_cm = pos_off[1]
+                off_y_cm = pos_off[1] if abs(pos_off[1]) < 3.0 else 0.0
 
             anc_x = float(base_anc_x + (off_x_cm * px_per_cm * u_rx) + (off_y_cm * px_per_cm * u_ux))
             anc_y = float(base_anc_y + (off_x_cm * px_per_cm * u_ry) + (off_y_cm * px_per_cm * u_uy))
@@ -1303,22 +1306,27 @@ class LensSimulator:
             dist_coeffs = pose["dist_coeffs"]
 
             # Ground-truth 3D anchor & dimensions in centimeters (Snapchat Lens Studio space)
-            off_x_3d = float(pos_off[0]) if has_sg else 0.0
-            off_y_3d = -(float(pos_off[1]) - 7.3) if has_sg else 0.0
+            off_x_3d = float(pos_off[0]) if (has_sg and abs(pos_off[0]) < 3.0) else 0.0
+            if att_point in ("Forehead", "LeftForehead", "RightForehead"):
+                off_y_3d = -float(pos_off[1]) if (has_sg and abs(pos_off[1]) < 3.0) else 0.0
+            elif att_point in ("HeadCenter", "CandideCenter") and (is_crown or is_halo or is_brow_shell):
+                off_y_3d = -(float(pos_off[1]) - 7.3) if (has_sg and pos_off[1] > 3.0) else 0.0
+            else:
+                off_y_3d = -float(pos_off[1]) if (has_sg and abs(pos_off[1]) < 3.0) else 0.0
 
             if is_crown:
-                anc_y_3d = -7.2 + off_y_3d
-                w_3d = 11.2 * scale_mult
-                h_3d = max(3.8, min(7.5, (w_3d * aspect) * 0.85))
+                anc_y_3d = -8.2 + off_y_3d
+                w_3d = 15.5 * scale_mult
+                h_3d = max(5.0, min(10.5, (w_3d * aspect) * 0.90))
                 corners_3d = np.array([
                     [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, 1.2],
                     [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, 1.2],
-                    [ (w_3d / 2.0) * 0.94 + off_x_3d, anc_y_3d, 0.2],
-                    [-(w_3d / 2.0) * 0.94 + off_x_3d, anc_y_3d, 0.2]
+                    [ (w_3d / 2.0) * 0.95 + off_x_3d, anc_y_3d, 0.2],
+                    [-(w_3d / 2.0) * 0.95 + off_x_3d, anc_y_3d, 0.2]
                 ], dtype=np.float64)
             elif is_visor:
                 anc_y_3d = -3.2 + off_y_3d
-                w_3d = 11.5 * scale_mult
+                w_3d = 14.5 * scale_mult
                 h_3d = max(3.5, min(6.5, 4.5 * aspect))
                 corners_3d = np.array([
                     [-w_3d / 2.0 + off_x_3d, -3.2 - h_3d / 2.0 + off_y_3d, -0.6],
@@ -1337,9 +1345,9 @@ class LensSimulator:
                     [-(w_3d / 2.0) + off_x_3d, anc_y_3d, 0.2]
                 ], dtype=np.float64)
             elif is_halo:
-                anc_y_3d = -9.5 + off_y_3d
-                w_3d = 12.5 * scale_mult
-                h_3d = max(4.0, min(8.0, (w_3d * aspect) * 0.80))
+                anc_y_3d = -10.0 + off_y_3d
+                w_3d = 16.5 * scale_mult
+                h_3d = max(5.0, min(10.0, (w_3d * aspect) * 0.85))
                 corners_3d = np.array([
                     [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, 1.5],
                     [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, 1.5],
@@ -1347,9 +1355,9 @@ class LensSimulator:
                     [-(w_3d / 2.0) + off_x_3d, anc_y_3d, 0.5]
                 ], dtype=np.float64)
             else:
-                anc_y_3d = -7.0 + off_y_3d
-                w_3d = 12.0 * scale_mult
-                h_3d = max(4.0, min(9.0, (w_3d * aspect) * 0.85))
+                anc_y_3d = -8.0 + off_y_3d
+                w_3d = 15.0 * scale_mult
+                h_3d = max(4.5, min(9.5, (w_3d * aspect) * 0.85))
                 corners_3d = np.array([
                     [-w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, 1.2],
                     [ w_3d / 2.0 + off_x_3d, anc_y_3d - h_3d, 1.2],
@@ -1359,6 +1367,22 @@ class LensSimulator:
 
             proj_corners, _ = cv2.projectPoints(corners_3d, rvec, tvec, cam_matrix, dist_coeffs)
             perspective_quad = proj_corners.reshape(-1, 2).tolist()
+
+            # Hard Anatomical Safety Clamping on Perspective Quad
+            if is_crown or is_halo or is_brow_shell:
+                # Bottom of crown quad (indices 2 and 3) must strictly sit above the eye line
+                max_bot_y = max(perspective_quad[2][1], perspective_quad[3][1])
+                target_ceiling = float(eye_cy - 25.0)
+                if max_bot_y > target_ceiling:
+                    shift_up = max_bot_y - target_ceiling
+                    perspective_quad = [[p[0], p[1] - shift_up] for p in perspective_quad]
+            elif is_visor:
+                # Visor quad must remain centered around eyes
+                quad_cy = sum(p[1] for p in perspective_quad) / 4.0
+                if abs(quad_cy - eye_cy) > (eye_dist * 0.20):
+                    shift = eye_cy - quad_cy
+                    perspective_quad = [[p[0], p[1] + shift] for p in perspective_quad]
+
             min_y = min(p[1] for p in perspective_quad)
             if min_y < 12.0:
                 shift_down = 12.0 - min_y
