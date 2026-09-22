@@ -773,5 +773,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/IrUVsXf0zEdrySmBlmXpV?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-22T17:18:49Z",
+    "account_id": "2",
+    "lens_name": "Gold Orbit Glow",
+    "lens_id": "495acb05-f3a8-4594-857d-f9b4fc7c1da5",
+    "checkpoint_id": "06ab2b46-ce45-731d-8000-9123a31f0162",
+    "prompt": "Architectural 24k brushed gold orbital ring hovering above forehead. Warm 2800K directional lighting. MouthOpen emits kinetic golden dust vortex. Smile triggers radiant sunbeam flare across cheekbones. EyebrowRaise amplifies dewy skin luster. HeadTilt creates prismatic caustic light refraction. PBR materials, ray-traced shadows, zero UI, no masking. Cinematic high-fashion aesthetic, full-screen immersive beauty. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "goldenhour",
+      "aesthetic",
+      "beauty",
+      "sunlight",
+      "luxury"
+    ],
+    "visual_hook": "The striking architectural orbital gold ring provides an instant, high-contrast silhouette that defines the user's upper face.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/byVDTJdSdiRT8qLmRwMwf?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/OZjz85RLmJl6ZvR38CdyH?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Ktk1CkDNEZmtMYPBf6IaG?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
