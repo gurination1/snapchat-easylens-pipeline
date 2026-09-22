@@ -826,5 +826,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/Nq3Pn4ueTinFNXwnhlE6H?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-22T19:29:11Z",
+    "account_id": "4",
+    "lens_name": "Pizza Physics Chef",
+    "lens_id": "9fe3eb78-c0ad-4d5f-9a8b-ecebb5ddecfb",
+    "checkpoint_id": "06ab2d40-ac56-7779-8000-01f5d15fc0cc",
+    "prompt": "Hyper-realistic 3D chef toque sits on forehead, crafted from brushed titanium and neon tubing. MouthOpen triggers pizza slices to fall, activating stretchy cheese-pull physics. Smile emits spicy pepperoni confetti bursts. EyebrowRaise launches spinning dough into a vertical arc. HeadTilt shifts gravity, causing falling slices to veer left or right for quick-reflex snapping. PBR textures, 6500K rim lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "foodie",
+      "gaming",
+      "comedy",
+      "chef",
+      "reflex"
+    ],
+    "visual_hook": "The bold, recognizable silhouette of a glowing neon chef hat acts as an immediate, high-contrast visual anchor.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/jxqoZyHtPDCcjB5uVjCSN?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/8kUOjq1JsVTncG38LM4Md?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/qs8oiwLNllqLI9pbc2Ys8?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
