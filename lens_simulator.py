@@ -945,9 +945,35 @@ class LensSimulator:
         portraits_dir = os.path.join(self.portrait_dir, "portraits")
         aid = str(self.lens_data.get("account_id", "1"))
         niche = self.resolve_visual_niche(account_id=aid)
+        if video_sync:
+            # Sync with exact frame 0 of matching motion video
+            if aid == "2" or niche in ["cyber", "chrome", "retro", "space"]:
+                cand = "model_blonde.png"
+                target = os.path.join(portraits_dir, cand)
+                if os.path.exists(target):
+                    return target
+                cand = "model_5_chrome.jpg"
+            else:
+                cand = "model_1_classic.png"
+        else:
+            # Diverse niche studio models for multi-model VFX parity
+            niche_map = {
+                "mythic": "model_1_classic.png",
+                "cyber": "model_2_cyber.jpg",
+                "comedy": "model_4_meme.jpg",
+                "luxury": "model_3_luxe.jpg",
+                "chrome": "model_5_chrome.jpg",
+                "game": "model_1_classic.png",
+                "retro": "model_blonde.png",
+                "greek": "model_3_luxe.jpg",
+                "beauty": "model_3_luxe.jpg",
+                "space": "model_2_cyber.jpg",
+                "randomizer": "model_1_classic.png",
+                "gothic": "model_5_chrome.jpg"
+            }
+            cand = niche_map.get(niche, "model_1_classic.png")
 
-        # Canonical Snapchat portrait model 1:1 matching EasyLens
-        target = os.path.join(portraits_dir, "model_1_classic.png")
+        target = os.path.join(portraits_dir, cand)
         if os.path.exists(target):
             return target
 
@@ -956,7 +982,14 @@ class LensSimulator:
         return fallback if os.path.exists(fallback) else None
 
     def resolve_portrait_video(self, account_id: str = None) -> str:
-        """Picks canonical Snapchat test portrait motion video 1:1 matching EasyLens"""
+        """Picks the matching 9:16 vertical motion stock video strictly aligned with the still portrait model"""
+        aid = str(account_id or self.lens_data.get("account_id", "1"))
+        niche = self.resolve_visual_niche(account_id=aid)
+
+        if aid == "2" or niche in ["cyber", "chrome", "retro", "space"]:
+            cand = os.path.join(self.portrait_dir, "test_portrait_blonde.mp4")
+            if os.path.exists(cand):
+                return cand
         cand = os.path.join(self.portrait_dir, "test_portrait.mp4")
         if os.path.exists(cand):
             return cand
@@ -964,6 +997,14 @@ class LensSimulator:
 
     def resolve_portrait_mouth_model(self, account_id: str = None) -> str:
         """Picks canonical mouth open / trigger frame matching portrait model strictly"""
+        aid = str(account_id or self.lens_data.get("account_id", "1"))
+        niche = self.resolve_visual_niche(account_id=aid)
+        portraits_dir = os.path.join(self.portrait_dir, "portraits")
+
+        if aid == "2" or niche in ["cyber", "chrome", "retro", "space"]:
+            cand = os.path.join(portraits_dir, "model_blonde_mouth_open.png")
+            if os.path.exists(cand):
+                return cand
         cand = os.path.join(self.portrait_dir, "portrait_mouth_open.png")
         if os.path.exists(cand):
             return cand
