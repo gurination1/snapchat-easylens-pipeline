@@ -699,7 +699,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/iV9raI9Nw5IJnipPMRWsB?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/CKSsC31rRNF0i0Kx21gz6?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
