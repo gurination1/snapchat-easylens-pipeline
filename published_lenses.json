@@ -747,7 +747,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/u9xNClAAA63126ZkrMczg?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/1YgMXceRuDMBtJwukYCwy?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
