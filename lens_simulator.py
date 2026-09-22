@@ -1253,14 +1253,33 @@ class LensSimulator:
             u_ux = u_ry
             u_uy = -u_rx
 
-            # Deviations from standard baseline positionOffset [0, 7.3, 0]
+            # Anchor offsets in cm
             off_x_cm = pos_off[0]
-            off_y_cm = pos_off[1] - 7.3
+            # For Forehead/brow/crown attachment, pos_off[1] is already relative to forehead
+            if att_point in ("Forehead", "LeftForehead", "RightForehead"):
+                off_y_cm = pos_off[1]
+            elif att_point in ("HeadCenter", "CandideCenter") and (is_crown or is_halo or is_brow_shell):
+                off_y_cm = pos_off[1] - 7.3 if pos_off[1] > 3.0 else pos_off[1]
+            else:
+                off_y_cm = pos_off[1]
+
             anc_x = float(base_anc_x + (off_x_cm * px_per_cm * u_rx) + (off_y_cm * px_per_cm * u_ux))
             anc_y = float(base_anc_y + (off_x_cm * px_per_cm * u_ry) + (off_y_cm * px_per_cm * u_uy))
         else:
             anc_x = base_anc_x
             anc_y = base_anc_y
+
+        # Anatomical safety boundaries: prevent crowns, halos, and circlets from sliding onto nose/mouth
+        if is_crown or is_halo or is_brow_shell:
+            # Crowns must strictly remain above the eye line (anc_y <= eye_cy - 25px)
+            max_crown_y = float(eye_cy - 25.0)
+            if anc_y > max_crown_y:
+                anc_y = max_crown_y
+        elif is_visor:
+            # Visors must remain aligned with the eyes (never sliding down to mouth or chin)
+            max_visor_y = float(eye_cy + eye_dist * 0.20)
+            min_visor_y = float(eye_cy - eye_dist * 0.25)
+            anc_y = max(min_visor_y, min(max_visor_y, anc_y))
 
         cur_w = base_w
         cur_h = int(cur_w * aspect)
@@ -2061,13 +2080,14 @@ class LensSimulator:
 
 
         elif niche == "cyber":
-            # Visor edge glow & horizontal optical flare line on the visor frame
+            # Visor edge glow & soft anamorphic optical flare on the visor frame
             flare = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
             f_draw = ImageDraw.Draw(flare)
             fl_w = int(140 * p * scale)
-            f_draw.line([(cx - fl_w, ev_y), (cx + fl_w, ev_y)], fill=(0, 245, 255, int(180 * p)), width=2)
-            f_draw.line([(cx - fl_w // 2, ev_y), (cx + fl_w // 2, ev_y)], fill=(220, 255, 255, int(230 * p)), width=1)
-            flare = flare.filter(ImageFilter.GaussianBlur(5))
+            fl_h = max(2, int(6 * scale))
+            f_draw.ellipse([(cx - fl_w, ev_y - fl_h), (cx + fl_w, ev_y + fl_h)], fill=(0, 245, 255, int(110 * p)))
+            f_draw.ellipse([(cx - fl_w // 2, ev_y - max(1, fl_h // 2)), (cx + fl_w // 2, ev_y + max(1, fl_h // 2))], fill=(220, 255, 255, int(150 * p)))
+            flare = flare.filter(ImageFilter.GaussianBlur(12))
             overlay.alpha_composite(flare)
 
         elif niche == "comedy":
@@ -2267,10 +2287,11 @@ class LensSimulator:
             if t_prog > 0.10:
                 flare_layer = Image.new("RGBA", ar_layer.size, (0, 0, 0, 0))
                 f_draw = ImageDraw.Draw(flare_layer)
-                fl_w = int(120 * t_prog * scale)
-                f_draw.line([(anc_x - fl_w, anc_y), (anc_x + fl_w, anc_y)], fill=(0, 245, 255, int(180 * t_prog)), width=2)
-                f_draw.line([(anc_x - fl_w // 2, anc_y), (anc_x + fl_w // 2, anc_y)], fill=(220, 255, 255, int(230 * t_prog)), width=1)
-                flare_blur = flare_layer.filter(ImageFilter.GaussianBlur(5))
+                fl_w = int(140 * t_prog * scale)
+                fl_h = max(2, int(6 * scale))
+                f_draw.ellipse([(anc_x - fl_w, anc_y - fl_h), (anc_x + fl_w, anc_y + fl_h)], fill=(0, 245, 255, int(110 * t_prog)))
+                f_draw.ellipse([(anc_x - fl_w // 2, anc_y - max(1, fl_h // 2)), (anc_x + fl_w // 2, anc_y + max(1, fl_h // 2))], fill=(220, 255, 255, int(150 * t_prog)))
+                flare_blur = flare_layer.filter(ImageFilter.GaussianBlur(12))
                 ar_layer.alpha_composite(flare_blur)
 
         elif niche == "luxury":
@@ -2330,10 +2351,11 @@ class LensSimulator:
             if t_prog > 0.08:
                 ret_layer = Image.new("RGBA", ar_layer.size, (0, 0, 0, 0))
                 r_draw = ImageDraw.Draw(ret_layer)
-                rw = int(120 * t_prog * scale)
-                r_draw.line([(anc_x - rw, anc_y), (anc_x + rw, anc_y)], fill=(255, 40, 160, int(160 * t_prog)), width=2)
-                r_draw.line([(anc_x - rw // 2, anc_y), (anc_x + rw // 2, anc_y)], fill=(0, 245, 255, int(190 * t_prog)), width=1)
-                r_blur = ret_layer.filter(ImageFilter.GaussianBlur(6))
+                rw = int(140 * t_prog * scale)
+                rh = max(2, int(6 * scale))
+                r_draw.ellipse([(anc_x - rw, anc_y - rh), (anc_x + rw, anc_y + rh)], fill=(255, 40, 160, int(110 * t_prog)))
+                r_draw.ellipse([(anc_x - rw // 2, anc_y - max(1, rh // 2)), (anc_x + rw // 2, anc_y + max(1, rh // 2))], fill=(0, 245, 255, int(150 * t_prog)))
+                r_blur = ret_layer.filter(ImageFilter.GaussianBlur(12))
                 ar_layer.alpha_composite(r_blur)
 
         elif niche == "beauty":
