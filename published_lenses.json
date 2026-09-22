@@ -850,5 +850,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/qs8oiwLNllqLI9pbc2Ys8?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-22T22:30:49Z",
+    "account_id": "3",
+    "lens_name": "Valkyrie Circlet",
+    "lens_id": "6a73195e-2d69-4c77-9def-2debd6e51406",
+    "checkpoint_id": "06ab2fde-46af-7a9d-8000-0ae478c4b2c7",
+    "prompt": "Brushed silver and iridescent mother-of-pearl Valkyrie winged circlet fitted firmly to forehead. Photorealistic PBR metal reflections with frosted runic engravings and cool 6500K Nordic key lighting. Opening mouth summons ethereal soaring spectral raven aura; smiling ignites crystalline glacial eye glints. Seamless head tracking, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "valkyrie",
+      "winged",
+      "circlet",
+      "aurora",
+      "pbr"
+    ],
+    "visual_hook": "Godly transformation: Aphrodite Seafoam Scallop Pearl Tiara elevates user to mythical Olympian beauty.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/htPq5CR6BDKn74GoCYyHo?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/m6PDU4wluTtdUsC4fguGL?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/ssc95LBMKk8GbuUMfHySo?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
