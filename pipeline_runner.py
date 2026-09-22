@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import time
 
 try:
     sys.stdout.reconfigure(line_buffering=True)
@@ -555,7 +556,6 @@ def main():
                     time.sleep(10)
 
         # Record into deduplication state file (persisted in git like yt-auto)
-        import time
         history_file = "published_lenses.json"
         history = []
         if os.path.exists(history_file):

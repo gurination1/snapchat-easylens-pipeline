@@ -619,5 +619,39 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/EOUtUqJD6uYcd2hWx1GHO?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-21T19:44:45Z",
+    "account_id": "3",
+    "lens_name": "Cyber Speeder Rush",
+    "lens_id": "c18d6d76-62e3-46e0-ac46-5edc72fd8324",
+    "checkpoint_id": "06ab188d-da43-7e60-8000-e03a48e00b72",
+    "prompt": "Sleek aerodynamic 3D neon cyber speeder hovercraft anchored above brow navigating floating neon obstacle gates. Head tilt left or right banks and steers the speeder smoothly with kinetic thruster trails; opening mouth triggers hyper-boost nitro warp with chromatic speed lines; smiling clears obstacle gates with sonic blast ring; eyebrow raise flares dual ion engine exhausts. High-velocity AR gameplay, zero UI.",
+    "tags": [
+      "cyberspeeder",
+      "hovercraft",
+      "neon",
+      "racing",
+      "gameplay"
+    ],
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-21T23:44:27Z",
+    "account_id": "3",
+    "lens_name": "Valkyrie Circlet",
+    "lens_id": "30f0ddcb-76ac-4fe1-85c7-14058d300732",
+    "checkpoint_id": "06ab1c0b-a354-704f-8000-7c730aa06339",
+    "prompt": "Brushed silver and iridescent mother-of-pearl Valkyrie winged circlet fitted firmly to forehead. Photorealistic PBR metal reflections with frosted runic engravings and cool 6500K Nordic key lighting. Opening mouth summons ethereal soaring spectral raven aura; smiling ignites crystalline glacial eye glints. Seamless head tracking, zero strobing.",
+    "tags": [
+      "valkyrie",
+      "winged",
+      "circlet",
+      "aurora",
+      "pbr"
+    ],
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]

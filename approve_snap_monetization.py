@@ -883,8 +883,19 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
                                 cls = (await sw.get_attribute("class") or "").lower()
                                 if "sds-switch--checked" in cls or "is-checked" in cls:
                                     return True
-                                bg = await sw.evaluate("el => window.getComputedStyle(el).backgroundColor || (el.querySelector('.sds-switch__slider, .sds-switch__track') && window.getComputedStyle(el.querySelector('.sds-switch__slider, .sds-switch__track')).backgroundColor) || ''")
-                                if "rgb(0, 224" in bg or "#00e054" in bg or "green" in bg.lower():
+                                bg = await sw.evaluate("""el => {
+                                    const track = el.querySelector('.sds-switch__slider, .sds-switch__track') || el;
+                                    const c = window.getComputedStyle(track).backgroundColor || '';
+                                    const match = c.match(/rgba?\\((\\d+),\\s*(\\d+),\\s*(\\d+)/);
+                                    if (match) {
+                                        const r = parseInt(match[1], 10);
+                                        const g = parseInt(match[2], 10);
+                                        const b = parseInt(match[3], 10);
+                                        if (g > 150 && g > r + 20) return 'green';
+                                    }
+                                    return c;
+                                }""")
+                                if "green" in bg.lower() or "rgb(0, 224" in bg or "#00e054" in bg:
                                     return True
                                 has_svg_check = await sw.evaluate("el => !! (el.querySelector('svg polyline') || el.querySelector('[data-testid*=\"check-icon\"]') || el.querySelector('.sds-icon--check') || el.querySelector('.sds-switch__icon--check'))")
                                 if has_svg_check:
@@ -1047,11 +1058,23 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
         target_lens_id=target_lens_id, target_lens_url=target_lens_url
     ))
 
+    # Post-browser GraphQL double verification
+    if target_lens_id and not verified_payout:
+        try:
+            v_res = execute_direct_graphql(my_lenses_ticket, cookie_str, GQL_GET_LENS, variables={"lensId": target_lens_id}, operation_name="getLens")
+            v_lens = ((v_res.get("data") or {}).get("getLens") or {}).get("lens") or {}
+            v_elig = v_lens.get("lensCreatorPayoutEligibility", "")
+            print(f"[POST-BROWSER GRAPHQL VERIFICATION {target_lens_id}] Status: {v_lens.get('status')} | Payout: '{v_elig}'")
+            if v_elig in ("LENS_CREATOR_PAYOUT_ELIGIBILITY_PENDING", "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE"):
+                verified_payout = True
+        except Exception:
+            pass
+
     target_verified = False
     if target_lens_id:
         target_verified = bool(
             verified_payout
-            or browser_results.get("top_performer_toggled", False)
+            or (browser_results.get("top_performer_toggled", False) and browser_results.get("final_checked", False))
             or enroll_results.get("target_lens_verified", False)
         )
     else:
