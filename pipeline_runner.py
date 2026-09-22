@@ -183,14 +183,16 @@ STATIC_FALLBACKS = {
 }
 
 
-def select_lru_fallback(account_id: str, history: list = None) -> dict:
+def select_lru_fallback(account_id: str, history: list = None, exclude_names: list = None) -> dict:
     """
     Selects the least-recently-used (LRU) static blueprint across ALL 25 verified blueprints
-    from all 5 genres (Mythic, Cyber, Comedy, Luxury, Chrome), guaranteeing cross-genre rotation.
+    from all 5 genres (Mythic, Cyber, Comedy, Luxury, Chrome), guaranteeing cross-genre rotation
+    and excluding blueprints already attempted in the current session.
     """
     aid = str(account_id)
     if history is None:
         history = load_published_history("published_lenses.json")
+    exclude_set = {str(n).strip().lower() for n in (exclude_names or []) if n}
 
     # Master pool of all 25 blueprints across all 5 genres
     all_blueprints = []
@@ -210,6 +212,16 @@ def select_lru_fallback(account_id: str, history: list = None) -> dict:
                 break
 
     candidates = [bp for bp in all_blueprints if bp["genre_id"] != last_genre] or all_blueprints
+
+    # Filter out excluded blueprints if possible
+    if exclude_set:
+        unattempted = [bp for bp in candidates if bp["lens_name"].strip().lower() not in exclude_set]
+        if unattempted:
+            candidates = unattempted
+        else:
+            unattempted_all = [bp for bp in all_blueprints if bp["lens_name"].strip().lower() not in exclude_set]
+            if unattempted_all:
+                candidates = unattempted_all
 
     def bp_score(bp):
         bp_name = bp["lens_name"].lower()
@@ -334,7 +346,7 @@ def main():
     static_tags = [t.strip() for t in (os.getenv("LENS_TAGS") or ",".join(active_fallback["tags"])).split(",")]
 
     # Multi-attempt Generation & 7-Gate Verification Loop
-    MAX_ATTEMPTS = 3
+    MAX_ATTEMPTS = 5
     passed = False
     report = {}
     gemini_plan = None
@@ -346,6 +358,7 @@ def main():
     cid = None
 
     failed_archetypes = []
+    attempted_blueprint_names = []
     curr_archetype_id = None
 
     for attempt in range(1, MAX_ATTEMPTS + 1):
@@ -379,58 +392,79 @@ def main():
                 print(f"[GEMINI SUCCESS] Lens: {lens_name} (Archetype: {curr_archetype_id})")
                 print(f"[GEMINI SUCCESS] Hook: {gemini_plan.get('visual_hook')}")
             except Exception as e:
-                print(f"[GEMINI WARN] Gemini synthesis failed ({e}), falling back to persona #{ACCOUNT_ID} static prompt...")
-                active_fallback = select_lru_fallback(ACCOUNT_ID)
+                print(f"[GEMINI WARN] Gemini synthesis failed ({e}), falling back to offline verified LRU blueprint...")
+                active_fallback = select_lru_fallback(ACCOUNT_ID, exclude_names=attempted_blueprint_names)
                 prompt = active_fallback["prompt"]
                 lens_name = active_fallback["lens_name"]
                 tags = active_fallback["tags"]
         else:
-            if attempt == 3:
-                print(f"\n=== STEP 0: ZERO-MISTAKE CIRCUIT BREAKER (ATTEMPT 3): Engaging offline verified LRU blueprint ===")
-            active_fallback = select_lru_fallback(ACCOUNT_ID)
+            print(f"\n=== STEP 0: ZERO-MISTAKE CIRCUIT BREAKER (ATTEMPT {attempt}/{MAX_ATTEMPTS}): Engaging offline verified LRU blueprint ===")
+            active_fallback = select_lru_fallback(ACCOUNT_ID, exclude_names=attempted_blueprint_names)
             prompt = active_fallback["prompt"]
             lens_name = active_fallback["lens_name"]
             tags = active_fallback["tags"]
+            print(f"[CIRCUIT BREAKER] Blueprint: '{lens_name}' (Excluded: {attempted_blueprint_names})")
+
+        if lens_name:
+            attempted_blueprint_names.append(lens_name)
 
         # Pre-flight sanitation guarantee: zero canvas/spinner/TWEEN tokens
         prompt = sanitize_lens_prompt(prompt)
         if "no tween" not in prompt.lower() and "zero tween" not in prompt.lower():
             prompt = prompt.rstrip(" .") + ". Zero easing curves, no tweening, no UI sliders, pure 3D mesh only."
 
-        print(f"\n=== STEP 2: CREATING LENS CONVERSATION (ATTEMPT {attempt}) ===")
-        cid = client.create_conversation()
+        # Steps 2-4: Communication with Snapchat AILC
+        try:
+            print(f"\n=== STEP 2: CREATING LENS CONVERSATION (ATTEMPT {attempt}) ===")
+            cid = client.create_conversation()
 
-        print(f"\n=== STEP 3: SUBMITTING PROMPT TO SNAPCHAT AILC (ATTEMPT {attempt}) ===")
-        print(f"Prompt: {prompt}")
-        client.send_prompt(cid, prompt)
+            print(f"\n=== STEP 3: SUBMITTING PROMPT TO SNAPCHAT AILC (ATTEMPT {attempt}) ===")
+            print(f"Prompt: {prompt}")
+            client.send_prompt(cid, prompt)
 
-        print(f"\n=== STEP 4: POLLING FOR LENS GENERATION (ATTEMPT {attempt}) ===")
-        lens_data = client.poll_lens(cid, max_wait_sec=200)
+            print(f"\n=== STEP 4: POLLING FOR LENS GENERATION (ATTEMPT {attempt}) ===")
+            lens_data = client.poll_lens(cid, max_wait_sec=200)
 
-        checkpoint_id = lens_data.get("checkpoint_id")
-        archive_url = lens_data.get("download_url") or (lens_data.get("lens_bundle_data") or {}).get("lens_archive_url")
-        checksum = lens_data.get("checksum") or (lens_data.get("lens_bundle_data") or {}).get("checksum")
-        icon_url = lens_data.get("lens_icon_download_url")
+            checkpoint_id = lens_data.get("checkpoint_id")
+            archive_url = lens_data.get("download_url") or (lens_data.get("lens_bundle_data") or {}).get("lens_archive_url")
+            checksum = lens_data.get("checksum") or (lens_data.get("lens_bundle_data") or {}).get("checksum")
+            icon_url = lens_data.get("lens_icon_download_url")
 
-        # Save metadata
-        with open("generated_lens_metadata.json", "w") as f:
-            json.dump(lens_data, f, indent=2)
+            # Save metadata
+            with open("generated_lens_metadata.json", "w") as f:
+                json.dump(lens_data, f, indent=2)
+        except Exception as ailc_err:
+            print(f"\n[AILC ERROR] Attempt {attempt} failed during AILC generation/polling: {ailc_err}")
+            report = {"errors": [f"AILC communication error: {ailc_err}"]}
+            passed = False
+            if attempt < MAX_ATTEMPTS:
+                print(f"[RETRY RECOVERY] Waiting 10s before attempt {attempt + 1}...")
+                time.sleep(10)
+                continue
+            else:
+                break
 
-        print(f"\n=== STEP 5: 7-GATE COMPREHENSIVE LENS & JUDGE AI VERIFICATION (ATTEMPT {attempt}) ===")
-        plan_data = gemini_plan if USE_GEMINI else {"prompt": prompt, "lens_name": lens_name}
-        verifier = LensVerifier(lens_data=lens_data, session=client.session, plan=plan_data)
-        passed = verifier.verify_all()
-        report = verifier.export_report("verification_report.json")
+        # Step 5: 7-Gate Verification
+        try:
+            print(f"\n=== STEP 5: 7-GATE COMPREHENSIVE LENS & JUDGE AI VERIFICATION (ATTEMPT {attempt}) ===")
+            plan_data = gemini_plan if (USE_GEMINI and attempt < 3 and gemini_plan) else {"prompt": prompt, "lens_name": lens_name}
+            verifier = LensVerifier(lens_data=lens_data, session=client.session, plan=plan_data)
+            passed = verifier.verify_all()
+            report = verifier.export_report("verification_report.json")
 
-        print(f"Gate 1 (Metadata Status): {report['gates'].get('gate1_metadata_status', {}).get('passed')}")
-        print(f"Gate 2 (Icon Health):     {report['gates'].get('gate2_icon_health', {}).get('passed')}")
-        print(f"Gate 3 (Checksum Hash):   {report['gates'].get('gate3_checksum_integrity', {}).get('passed')}")
-        print(f"Gate 4 (Size Boundaries): {report['gates'].get('gate4_size_limits', {}).get('passed')} (Compressed: {report['metrics'].get('compressed_size_bytes', 0) // 1024}KB, Unpacked: {report['metrics'].get('uncompressed_size_bytes', 0) // 1024}KB)")
-        print(f"Gate 5 (Assets & Events): {report['gates'].get('gate5_assets_and_controller', {}).get('passed')}")
-        print(f"Gate 6 (Judge AI Score):  {report['gates'].get('gate6_judge_ai', {}).get('passed')} ({report['gates'].get('gate6_judge_ai', {}).get('score')}/100 - {report['gates'].get('gate6_judge_ai', {}).get('verdict')})")
-        g7 = report['gates'].get('gate7_visual_simulation', {})
-        print(f"Gate 7 (Vision Simulation): {g7.get('passed')} (Score: {g7.get('score')}/100, 3D Mesh: {g7.get('has_3d_mesh')}, BG Only: {g7.get('is_background_only')})")
-        print(f"OVERALL VERIFICATION VERDICT: {'PASSED (100%)' if passed else 'FAILED'}")
+            print(f"Gate 1 (Metadata Status): {report['gates'].get('gate1_metadata_status', {}).get('passed')}")
+            print(f"Gate 2 (Icon Health):     {report['gates'].get('gate2_icon_health', {}).get('passed')}")
+            print(f"Gate 3 (Checksum Hash):   {report['gates'].get('gate3_checksum_integrity', {}).get('passed')}")
+            print(f"Gate 4 (Size Boundaries): {report['gates'].get('gate4_size_limits', {}).get('passed')} (Compressed: {report['metrics'].get('compressed_size_bytes', 0) // 1024}KB, Unpacked: {report['metrics'].get('uncompressed_size_bytes', 0) // 1024}KB)")
+            print(f"Gate 5 (Assets & Events): {report['gates'].get('gate5_assets_and_controller', {}).get('passed')}")
+            print(f"Gate 6 (Judge AI Score):  {report['gates'].get('gate6_judge_ai', {}).get('passed')} ({report['gates'].get('gate6_judge_ai', {}).get('score')}/100 - {report['gates'].get('gate6_judge_ai', {}).get('verdict')})")
+            g7 = report['gates'].get('gate7_visual_simulation', {})
+            print(f"Gate 7 (Vision Simulation): {g7.get('passed')} (Score: {g7.get('score')}/100, 3D Mesh: {g7.get('has_3d_mesh')}, BG Only: {g7.get('is_background_only')})")
+            print(f"OVERALL VERIFICATION VERDICT: {'PASSED (100%)' if passed else 'FAILED'}")
+        except Exception as ver_err:
+            print(f"\n[VERIFICATION ERROR] Exception during 7-gate verification on attempt {attempt}: {ver_err}")
+            report = {"errors": [f"Verification exception: {ver_err}"]}
+            passed = False
 
         if passed:
             print(f"\n[VERIFICATION OK] Attempt {attempt} passed all 7 quality & compliance gates!")
