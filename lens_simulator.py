@@ -946,35 +946,8 @@ class LensSimulator:
         aid = str(self.lens_data.get("account_id", "1"))
         niche = self.resolve_visual_niche(account_id=aid)
 
-        if video_sync:
-            # Sync with exact frame 0 of matching motion video
-            if aid == "2" or niche in ["cyber", "chrome", "retro", "space"]:
-                cand = "model_blonde.png"
-                target = os.path.join(portraits_dir, cand)
-                if os.path.exists(target):
-                    return target
-                cand = "model_5_chrome.jpg"
-            else:
-                cand = "model_1_classic.png"
-        else:
-            # Diverse niche studio models for multi-model VFX parity
-            niche_map = {
-                "mythic": "model_1_classic.png",
-                "cyber": "model_2_cyber.jpg",
-                "comedy": "model_4_meme.jpg",
-                "luxury": "model_3_luxe.jpg",
-                "chrome": "model_5_chrome.jpg",
-                "game": "model_1_classic.png",
-                "retro": "model_blonde.png",
-                "greek": "model_3_luxe.jpg",
-                "beauty": "model_3_luxe.jpg",
-                "space": "model_2_cyber.jpg",
-                "randomizer": "model_1_classic.png",
-                "gothic": "model_5_chrome.jpg"
-            }
-            cand = niche_map.get(niche, "model_1_classic.png")
-
-        target = os.path.join(portraits_dir, cand)
+        # Canonical Snapchat portrait model 1:1 matching EasyLens
+        target = os.path.join(portraits_dir, "model_1_classic.png")
         if os.path.exists(target):
             return target
 
@@ -983,28 +956,14 @@ class LensSimulator:
         return fallback if os.path.exists(fallback) else None
 
     def resolve_portrait_video(self, account_id: str = None) -> str:
-        """Picks the matching 9:16 vertical motion stock video strictly aligned with the still portrait model"""
-        aid = str(account_id or self.lens_data.get("account_id", "1"))
-        niche = self.resolve_visual_niche(account_id=aid)
-
-        if aid == "2" or niche in ["cyber", "chrome", "retro", "space"]:
-            cand = os.path.join(self.portrait_dir, "test_portrait_blonde.mp4")
-            if os.path.exists(cand):
-                return cand
+        """Picks canonical Snapchat test portrait motion video 1:1 matching EasyLens"""
         cand = os.path.join(self.portrait_dir, "test_portrait.mp4")
         if os.path.exists(cand):
             return cand
         return None
 
     def resolve_portrait_mouth_model(self, account_id: str = None) -> str:
-        """Picks matching mouth open / trigger frame matching portrait model strictly"""
-        portraits_dir = os.path.join(self.portrait_dir, "portraits")
-        aid = str(account_id or self.lens_data.get("account_id", "1"))
-        niche = self.resolve_visual_niche(account_id=aid)
-        if aid == "2" or niche in ["cyber", "chrome", "retro", "space"]:
-            cand = os.path.join(portraits_dir, "model_blonde_mouth_open.png")
-            if os.path.exists(cand):
-                return cand
+        """Picks canonical mouth open / trigger frame matching portrait model strictly"""
         cand = os.path.join(self.portrait_dir, "portrait_mouth_open.png")
         if os.path.exists(cand):
             return cand
@@ -1441,11 +1400,8 @@ class LensSimulator:
         }
         flare_rgb = flare_colors.get(niche, (0, 245, 255))
 
-        # 1. Authentic UGC camera grading (identical across still and video)
-        enh_con = ImageEnhance.Contrast(pil_frame)
-        pil_frame = enh_con.enhance(1.08 + 0.08 * t_prog)
-        enh_col = ImageEnhance.Color(pil_frame)
-        pil_frame = enh_col.enhance(1.12)
+        # 1. 100% authentic base video fidelity matching Snapchat EasyLens
+        # Keep base portrait pixels pristine without fake global skin discoloration
 
         # 2. Unified geometry & anchor
         geom = self.compute_asset_geometry(landmarks)
@@ -3024,11 +2980,8 @@ class LensSimulator:
                         clean_ar.convert("RGB").save(out_trigger, "PNG")
                         self._last_trigger_path = out_trigger
 
-                    # Video frame with UGC badges
-                    video_frame = self.composite_ar_frame(
-                        pil_frame, lm_dict, t_prog=t_prog, frame_ratio=frame_ratio,
-                        draw_ui=True, base_eye_dist=base_eye_dist, account_id=aid
-                    )
+                    # Video frame: 100% clean AR output matching Snapchat EasyLens (zero baked 2D UI badges)
+                    video_frame = clean_ar
 
                     frame_path = os.path.join(temp_frames_dir, f"{idx:04d}.jpg")
                     cv2.imwrite(frame_path, cv2.cvtColor(np.array(video_frame), cv2.COLOR_RGBA2BGR), [cv2.IMWRITE_JPEG_QUALITY, 93])

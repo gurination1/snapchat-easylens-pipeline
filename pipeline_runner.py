@@ -502,12 +502,12 @@ def main():
             except Exception as e:
                 print(f"[PREVIEW VIDEO WARN] Bolt upload failed ({e}). Proceeding without preview video.")
 
-        # Check for high-impact preview image with full lens effect from Gate 7
+        # Check for preview image matching Frame 0 poster of preview video 1:1 like EasyLens
         preview_img_url = None
         preview_img_key = None
-        preview_img_path = g7.get("trigger_preview") or g7.get("neutral_preview") or "preview_mouth_open_simulated.png"
+        preview_img_path = g7.get("neutral_preview") or "preview_neutral_simulated.png"
         if not os.path.exists(preview_img_path):
-            preview_img_path = "preview_neutral_simulated.png"
+            preview_img_path = g7.get("trigger_preview") or "preview_mouth_open_simulated.png"
         if os.path.exists(preview_img_path):
             print("\n=== STEP 5.6: UPLOADING HIGH-IMPACT PREVIEW IMAGE (FULL AR EFFECT) TO BOLT CDN ===")
             try:

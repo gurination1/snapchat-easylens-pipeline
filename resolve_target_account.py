@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 def resolve_fleet_target(
     history_file: str = None,
     active_accounts: list = None,
-    min_cooldown_hours: float = 6.0,
+    min_cooldown_hours: float = 4.0,
     max_daily_posts: int = 3,
     forced_account: str = None
 ) -> dict:
@@ -146,7 +146,7 @@ def resolve_fleet_target(
 def main():
     parser = argparse.ArgumentParser(description="Resolve target Snapchat account for scheduled run.")
     parser.add_argument("--force-account", type=str, default=None, choices=["1", "2", "3", "4", "5"], help="Force specific account ID (1, 2, 3, 4, or 5)")
-    parser.add_argument("--min-hours", type=float, default=6.0, help="Minimum cooldown hours between publishes per account")
+    parser.add_argument("--min-hours", type=float, default=4.0, help="Minimum cooldown hours between publishes per account")
     parser.add_argument("--max-daily-posts", type=int, default=3, help="Maximum publishes per account in rolling 24-hour window")
     parser.add_argument("--env-file", type=str, default=None, help="File path to write export commands")
     args = parser.parse_args()

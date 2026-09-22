@@ -2,9 +2,9 @@ name: Snapchat EasyLens Autonomous Agent Pipeline
 
 on:
   schedule:
-    # Autonomous fleet pacing: runs hourly at minute 17 (24 slots/day services 15 uploads: 3x per day for each of 5 accounts)
-    # resolve_target_account.py enforces 3x daily quota, 6.0h min cooldown per account, and auto catch-up for idle accounts
-    - cron: '17 * * * *'
+    # Autonomous fleet pacing: runs every 30 minutes at minutes 17 and 47 (48 slots/day services 15 uploads: 3x per day for each of 5 accounts)
+    # resolve_target_account.py enforces 3x daily quota, 4.0h min cooldown per account, and auto catch-up for idle accounts
+    - cron: '17,47 * * * *'
   workflow_dispatch:
     inputs:
       account_id:
