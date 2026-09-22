@@ -677,5 +677,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/pVl2zSSCLhigrqstdaChN?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-22T03:14:50Z",
+    "account_id": "2",
+    "lens_name": "Obsidian Soulfire",
+    "lens_id": "396a0e5b-57a5-4dd2-9edd-20920eb3ab4b",
+    "checkpoint_id": "06ab1eea-b17b-70c0-8000-9174565e0304",
+    "prompt": "Chiseled black volcanic obsidian coronet with glowing stygian rune inlays rests across brow. MouthOpen erupts ethereal spectral cyan soulfire flames surging upward with floating ghostly embers. Smile awakens piercing stygian blue eye glare. EyebrowRaise ignites crown spires in cold cyan plasma. HeadTilt wafts underworld smoke. Dark mythic majesty, 3-point rim lighting, PBR obsidian, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "hades",
+      "mythology",
+      "obsidian",
+      "olympian",
+      "stygian"
+    ],
+    "visual_hook": "The high-contrast silhouette of the obsidian crown against the skin creates an instant, authoritative mythic identity.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/JYNdQYyi0oHyj0jnv4HvV?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/iV9raI9Nw5IJnipPMRWsB?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/CKSsC31rRNF0i0Kx21gz6?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
