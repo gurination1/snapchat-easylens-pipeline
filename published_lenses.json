@@ -1082,5 +1082,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/BdHNWWeqCJGryh1ruGh9z?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-23T17:26:59Z",
+    "account_id": "1",
+    "lens_name": "Spirit Totem Spin",
+    "lens_id": "377fe3c9-56b8-47a4-b231-2f8f8757c059",
+    "checkpoint_id": "06ab4076-d766-7e37-8000-240386697cf5",
+    "prompt": "Carved gilded totem disc spinning above hairline showing mythical spirit avatars. Smiling halts spinner on user's spirit animal, morphing brow with matching 3D ears and sparkles; head tilt rotates camera perspective; opening mouth unleashes animal spirit roar aura; eyebrow raise spins totem again. High viral replayability, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "randomizer",
+      "wheel",
+      "decision",
+      "tarot",
+      "vibe",
+      "which_are_you",
+      "interactive",
+      "viral"
+    ],
+    "visual_hook": "Viral interactive game: Spinning Spirit Animal Totem Wheel reveals user spirit animal with instant 3D metamorphosis.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/HQa3sh9xUMRScHGi9UD2b?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/PRsEYic2NvMuPvrCPi2tk?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/oxQlr7pQ2ejbI09NfIHzE?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
