@@ -771,7 +771,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/uNtAg4EAbcmvQAfwgL8MD?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/IrUVsXf0zEdrySmBlmXpV?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -872,6 +872,30 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/m6PDU4wluTtdUsC4fguGL?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/ssc95LBMKk8GbuUMfHySo?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-23T00:54:20Z",
+    "account_id": "5",
+    "lens_name": "Mars Helm VFX",
+    "lens_id": "651e799b-be44-4a25-b9aa-6321efb943fc",
+    "checkpoint_id": "06ab31f1-4d1d-7f2a-8000-1b381577360f",
+    "prompt": "Rugged carbon-kevlar planetary exploration helmet, polarized amber optic shield, brushed titanium finish. MouthOpen triggers swirling red Martian dust vortex with floating basalt shards. Smile activates twin temple-mounted LED searchlights. EyebrowRaise triggers sharp crimson terrain scanlines. HeadTilt sways atmospheric plumes. 3-point contrast lighting, ray-traced contact shadows. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "space",
+      "mars",
+      "scifi",
+      "exploration",
+      "helmet"
+    ],
+    "visual_hook": "Bold amber-tinted visor silhouette provides an instant, high-contrast interstellar identity.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/Hj7A9dIVXwrUQN2ZOHLjG?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/NofcvmKh3G2LhsqfABUfD?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/9GYh9qNhya2XDkRqnT0Hy?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
