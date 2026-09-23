@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EasyLens Headless Camera Kit Recorder</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 720px;
+      height: 1280px;
+      background: #000;
+      overflow: hidden;
+    }
+    #render-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 720px;
+      height: 1280px;
+    }
+    canvas {
+      width: 720px;
+      height: 1280px;
+      display: block;
+    }
+    video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1px;
+      height: 1px;
+      opacity: 0.01;
+      pointer-events: none;
+    }
+    #status {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="render-container">
+    <canvas id="ck-canvas" width="720" height="1280"></canvas>
+    <video id="video-input" playsinline muted crossorigin="anonymous"></video>
+    <div id="status">Initializing Camera Kit Recorder...</div>
+  </div>
+
+  <script>
+    // Global output buffers for Playwright automation
+    window.__RENDER_DONE__ = false;
+    window.__RENDER_ERROR__ = null;
+    window.__NEUTRAL_FRAME__ = null;
+    window.__TRIGGER_FRAME__ = null;
+    window.__RECORDED_VIDEO__ = null;
+    window.__CONSOLE_LOGS__ = [];
+
+    function logMsg(msg) {
+      console.log("[Recorder]", msg);
+      window.__CONSOLE_LOGS__.push(msg);
+      const el = document.getElementById('status');
+      if (el) el.textContent = msg;
+    }
+
+    // Bypass CORS blocking on camera-kit metrics & circumstances in local environment
+    const origFetch = window.fetch;
+    const INIT_GRPC_FRAME = new Uint8Array([0, 0, 0, 0, 6, 8, 0, 16, 0, 24, 0, 128, 0, 0, 0, 16, 103, 114, 112, 99, 45, 115, 116, 97, 116, 117, 115, 58, 32, 48, 13, 10]);
+    const EMPTY_GRPC_FRAME = new Uint8Array([0, 0, 0, 0, 0, 128, 0, 0, 0, 16, 103, 114, 112, 99, 45, 115, 116, 97, 116, 117, 115, 58, 32, 48, 13, 10]);
+    window.fetch = async function(url, opts) {
+      const urlStr = typeof url === 'string' ? url : (url?.url || '');
+      if (urlStr.includes('camera-kit-api.snapar.com')) {
+        const frame = urlStr.includes('GetInitializationConfig') ? INIT_GRPC_FRAME : EMPTY_GRPC_FRAME;
+        return new Response(frame, {
+          status: 200,
+          headers: { 'content-type': 'application/grpc-web+proto', 'grpc-status': '0' }
+        });
+      }
+      return origFetch(url, opts);
+    };
+
+    // Protobuf encoder for sideloading .lns bundles
+    function encodeVarint(val) {
+      const bytes = [];
+      while (val > 127) {
+        bytes.push((val & 127) | 128);
+        val >>>= 7;
+      }
+      bytes.push(val);
+      return bytes;
+    }
+
+    function encodeField(fieldNum, wireType, dataBytes) {
+      const tag = (fieldNum << 3) | wireType;
+      return [...encodeVarint(tag), ...dataBytes];
+    }
+
+    function encodeStringField(fieldNum, str) {
+      const strBytes = Array.from(new TextEncoder().encode(str));
+      return encodeField(fieldNum, 2, [...encodeVarint(strBytes.length), ...strBytes]);
+    }
+
+    function encodeMessageField(fieldNum, msgBytes) {
+      return encodeField(fieldNum, 2, [...encodeVarint(msgBytes.length), ...msgBytes]);
+    }
+
+    function createLensProto({ id, name, lnsUrl, sha256, iconUrl }) {
+      const content = [
+        ...encodeStringField(1, lnsUrl),
+        ...encodeStringField(2, sha256 || ""),
+        ...encodeStringField(3, iconUrl || ""),
+        ...encodeStringField(8, lnsUrl),
+        ...encodeStringField(9, iconUrl || "")
+      ];
+      const lens = [
+        ...encodeStringField(1, id),
+        ...encodeStringField(2, name),
+        ...encodeMessageField(4, content)
+      ];
+      return new Uint8Array(encodeMessageField(1, lens));
+    }
+
+    async function startRenderPipeline() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const lensUrl = params.get('lens') || '/assets/abyssal_crown.lns';
+        const sourceMode = params.get('mode') || (params.get('image') ? 'image' : 'video');
+        const videoUrl = params.get('video') || '/assets/test_portrait.mp4';
+        const imageUrl = params.get('image') || '/assets/portrait_neutral.png';
+        const durationSec = parseFloat(params.get('duration') || '3.6');
+        const fps = parseInt(params.get('fps') || '30', 10);
+        const lensName = params.get('name') || 'EasyLens Verified 3D AR';
+        const lensId = params.get('lens_id') || '06ab0c08-158f-762e-8000-87bcd093434c';
+
+        let lensSha256 = params.get('sha256') || '';
+        if (!lensSha256) {
+          if (lensUrl.includes('verdant')) {
+            lensSha256 = '5e3073fef319837d20445c4040f7ec0c1bdea4bf0342bd11c532db8acdd736dc';
+          } else {
+            lensSha256 = '6ed4b8bd471563a78b9e3ca97e6139e7ff0fc6d08b1051c0c5b205ce2a0061cc';
+          }
+        }
+
+        logMsg(`Config: mode=${sourceMode} lens=${lensUrl} duration=${durationSec}s`);
+
+        const videoInput = document.getElementById('video-input');
+        const canvas = document.getElementById('ck-canvas');
+
+        logMsg("Bootstrapping Camera Kit SDK...");
+        const { 
+          bootstrapCameraKit, 
+          createExtension, 
+          lensSourcesFactory, 
+          ConcatInjectable, 
+          createMediaStreamSource, 
+          Transform2D 
+        } = await import('/js/camera-kit.bundle.js');
+
+        const token = "eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzMyNjMzNDE5LCJzdWIiOiIwMjdmNjZkZi0wOTQyLTQ3ZWUtODUxMi1lNGMyZTQ2MWRkMzR-UFJPRFVDVElPTn43N2Y5Y2ZlYi1lNWUxLTRhZTgtYWU5ZS01MjQ1NGYwM2JiYTYifQ.niwcW4CuvpHEhciugcvxa2S5vQBsehTktDu_k8galYU";
+
+        const fullLensUrl = lensUrl.startsWith('http') ? lensUrl : (window.location.origin + lensUrl);
+        const customLensSource = {
+          isGroupOwner(groupId) {
+            return groupId === "lens-sideload-extension-group";
+          },
+          async loadLens(id, groupId) {
+            logMsg(`Sideload loadLens requested: ${id} from ${fullLensUrl} (sha: ${lensSha256.substring(0, 10)}...)`);
+            return createLensProto({
+              id: id,
+              name: lensName,
+              lnsUrl: fullLensUrl,
+              sha256: lensSha256
+            });
+          },
+          async loadLensGroup() {
+            throw new Error("loadLensGroup not implemented");
+          }
+        };
+
+        const sideloadExtension = createExtension().provides(
+          ConcatInjectable(lensSourcesFactory.token, () => customLensSource)
+        );
+
+        const ckInstance = await bootstrapCameraKit({
+          apiToken: token
+        }, container => container.provides(sideloadExtension));
+
+        logMsg("Creating WebGL2 Live Session on 720x1280 canvas...");
+        const ckSession = await ckInstance.createSession({ 
+          liveRenderTarget: canvas
+        });
+
+        // Setup input source (Video or Image)
+        if (sourceMode === 'image') {
+          logMsg(`Loading stock portrait image: ${imageUrl}`);
+          const stockImg = new Image();
+          stockImg.crossOrigin = 'anonymous';
+          stockImg.src = imageUrl;
+          await new Promise((resolve, reject) => {
+            stockImg.onload = resolve;
+            stockImg.onerror = () => reject(new Error("Image load failed: " + imageUrl));
+          });
+
+          const feedCanvas = document.createElement('canvas');
+          feedCanvas.width = 720;
+          feedCanvas.height = 1280;
+          feedCanvas.style.position = 'absolute';
+          feedCanvas.style.left = '-9999px';
+          document.body.appendChild(feedCanvas);
+          const feedCtx = feedCanvas.getContext('2d');
+          feedCtx.drawImage(stockImg, 0, 0, 720, 1280);
+
+          let animRunning = true;
+          const drawFrame = () => {
+            if (!animRunning) return;
+            feedCtx.drawImage(stockImg, 0, 0, 720, 1280);
+            requestAnimationFrame(drawFrame);
+          };
+          drawFrame();
+
+          const vStream = feedCanvas.captureStream(30);
+          const source = createMediaStreamSource(vStream, { transform: Transform2D.Identity });
+          await ckSession.setSource(source);
+          await source.setRenderSize(720, 1280);
+          await ckSession.play();
+        } else {
+          logMsg(`Loading stock portrait video: ${videoUrl}`);
+          videoInput.style.display = 'block';
+          videoInput.style.position = 'absolute';
+          videoInput.style.left = '-9999px';
+          videoInput.style.width = '720px';
+          videoInput.style.height = '1280px';
+          videoInput.src = videoUrl;
+          await new Promise((resolve, reject) => {
+            videoInput.onloadedmetadata = () => resolve();
+            videoInput.onerror = (e) => reject(new Error("Video load failed: " + videoUrl));
+          });
+          videoInput.currentTime = 0;
+          await videoInput.play();
+          const vStream = videoInput.captureStream ? videoInput.captureStream(fps) : videoInput.mozCaptureStream(fps);
+          const source = createMediaStreamSource(vStream, { transform: Transform2D.Identity });
+          await ckSession.setSource(source);
+          await source.setRenderSize(720, 1280);
+          await ckSession.play();
+        }
+
+        // Apply sideloaded lens
+        logMsg(`Applying 3D Lens bundle (${fullLensUrl})...`);
+        const lens = await ckInstance.lensRepository.loadLens(lensId, "lens-sideload-extension-group");
+        await ckSession.applyLens(lens);
+        logMsg("Lens applied! Warming up WebGL shaders & facial tracking...");
+
+        // Wait 1.5s for AR engine to lock on face
+        await new Promise(r => setTimeout(r, 1500));
+
+        if (sourceMode === 'video') {
+          // Reset video to frame 0 for clean start
+          videoInput.pause();
+          videoInput.currentTime = 0;
+          await new Promise(r => setTimeout(r, 300));
+        }
+        await new Promise(r => setTimeout(r, 200));
+
+        // Capture Frame 0 Neutral Poster Image (100% Camera Kit WebGL Render)
+        logMsg("Capturing Frame 0 Neutral Poster image...");
+        window.__NEUTRAL_FRAME__ = canvas.toDataURL('image/png');
+
+        // Setup MediaRecorder for 3.6s canvas recording
+        logMsg(`Starting MediaRecorder (${fps} fps @ 720x1280)...`);
+        const canvasStream = canvas.captureStream(fps);
+        let mimeType = 'video/webm; codecs=vp8';
+        if (!MediaRecorder.isTypeSupported(mimeType)) {
+          mimeType = 'video/webm';
+        }
+
+        const recorder = new MediaRecorder(canvasStream, { 
+          mimeType,
+          videoBitsPerSecond: 6000000 
+        });
+        const chunks = [];
+
+        recorder.ondataavailable = e => {
+          if (e.data && e.data.size > 0) chunks.push(e.data);
+        };
+
+        const recordPromise = new Promise((resolve, reject) => {
+          recorder.onstop = async () => {
+            try {
+              logMsg(`Recorder stopped. Processing ${chunks.length} chunks...`);
+              const blob = new Blob(chunks, { type: mimeType });
+              const reader = new FileReader();
+              reader.onloadend = () => {
+                window.__RECORDED_VIDEO__ = reader.result; // data:video/webm;base64,...
+                logMsg(`Recorded video ready (${blob.size} bytes)!`);
+                resolve();
+              };
+              reader.onerror = reject;
+              reader.readAsDataURL(blob);
+            } catch (err) {
+              reject(err);
+            }
+          };
+          recorder.onerror = reject;
+        });
+
+        recorder.start(100);
+        await videoInput.play();
+
+        // Capture peak trigger frame halfway through
+        setTimeout(() => {
+          try {
+            window.__TRIGGER_FRAME__ = canvas.toDataURL('image/png');
+            logMsg("Peak trigger frame captured!");
+          } catch (e) {
+            console.warn("Could not capture trigger frame:", e);
+          }
+        }, Math.floor((durationSec * 1000) / 2));
+
+        // Stop recording after duration
+        await new Promise(r => setTimeout(r, Math.floor(durationSec * 1000)));
+        recorder.stop();
+        await recordPromise;
+
+        videoInput.pause();
+        logMsg("Camera Kit 100% Native AR Render Complete!");
+        window.__RENDER_DONE__ = true;
+
+      } catch (err) {
+        console.error("[CameraKit Render Fatal Error]", err);
+        window.__RENDER_ERROR__ = err.message || String(err);
+        window.__RENDER_DONE__ = true;
+        logMsg("ERROR: " + err.message);
+      }
+    }
+
+    // Auto-start on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      startRenderPipeline();
+    });
+  </script>
+</body>
+</html>

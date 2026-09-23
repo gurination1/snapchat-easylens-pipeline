@@ -46,8 +46,8 @@ def test_audit_test_portrait():
 
 
 def test_audit_newly_generated_preview():
-    print("=== TEST 2: Generate New preview_video.mp4 & Audit ===")
-    out_video = "preview_video.mp4"
+    print("=== TEST 2: Generate Test preview video & Audit ===")
+    out_video = "test_audit_preview_video.mp4"
     if os.path.exists(out_video):
         os.remove(out_video)
 
@@ -67,7 +67,7 @@ def test_audit_newly_generated_preview():
     generated = sim.render_simulation_video(out_path=out_video, out_neutral=out_n, out_trigger=out_t, account_id="2")
 
     assert generated == out_video, "render_simulation_video must return output video path"
-    assert os.path.exists(out_video), "preview_video.mp4 must exist"
+    assert os.path.exists(out_video), f"{out_video} must exist"
 
     res = audit_preview_video(out_video)
     print(f"Result for newly generated {out_video}:")

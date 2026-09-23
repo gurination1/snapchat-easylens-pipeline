@@ -17,6 +17,8 @@ import io
 import sys
 import json
 import time
+import base64
+import subprocess
 from flask import Flask, Response, jsonify, send_file, request, render_template_string, send_from_directory
 
 app = Flask(__name__)
@@ -138,28 +140,31 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       flex-direction: column;
       align-items: center;
       gap: 16px;
+      position: relative;
+      z-index: 10;
     }
 
     .mode-pills {
       display: flex;
+      flex-wrap: wrap;
       background: rgba(255, 255, 255, 0.05);
       padding: 4px;
-      border-radius: 28px;
+      border-radius: 16px;
       border: 1px solid var(--card-border);
       width: 100%;
-      max-width: 440px;
-      gap: 2px;
+      max-width: 460px;
+      gap: 4px;
     }
 
     .mode-btn {
-      flex: 1;
-      padding: 8px 10px;
+      flex: 1 1 auto;
+      padding: 7px 10px;
       border: none;
       background: transparent;
       color: var(--text-muted);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
-      border-radius: 24px;
+      border-radius: 12px;
       cursor: pointer;
       transition: all 0.2s ease;
       white-space: nowrap;
@@ -585,8 +590,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         </div>
         <div class="ck-toolbar-row">
           <label style="font-size: 11px; color: var(--text-muted); font-weight: 600;">INPUT SOURCE:</label>
-          <button id="src-btn-video" class="ctrl-btn active-source" style="flex:1;" onclick="setCameraKitSource('video')">👤 Canonical Model (0% Zoom)</button>
-          <button id="src-btn-cam" class="ctrl-btn" style="flex:1;" onclick="setCameraKitSource('webcam')">📹 Live WebCam (Fit)</button>
+          <button id="src-btn-video" class="ctrl-btn active-source" style="flex:1;" onclick="setCameraKitSource('video')">👤 Stock Video</button>
+          <button id="src-btn-blonde" class="ctrl-btn" style="flex:1;" onclick="setCameraKitSource('blonde')">👱‍♀️ Cyber Video</button>
+          <button id="src-btn-image" class="ctrl-btn" style="flex:1;" onclick="setCameraKitSource('image')">🖼️ Stock Image</button>
+          <button id="src-btn-cam" class="ctrl-btn" style="flex:1;" onclick="setCameraKitSource('webcam')">📹 Live WebCam</button>
         </div>
         <div class="ck-toolbar-row" id="cam-subcontrols" style="display: none;">
           <label style="font-size: 11px; color: var(--text-muted); font-weight: 600;">CAM FRAMING:</label>
@@ -780,8 +787,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
     function setMode(mode) {
       currentMode = mode;
-      document.querySelectorAll('.mode-pills .mode-btn').forEach(b => b.classList.remove('active'));
-      event.target.classList.add('active');
+      if (typeof event !== 'undefined' && event?.target?.classList) {
+        event.target.classList.add('active');
+      } else {
+        const btn = Array.from(document.querySelectorAll('.mode-pills .mode-btn')).find(b => b.textContent.toLowerCase().includes(mode.toLowerCase()));
+        if (btn) btn.classList.add('active');
+      }
 
       // Reset all views
       video.style.display = 'none';
@@ -946,21 +957,58 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         cropAnimFrameId = null;
       }
 
-      if (ckActiveSource === 'video') {
-        // Canonical EasyLens Portrait Video (720x1280 @ 30fps)
+      if (ckActiveSource === 'video' || ckActiveSource === 'blonde') {
         if (webcamStream) {
           webcamStream.getTracks().forEach(t => t.stop());
           webcamStream = null;
         }
-        statusEl.textContent = 'Streaming Canonical Model Video (assets/test_portrait.mp4)...';
+        const targetSrc = (ckActiveSource === 'blonde') ? '/assets/test_portrait_blonde.mp4' : '/assets/test_portrait.mp4';
+        statusEl.textContent = `Streaming Model Video (${targetSrc})...`;
+        videoInput.pause();
+        videoInput.src = targetSrc;
         videoInput.currentTime = 0;
         await videoInput.play();
-        const stream = videoInput.captureStream ? videoInput.captureStream(30) : videoInput.mozCaptureStream(30);
+
+        const renderVideoLoop = () => {
+          if (ckActiveSource !== 'video' && ckActiveSource !== 'blonde') return;
+          if (videoInput.videoWidth > 0 && videoInput.videoHeight > 0) {
+            cropCtx.drawImage(videoInput, 0, 0, 720, 1280);
+          }
+          cropAnimFrameId = requestAnimationFrame(renderVideoLoop);
+        };
+        renderVideoLoop();
+
+        const stream = cropCanvas.captureStream(30);
         const source = createMediaStreamSource(stream, { transform: Transform2D.Identity });
         await ckSession.setSource(source);
         await source.setRenderSize(720, 1280);
         await ckSession.play();
-        statusEl.textContent = 'Active: Canonical Portrait Model (0% Zoom • 1:1 EasyLens Parity)';
+        statusEl.textContent = 'Active: Stock Model Video (0% Zoom • 1:1 EasyLens Parity)';
+      } else if (ckActiveSource === 'image') {
+        if (webcamStream) {
+          webcamStream.getTracks().forEach(t => t.stop());
+          webcamStream = null;
+        }
+        videoInput.pause();
+        statusEl.textContent = 'Rendering Still Stock Portrait (assets/portrait_neutral.png)...';
+        const stockImg = new Image();
+        stockImg.crossOrigin = 'anonymous';
+        stockImg.src = '/assets/portrait_neutral.png';
+        await new Promise(r => { stockImg.onload = r; });
+
+        const renderImageLoop = () => {
+          if (ckActiveSource !== 'image') return;
+          cropCtx.drawImage(stockImg, 0, 0, 720, 1280);
+          cropAnimFrameId = requestAnimationFrame(renderImageLoop);
+        };
+        renderImageLoop();
+
+        const stream = cropCanvas.captureStream(30);
+        const source = createMediaStreamSource(stream, { transform: Transform2D.Identity });
+        await ckSession.setSource(source);
+        await source.setRenderSize(720, 1280);
+        await ckSession.play();
+        statusEl.textContent = 'Active: Stock Portrait Still (Frame 0 Parity)';
       } else if (ckActiveSource === 'webcam') {
         // Anti-Zoom WebCam Stream Adapter
         statusEl.textContent = 'Requesting WebCam Access...';
@@ -1063,22 +1111,18 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       }
     }
 
-    // Switch source between canonical video and webcam
+    // Switch source between stock video, cyber video, stock image, and webcam
     async function setCameraKitSource(src) {
       ckActiveSource = src;
-      const btnVideo = document.getElementById('src-btn-video');
-      const btnCam = document.getElementById('src-btn-cam');
+      ['video', 'blonde', 'image', 'webcam'].forEach(s => {
+        const b = document.getElementById('src-btn-' + s);
+        if (b) {
+          if (s === src) b.classList.add('active-source');
+          else b.classList.remove('active-source');
+        }
+      });
       const camSub = document.getElementById('cam-subcontrols');
-
-      if (src === 'video') {
-        btnVideo.classList.add('active-source');
-        btnCam.classList.remove('active-source');
-        camSub.style.display = 'none';
-      } else {
-        btnCam.classList.add('active-source');
-        btnVideo.classList.remove('active-source');
-        camSub.style.display = 'flex';
-      }
+      if (camSub) camSub.style.display = (src === 'webcam') ? 'flex' : 'none';
 
       if (ckSession) {
         await applySelectedSource();
@@ -1125,25 +1169,145 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       await switchLens(checkpointId);
     }
 
+    // Global output buffers for headless automation & preview generation
+    window.__RENDER_DONE__ = false;
+    window.__RENDER_ERROR__ = null;
+    window.__NEUTRAL_FRAME__ = null;
+    window.__TRIGGER_FRAME__ = null;
+    window.__RECORDED_VIDEO__ = null;
+
+    async function captureCameraKitExport(options = {}) {
+      window.__RENDER_DONE__ = false;
+      window.__RENDER_ERROR__ = null;
+      const durationSec = options.duration || 3.6;
+      const fps = options.fps || 30;
+      const lensUrl = options.lensUrl || null;
+
+      try {
+        setMode('camerakit');
+        if (lensUrl) {
+          sideloadedLenses.set("custom_export_lens", {
+            id: "custom_export_lens",
+            name: "Active Preview Lens",
+            lnsUrl: lensUrl,
+            sha256: ""
+          });
+          ckCurrentLensId = "custom_export_lens";
+        }
+        await initCameraKit();
+
+        // Wait for lens to be active
+        let active = false;
+        for (let i = 0; i < 50; i++) {
+          await new Promise(r => setTimeout(r, 500));
+          const st = document.getElementById('ck-status').textContent;
+          if (st.includes('3D AR Lens Active') || st.includes('Camera Kit WebGL2 Active') || st.includes('Parity Verified')) {
+            active = true;
+            break;
+          }
+        }
+
+        const canvas = document.getElementById('ck-canvas');
+        const vid = document.getElementById('ck-video-input');
+
+        // Rewind video and grab Frame 0 Neutral Poster
+        vid.pause();
+        vid.currentTime = 0;
+        await new Promise(r => setTimeout(r, 300));
+        window.__NEUTRAL_FRAME__ = canvas.toDataURL('image/png');
+
+        // Start Recording
+        const stream = canvas.captureStream(fps);
+        let mimeType = 'video/webm; codecs=vp8';
+        if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = 'video/webm';
+        const recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 6000000 });
+        const chunks = [];
+        recorder.ondataavailable = e => { if (e.data && e.data.size > 0) chunks.push(e.data); };
+
+        const recordPromise = new Promise((resolve, reject) => {
+          recorder.onstop = () => {
+            const blob = new Blob(chunks, { type: mimeType });
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              window.__RECORDED_VIDEO__ = reader.result;
+              resolve();
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          };
+          recorder.onerror = reject;
+        });
+
+        recorder.start(100);
+        await vid.play();
+
+        setTimeout(() => {
+          try { window.__TRIGGER_FRAME__ = canvas.toDataURL('image/png'); } catch (e) {}
+        }, (durationSec * 1000) / 2);
+
+        await new Promise(r => setTimeout(r, durationSec * 1000));
+        recorder.stop();
+        await recordPromise;
+
+        window.__RENDER_DONE__ = true;
+        return { success: true };
+      } catch (err) {
+        window.__RENDER_ERROR__ = err.message;
+        window.__RENDER_DONE__ = true;
+        throw err;
+      }
+    }
+
     // Record 3.6s Preview Video (1:1 with EasyLens chunk-64PANOPO.js)
     function recordPreview() {
       const canvas = document.getElementById('ck-canvas');
       const statusEl = document.getElementById('ck-status');
       try {
+        statusEl.textContent = '⏺️ Recording 3.6s preview video (108 frames @ 30fps)...';
+        const posterB64 = canvas.toDataURL('image/png');
         const stream = canvas.captureStream(30);
-        const recorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp8' });
+        let mimeType = 'video/webm; codecs=vp8';
+        if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = 'video/webm';
+        const recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 6000000 });
         const chunks = [];
         recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
         recorder.onstop = () => {
-          const blob = new Blob(chunks, { type: 'video/webm' });
+          const blob = new Blob(chunks, { type: mimeType });
           const a = document.createElement('a');
           a.href = URL.createObjectURL(blob);
-          a.download = `${ckCurrentLensId}_preview.webm`;
+          a.download = `${ckCurrentLensId}_camerakit_preview.webm`;
           a.click();
-          statusEl.textContent = `Exported 3.6s Preview Video (${blob.size} bytes)!`;
+          statusEl.textContent = `Syncing Camera Kit Preview (${blob.size} bytes)...`;
+
+          const reader = new FileReader();
+          reader.onloadend = async () => {
+            try {
+              const res = await fetch('/api/save_camerakit_preview', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  video_data: reader.result,
+                  poster_data: posterB64,
+                  lens_id: ckCurrentLensId
+                })
+              });
+              const json = await res.json();
+              if (json.success) {
+                statusEl.textContent = '⚡ Camera Kit Preview Video & Neutral Frame Saved to Studio!';
+                const v = document.getElementById('lens-video');
+                if (v) v.src = '/video?' + Date.now();
+                const sp = document.getElementById('still-preview');
+                if (sp) sp.src = '/neutral?' + Date.now();
+              } else {
+                statusEl.textContent = 'Save preview err: ' + json.error;
+              }
+            } catch (err) {
+              console.error(err);
+            }
+          };
+          reader.readAsDataURL(blob);
         };
-        recorder.start();
-        statusEl.textContent = '⏺️ Recording 3.6s preview video (108 frames @ 30fps)...';
+        recorder.start(100);
         setTimeout(() => recorder.stop(), 3600);
       } catch (err) {
         alert('Recorder error: ' + err.message);
@@ -1225,6 +1389,55 @@ def api_lenses():
         with open(lenses_path, "r") as f:
             return jsonify(json.load(f))
     return jsonify([])
+
+@app.route("/api/save_camerakit_preview", methods=["POST"])
+def api_save_camerakit_preview():
+    try:
+        data = request.get_json(force=True)
+        vid_b64 = data.get("video_data", "")
+        poster_b64 = data.get("poster_data", "")
+        lens_id = data.get("lens_id", "lens")
+
+        out_vid = os.path.join(BASE_DIR, "preview_video.mp4")
+        out_poster = os.path.join(BASE_DIR, "preview_neutral_simulated.png")
+        out_split = os.path.join(BASE_DIR, "preview_split_comparison.png")
+
+        if poster_b64 and "," in poster_b64:
+            p_bytes = base64.b64decode(poster_b64.split(",", 1)[1])
+            with open(out_poster, "wb") as f:
+                f.write(p_bytes)
+
+        if vid_b64 and "," in vid_b64:
+            v_bytes = base64.b64decode(vid_b64.split(",", 1)[1])
+            temp_webm = "/tmp/ck_studio_record.webm"
+            with open(temp_webm, "wb") as f:
+                f.write(v_bytes)
+
+            audio_path = os.path.join(BASE_DIR, "assets", "audio", "mythic_roar.mp3")
+            cmd = ["ffmpeg", "-y", "-i", temp_webm]
+            if os.path.exists(audio_path):
+                cmd.extend(["-i", audio_path, "-c:v", "libx264", "-preset", "fast", "-crf", "18", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-shortest"])
+            else:
+                cmd.extend(["-c:v", "libx264", "-preset", "fast", "-crf", "18", "-pix_fmt", "yuv420p"])
+            cmd.extend(["-movflags", "+faststart", out_vid])
+            subprocess.run(cmd, check=True)
+
+        raw_portrait = os.path.join(BASE_DIR, "assets", "portrait_neutral.png")
+        if os.path.exists(raw_portrait) and os.path.exists(out_poster):
+            try:
+                from camerakit_renderer import render_split_comparison_image
+                render_split_comparison_image(raw_portrait, out_poster, out_split, lens_name=lens_id)
+            except Exception as se:
+                print("Split render warn:", se)
+
+        return jsonify({
+            "success": True,
+            "preview_video": "/video",
+            "neutral_preview": "/neutral",
+            "split_preview": "/split"
+        })
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
 
 if __name__ == "__main__":
     import argparse

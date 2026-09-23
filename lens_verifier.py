@@ -981,13 +981,30 @@ class LensVerifier:
                 out_trigger="preview_mouth_open_simulated.png"
             )
 
-            # Render authentic 9:16 vertical looping preview video
-            preview_video = simulator.render_simulation_video(
-                out_path="preview_video.mp4",
-                out_neutral=out_neutral,
-                out_trigger=out_trigger,
-                account_id=sim_lens_data.get("account_id")
-            )
+            # Render authentic 9:16 vertical looping preview video & split comparison
+            temp_lns = "/tmp/gate7_active_bundle.lns"
+            try:
+                with open(temp_lns, "wb") as f:
+                    f.write(bundle_bytes)
+                from camerakit_renderer import render_camerakit_preview
+                ck_res = render_camerakit_preview(
+                    lens_path=temp_lns,
+                    video_path=simulator.resolve_portrait_video(account_id=sim_lens_data.get("account_id")) or "assets/test_portrait.mp4",
+                    out_video="preview_video.mp4",
+                    out_neutral=out_neutral,
+                    out_trigger=out_trigger,
+                    out_split="preview_split_comparison.png",
+                    lens_name=sim_lens_data.get("lens_name", "Camera Kit AR Effect")
+                )
+                preview_video = ck_res.get("preview_video", "preview_video.mp4")
+            except Exception as ck_err:
+                print(f"[LensVerifier] CameraKit renderer integration notice ({ck_err}), falling back to direct simulator...")
+                preview_video = simulator.render_simulation_video(
+                    out_path="preview_video.mp4",
+                    out_neutral=out_neutral,
+                    out_trigger=out_trigger,
+                    account_id=sim_lens_data.get("account_id")
+                )
 
             # Render high-CTR viral 320x320 lens icon ("The Pick")
             lens_icon_path = simulator.generate_viral_lens_icon(
@@ -996,10 +1013,12 @@ class LensVerifier:
             )
 
             # Render high-converting Before/After Split Comparison photo
-            split_photo_path = simulator.render_split_comparison(
-                out_path="preview_split_comparison.png",
-                account_id=sim_lens_data.get("account_id")
-            )
+            split_photo_path = "preview_split_comparison.png"
+            if not os.path.exists(split_photo_path) or os.path.getsize(split_photo_path) < 1000:
+                split_photo_path = simulator.render_split_comparison(
+                    out_path=split_photo_path,
+                    account_id=sim_lens_data.get("account_id")
+                )
 
             # Evaluate with Gemini Multimodal Vision AI (Dual-Frame + Video Timeline Keyframes)
             judge_res = simulator.judge_visuals_with_gemini_vision(
