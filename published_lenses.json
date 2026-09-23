@@ -1024,7 +1024,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/rJOMlkm2sqtVpNqWU7Ltx?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/gZgCIwOts1EU4sPHjKyzy?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -1131,6 +1131,30 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/uhEXMgr0xTkuqE8ykMoaE?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/UGZbKGqwxtOtsSVKXeAJK?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-23T22:36:23Z",
+    "account_id": "5",
+    "lens_name": "Titanium Wireframe",
+    "lens_id": "fc5f6e64-2b2d-46c5-9e7a-f29de2da144d",
+    "checkpoint_id": "06ab450d-cc55-741d-8000-392d60bed758",
+    "prompt": "Architectural brushed-titanium wireframe perspective arch spanning the temples. 80s analog CRT scanline halation with sharp cyan rim lighting. Mouth open triggers hyperspace warp grid expansion with laser beams. Smiling activates warm sunset flare. Eyebrow raise pulses bass-rings. Head tilt shifts frame perspective. 24k polished metal surfaces, ray-traced reflections, high-fidelity PBR, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "synthwave",
+      "retrofuturism",
+      "chrome",
+      "80s",
+      "cyber"
+    ],
+    "visual_hook": "The striking architectural silhouette of a brushed-titanium wireframe arch creates an instant, authoritative 80s tech identity.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/hy5TMf8vJJ3vglxV8ewyY?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/MXMzKGcN5rUGGG2XMwb9l?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/sb0IlGArdltRvn5t5G6nf?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
