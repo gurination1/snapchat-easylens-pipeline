@@ -898,5 +898,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/9GYh9qNhya2XDkRqnT0Hy?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-23T01:55:01Z",
+    "account_id": "2",
+    "lens_name": "Valkyrie Circlet",
+    "lens_id": "2a66a565-693b-46e9-9135-159eefd35a24",
+    "checkpoint_id": "06ab32d7-5ddb-7be8-8000-b2a5f2510a3e",
+    "prompt": "Brushed silver and iridescent mother-of-pearl Valkyrie winged circlet fitted firmly to forehead. Photorealistic PBR metal reflections with frosted runic engravings and cool 6500K Nordic key lighting. Opening mouth summons ethereal soaring spectral raven aura; smiling ignites crystalline glacial eye glints. Seamless head tracking, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "valkyrie",
+      "winged",
+      "circlet",
+      "aurora",
+      "pbr"
+    ],
+    "visual_hook": "The immediate 0.2s identification of a high-contrast neon grid framing the upper face creates an instant, authoritative gaming identity.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/jraZvVDpYSHkOdsw8kLtg?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/6Ob445I4xhfGf4TWT7amI?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/aIPyPwaMeVbKxToSxsnHF?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
