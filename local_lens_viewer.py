@@ -1227,6 +1227,27 @@ def api_lenses():
     return jsonify([])
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))
-    print(f"=== EasyLens Local Realtime AR Studio starting on http://localhost:{port} ===")
-    app.run(host="0.0.0.0", port=port, debug=False)
+    import argparse
+    import socket
+
+    parser = argparse.ArgumentParser(description="EasyLens Local Realtime AR Studio")
+    parser.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8888)), help="Port to listen on (default: 8888)")
+    parser.add_argument("--host", type=str, default="0.0.0.0", help="Host interface (default: 0.0.0.0)")
+    args = parser.parse_args()
+
+    port = args.port
+    # Auto-find free port if occupied
+    for p in range(port, port + 20):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        res = s.connect_ex(('127.0.0.1', p))
+        s.close()
+        if res != 0:
+            port = p
+            break
+
+    print(f"\n==================================================================")
+    print(f"⚡ EasyLens Local Realtime AR Studio starting on:")
+    print(f"   Localhost URL: http://localhost:{port}/")
+    print(f"   Direct IP URL: http://127.0.0.1:{port}/")
+    print(f"==================================================================\n")
+    app.run(host=args.host, port=port, debug=False)

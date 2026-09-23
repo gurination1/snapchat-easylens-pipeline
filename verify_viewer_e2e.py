@@ -23,8 +23,8 @@ async def run_verification():
         page.on("console", lambda msg: console_logs.append(f"[{msg.type}] {msg.text}"))
         page.on("pageerror", lambda err: print(f"PAGE ERROR: {err}"))
 
-        print("1. Loading http://127.0.0.1:8080/...")
-        await page.goto("http://127.0.0.1:8080/", wait_until="networkidle")
+        print("1. Loading http://127.0.0.1:8888/...")
+        await page.goto("http://127.0.0.1:8888/", wait_until="domcontentloaded")
         await page.screenshot(path="/root/snapchat-lens/e2e_01_initial.png")
         print("Initial page loaded and captured.")
 
