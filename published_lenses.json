@@ -951,5 +951,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/Qz844HfIaBavfJ8Tklt4B?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-23T06:53:52Z",
+    "account_id": "1",
+    "lens_name": "Porcelain Dew Luxe",
+    "lens_id": "63a78aa2-281c-4ede-b1db-2c00053d2713",
+    "checkpoint_id": "06ab3738-6100-701b-8000-e229141e45af",
+    "prompt": "Ultra-refined porcelain skin smoothing with dewy high-fashion cheekbone highlights and subtle micro-freckles. A sculptural rose-quartz brow frame anchors the face. MouthOpen: cascades champagne micro-glitter dust. Smile: illuminates pearlescent facial sheen. EyebrowRaise: sharpens feline winged liner. HeadTilt: triggers 6500K studio eye-catches. PBR materials, 3-point contrast lighting, zero UI, zero HUD. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "glow",
+      "aesthetic",
+      "quartz",
+      "glam"
+    ],
+    "visual_hook": "The immediate 0.2s silhouette of a structural rose-quartz brow frame creates an instant, high-fashion, ethereal transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/hoQSTMWEmxlgRRXFYT9Vr?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/pFZBdVue8dlkGghLhNPR7?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Djs9di4cts2vnQG8A2ZKD?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
