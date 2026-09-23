@@ -999,5 +999,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/0sVI4AWKf9sIYUCnOpD57?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-23T13:05:55Z",
+    "account_id": "5",
+    "lens_name": "Pizza Chomp Party",
+    "lens_id": "71f82d37-4df9-4dfe-9d4a-4268be058ecd",
+    "checkpoint_id": "06ab3ca9-dfae-7bbe-8000-1d5df9d7275d",
+    "prompt": "Stylized 3D neon chef toque hat resting on crown with tumbling cartoon pepperoni pizza slices descending toward mouth. Opening mouth chomps pizza with hilarious bubbling cheese-pull strands and floating +250 SCORE badges; smiling triggers pepperoni party confetti; eyebrow raise tosses spinning pizza dough into the air; head tilt catches slices at wild angles. Viral comedy food game, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "game",
+      "arcade",
+      "challenge",
+      "interactive",
+      "racer",
+      "catcher",
+      "reflex",
+      "pbr"
+    ],
+    "visual_hook": "Addictive gamified AR: Speed Pizza Chomp captures instant viral appetite with mouth-watering cartoon cheese physics.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/KgXHmE4AWQBj4XS70dete?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/rJOMlkm2sqtVpNqWU7Ltx?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/gZgCIwOts1EU4sPHjKyzy?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
