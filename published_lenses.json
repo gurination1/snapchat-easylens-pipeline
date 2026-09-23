@@ -920,7 +920,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/6Ob445I4xhfGf4TWT7amI?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/aIPyPwaMeVbKxToSxsnHF?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -1025,6 +1025,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/gZgCIwOts1EU4sPHjKyzy?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-23T15:29:55Z",
+    "account_id": "2",
+    "lens_name": "Lava Petal Crown",
+    "lens_id": "dfed8c83-4475-4166-808a-510d5bd5909f",
+    "checkpoint_id": "06ab3ebc-9eac-702c-8000-fbb621a61930",
+    "prompt": "Undulating liquid-lava flow flower crown with warm psychedelic orange, mustard, and magenta swirls. Opening mouth releases floating kaleidoscope groovy flower petals and liquid light ripple waves; smiling warms complexion with retro Woodstock sunset halation; eyebrow raise blooms psychedelic petals; head tilt ripples lava patterns. Trippy 70s bohemian aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "retro",
+      "80s",
+      "90s",
+      "70s",
+      "synthwave",
+      "vhs",
+      "camcorder",
+      "disco",
+      "y2k",
+      "nostalgia"
+    ],
+    "visual_hook": "Decades nostalgia hit: 70s Psychedelic Woodstock Flower Crown delivers mesmerizing bohemian liquid light waves.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/B1BLlFpxDJlzq1DJfzkGz?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/k8ydPAXfI3jpJ3FZdAkQv?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Sgqg2uXQdqT7pqH7oMguq?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
