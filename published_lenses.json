@@ -949,7 +949,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/KSuWdHl5Ho17J0kihCOVR?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/Qz844HfIaBavfJ8Tklt4B?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -1054,6 +1054,33 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/Sgqg2uXQdqT7pqH7oMguq?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-23T16:56:03Z",
+    "account_id": "3",
+    "lens_name": "Neon Card Shuffle",
+    "lens_id": "1024a455-4c7a-4795-a74c-6504171c2576",
+    "checkpoint_id": "06ab4009-eb70-77ca-8000-d0cca698e9d3",
+    "prompt": "High-energy floating neon cards flipping rapidly above brow with viral mood titles. Blinking or smiling locks the winner in a burst of sparkling neon confetti and celebratory sound chimes; opening mouth spins cards into hyper-speed blur; eyebrow raise resets the shuffle; head tilt tilts cards toward camera. Viral social challenge magnet, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "randomizer",
+      "wheel",
+      "decision",
+      "tarot",
+      "vibe",
+      "which_are_you",
+      "interactive",
+      "viral"
+    ],
+    "visual_hook": "Viral interactive game: Which Vibe Are You? drives massive comment debates and social share velocity.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/ZQDmj9YEuRnU83zY6oKa6?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/lznExQaM8A4qDjlC2GJ31?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/BdHNWWeqCJGryh1ruGh9z?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
