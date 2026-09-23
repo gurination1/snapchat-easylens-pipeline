@@ -848,7 +848,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/8kUOjq1JsVTncG38LM4Md?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/qs8oiwLNllqLI9pbc2Ys8?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -974,6 +974,30 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/Djs9di4cts2vnQG8A2ZKD?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-23T10:20:53Z",
+    "account_id": "4",
+    "lens_name": "Valkyrie Crown",
+    "lens_id": "c5322415-3e7b-46f8-a603-35a1cc175584",
+    "checkpoint_id": "06ab3a45-dfa4-7581-8000-9d3d37b167ac",
+    "prompt": "Brushed silver and iridescent mother-of-pearl Valkyrie winged circlet fitted firmly to forehead. Photorealistic PBR metal reflections with frosted runic engravings and cool 6500K Nordic key lighting. Opening mouth summons ethereal soaring spectral raven aura; smiling ignites crystalline glacial eye glints. Seamless head tracking, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "valkyrie",
+      "winged",
+      "circlet",
+      "aurora",
+      "pbr"
+    ],
+    "visual_hook": "The immediate silhouette of dual-weighted 24k gold scales framing the forehead creates an authoritative, high-contrast focal point.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/AoHaFhssjj5x4PBjsm045?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/gKZGT4duvxMB0cCYFF4v6?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/0sVI4AWKf9sIYUCnOpD57?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
