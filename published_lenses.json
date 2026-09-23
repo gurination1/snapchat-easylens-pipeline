@@ -872,7 +872,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/m6PDU4wluTtdUsC4fguGL?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/ssc95LBMKk8GbuUMfHySo?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -920,6 +920,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/6Ob445I4xhfGf4TWT7amI?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/aIPyPwaMeVbKxToSxsnHF?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-23T05:32:27Z",
+    "account_id": "3",
+    "lens_name": "Abyssal Crown",
+    "lens_id": "41c7a2d1-6eb0-4982-9085-6560db584ed8",
+    "checkpoint_id": "06ab360a-2728-7120-8000-82c7d251a2f9",
+    "prompt": "Deep turquoise sea-glass and encrusted barnacle-gold trident circlet with floating bioluminescent deep-sea motes. Opening mouth unleashes surging abyssal tidal wave vortex with floating glowing jellyfish particles; smiling illuminates piercing aquamarine eye glints; eyebrow raise activates tidal storm crest; head tilt ripples underwater caustics. Sovereign ocean ruler. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "greek",
+      "mythology",
+      "olympus",
+      "zeus",
+      "medusa",
+      "aphrodite",
+      "apollo",
+      "hades",
+      "gods",
+      "deity"
+    ],
+    "visual_hook": "Godly transformation: Poseidon Oceanic Trident Crown submerges the viewer into an epic deep-ocean realm.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/2UQIpT5xxfvGv0csRMFwD?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/KSuWdHl5Ho17J0kihCOVR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Qz844HfIaBavfJ8Tklt4B?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
