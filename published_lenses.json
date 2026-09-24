@@ -1210,5 +1210,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/MOl9oZ1EL0cPlSsVtJDJ3?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-24T10:56:51Z",
+    "account_id": "1",
+    "lens_name": "Hi-8 Glitch Cam",
+    "lens_id": "3754bd48-d5d1-4327-ada9-3ea0f330ef66",
+    "checkpoint_id": "06ab4fd7-5af3-7735-8000-56ce40fb4fd8",
+    "prompt": "Authentic 90s Hi-8 camcorder visor frame with floating green PLAY OSD timestamp and magnetic phosphor scanlines. Opening mouth triggers nostalgic magnetic tape-rip glitch shockwave with RGB color split and tracking static; smiling pulses battery REC particle glints flare; eyebrow raise flashes amber night-vision beam; head tilt shifts cathode interlacing. Pure 90s camcorder nostalgia, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "retro",
+      "80s",
+      "90s",
+      "70s",
+      "synthwave",
+      "vhs",
+      "camcorder",
+      "disco",
+      "y2k",
+      "nostalgia"
+    ],
+    "visual_hook": "Decades nostalgia hit: authentic 90s Hi-8 VHS Camcorder tape glitch captures the unmistakable warmth of analogue memories.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/cya9kLcyil01a6QDt2fzx?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/R2k2wPevi37uqzZleP30r?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/nLCY3xg63wEp4sU6PrVrz?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
