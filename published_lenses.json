@@ -1155,7 +1155,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/MXMzKGcN5rUGGG2XMwb9l?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/sb0IlGArdltRvn5t5G6nf?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -1266,6 +1266,30 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/gvKLSp9O1jVXn8Elyr37k?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/Lm0Jn1n6qWRAoeb75jjcE?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-24T19:53:23Z",
+    "account_id": "5",
+    "lens_name": "Psychedelic Bloom",
+    "lens_id": "961e34db-9cb4-4352-82d6-d51d7c18ebc0",
+    "checkpoint_id": "06ab57bc-2a3c-7b69-8000-2544f401f078",
+    "prompt": "Forehead-anchored 70s psychedelic wreath sculpted with blooming velvet poppies and viscous amber-magenta lava tubes. 3-point tungsten rim illumination. MouthOpen triggers an explosive kaleidoscope petal burst with liquid oil caustics. Smile bathes cheeks in warm Woodstock sunset halation. EyebrowRaise expands concentric petal tiers upwards. HeadTilt ripples liquid color streams through clear blown glass. Unobscured face with Portra 400 film warmth. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "woodstock",
+      "70sretro",
+      "flowercrown",
+      "psychedelic",
+      "lavalamp"
+    ],
+    "visual_hook": "The vivid silhouette of molten lava tubes and velvet poppies produces an unmistakable 1970s bohemian Woodstock aesthetic instantly.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/U8GsKv58xLiNeBQEXczDp?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/EZvWBhpDKkAZG0PewDCFQ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/jgfYemCy7KLyU5fIQ4Gpm?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
