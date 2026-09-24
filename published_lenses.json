@@ -1292,5 +1292,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/jgfYemCy7KLyU5fIQ4Gpm?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-24T23:10:50Z",
+    "account_id": "2",
+    "lens_name": "Orbital Ring FX",
+    "lens_id": "e379ab73-eac5-4bb7-87a8-1ca18aeb4a02",
+    "checkpoint_id": "06ab5a91-d7f9-7c49-8000-d68eaf1cf6ec",
+    "prompt": "A floating orbital ring of brushed obsidian and iridescent opal orbits the forehead. Mouth open triggers a violent violet particle supernova burst. Smile releases soft cyan auroral dust clouds. Eyebrow raise initiates a rapid scanning pulse of light across the eyes. Head tilt cycles the orbital ring hue. High contrast 3-point lighting, PBR materials, zero UI, zero text, zero obscuring of the face. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aura",
+      "cosmic",
+      "scanner",
+      "energy",
+      "vibes"
+    ],
+    "visual_hook": "The striking, high-contrast obsidian orbital ring creates an immediate, recognizable silhouette on the user's forehead.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/b7MPE0RQeX8N2MDARf25w?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/KjBKJuoNZcmZbuhOtZw83?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/9GrsPwZN3wqSTEp7EzrlI?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
