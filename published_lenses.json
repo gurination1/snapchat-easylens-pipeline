@@ -1080,7 +1080,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/lznExQaM8A4qDjlC2GJ31?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/BdHNWWeqCJGryh1ruGh9z?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -1180,6 +1180,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/6drQgjb6pJAEbJ1aOUZpH?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-24T05:47:24Z",
+    "account_id": "3",
+    "lens_name": "Pearl Crest Tiara",
+    "lens_id": "44a0f5d5-5059-4c96-be18-a9a6481f4dde",
+    "checkpoint_id": "06ab4b5d-9749-7d16-8000-9ba7d05b161d",
+    "prompt": "Iridescent mother-of-pearl scallop seashell tiara adorned with floating baroque freshwater pearls and crystalline seafoam bubbles. Opening mouth releases swirling oceanic sea-auroral sparkles with floating luminescent pearl bubbles; smiling illuminates high-glamour pearlescent skin sheen and warm Aegean sunlight; eyebrow raise expands seashell crest; head tilt sways floating pearls. Celestial goddess beauty. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "greek",
+      "mythology",
+      "olympus",
+      "zeus",
+      "medusa",
+      "aphrodite",
+      "apollo",
+      "hades",
+      "gods",
+      "deity"
+    ],
+    "visual_hook": "Godly transformation: Aphrodite Seafoam Scallop Pearl Tiara elevates user to mythical Olympian beauty.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/G45jIrPGPRs30xvvVKSw6?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/WGDPfe8lYVAjMvaGfKoFT?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/MOl9oZ1EL0cPlSsVtJDJ3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
