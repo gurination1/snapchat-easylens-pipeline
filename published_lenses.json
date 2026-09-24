@@ -1157,5 +1157,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/sb0IlGArdltRvn5t5G6nf?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-24T00:56:14Z",
+    "account_id": "2",
+    "lens_name": "Golden Facet Crown",
+    "lens_id": "9f480e1e-d674-41a3-9985-b51077f22c00",
+    "checkpoint_id": "06ab4709-2f41-7c59-8000-511bf25734eb",
+    "prompt": "Architectural 24k gold mirrored facets crown the forehead with authentic ray-traced caustics. MouthOpen triggers a cascading torrent of metallic star-dust. Smile ignites rhythmic prismatic light beams. EyebrowRaise activates a warm 70s sunset halation flare. HeadTilt shifts mirror reflections. High-contrast PBR finish, zero UI, no HUD. Pure analog dancefloor glamour, sculpted geometry, zero obstruction. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "retro",
+      "glamour",
+      "disco",
+      "vintage",
+      "fashion"
+    ],
+    "visual_hook": "The high-contrast 24k gold mirror crown creates an immediate, recognizable silhouette the moment the camera opens.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/u7VSkKlK6vTJ6bwl9ccsw?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/RuLobvyNBAXH1yhsrbdZh?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/6drQgjb6pJAEbJ1aOUZpH?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
