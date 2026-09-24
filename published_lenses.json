@@ -1131,7 +1131,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/uhEXMgr0xTkuqE8ykMoaE?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/UGZbKGqwxtOtsSVKXeAJK?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -1238,6 +1238,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/nLCY3xg63wEp4sU6PrVrz?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-24T15:53:00Z",
+    "account_id": "4",
+    "lens_name": "Matrix Wire Shades",
+    "lens_id": "57a47be4-8e5d-4dd7-a849-a91e5f1db2b8",
+    "checkpoint_id": "06ab5434-c717-77dd-8000-b12fdbb1e712",
+    "prompt": "Sleek minimalist matrix wireframe shades with cascading emerald phosphor digital code particles floating around temples. Opening mouth triggers shockwave pulse that freezes digital code into geometric cubes; smiling glints neon green laser beams through lenses; eyebrow raise accelerates matrix rain streams; head tilt angles code trajectory. Legendary late-90s cyberspace chic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "retro",
+      "80s",
+      "90s",
+      "70s",
+      "synthwave",
+      "vhs",
+      "camcorder",
+      "disco",
+      "y2k",
+      "nostalgia"
+    ],
+    "visual_hook": "Decades nostalgia hit: Y2K Cyberspace Liquid Wireframe Visor commands instant attention with iconic falling digital code.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/gIffKXl2YtAROuukIbsta?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/gvKLSp9O1jVXn8Elyr37k?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Lm0Jn1n6qWRAoeb75jjcE?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
