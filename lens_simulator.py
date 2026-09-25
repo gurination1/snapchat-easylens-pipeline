@@ -160,7 +160,26 @@ class LensSimulator:
             cropped = clean_im.crop(bbox)
             if cropped.width >= 100 and cropped.height >= 40:
                 return cropped
-            print(f"[SIMULATOR] Extracted crop too small ({cropped.width}x{cropped.height}); discarding fragment")
+            print(f"[SIMULATOR] Extracted crop too small ({cropped.width}x{cropped.height}); attempting contrast fallback...")
+
+        # Fallback: Background-difference foreground crop
+        # If strict gem/gold segmentation missed the object (e.g. non-gem materials, stylized colors, clouds, cyber visor)
+        bg_diff_mask = inside_zone & (color_dist > 32)
+        # Exclude mannequin skin/slate tone if present around lower center
+        is_mannequin = (y > h * 0.38) & (abs(x - cx) < w * 0.20) & (sat < 40) & (val > 90) & (val < 195)
+        fg_mask = bg_diff_mask & (~is_mannequin)
+        if np.sum(fg_mask) > 300:
+            fg_clean = cv2.morphologyEx(fg_mask.astype(np.uint8) * 255, cv2.MORPH_CLOSE, kernel)
+            alpha_fg = cv2.GaussianBlur(fg_clean.astype(np.float32), (3, 3), 0)
+            out_arr2 = arr.copy()
+            out_arr2[:, :, 3] = np.clip(alpha_fg, 0, 255).astype(np.uint8)
+            clean_im2 = Image.fromarray(out_arr2)
+            bbox2 = clean_im2.split()[-1].getbbox()
+            if bbox2:
+                cropped2 = clean_im2.crop(bbox2)
+                if cropped2.width >= 60 and cropped2.height >= 30:
+                    print(f"[SIMULATOR] Extracted authentic hero asset via background contrast fallback ({cropped2.width}x{cropped2.height})")
+                    return cropped2
         return None
 
     @staticmethod

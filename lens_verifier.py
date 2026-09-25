@@ -1009,7 +1009,9 @@ class LensVerifier:
                     out_neutral=out_neutral,
                     out_trigger=out_trigger,
                     out_split="preview_split_comparison.png",
-                    lens_name=sim_lens_data.get("lens_name", "Camera Kit AR Effect")
+                    lens_name=sim_lens_data.get("lens_name", "Camera Kit AR Effect"),
+                    lens_data=sim_lens_data,
+                    account_id=sim_lens_data.get("account_id", "1")
                 )
                 preview_video = ck_res.get("preview_video", "preview_video.mp4")
             except Exception as ck_err:

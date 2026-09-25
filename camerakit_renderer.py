@@ -93,19 +93,29 @@ async def _async_render_camerakit(
     from playwright.async_api import async_playwright
 
     base_dir = os.path.abspath(os.path.dirname(__file__))
+    assets_dir = os.path.join(base_dir, "assets")
+    os.makedirs(assets_dir, exist_ok=True)
 
     # Resolve local URL or copy lens to accessible path
     rel_lens = os.path.relpath(os.path.abspath(lens_path), base_dir)
-    if not rel_lens.startswith(".."):
+    if not rel_lens.startswith("..") and os.path.exists(os.path.join(base_dir, rel_lens)):
         lens_url = f"/{rel_lens}"
     else:
-        # Copy to /tmp or assets if outside
+        # Copy to assets so local server can serve it
+        dest_lens = os.path.join(assets_dir, os.path.basename(lens_path))
+        if os.path.abspath(lens_path) != os.path.abspath(dest_lens) and os.path.exists(lens_path):
+            import shutil
+            shutil.copyfile(lens_path, dest_lens)
         lens_url = f"/assets/{os.path.basename(lens_path)}"
 
     rel_video = os.path.relpath(os.path.abspath(video_path), base_dir)
-    if not rel_video.startswith(".."):
+    if not rel_video.startswith("..") and os.path.exists(os.path.join(base_dir, rel_video)):
         video_url = f"/{rel_video}"
     else:
+        dest_vid = os.path.join(assets_dir, os.path.basename(video_path))
+        if os.path.abspath(video_path) != os.path.abspath(dest_vid) and os.path.exists(video_path):
+            import shutil
+            shutil.copyfile(video_path, dest_vid)
         video_url = f"/assets/{os.path.basename(video_path)}"
 
     import hashlib
@@ -115,29 +125,55 @@ async def _async_render_camerakit(
             lens_sha256 = hashlib.sha256(f.read()).hexdigest()
     print(f"[CameraKit Renderer] Bundle SHA256: {lens_sha256[:16]}... ({lens_path})")
 
+    # Ensure local studio server is listening on port
+    import socket
+    import threading
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_alive = False
+    try:
+        s.connect(('127.0.0.1', port))
+        s.close()
+        server_alive = True
+    except Exception:
+        pass
+
+    server_obj = None
+    if not server_alive:
+        try:
+            from werkzeug.serving import make_server
+            from local_lens_viewer import app as viewer_app
+            server_obj = make_server('127.0.0.1', port, viewer_app)
+            t = threading.Thread(target=server_obj.serve_forever, daemon=True)
+            t.start()
+            time.sleep(0.3)
+            print(f"[CameraKit Renderer] Spun up local studio server on port {port}")
+        except Exception as s_err:
+            print(f"[CameraKit Renderer] Notice starting studio server ({s_err})")
+
     target_url = f"http://127.0.0.1:{port}/"
     print(f"[CameraKit Renderer] Loading Studio URL: {target_url}")
 
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(
-            headless=True,
-            executable_path="/usr/bin/chromium",
-            args=[
-                "--no-sandbox",
-                "--disable-dev-shm-usage",
-                "--headless=new",
-                "--enable-webgl",
-                "--ignore-gpu-blocklist",
-                "--window-size=1280,1400"
-            ]
-        )
-        page = await browser.new_page(viewport={"width": 1280, "height": 1400})
+    try:
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(
+                headless=True,
+                executable_path="/usr/bin/chromium",
+                args=[
+                    "--no-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--headless=new",
+                    "--enable-webgl",
+                    "--ignore-gpu-blocklist",
+                    "--window-size=1280,1400"
+                ]
+            )
+            page = await browser.new_page(viewport={"width": 1280, "height": 1400})
 
-        # Forward console logs and page errors
-        page.on("console", lambda msg: print(f"[Browser Console] {msg.text}", flush=True))
-        page.on("pageerror", lambda err: print(f"[Page Error] {err}", flush=True))
+            # Forward console logs and page errors
+            page.on("console", lambda msg: print(f"[Browser Console] {msg.text}", flush=True))
+            page.on("pageerror", lambda err: print(f"[Page Error] {err}", flush=True))
 
-        await page.goto(target_url, wait_until="domcontentloaded")
+            await page.goto(target_url, wait_until="domcontentloaded")
 
         # Set custom stock video if different from default
         if video_url:
@@ -293,15 +329,22 @@ async def _async_render_camerakit(
             render_split_comparison_image(raw_portrait, out_neutral, out_split, lens_name=lens_name)
             print(f"[CameraKit Renderer] Rendered Split Photo ({os.path.getsize(out_split)} bytes): {out_split}")
 
-        return {
-            "success": True,
-            "preview_video": out_video,
-            "neutral_preview": out_neutral,
-            "trigger_preview": out_trigger,
-            "split_comparison": out_split,
-            "video_size": os.path.getsize(out_video),
-            "image_size": os.path.getsize(out_neutral)
-        }
+            return {
+                "success": True,
+                "preview_video": out_video,
+                "neutral_preview": out_neutral,
+                "trigger_preview": out_trigger,
+                "split_comparison": out_split,
+                "video_size": os.path.getsize(out_video),
+                "image_size": os.path.getsize(out_neutral)
+            }
+    finally:
+        if server_obj:
+            try:
+                server_obj.shutdown()
+                print(f"[CameraKit Renderer] Shut down studio server on port {port}")
+            except Exception:
+                pass
 
 
 def render_camerakit_preview(
@@ -315,7 +358,9 @@ def render_camerakit_preview(
     lens_name: str = "Camera Kit AR Effect",
     port: int = 8888,
     duration: float = 3.6,
-    fps: int = 30
+    fps: int = 30,
+    lens_data: dict = None,
+    account_id: str = "1"
 ) -> dict:
     """Synchronous entry point to render Camera Kit WebGL AR preview with optical flow fallback."""
     try:
@@ -333,18 +378,27 @@ def render_camerakit_preview(
             fps=fps
         ))
     except Exception as e:
-        print(f"[CameraKit Renderer] WebGL headless note ({e}), engaging LensSimulator optical flow engine...")
+        print(f"[CameraKit Renderer] WebGL note ({e}), engaging LensSimulator optical flow engine...")
         base_dir = os.path.abspath(os.path.dirname(__file__))
         from lens_simulator import LensSimulator
         b_bytes = b""
         if os.path.exists(lens_path):
             with open(lens_path, "rb") as f:
                 b_bytes = f.read()
-        sim = LensSimulator(b_bytes, lens_data={"lens_name": lens_name, "account_id": "1"}, portrait_dir=os.path.join(base_dir, "assets"))
-        pure_tiara = os.path.join(base_dir, "verdant_tiara_pure.png")
-        if os.path.exists(pure_tiara):
-            sim.dominant_texture = Image.open(pure_tiara)
-        v_res = sim.render_simulation_video(out_path=out_video, out_neutral=out_neutral, out_trigger=out_trigger, motion_video=video_path, account_id="1")
+
+        sim_data = dict(lens_data or {})
+        sim_data.setdefault("lens_name", lens_name)
+        sim_data.setdefault("account_id", account_id)
+
+        sim = LensSimulator(b_bytes, lens_data=sim_data, portrait_dir=os.path.join(base_dir, "assets"))
+        # Render authentic simulation using real lens bundle assets (never hardcoded mocks)
+        v_res = sim.render_simulation_video(
+            out_path=out_video,
+            out_neutral=out_neutral,
+            out_trigger=out_trigger,
+            motion_video=video_path,
+            account_id=account_id
+        )
         raw_portrait = os.path.join(base_dir, "assets", "portrait_neutral.png")
         if os.path.exists(raw_portrait) and os.path.exists(out_neutral):
             render_split_comparison_image(raw_portrait, out_neutral, out_split, lens_name=lens_name)
