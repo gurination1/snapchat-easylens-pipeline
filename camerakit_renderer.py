@@ -24,12 +24,36 @@ def get_font(size=14, bold=True):
         return ImageFont.load_default()
 
 
-def render_split_comparison_image(before_path: str, after_path: str, out_path: str, lens_name: str = "Snapchat 3D AR Lens") -> str:
+def extract_neutral_frame0(video_path: str, fallback_path: str = None) -> Image.Image:
+    """Extracts exact Frame 0 from motion video as the true before-canvas reference."""
+    if video_path and os.path.exists(video_path):
+        try:
+            import cv2
+            cap = cv2.VideoCapture(video_path)
+            ret, f0 = cap.read()
+            cap.release()
+            if ret and f0 is not None:
+                rgb = cv2.cvtColor(f0, cv2.COLOR_BGR2RGB)
+                return Image.fromarray(rgb).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
+        except Exception:
+            pass
+    if fallback_path and os.path.exists(fallback_path):
+        return Image.open(fallback_path).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
+    return None
+
+
+def render_split_comparison_image(before_input, after_path: str, out_path: str, lens_name: str = "Snapchat 3D AR Lens") -> str:
     """Renders a polished Before/After editorial split comparison from the Camera Kit render."""
-    if not os.path.exists(before_path) or not os.path.exists(after_path):
+    if before_input is None or not os.path.exists(after_path):
         return None
 
-    raw_img = Image.open(before_path).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
+    if isinstance(before_input, Image.Image):
+        raw_img = before_input.convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
+    elif isinstance(before_input, str) and os.path.exists(before_input):
+        raw_img = Image.open(before_input).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
+    else:
+        return None
+
     ar_img = Image.open(after_path).convert("RGBA").resize((720, 1280), Image.Resampling.BILINEAR)
 
     split_x = 360
@@ -175,111 +199,111 @@ async def _async_render_camerakit(
 
             await page.goto(target_url, wait_until="domcontentloaded")
 
-        # Set custom stock video if different from default
-        if video_url:
-            await page.evaluate(f"""
-                const vid = document.getElementById('ck-video-input');
-                if (vid && '{video_url}' !== vid.getAttribute('src')) {{
-                    vid.src = '{video_url}';
-                }}
-            """)
+            # Set custom stock video if different from default
+            if video_url:
+                await page.evaluate(f"""
+                    const vid = document.getElementById('ck-video-input');
+                    if (vid && '{video_url}' !== vid.getAttribute('src')) {{
+                        vid.src = '{video_url}';
+                    }}
+                """)
 
-        # Register custom lens if provided
-        if lens_url:
-            await page.evaluate(f"""
-                sideloadedLenses.set('custom_render', {{
-                    id: 'custom_render',
-                    name: '{lens_name}',
-                    lnsUrl: window.location.origin + '{lens_url}',
-                    sha256: '{lens_sha256}'
-                }});
-                ckCurrentLensId = 'custom_render';
-            """)
+            # Register custom lens if provided
+            if lens_url:
+                await page.evaluate(f"""
+                    sideloadedLenses.set('custom_render', {{
+                        id: 'custom_render',
+                        name: '{lens_name}',
+                        lnsUrl: window.location.origin + '{lens_url}',
+                        sha256: '{lens_sha256}'
+                    }});
+                    ckCurrentLensId = 'custom_render';
+                """)
 
-        # Click Camera Kit Web AR tab to initialize session
-        print("[CameraKit Renderer] Activating Camera Kit Web AR tab...")
-        await page.click("button:has-text('Camera Kit Web AR')")
+            # Click Camera Kit Web AR tab to initialize session
+            print("[CameraKit Renderer] Activating Camera Kit Web AR tab...")
+            await page.click("button:has-text('Camera Kit Web AR')")
 
-        # Wait for Camera Kit session initialization & lens application
-        max_wait = 45
-        lens_active = False
-        for i in range(max_wait):
-            await asyncio.sleep(1)
-            status = await page.inner_text("#ck-status")
-            print(f"[CameraKit Renderer {i+1}s] Status: {status}")
-            if "3D AR Lens Active" in status or "Parity Verified" in status:
-                lens_active = True
-                break
+            # Wait for Camera Kit session initialization & lens application
+            max_wait = 45
+            lens_active = False
+            for i in range(max_wait):
+                await asyncio.sleep(1)
+                status = await page.inner_text("#ck-status")
+                print(f"[CameraKit Renderer {i+1}s] Status: {status}")
+                if "3D AR Lens Active" in status or "Parity Verified" in status:
+                    lens_active = True
+                    break
 
-        if not lens_active:
-            await browser.close()
-            raise TimeoutError(f"Camera Kit did not become active within {max_wait}s")
+            if not lens_active:
+                await browser.close()
+                raise TimeoutError(f"Camera Kit did not become active within {max_wait}s")
 
-        print("[CameraKit Renderer] 3D AR Lens Active! Capturing Frame 0 Neutral Poster...")
-        # Reset video to frame 0
-        await page.evaluate("""
-            const vid = document.getElementById('ck-video-input');
-            vid.pause();
-            vid.currentTime = 0;
-        """)
-        await asyncio.sleep(0.3)
-
-        # 1. Grab Frame 0 Neutral Poster PNG
-        neutral_b64 = await page.evaluate("document.getElementById('ck-canvas').toDataURL('image/png')")
-        if neutral_b64 and "," in neutral_b64:
-            n_bytes = base64.b64decode(neutral_b64.split(",", 1)[1])
-            with open(out_neutral, "wb") as f:
-                f.write(n_bytes)
-            print(f"[CameraKit Renderer] Saved Frame 0 Neutral Poster ({len(n_bytes)} bytes): {out_neutral}")
-
-        # 2. Start recording 3.6s canvas video @ 30fps
-        print(f"[CameraKit Renderer] Recording {duration}s canvas video at {fps} fps...")
-        await page.evaluate(f"""
-            window.__RECORDED_CHUNKS__ = [];
-            const canvas = document.getElementById('ck-canvas');
-            const stream = canvas.captureStream({fps});
-            let mimeType = 'video/webm; codecs=vp8';
-            if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = 'video/webm';
-            window.__RECORDER__ = new MediaRecorder(stream, {{ mimeType, videoBitsPerSecond: 6000000 }});
-            window.__RECORDER__.ondataavailable = e => {{
-                if (e.data && e.data.size > 0) window.__RECORDED_CHUNKS__.push(e.data);
-            }};
-            window.__RECORDER__.start(100);
-            const vid = document.getElementById('ck-video-input');
-            vid.currentTime = 0;
-            vid.play();
-        """)
-
-        # Capture trigger frame at midpoint
-        await asyncio.sleep(duration / 2.0)
-        trigger_b64 = await page.evaluate("document.getElementById('ck-canvas').toDataURL('image/png')")
-        if trigger_b64 and "," in trigger_b64:
-            t_bytes = base64.b64decode(trigger_b64.split(",", 1)[1])
-            with open(out_trigger, "wb") as f:
-                f.write(t_bytes)
-            print(f"[CameraKit Renderer] Saved Peak Trigger Poster ({len(t_bytes)} bytes): {out_trigger}")
-
-        # Wait remaining duration
-        await asyncio.sleep(duration / 2.0)
-
-        # Stop recorder and extract WebM base64
-        print("[CameraKit Renderer] Stopping recorder and extracting WebM stream...")
-        video_b64 = await page.evaluate("""
-            new Promise((resolve, reject) => {
+            print("[CameraKit Renderer] 3D AR Lens Active! Capturing Frame 0 Neutral Poster...")
+            # Reset video to frame 0
+            await page.evaluate("""
                 const vid = document.getElementById('ck-video-input');
                 vid.pause();
-                window.__RECORDER__.onstop = () => {
-                    const blob = new Blob(window.__RECORDED_CHUNKS__, { type: window.__RECORDER__.mimeType || 'video/webm' });
-                    const reader = new FileReader();
-                    reader.onloadend = () => resolve(reader.result);
-                    reader.onerror = reject;
-                    reader.readAsDataURL(blob);
-                };
-                window.__RECORDER__.stop();
-            })
-        """)
+                vid.currentTime = 0;
+            """)
+            await asyncio.sleep(0.3)
 
-        await browser.close()
+            # 1. Grab Frame 0 Neutral Poster PNG
+            neutral_b64 = await page.evaluate("document.getElementById('ck-canvas').toDataURL('image/png')")
+            if neutral_b64 and "," in neutral_b64:
+                n_bytes = base64.b64decode(neutral_b64.split(",", 1)[1])
+                with open(out_neutral, "wb") as f:
+                    f.write(n_bytes)
+                print(f"[CameraKit Renderer] Saved Frame 0 Neutral Poster ({len(n_bytes)} bytes): {out_neutral}")
+
+            # 2. Start recording 3.6s canvas video @ 30fps
+            print(f"[CameraKit Renderer] Recording {duration}s canvas video at {fps} fps...")
+            await page.evaluate(f"""
+                window.__RECORDED_CHUNKS__ = [];
+                const canvas = document.getElementById('ck-canvas');
+                const stream = canvas.captureStream({fps});
+                let mimeType = 'video/webm; codecs=vp8';
+                if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = 'video/webm';
+                window.__RECORDER__ = new MediaRecorder(stream, {{ mimeType, videoBitsPerSecond: 6000000 }});
+                window.__RECORDER__.ondataavailable = e => {{
+                    if (e.data && e.data.size > 0) window.__RECORDED_CHUNKS__.push(e.data);
+                }};
+                window.__RECORDER__.start(100);
+                const vid = document.getElementById('ck-video-input');
+                vid.currentTime = 0;
+                vid.play();
+            """)
+
+            # Capture trigger frame at midpoint
+            await asyncio.sleep(duration / 2.0)
+            trigger_b64 = await page.evaluate("document.getElementById('ck-canvas').toDataURL('image/png')")
+            if trigger_b64 and "," in trigger_b64:
+                t_bytes = base64.b64decode(trigger_b64.split(",", 1)[1])
+                with open(out_trigger, "wb") as f:
+                    f.write(t_bytes)
+                print(f"[CameraKit Renderer] Saved Peak Trigger Poster ({len(t_bytes)} bytes): {out_trigger}")
+
+            # Wait remaining duration
+            await asyncio.sleep(duration / 2.0)
+
+            # Stop recorder and extract WebM base64
+            print("[CameraKit Renderer] Stopping recorder and extracting WebM stream...")
+            video_b64 = await page.evaluate("""
+                new Promise((resolve, reject) => {
+                    const vid = document.getElementById('ck-video-input');
+                    vid.pause();
+                    window.__RECORDER__.onstop = () => {
+                        const blob = new Blob(window.__RECORDED_CHUNKS__, { type: window.__RECORDER__.mimeType || 'video/webm' });
+                        const reader = new FileReader();
+                        reader.onloadend = () => resolve(reader.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(blob);
+                    };
+                    window.__RECORDER__.stop();
+                })
+            """)
+
+            await browser.close()
 
         if not video_b64 or "," not in video_b64:
             raise RuntimeError("Recorded video data buffer was empty or null.")
@@ -324,20 +348,20 @@ async def _async_render_camerakit(
         print(f"[CameraKit Renderer] Muxed Native MP4 Video ({os.path.getsize(out_video)} bytes): {out_video}")
 
         # Render Before/After split image
-        raw_portrait = os.path.join(base_dir, "assets", "portrait_neutral.png")
-        if os.path.exists(raw_portrait) and os.path.exists(out_neutral):
+        raw_portrait = extract_neutral_frame0(video_path, os.path.join(base_dir, "assets", "portrait_neutral.png"))
+        if raw_portrait is not None and os.path.exists(out_neutral):
             render_split_comparison_image(raw_portrait, out_neutral, out_split, lens_name=lens_name)
             print(f"[CameraKit Renderer] Rendered Split Photo ({os.path.getsize(out_split)} bytes): {out_split}")
 
-            return {
-                "success": True,
-                "preview_video": out_video,
-                "neutral_preview": out_neutral,
-                "trigger_preview": out_trigger,
-                "split_comparison": out_split,
-                "video_size": os.path.getsize(out_video),
-                "image_size": os.path.getsize(out_neutral)
-            }
+        return {
+            "success": True,
+            "preview_video": out_video,
+            "neutral_preview": out_neutral,
+            "trigger_preview": out_trigger,
+            "split_comparison": out_split,
+            "video_size": os.path.getsize(out_video),
+            "image_size": os.path.getsize(out_neutral)
+        }
     finally:
         if server_obj:
             try:
@@ -399,9 +423,13 @@ def render_camerakit_preview(
             motion_video=video_path,
             account_id=account_id
         )
-        raw_portrait = os.path.join(base_dir, "assets", "portrait_neutral.png")
-        if os.path.exists(raw_portrait) and os.path.exists(out_neutral):
-            render_split_comparison_image(raw_portrait, out_neutral, out_split, lens_name=lens_name)
+        # Render matching Before/After split image using exact video Frame 0
+        try:
+            sim.render_split_comparison(out_path=out_split, account_id=account_id)
+        except Exception:
+            raw_p = extract_neutral_frame0(video_path, os.path.join(base_dir, "assets", "portrait_neutral.png"))
+            if raw_p is not None and os.path.exists(out_neutral):
+                render_split_comparison_image(raw_p, out_neutral, out_split, lens_name=lens_name)
         return {
             "success": True,
             "preview_video": v_res,
