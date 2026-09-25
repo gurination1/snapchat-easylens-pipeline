@@ -1266,7 +1266,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/gvKLSp9O1jVXn8Elyr37k?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/Lm0Jn1n6qWRAoeb75jjcE?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -1363,6 +1363,30 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/Fplt7saHNDQL4Lva8JOk0?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-25T12:11:25Z",
+    "account_id": "4",
+    "lens_name": "Bat Ruby Coronet",
+    "lens_id": "12c4e59b-8a93-4a48-9e3f-671f975ec78b",
+    "checkpoint_id": "06ab660c-bf3f-7557-8000-e71e653e6bd4",
+    "prompt": "Matte obsidian gothic bat-wing coronet with dripping ruby teardrops anchors to brow. MouthOpen reveals sharp 3D ivory vampire fangs emitting crimson auroral sparkles and dark smoke. Smile ignites piercing ruby eye glints. EyebrowRaise expands the gothic bat wings. HeadTilt catches dramatic ruby caustics. Immersive real-time tracking, 3-point high-contrast cinematic lighting, pure physical materials, zero UI or on-screen text. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "vampire",
+      "gothic",
+      "coronet",
+      "halloween",
+      "darkfantasy"
+    ],
+    "visual_hook": "A striking matte obsidian gothic bat-wing coronet with dripping ruby teardrops instantly commands the screen.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/U3iRpDpsZuBI2bXJTglId?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/0ppfCjcHl2B6myqqOQwiB?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/oRhCUGrQIVRsKiM9I5x1z?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
