@@ -1208,7 +1208,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/WGDPfe8lYVAjMvaGfKoFT?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/MOl9oZ1EL0cPlSsVtJDJ3?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -1315,6 +1315,30 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/9GrsPwZN3wqSTEp7EzrlI?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-25T01:16:42Z",
+    "account_id": "3",
+    "lens_name": "Kitsune Spirit Fox",
+    "lens_id": "979313fa-d953-4045-8c38-f850bb2cb703",
+    "checkpoint_id": "06ab5c7c-ca73-7154-8000-0a857d4006a3",
+    "prompt": "Carved porcelain and polished vermilion lacquer kitsune forehead crest anchored strictly to brow, leaving eyes and mouth clear. Shimmering spirit bells and twin floating foxfire tails contouring jawline. Opening mouth erupts swirling azure spirit flame orbs with dynamic volumetric embers; smiling reveals ethereal golden fox spirit eye reflections. Pure PBR craft, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "kitsune",
+      "foxfire",
+      "spirit",
+      "crest",
+      "pbr"
+    ],
+    "visual_hook": "The immediate 0.2s silhouette of a glowing sun-temple crown provides an authoritative and majestic identity.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/u4hsrTbNcV6fLLdgnwi1j?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/9bkkXv2fmtetCQCskbryl?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/g7tWxDUnh2O23fEabrw7d?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
