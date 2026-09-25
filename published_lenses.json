@@ -1417,5 +1417,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/tUqD2SedI3SEZYyHtsZsD?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-25T20:54:31Z",
+    "account_id": "2",
+    "lens_name": "Matrix Shades FX",
+    "lens_id": "145563b5-885e-4d0f-b1fd-81107439629b",
+    "checkpoint_id": "06ab6dac-80e0-7a0b-8000-eadfa39a5bdf",
+    "prompt": "Sleek minimalist matrix wireframe shades with cascading emerald phosphor digital code particles floating around temples. Opening mouth triggers shockwave pulse that freezes digital code into geometric cubes; smiling glints neon green laser beams through lenses; eyebrow raise accelerates matrix rain streams; head tilt angles code trajectory. Legendary late-90s cyberspace chic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "retro",
+      "80s",
+      "90s",
+      "70s",
+      "synthwave",
+      "vhs",
+      "camcorder",
+      "disco",
+      "y2k",
+      "nostalgia"
+    ],
+    "visual_hook": "Decades nostalgia hit: Y2K Cyberspace Liquid Wireframe Visor commands instant attention with iconic falling digital code.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/5G81hBPBLXLE9tZwYbXJF?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/IDhshiVbPcy1OLgzxYsNU?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/oHhJiAYgmSkqADKL9qwaj?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
