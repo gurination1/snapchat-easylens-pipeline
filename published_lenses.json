@@ -1290,7 +1290,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/EZvWBhpDKkAZG0PewDCFQ?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/jgfYemCy7KLyU5fIQ4Gpm?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -1386,6 +1386,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/0ppfCjcHl2B6myqqOQwiB?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/oRhCUGrQIVRsKiM9I5x1z?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-25T17:33:16Z",
+    "account_id": "5",
+    "lens_name": "Lava Flower Crown",
+    "lens_id": "ff88b0fb-cbed-4857-be9b-0cbfab637c05",
+    "checkpoint_id": "06ab6ac0-66b1-7c21-8000-6fc1deb27197",
+    "prompt": "Undulating liquid-lava flow flower crown with warm psychedelic orange, mustard, and magenta swirls. Opening mouth releases floating kaleidoscope groovy flower petals and liquid light ripple waves; smiling warms complexion with retro Woodstock sunset halation; eyebrow raise blooms psychedelic petals; head tilt ripples lava patterns. Trippy 70s bohemian aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "retro",
+      "80s",
+      "90s",
+      "70s",
+      "synthwave",
+      "vhs",
+      "camcorder",
+      "disco",
+      "y2k",
+      "nostalgia"
+    ],
+    "visual_hook": "Decades nostalgia hit: 70s Psychedelic Woodstock Flower Crown delivers mesmerizing bohemian liquid light waves.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/efo78fqTTg7dTeAnef4vF?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/WH6qmNORLgXLt29G9sohg?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/tUqD2SedI3SEZYyHtsZsD?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
