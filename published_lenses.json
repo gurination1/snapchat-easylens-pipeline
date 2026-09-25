@@ -1340,5 +1340,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/g7tWxDUnh2O23fEabrw7d?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-25T06:36:34Z",
+    "account_id": "1",
+    "lens_name": "Neon Coin Chomp",
+    "lens_id": "695b3e4f-6dc3-4ef0-8602-f0a2e0b195fc",
+    "checkpoint_id": "06ab6118-5ca5-7d5f-8000-2e4dd11a5e9a",
+    "prompt": "Retro-futuristic 3D neon arcade crown sits atop forehead. Emissive PBR gold coins tumble downward. Mouth open triggers satisfying coin chomp with kinetic 3D spark showers. Smile generates vibrant rainbow jackpot flare. Eyebrow raise initiates double-coin frenzy. Head tilt enables precise coin capture physics. High-contrast 6500K rim lighting. Zero UI, pure 3D interactive arcade challenge. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "arcade",
+      "game",
+      "retro",
+      "3d",
+      "interactive"
+    ],
+    "visual_hook": "The instant recognizable silhouette of a neon-emissive arcade crown anchors to the forehead, signaling an immediate interactive game.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/emoMgQ84I2O64XWQNIARC?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/QcTdZXvu5Fb3Txm5aru3K?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Fplt7saHNDQL4Lva8JOk0?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
