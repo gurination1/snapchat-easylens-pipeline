@@ -341,6 +341,29 @@ class EasyLensClient:
         print(f"[BOLT SUCCESS] Video uploaded successfully to: {content_url}")
         return content_url, b64_key
 
+    @staticmethod
+    def sanitize_tags(tags: list) -> list:
+        """
+        Sanitizes tags to strictly match Snapchat EasyLens V0 client rules:
+        - Max 8 tags
+        - Alphanumeric only [a-z0-9] (no spaces, punctuation, or underscores)
+        - Max 15 characters per tag
+        - Lowercase & deduplicated
+        """
+        if not tags:
+            return []
+        import re
+        sanitized = []
+        for t in tags:
+            if not isinstance(t, str):
+                continue
+            cleaned = re.sub(r'[^a-zA-Z0-9]', '', t)[:15].lower()
+            if cleaned and cleaned not in sanitized:
+                sanitized.append(cleaned)
+            if len(sanitized) >= 8:
+                break
+        return sanitized
+
     def publish_lens(
         self,
         conversation_id: str,
@@ -354,11 +377,13 @@ class EasyLensClient:
         preview_image_encryption_key: str = None
     ):
         url = f"{AILC_BASE}/assistant/publish"
+        sanitized_tags = self.sanitize_tags(tags)
         payload = {
             "conversation_id": conversation_id,
             "lens_name": lens_name,
-            "tags": tags,
+            "tags": sanitized_tags if sanitized_tags else tags,
             "source_application": "LensStudioWeb",
+            "enroll_in_payouts": True,
             "remixable": True,
             "lens_visibility": "PUBLIC"
         }
