@@ -1415,7 +1415,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/WH6qmNORLgXLt29G9sohg?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/tUqD2SedI3SEZYyHtsZsD?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -1516,6 +1516,33 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/NhDD6Tfx3BeC5ay4ZGuA9?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/5AMU5gFAsvezsa884RsLq?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-26T12:03:25Z",
+    "account_id": "5",
+    "lens_name": "Y2K Cyber Butterfly",
+    "lens_id": "f8ab241d-3cd6-4e7f-8c9b-5dab771c76a0",
+    "checkpoint_id": "06ab7b17-036c-7efc-8000-004bce2b8bea",
+    "prompt": "Stunning iridescent chrome butterfly diadem anchored to forehead. MouthOpen triggers holographic wing flutter releasing glowing prismatic glitter particles. Smile activates radiant dewy skin gloss effect across cheekbones. EyebrowRaise expands wireframe butterfly geometry. HeadTilt reflects 3D caustic light. Physical PBR materials, ray-traced shadows, 6500K rim lighting. Zero UI. Full screen 3D immersion. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "retro",
+      "cyberpunk",
+      "butterfly",
+      "diadem",
+      "holographic",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "visual_hook": "The high-contrast, reflective chrome butterfly diadem creates an instant, unmistakable silhouette that captures light dynamically.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/hftylhyzdn9zOhHVmYMi8?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/yI8NqB39bXLx4HJfjclDU?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/H73bjHvgBELHrse1LHJEM?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
