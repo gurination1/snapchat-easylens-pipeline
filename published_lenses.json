@@ -1569,5 +1569,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/Y0nyUtXMRB6ZxdCeXabf2?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-26T16:37:52Z",
+    "account_id": "3",
+    "lens_name": "Celestial Kitsune Crest",
+    "lens_id": "4df2b87d-52eb-4ec3-bc0f-fd1919712256",
+    "checkpoint_id": "06ab7f1b-c2d1-7781-8000-f2cd15fd7f3e",
+    "prompt": "Carved porcelain and polished vermilion lacquer kitsune forehead crest anchored strictly to brow, leaving eyes and mouth clear. Shimmering spirit bells and twin floating foxfire tails contouring jawline. Opening mouth erupts swirling azure spirit flame orbs with dynamic volumetric embers; smiling reveals ethereal golden fox spirit eye reflections. Pure PBR craft, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "kitsune",
+      "foxfire",
+      "spirit",
+      "crest",
+      "pbr"
+    ],
+    "visual_hook": "The instant 0.2s silhouette of a weightless, rotating chromatic gemstone halo creates an authoritative and high-tech identity.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/oyihzBMWnmg3q7m06cc5a?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/mTBiyIgy17yMoxISWGwgl?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/ntucS6T7d6eGR5DBJjMkc?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
