@@ -1618,5 +1618,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/JKu6H1BuG6BJ2ZzMQz1W2?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-26T19:48:26Z",
+    "account_id": "4",
+    "lens_name": "Neon Speed Goggles",
+    "lens_id": "f9e5ec81-ef5b-41ac-a45e-6777f20aaf0e",
+    "checkpoint_id": "06ab81d0-e1b2-7950-8000-891e9a676c93",
+    "prompt": "Ultra-lightweight matte-black alloy speed-optic goggles fitted across brow and nose bridge. Features illuminated amber and electric blue neon optical rings with internal refractive glass prism elements. PBR metallic shaders with ray-traced contact shadows. Opening mouth triggers hyperdrive chromatic warp streak particle bursts across peripheral vision; smiling pulses warm amber glow across goggles frame. Zero strobing, zero text, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "goggles",
+      "speed",
+      "neon",
+      "racing",
+      "optics"
+    ],
+    "visual_hook": "Instant 0.2s recognition of a playful 3D bunny character atop a floating pastel cloud platform game.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/QTs0Fp6aeaM1eZjxcUf2j?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/8ZTqGiZst6UoieLlFaNed?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Zf8229yvqcEovqlIn7OST?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
