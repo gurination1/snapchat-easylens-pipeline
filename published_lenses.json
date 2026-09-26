@@ -1545,5 +1545,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/H73bjHvgBELHrse1LHJEM?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-26T12:34:48Z",
+    "account_id": "2",
+    "lens_name": "Valkyrie Frost Circlet",
+    "lens_id": "91f31d69-6e10-49dd-bfa8-0d1685602d95",
+    "checkpoint_id": "06ab7b6a-b7cc-7ac1-8000-ec08408d544c",
+    "prompt": "Brushed silver and iridescent mother-of-pearl Valkyrie winged circlet fitted firmly to forehead. Photorealistic PBR metal reflections with frosted runic engravings and cool 6500K Nordic key lighting. Opening mouth summons ethereal soaring spectral raven aura; smiling ignites crystalline glacial eye glints. Seamless head tracking, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "valkyrie",
+      "winged",
+      "circlet",
+      "aurora",
+      "pbr"
+    ],
+    "visual_hook": "The high-contrast, rotating gold solar array creates an instant, unmistakable silhouette of a high-tech space station.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/D31ROjQsaqntqCUSBm2g2?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/C80dwN86vj8NHI09q2KS0?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Y0nyUtXMRB6ZxdCeXabf2?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
