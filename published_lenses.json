@@ -1386,7 +1386,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/0ppfCjcHl2B6myqqOQwiB?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/oRhCUGrQIVRsKiM9I5x1z?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -1492,6 +1492,30 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/xaj1XIRIFLe9AjclQ28dc?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/BLPUveTu4cPltuaSFBFZd?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-26T08:00:03Z",
+    "account_id": "4",
+    "lens_name": "Valkyrie Circlet",
+    "lens_id": "651664ae-e078-4163-ab3a-56c8f62530a7",
+    "checkpoint_id": "06ab7785-fb33-778e-8000-1f52d300c6e1",
+    "prompt": "Brushed silver and iridescent mother-of-pearl Valkyrie winged circlet fitted firmly to forehead. Photorealistic PBR metal reflections with frosted runic engravings and cool 6500K Nordic key lighting. Opening mouth summons ethereal soaring spectral raven aura; smiling ignites crystalline glacial eye glints. Seamless head tracking, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "valkyrie",
+      "winged",
+      "circlet",
+      "aurora",
+      "pbr"
+    ],
+    "visual_hook": "The high-contrast, multifaceted mirror geometry creates an instant, unmistakable disco-ball silhouette that demands attention.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/RuuXsy7zSzcWFZGRb0XFu?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/NhDD6Tfx3BeC5ay4ZGuA9?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/5AMU5gFAsvezsa884RsLq?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
