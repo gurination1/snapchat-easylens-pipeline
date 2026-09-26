@@ -1593,5 +1593,30 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/ntucS6T7d6eGR5DBJjMkc?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-26T17:16:37Z",
+    "account_id": "1",
+    "lens_name": "90s Cyber Camcorder Visor",
+    "lens_id": "3722b6d5-7bc6-4fd7-be06-9c22acbe2201",
+    "checkpoint_id": "06ab7f8d-c318-7e62-8000-be036210905e",
+    "prompt": "Retro-futuristic 90s cyber camcorder visor frame contoured across brow and temples with holographic rec timestamp and magnetic phosphor glass. PBR brushed titanium, cathode-ray scanline reflections. Opening mouth discharges magnetic tape-rip glitch shockwave and RGB chromatic particle split; smiling pulses neon REC battery flare; head tilt shifts scanlines. Zero strobing, pure 3D AR craft, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "camcorder",
+      "vhs",
+      "glitch",
+      "cyberpunk",
+      "visor",
+      "pbr"
+    ],
+    "visual_hook": "Instant visual recognition of falling, high-gloss 3D fruits against a clean, uncluttered face.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/23ouyXLEmPLqd9PDfG3Bh?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Qir57gBChB7JbcrChsdWx?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/JKu6H1BuG6BJ2ZzMQz1W2?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
