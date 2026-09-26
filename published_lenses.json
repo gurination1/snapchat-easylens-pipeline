@@ -1642,5 +1642,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/Zf8229yvqcEovqlIn7OST?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-26T22:36:51Z",
+    "account_id": "5",
+    "lens_name": "Aura Frequency Scanner",
+    "lens_id": "3dacfbf9-aed7-4be7-a4fd-c35540a62931",
+    "checkpoint_id": "06ab8444-3856-75db-8000-4ccac092c26e",
+    "prompt": "A floating iridescent orbital ring anchors to the forehead. High-fidelity liquid mercury geometry pulses with 3-point ray-traced lighting. Smile triggers a vibrant, swirling aurora borealis cloud erupting from the halo. Mouth open discharges a high-energy, chromatic particle shockwave. Eyebrow raise initiates a rapid biometric scan shift. Head tilt cycles through rare, glowing spectral color frequencies. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "fantasy",
+      "halo",
+      "aura",
+      "scanner",
+      "mouthopen",
+      "pbr",
+      "3d"
+    ],
+    "visual_hook": "The instant 0.2s silhouette of a weightless, liquid-mercury orbital halo creates an authoritative and high-tech identity.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/p04Aj5UtU8U27yKiwgubs?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/VDWXxSlFbPAybrvpXQr6q?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/tdfOIIzpWmqeV9vvRfASC?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
