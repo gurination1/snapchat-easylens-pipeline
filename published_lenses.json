@@ -1804,5 +1804,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/t1KUoU6g9GlSyb2tDScAV?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-27T07:26:20Z",
+    "account_id": "2",
+    "lens_name": "Neon Mood Picker",
+    "lens_id": "5c7bfa47-2d61-4ab1-9596-0ed6be9e9952",
+    "checkpoint_id": "06ab8bf7-30ec-76c7-8000-013b371dc7fe",
+    "prompt": "A 3D arch of floating holographic badges hovers above the forehead. Mouth open triggers a high-speed blur rotation of glowing icons. Smile freezes the carousel on a random selection with a burst of prismatic glitter. Eyebrow raise resets the sequence to original speed. Head tilt shifts the angle of the floating cards toward the lens. 24k gold leaf and brushed titanium materials, PBR ray-traced lighting. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "retro",
+      "neon",
+      "cards",
+      "crown",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "visual_hook": "Instant recognition of a high-speed, glowing 3D card carousel framing the face creates a curiosity-driven personality test.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/qHbOScO4i5ObKaaE3RIo3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/6xmUNCUJOY44fC4Kcvomd?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/FABEEtv3arDdHrggG6M8o?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
