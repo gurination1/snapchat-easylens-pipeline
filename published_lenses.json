@@ -1858,5 +1858,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/1ZUTpDPkLYcvB5LqiD3Wb?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-27T11:38:18Z",
+    "account_id": "1",
+    "lens_name": "Obsidian Angel Halo",
+    "lens_id": "517e8dc4-ef07-4d76-a279-3ff1c9749168",
+    "checkpoint_id": "06ab8fae-aac1-73e3-8000-1334b5460c48",
+    "prompt": "Architectural blackened iron thorn crown hovering above forehead. Features photorealistic raven feathers drifting in air. MouthOpen triggers explosive vortex of dark feathered shockwaves and violet lightning bursts. Smile pulses icy blue rim light across facial structure. EyebrowRaise extends sharp thorn spires outward. HeadTilt sways feathers with realistic inertia. PBR finish, 3-point contrast lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "fantasy",
+      "gothic",
+      "angel",
+      "crown",
+      "halo",
+      "mouthopen",
+      "vfx",
+      "pbr"
+    ],
+    "visual_hook": "The striking silhouette of an aggressive, floating blackened iron thorn crown creates an immediate, high-status dark fantasy aesthetic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/cu1MYyjgv84vrdZcrQ0Wg?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Yc0vsPDtYVCXxrqmb1iRG?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/YAaomsJ174KmGJAzhBEIf?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
