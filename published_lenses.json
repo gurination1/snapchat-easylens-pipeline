@@ -1831,5 +1831,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/FABEEtv3arDdHrggG6M8o?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-27T11:09:04Z",
+    "account_id": "3",
+    "lens_name": "Liquid Metal Fortune Crown",
+    "lens_id": "600873db-eaf6-48d6-93fb-b67a766fb65a",
+    "checkpoint_id": "06ab8f57-1197-72b9-8000-764e7f574124",
+    "prompt": "Floating liquid mercury panels surround the forehead in a 3D ring. MouthOpen triggers an explosive chrome shockwave ripple. Smile releases golden dust particles. EyebrowRaise causes the panels to reconfigure into a new sequence. HeadTilt pivots the ring geometry toward the lens. High contrast 24k gold leaf reflections, ray traced shadows, brushed titanium finish. No text, no UI, pure physical material interaction. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "fantasy",
+      "beauty",
+      "crown",
+      "metal",
+      "mercury",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "visual_hook": "The instant 0.2s silhouette of shifting, reflective liquid-metal geometry framing the face creates an elite, high-fashion authority.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/SlGi8PJ2Ew4I2wIAVjB42?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/RtvlVnfX2Ia889mphlJ75?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/1ZUTpDPkLYcvB5LqiD3Wb?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
