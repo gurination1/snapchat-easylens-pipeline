@@ -2017,5 +2017,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/jN06Y0SqdNbcJyNeMf8ZJ?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-27T20:45:10Z",
+    "account_id": "4",
+    "lens_name": "Disco Roller Crown",
+    "lens_id": "ed787e06-bdbd-4744-a886-2d9c6150ad80",
+    "checkpoint_id": "06ab97be-0c0d-728b-8000-f876cb12738d",
+    "prompt": "Wearable 70s disco ball crown anchored to hairline with brushed gold facets. PBR ray-traced mirror reflections and warm sunset rim lighting. Mouth open triggers cascading golden glitter rain. Smile emits prismatic lightbeams across the face. Eyebrow raise ignites rhythmic funk strobe pulses. Head tilt sweeps dancing mirror flares. High-fidelity glass, gold leaf, and 3-point studio lighting. Zero UI, pure 3D glam. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "retro",
+      "beauty",
+      "disco",
+      "crown",
+      "glitter",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "visual_hook": "The high-contrast silhouette of multifaceted spinning mirror facets provides an immediate, high-fashion 0.2s visual impact.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/GtxAiMPJ2m3WT2cjsm6vW?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/QuFjiuSjxpD6XfWWwIkUM?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/qkdaRCAXHt9e8QvLUMHjB?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
