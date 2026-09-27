@@ -1909,5 +1909,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/r3xvS5WfiLTAZXAnvBgdG?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-27T12:46:33Z",
+    "account_id": "5",
+    "lens_name": "Dual Choice Compass",
+    "lens_id": "77aaf08f-354d-45c1-9125-68df26cb69ae",
+    "checkpoint_id": "06ab90c5-2e15-7ad4-8000-01f64846d448",
+    "prompt": "Two floating 24k gold decision pillars anchor to temples with a central diamond compass needle. Tilting head left or right locks the selection, triggering crystalline fractures. Mouth open resets the field, smile releases golden confetti bursts, and eyebrow raise swaps the icon set. Brushed titanium aesthetic, ray-traced shadows, high-contrast studio rim lighting, zero UI, pure 3D geometry. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "fantasy",
+      "beauty",
+      "compass",
+      "crown",
+      "decision",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "visual_hook": "The immediate 0.2s silhouette of a balanced, dual-pillar gold crown creates a high-status focal point.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/YgyrjCMrRmzVKxrKCgDhk?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/K264QUSJ3q6zcaYkrxzOJ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Wwk4R6Z7KLgmqPeoi9sS8?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
