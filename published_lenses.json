@@ -1723,5 +1723,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/sFBq6f6TahRYs2CmEQJQk?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-27T06:14:15Z",
+    "account_id": "1",
+    "lens_name": "Arcade Coin Chomp",
+    "lens_id": "3c91bb74-67e5-4a9e-b60c-5398ea47174e",
+    "checkpoint_id": "06ab8af1-d2d6-7349-8000-53aa358a963d",
+    "prompt": "Wearable brushed titanium arcade crown anchors to forehead. High-gloss physical 3D gold tokens tumble downward toward mouth. MouthOpen triggers chomp particle torrent with bright starbursts. Smile emits rainbow jackpot glitter. EyebrowRaise initiates rapid double-coin frenzy. HeadTilt shifts trajectory. Zero UI. Pure 3D PBR materials with directional rim lighting. Intense metallic luster, no textures. Immersive game loop. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "arcade",
+      "game",
+      "coin",
+      "gold",
+      "token",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "visual_hook": "Instant recognition of high-gloss gold tokens cascading toward the mouth creates a high-stakes dopamine reflex challenge.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/8S26qxIXHDr3COdYtuM2X?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/qjlG85q07FyLrgcrwoFFI?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/ZiSwLMo3MOLi67EeewAdm?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
