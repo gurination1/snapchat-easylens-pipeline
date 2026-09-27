@@ -34,12 +34,14 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   run-autonomous-agent:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: write
 
     steps:
       - name: Checkout Code
@@ -239,3 +241,11 @@ jobs:
           if [ "$PUSH_SUCCESS" != "true" ]; then
             echo "WARNING: Could not push pipeline state after 5 attempts!"
           fi
+
+      - name: Trigger Fleet Watchdog & Catch-Up Cascade
+        if: always() && steps.pacing.outputs.skip_run != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
+        run: |
+          echo "=== [FLEET CASCADE] RE-EVALUATING QUOTA & CATCHING UP IDLE ACCOUNTS ==="
+          python3 snapchat_fleet_watchdog.py

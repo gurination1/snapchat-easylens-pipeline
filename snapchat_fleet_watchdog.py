@@ -16,13 +16,13 @@ from resolve_target_account import resolve_fleet_target
 REPO = "gurination1/snapchat-easylens-pipeline"
 
 
-def check_active_runs(repo: str = REPO) -> bool:
+def check_active_runs(repo: str = REPO, ignore_run_id: str = None) -> bool:
     """Check if any pipeline run is currently in progress or queued."""
     cmd = [
         "gh", "run", "list",
         "--repo", repo,
         "--workflow", "snapchat_easylens.yml",
-        "--limit", "3",
+        "--limit", "5",
         "--json", "databaseId,status"
     ]
     try:
@@ -30,9 +30,14 @@ def check_active_runs(repo: str = REPO) -> bool:
         if res.returncode != 0:
             return False
         runs = json.loads(res.stdout)
+        self_run_id = ignore_run_id or os.environ.get("GITHUB_RUN_ID")
         for r in runs:
+            run_id_str = str(r.get("databaseId"))
+            if self_run_id and run_id_str == str(self_run_id):
+                # Ignore self if watchdog is triggered during workflow completion step
+                continue
             if r.get("status") in ("in_progress", "queued"):
-                print(f"[WATCHDOG] Active run detected on GHA: Run ID {r.get('databaseId')} ({r.get('status')})")
+                print(f"[WATCHDOG] Active run detected on GHA: Run ID {run_id_str} ({r.get('status')})")
                 return True
         return False
     except Exception as e:
@@ -46,6 +51,7 @@ def dispatch_catchup(account_id: str = "auto", repo: str = REPO) -> bool:
         "gh", "workflow", "run",
         "snapchat_easylens.yml",
         "--repo", repo,
+        "--ref", "main",
         "-f", f"account_id={account_id}"
     ]
     try:
