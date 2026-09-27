@@ -1750,5 +1750,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/ZiSwLMo3MOLi67EeewAdm?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-27T06:36:27Z",
+    "account_id": "4",
+    "lens_name": "Kinetic Laser Dodge",
+    "lens_id": "e833ff8f-3033-47af-9327-81f371c84173",
+    "checkpoint_id": "06ab8b54-141e-717d-8000-263f7779cea4",
+    "prompt": "Floating geometric barrier grid approaches face. Head tilt navigates left or right to weave through incoming light blades. Opening mouth deploys a hexagonal energy shield that shatters beams into brilliant white spark showers. Smiling triggers a vibrant green pulse across the environment. Eyebrow raise activates a localized chrono-stutter effect. Physically accurate 3D materials with high-contrast ray-traced lighting. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "gaming",
+      "action",
+      "laser",
+      "shield",
+      "dodge",
+      "mouthopen",
+      "selfie",
+      "3d"
+    ],
+    "visual_hook": "The immediate psychological hook is the high-stakes, obstacle-course silhouette that forces instinctive head movement.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/eVE7ugAYNuwcTyKl7rMMX?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/OFN1X0X1RJZULbfE99LYa?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/2Sv7jTzdBKAVbJs8CKPUX?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
