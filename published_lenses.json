@@ -1990,5 +1990,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/RWThnU64VddXJQmd6DHH2?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-27T18:23:53Z",
+    "account_id": "1",
+    "lens_name": "Gargantua Event Horizon",
+    "lens_id": "71365564-46b5-4caa-947a-594b5d69290b",
+    "checkpoint_id": "06ab959d-69f3-7c17-8000-ad1815c9eb9f",
+    "prompt": "A 3D gravitational light bending black hole crown floats above the forehead. Rendered in brushed titanium and ionized gold leaf with ray traced contact shadows. Mouth open triggers vertical blue plasma jets shooting upward. Smiling initiates a gravitational lensing swirl of stars. Eyebrow raise accelerates the accretion vortex. Head tilt distorts the event horizon ring geometry. Zero UI, high contrast 6500K lighting. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "space",
+      "fantasy",
+      "blackhole",
+      "gravity",
+      "galaxy",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "visual_hook": "The unmistakable, high-contrast silhouette of a gravitational light-bending black hole crown framing the forehead.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/h6RTZCRr3gYMhFKyq46xp?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/6j2fxHxbZ426CIZZLbKyt?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/jN06Y0SqdNbcJyNeMf8ZJ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
