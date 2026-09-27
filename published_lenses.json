@@ -1696,5 +1696,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/XkOc9esrtM8UAPBYuN3Rv?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-27T05:19:22Z",
+    "account_id": "3",
+    "lens_name": "Solar Orbit Halo",
+    "lens_id": "cb99f1ec-feac-4a20-bf71-8b954758e2e1",
+    "checkpoint_id": "06ab8a40-d95b-7a97-8000-fd0b00b90b7f",
+    "prompt": "Photorealistic 3D planetarium crown orbiting head. Brushed gold Sun at apex, detailed Saturn rings, and marble Earth traverse smooth elliptical paths with drifting stardust. Mouth open triggers a brilliant supernova starburst with expanding asteroid shockwaves. Smiling illuminates intense solar flares from brow. Eyebrow raise expands orbital radius. Head tilt shifts Saturn ring plane. High PBR gold leaf finish, 3-point cinematic lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "space",
+      "fantasy",
+      "planet",
+      "orbit",
+      "gold",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "visual_hook": "The 0.2s silhouette of a dynamic, gold-leaf solar system crown creates an immediate, high-authority space-age aesthetic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/ujzrhKeybBx7fg2hvmgXN?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/MbI70yH6MLpXTeUYi6A6E?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/sFBq6f6TahRYs2CmEQJQk?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
