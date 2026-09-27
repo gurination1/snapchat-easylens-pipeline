@@ -1885,5 +1885,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/YAaomsJ174KmGJAzhBEIf?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-27T12:02:49Z",
+    "account_id": "4",
+    "lens_name": "Apex Spectre Visor",
+    "lens_id": "c2acff6f-bfad-49f2-bf76-be6252b2a3b9",
+    "checkpoint_id": "06ab9021-e64d-76e5-8000-c6dc68bbcd7f",
+    "prompt": "Faceted obsidian and dichroic glass stealth visor contoured across brow and temples. PBR metallic luster with 3-point contrast violet rim lighting. Opening mouth emits radial sonic particle shockwave with refractive edge displacement; smiling pulses brilliant violet prism reflections across glass face. Zero strobing, zero 3D particle shockwaves, zero screen text, pure 3D mesh only. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "spectre",
+      "stealth",
+      "visor",
+      "prismatic",
+      "hud"
+    ],
+    "visual_hook": "The high-contrast silhouette of a multifaceted, reflective disco crown provides an immediate, glamorous 0.2s visual hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/IoIpT4MkTc62RNN08cd1P?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/CPWw84DFhgp7hbbDjwIrJ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/r3xvS5WfiLTAZXAnvBgdG?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
