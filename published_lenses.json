@@ -1777,5 +1777,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/2Sv7jTzdBKAVbJs8CKPUX?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-27T06:56:36Z",
+    "account_id": "5",
+    "lens_name": "Mystic Tarot Vibe",
+    "lens_id": "ca961ef8-21ef-4539-a1d0-08de9f927c1c",
+    "checkpoint_id": "06ab8ba7-f2c2-7c1f-8000-7ef2f431e824",
+    "prompt": "Floating 3D holographic tarot cards rotate above brow in a weightless ring. Mouth open triggers a rapid card shuffle blur. Smiling locks the card on a vibrant celestial illustration with gold leaf particles. Eyebrow raise resets the deck. Head tilt shifts card perspective toward camera. High fidelity PBR surfaces with caustic light reflections. No text or UI. 3-point contrast lighting with rim flare. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "fantasy",
+      "beauty",
+      "tarot",
+      "cards",
+      "vibe",
+      "mouthopen",
+      "selfie",
+      "3d"
+    ],
+    "visual_hook": "The unexpected, high-speed rotation of mysterious, glowing 3D cards creates an immediate curiosity gap.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/Otyzh0rOf3dnl6j6w3Npx?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/DoMeSUh9TgWixaPl5FzMz?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/t1KUoU6g9GlSyb2tDScAV?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
