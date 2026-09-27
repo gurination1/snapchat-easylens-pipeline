@@ -1936,5 +1936,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/Wwk4R6Z7KLgmqPeoi9sS8?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-27T13:16:04Z",
+    "account_id": "2",
+    "lens_name": "Kinetic Aura Spinner",
+    "lens_id": "95c103b6-30ee-4298-a60e-6dfc9589f872",
+    "checkpoint_id": "06ab9115-62ab-7f00-8000-20413133e87f",
+    "prompt": "Floating above brow, a rapid ring of prismatic glass icons rotates in high-speed orbital motion. MouthOpen triggers an explosive radial expansion of light particles. A Smile locks the central frame with a brilliant diamond flare. EyebrowRaise resets the sequence with a sharp kinetic snap. HeadTilt shifts the radial plane toward the lens. PBR materials of polished quartz and iridium. 3-point contrast lighting for depth. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "fantasy",
+      "ring",
+      "icons",
+      "orbital",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "visual_hook": "The 0.2s silhouette of a high-speed, prismatic glass orbital ring creates an immediate, high-status curiosity gap.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/La1tuobUAa1hKGyQccOdD?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/moDhVYBCWLcmKEKN9OPBW?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/bMolClHhL1KuViueAsXoM?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
