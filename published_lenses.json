@@ -2125,5 +2125,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/6YFu7WQGlsdJcy22nEium?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-28T07:48:11Z",
+    "account_id": "1",
+    "lens_name": "Zeus Olympian Thunderbolt",
+    "lens_id": "f12f2e80-f9d3-4208-bc55-7b8a0825e5f8",
+    "checkpoint_id": "06aba15f-1689-7905-8000-b7386a28d361",
+    "prompt": "Beaten 24k gold lightning laurel crown anchored to brow. High-contrast PBR textures, caustic gold light, 6500K rim lighting. MouthOpen triggers explosive celestial thunderbolt shockwave. Smile ignites brilliant electric blue iris flare. EyebrowRaise sparks crackling plasma crown. HeadTilt discharges golden lightning embers. Zero UI, zero overlays, pure 3D artifact anchoring. Photorealistic metallic brilliance, storm energy. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "fantasy",
+      "myth",
+      "zeus",
+      "lightning",
+      "laurel",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "visual_hook": "The striking 0.2s silhouette of a jagged, hyper-reflective golden laurel crown immediately signals high-status divinity.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/P8VADTseo3qy332U2lYZO?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/R0dDy5ercj9krLdbpPWwB?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/ttI3Ds2PIctAZgV8v8wK3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
