@@ -2152,5 +2152,29 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/ttI3Ds2PIctAZgV8v8wK3?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-28T09:06:06Z",
+    "account_id": "4",
+    "lens_name": "Stormcloud Tears",
+    "lens_id": "c9ea91ad-5d4e-4589-88d9-5f55bf56d28b",
+    "checkpoint_id": "06aba291-ddec-7c03-8000-91bc66d220a5",
+    "prompt": "Fluffy 3D cartoon stormcloud hovering directly above head with gentle glowing rain droplets and soft ambient thunder light. PBR volumetric stylization, 3-point contrast lighting. Opening mouth erupts an exaggerated geyser of liquid mercury tears and spinning 24k gold coins bouncing off screen frame; smiling triggers a dramatic cartoon lightning rim flash. Physics-driven, zero strobe. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "meme",
+      "crying",
+      "funny",
+      "cloud",
+      "cartoon"
+    ],
+    "visual_hook": "Viral meme reaction: exaggerated 3D Mini Laughing Golden Skull detonates comical chaos on mouth open.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/6sxA1ShItQO3a4XLhtH1b?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/HTnBUJFD5IkD4XsX6BmjV?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/eNbeOJX24xp1gR09Lb3GR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
