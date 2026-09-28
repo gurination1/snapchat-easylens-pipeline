@@ -2044,5 +2044,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/qkdaRCAXHt9e8QvLUMHjB?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-28T00:01:54Z",
+    "account_id": "5",
+    "lens_name": "This or That Dual Neon Decision Pillars",
+    "lens_id": "07e88593-b8d9-4f0c-b8cc-e1b31ce88a1c",
+    "checkpoint_id": "06ab9a9a-4239-733c-8000-0384bd5da160",
+    "prompt": "Floating twin neon decision cards anchored to left and right temples with oscillating center compass needle. Head tilt left or right decisively slams needle into chosen option, detonating winner particle explosions; opening mouth clears choice for next round; smiling triggers jackpot; eyebrow raise flips options. Social decision game, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "randomizer",
+      "wheel",
+      "decision",
+      "tarot",
+      "vibe",
+      "quiz",
+      "interactive",
+      "viral"
+    ],
+    "visual_hook": "Viral interactive game: This or That Decision Pillars turns everyday dilemmas into high-stakes head-tilt choices.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/6CdocsDXwpwKuyT8Nfz4J?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/NDCGhIdywaB434TtcCJc5?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Aan4jEpiwCmoFfeeLVbV7?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
