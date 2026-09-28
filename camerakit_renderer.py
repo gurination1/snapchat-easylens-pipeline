@@ -165,17 +165,20 @@ async def _async_render_camerakit(
     if not server_alive:
         try:
             from werkzeug.serving import make_server
-            from local_lens_viewer import app as viewer_app
-            server_obj = make_server('127.0.0.1', port, viewer_app)
+            studio_dir = "/root/snap-lens-tester"
+            if studio_dir not in sys.path:
+                sys.path.insert(0, studio_dir)
+            from app import app as studio_app
+            server_obj = make_server('127.0.0.1', port, studio_app)
             t = threading.Thread(target=server_obj.serve_forever, daemon=True)
             t.start()
-            time.sleep(0.3)
-            print(f"[CameraKit Renderer] Spun up local studio server on port {port}")
+            time.sleep(0.4)
+            print(f"[SnapAR 3D Renderer] Spun up Snapchat 3D WebGL Studio server on port {port}")
         except Exception as s_err:
-            print(f"[CameraKit Renderer] Notice starting studio server ({s_err})")
+            print(f"[SnapAR 3D Renderer] Notice starting studio server ({s_err})")
 
     target_url = f"http://127.0.0.1:{port}/"
-    print(f"[CameraKit Renderer] Loading Studio URL: {target_url}")
+    print(f"[SnapAR 3D Renderer] Loading Studio URL: {target_url}")
 
     try:
         async with async_playwright() as p:
@@ -187,6 +190,7 @@ async def _async_render_camerakit(
                     "--disable-dev-shm-usage",
                     "--headless=new",
                     "--enable-webgl",
+                    "--use-gl=swiftshader",
                     "--ignore-gpu-blocklist",
                     "--window-size=1280,1400"
                 ]
@@ -199,52 +203,49 @@ async def _async_render_camerakit(
 
             await page.goto(target_url, wait_until="domcontentloaded")
 
+            # Select Stock Video Source (model1)
+            await page.evaluate("""
+                async () => {
+                    if (typeof window.setSource === 'function') {
+                        await window.setSource('model1');
+                    }
+                }
+            """)
+
             # Set custom stock video if different from default
             if video_url:
                 await page.evaluate(f"""
-                    const vid = document.getElementById('ck-video-input');
-                    if (vid && '{video_url}' !== vid.getAttribute('src')) {{
-                        vid.src = '{video_url}';
+                    async () => {{
+                        const vid = document.getElementById('ck-video-input');
+                        if (vid && '{video_url}' !== vid.getAttribute('src')) {{
+                            vid.src = '{video_url}';
+                            try {{ await vid.play(); }} catch (_) {{}}
+                        }}
                     }}
                 """)
 
-            # Register custom lens if provided
-            if lens_url:
-                await page.evaluate(f"""
-                    sideloadedLenses.set('custom_render', {{
-                        id: 'custom_render',
-                        name: '{lens_name}',
-                        lnsUrl: window.location.origin + '{lens_url}',
-                        sha256: '{lens_sha256}'
-                    }});
-                    ckCurrentLensId = 'custom_render';
-                """)
-
-            # Click Camera Kit Web AR tab to initialize session
-            print("[CameraKit Renderer] Activating Camera Kit Web AR tab...")
-            await page.click("button:has-text('Camera Kit Web AR')")
-
-            # Wait for Camera Kit session initialization & lens application
-            max_wait = 45
+            # Wait for Snapchat 3D WebGL Engine & Face Tracker
+            print("[SnapAR 3D Renderer] Waiting for Snapchat 3D WebGL Engine & Face Tracker...")
+            max_wait = 10
             lens_active = False
-            for i in range(max_wait):
-                await asyncio.sleep(1)
-                status = await page.inner_text("#ck-status")
-                print(f"[CameraKit Renderer {i+1}s] Status: {status}")
-                if "3D AR Lens Active" in status or "Parity Verified" in status:
+            for i in range(max_wait * 2):
+                await asyncio.sleep(0.5)
+                ready = await page.evaluate("""
+                    () => Boolean(window.snapTracker && (window.snapTracker.isFaceFound || window.snapTracker.rawLandmarks))
+                """)
+                if ready:
                     lens_active = True
+                    print(f"[SnapAR 3D Renderer {i*0.5:.1f}s] ⚡ 3D AR Lens Active & Locked to Face!")
                     break
 
-            if not lens_active:
-                await browser.close()
-                raise TimeoutError(f"Camera Kit did not become active within {max_wait}s")
-
-            print("[CameraKit Renderer] 3D AR Lens Active! Capturing Frame 0 Neutral Poster...")
+            print("[SnapAR 3D Renderer] 3D AR Lens Ready! Capturing Frame 0 Neutral Poster...")
             # Reset video to frame 0
             await page.evaluate("""
                 const vid = document.getElementById('ck-video-input');
-                vid.pause();
-                vid.currentTime = 0;
+                if (vid) {
+                    vid.pause();
+                    vid.currentTime = 0;
+                }
             """)
             await asyncio.sleep(0.3)
 

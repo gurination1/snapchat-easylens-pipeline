@@ -18,3 +18,4 @@ artifacts/
 !assets/*.mp4
 !assets/**/*.mp4
 latest_published_run/
+assets/gate7_active_bundle.lns

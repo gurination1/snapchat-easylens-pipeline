@@ -1348,6 +1348,20 @@ def extract_json(raw_text: str) -> dict:
             if m2:
                 res[key] = m2.group(1).replace("\n", " ").strip()
 
+    if "lens_name" not in res:
+        nm = re.search(r'"(?:lens_name|name|title)"\s*:\s*"([^"\n]+)"', text)
+        if nm:
+            res["lens_name"] = nm.group(1).strip()
+
+    if "prompt" not in res:
+        pm = re.search(r'"prompt"\s*:\s*"(.*?)"\s*,\s*"tags"', text, re.DOTALL)
+        if not pm:
+            pm = re.search(r'"prompt"\s*:\s*"(.*?)(?:"\s*\}|"\s*$|\n\s*"\w+"\s*:)', text, re.DOTALL)
+        if not pm:
+            pm = re.search(r'"(?:prompt|description|concept)"\s*:\s*"([^"\n]+)', text)
+        if pm:
+            res["prompt"] = pm.group(1).replace("\n", " ").strip()
+
     tags_m = re.search(r'"tags"\s*:\s*\[(.*?)\]', text, re.DOTALL)
     if tags_m:
         raw_tags = [re.sub(r'["\x27]', '', t).strip() for t in tags_m.group(1).split(",") if t.strip()]
@@ -1474,7 +1488,8 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "", e
         "generationConfig": {
             "responseMimeType": "application/json",
             "temperature": 0.75,
-            "maxOutputTokens": 2048
+            "maxOutputTokens": 4096,
+            "thinkingConfig": {"thinkingBudget": 0}
         }
     }
 
