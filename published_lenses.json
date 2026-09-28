@@ -2311,5 +2311,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/F5MnlcaZsUs8ggc5BrNDN?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-28T17:32:17Z",
+    "account_id": "5",
+    "lens_name": "Which Vibe Are You? Neon Floating Card Carousel",
+    "lens_id": "9bff9ab9-6777-4116-a923-a36ba65422b4",
+    "checkpoint_id": "06aba9ef-7149-7cee-8000-76eb99b0d433",
+    "prompt": "High-energy floating neon cards flipping rapidly above brow with viral mood titles. Blinking or smiling locks the winner in a burst of sparkling neon confetti and celebratory sound chimes; opening mouth spins cards into hyper-speed blur; eyebrow raise resets the shuffle; head tilt tilts cards toward camera. Viral social challenge magnet, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "randomizer",
+      "wheel",
+      "decision",
+      "tarot",
+      "vibe",
+      "quiz",
+      "interactive",
+      "viral"
+    ],
+    "visual_hook": "Viral interactive game: Which Vibe Are You? drives massive comment debates and social share velocity.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/mTJYhRnRgEE2kdGYzVvfy?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/iWbbG8Ueh0u5s0jnpmk8J?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/AbxfODSj5ZKE0hyd7O4YZ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
