@@ -2284,5 +2284,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/9vWsfHJl5KjjEsk8QH5sT?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-28T17:01:55Z",
+    "account_id": "4",
+    "lens_name": "Zero-G Chrome Tesseract Halo",
+    "lens_id": "d6ed491f-5aef-41b7-a64e-ffbde87411bf",
+    "checkpoint_id": "06aba97d-e627-7ec1-8000-4a0f1fe1e66d",
+    "prompt": "Weightless 4D liquid chrome tesseract frame rotating smoothly above head with mirrored vertices. Anisotropic reflections, ray-traced contact shadows. Opening mouth triggers gravitational shockwave ripple warping ambient reflections; smiling flashes prismatic chromatic aberration rings along cheek contours; eyebrow raise accelerates tesseract 4D rotation; head tilt distorts liquid chrome vertices. Y3K surrealism, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "surreal",
+      "chrome",
+      "mercury",
+      "y3k",
+      "zerog",
+      "halo",
+      "fluid",
+      "pbr"
+    ],
+    "visual_hook": "Hypnotic Y3K surrealism: zero-G Zero-G Chrome Tesseract Halo ripples with warped environmental reflections in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/aj2zsRXhfoyftUMJnYTpA?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/MHtLuzUOIgTHerPo6B4Hw?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/F5MnlcaZsUs8ggc5BrNDN?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
