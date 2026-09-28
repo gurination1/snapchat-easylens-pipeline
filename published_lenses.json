@@ -2203,5 +2203,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/Y8SyJDZTNrJ2IzS5lKLAx?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-28T09:53:00Z",
+    "account_id": "2",
+    "lens_name": "Chromatic Aura Scanner",
+    "lens_id": "59ba9f66-8cdd-466e-984c-d7c5df59b234",
+    "checkpoint_id": "06aba35d-5055-7ac2-8000-4253872a8e9c",
+    "prompt": "Floating crystalline ring crowns forehead, projecting iridescent biometric beams. Smile triggers radiant gold aura expansion. MouthOpen releases explosive prismatic shockwave. EyebrowRaise initiates rapid light frequency re-scan. HeadTilt cycles through seven spectral color states. 24k gold leaf and brushed titanium geometry, cinematic ray-traced lighting, 6500K rim light, zero UI, pure volumetric energy. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "fantasy",
+      "aura",
+      "scanner",
+      "crown",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "visual_hook": "The immediate 0.2s silhouette of a weightless, high-contrast floating crystalline halo creates an elite curiosity gap.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/31p8Pffyj0SHntfZysCsz?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/6ePYqDHnWj3mJtBqURrJ4?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/6JQxTkBwKyrCXt6IzMtjt?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
