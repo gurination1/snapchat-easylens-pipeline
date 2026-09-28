@@ -2071,5 +2071,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/Aan4jEpiwCmoFfeeLVbV7?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-28T02:31:38Z",
+    "account_id": "2",
+    "lens_name": "Vibe Ranker Crown",
+    "lens_id": "d1be3724-00b4-4126-881d-3c41a2a0c26e",
+    "checkpoint_id": "06ab9cb4-2da8-7d09-8000-213070150ebc",
+    "prompt": "Floating 3D metallic tablets orbit forehead in rapid radial motion. PBR brushed titanium surfaces catch 6500K rim light. MouthOpen initiates high-velocity blur rotation. Smile locks random tablet into fixed frontal display with golden flare burst. EyebrowRaise triggers immediate shuffle reset. HeadTilt angles floating geometry depth. Zero text. 3D mesh particles only. High contrast ray-traced shadows. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "fantasy",
+      "visor",
+      "halo",
+      "crown",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "visual_hook": "The instant 0.2s silhouette of high-speed, metallic orbital tablets framing the face creates an elite curiosity-driven personality test.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/UDzlM0kNc4IlfeRaHpSDF?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/rntAzBQgg4F0zkYxM6qrD?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/pf1XK3kGLQ5KMyEOWh1uM?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
