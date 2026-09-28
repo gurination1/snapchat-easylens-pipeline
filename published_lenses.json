@@ -2230,5 +2230,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/6JQxTkBwKyrCXt6IzMtjt?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-28T15:52:31Z",
+    "account_id": "3",
+    "lens_name": "Necromancer Soul Crown",
+    "lens_id": "836a918a-d3b7-45e7-b72a-15eb84d16213",
+    "checkpoint_id": "06aba886-ee0c-746c-8000-7ba565b4b993",
+    "prompt": "Regal gothic coronet of brushed electrum skulls framing the forehead with PBR metallic finish. Floating cyan soulfire wisps orbit temples. Mouth open triggers a violent surge of ghostly soulfire rings expanding outward. Smiling ignites piercing cyan eye luminescence. Eyebrow raise flares crown spires in intense necrotic flame. Head tilt releases long trailing ghostly soul smoke. Sovereign underworld aesthetic, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "gothic",
+      "fantasy",
+      "skull",
+      "crown",
+      "soulfire",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "visual_hook": "The 0.2s silhouette of electrum skulls framing the forehead commands immediate elite status.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/VaB1lz4dCYYj5JrXtrEHe?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/n9g8kHrd9skTDXKNItfbT?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/ETFdt0V8YU76Ef4VazLj9?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
