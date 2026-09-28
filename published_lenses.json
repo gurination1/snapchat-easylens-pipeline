@@ -2176,5 +2176,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/eNbeOJX24xp1gR09Lb3GR?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-28T09:33:50Z",
+    "account_id": "5",
+    "lens_name": "Aphrodite Seafoam Tiara",
+    "lens_id": "9795cd71-6c7a-4070-a01a-281db69cf3a5",
+    "checkpoint_id": "06aba2f8-9e70-7815-8000-92343c0982bd",
+    "prompt": "Iridescent mother-of-pearl scallop crown anchored to forehead with floating baroque freshwater pearls. MouthOpen triggers explosive oceanic sea-auroral sparkles with luminescent bubbles. Smile activates warm Aegean sunlight and high-glamour pearlescent skin sheen. EyebrowRaise expands central seashell crest. HeadTilt sways floating pearls. PBR materials, 3-point lighting, ray-traced caustics, cinematic ocean goddess beauty. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "fantasy",
+      "shell",
+      "pearl",
+      "tiara",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "visual_hook": "The bold, curved silhouette of an iridescent mother-of-pearl crown creates an instant high-status oceanic focal point.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/BZCOMXMAfZkdBLIGL7kwV?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/MgQFtfYqQUUjOdRNi1SX9?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Y8SyJDZTNrJ2IzS5lKLAx?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
