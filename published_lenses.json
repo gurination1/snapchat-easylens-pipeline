@@ -2098,5 +2098,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/pf1XK3kGLQ5KMyEOWh1uM?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-28T07:15:45Z",
+    "account_id": "3",
+    "lens_name": "Fortune Tarot Flip",
+    "lens_id": "76db461d-36e7-445a-9c56-58d7d562e3f2",
+    "checkpoint_id": "06aba0f7-1094-79b8-8000-672963215785",
+    "prompt": "Floating glass cards orbit forehead in 3D arc. Mouth open triggers rapid card blur expansion. Smile locks selection within golden sparkle shower. Eyebrow raise reverses shuffle direction. Head tilt shifts perspective angle. Materials: brushed titanium, obsidian, etched quartz. 3-point directional lighting, ray-traced shadows, zero UI, no text, no overlays. High-energy physics-based interactive personality game. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "fantasy",
+      "tarot",
+      "cards",
+      "fortune",
+      "mouthopen",
+      "selfie",
+      "3d"
+    ],
+    "visual_hook": "The instant 0.2s silhouette of rapidly orbiting, reflective glass cards creates an elite curiosity-driven personality test.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/5N4O990EFQ7g6KnGsXNW0?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/0SUmE53X2oRQspTT2y25t?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/6YFu7WQGlsdJcy22nEium?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
