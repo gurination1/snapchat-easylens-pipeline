@@ -2566,5 +2566,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/vDUt1A7mAbfxLghi62GD9?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-29T23:04:45Z",
+    "account_id": "4",
+    "lens_name": "Street Grind Snapback",
+    "lens_id": "60ac987f-469f-4925-a01d-c0771758dd20",
+    "checkpoint_id": "06abc3ed-8b76-78bd-8000-111b29657ad4",
+    "prompt": "Authentic flat-brim streetwear cap worn backwards with brushed titanium chrome logo. Mouth open triggers explosive kinetic skateboard kickflip spark burst with expanding bass shockwave rings. Smile activates warm golden street-lamp halation across face. Eyebrow raise tilts snapback brim. Head tilt leaves trailing orange grind sparks across temples. High-contrast PBR street culture design, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "street",
+      "sports",
+      "snapback",
+      "cap",
+      "grind",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "street_skate_snapback_sparks",
+    "channel_id": "17",
+    "visual_hook": "The 0.2s silhouette of a high-fashion, backwards flat-brim cap provides an instant urban-cool aesthetic hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/kOlmgkHXimA746YhWQifa?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/LgtT7XGEANZwwLld21Goo?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/A6ek3SydmpB1Fu5ckFqrq?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
