@@ -381,33 +381,27 @@ class EasyLensClient:
         payload = {
             "conversation_id": conversation_id,
             "lens_name": lens_name,
-            "tags": sanitized_tags if sanitized_tags else tags,
             "source_application": "LensStudioWeb",
             "enroll_in_payouts": True,
             "remixable": True,
             "lens_visibility": "PUBLIC"
         }
+        if sanitized_tags:
+            payload["tags"] = sanitized_tags
+        elif tags:
+            payload["tags"] = tags
         if preview_url:
             payload["lens_preview_url"] = preview_url
-            payload["preview_video_url"] = preview_url
         if preview_encryption_key:
             payload["lens_preview_encryption_key"] = preview_encryption_key
-            payload["preview_video_encryption_key"] = preview_encryption_key
         if icon_url:
             payload["lens_icon_url"] = icon_url
-            payload["icon_url"] = icon_url
         if icon_encryption_key:
             payload["lens_icon_encryption_key"] = icon_encryption_key
-            payload["icon_encryption_key"] = icon_encryption_key
-        if preview_image_url:
-            payload["lens_preview_image_url"] = preview_image_url
-            payload["preview_image_url"] = preview_image_url
-            payload["web_lens_preview_url"] = preview_image_url
-        if preview_image_encryption_key:
-            payload["lens_preview_image_encryption_key"] = preview_image_encryption_key
-            payload["preview_image_encryption_key"] = preview_image_encryption_key
 
         res = self._request_with_retry("POST", url, json=payload, timeout=25)
+        if not res.ok:
+            print(f"[PUBLISH ERROR] Snapchat API {res.status_code}: {res.text}")
         res.raise_for_status()
         data = res.json()
         print(f"[PUBLISH SUBMITTED] Response: {json.dumps(data)}")
