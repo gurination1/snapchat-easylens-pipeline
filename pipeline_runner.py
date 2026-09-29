@@ -360,6 +360,7 @@ def main():
     failed_archetypes = []
     attempted_blueprint_names = []
     curr_archetype_id = None
+    curr_channel_id = None
 
     for attempt in range(1, MAX_ATTEMPTS + 1):
         print(f"\n{'='*60}")
@@ -387,9 +388,10 @@ def main():
                 lens_name = gemini_plan["lens_name"]
                 tags = gemini_plan.get("tags", static_tags)
                 curr_archetype_id = gemini_plan.get("archetype")
+                curr_channel_id = gemini_plan.get("channel_id")
                 with open("gemini_generation_plan.json", "w") as f:
                     json.dump(gemini_plan, f, indent=2)
-                print(f"[GEMINI SUCCESS] Lens: {lens_name} (Archetype: {curr_archetype_id})")
+                print(f"[GEMINI SUCCESS] Lens: {lens_name} (Archetype: {curr_archetype_id}, Channel: {curr_channel_id})")
                 print(f"[GEMINI SUCCESS] Hook: {gemini_plan.get('visual_hook')}")
             except Exception as e:
                 print(f"[GEMINI WARN] Gemini synthesis failed ({e}), falling back to offline verified LRU blueprint...")
@@ -397,12 +399,16 @@ def main():
                 prompt = active_fallback["prompt"]
                 lens_name = active_fallback["lens_name"]
                 tags = active_fallback["tags"]
+                curr_archetype_id = active_fallback.get("archetype")
+                curr_channel_id = active_fallback.get("channel_id")
         else:
             print(f"\n=== STEP 0: ZERO-MISTAKE CIRCUIT BREAKER (ATTEMPT {attempt}/{MAX_ATTEMPTS}): Engaging offline verified LRU blueprint ===")
             active_fallback = select_lru_fallback(ACCOUNT_ID, exclude_names=attempted_blueprint_names)
             prompt = active_fallback["prompt"]
             lens_name = active_fallback["lens_name"]
             tags = active_fallback["tags"]
+            curr_archetype_id = active_fallback.get("archetype")
+            curr_channel_id = active_fallback.get("channel_id")
             print(f"[CIRCUIT BREAKER] Blueprint: '{lens_name}' (Excluded: {attempted_blueprint_names})")
 
         if lens_name:
@@ -607,6 +613,8 @@ def main():
             "checkpoint_id": checkpoint_id,
             "prompt": prompt,
             "tags": tags,
+            "archetype": curr_archetype_id or "",
+            "channel_id": curr_channel_id or "",
             "visual_hook": (gemini_plan or {}).get("visual_hook", "") if USE_GEMINI else "",
             "has_preview_video": bool(preview_url),
             "preview_url": preview_url,

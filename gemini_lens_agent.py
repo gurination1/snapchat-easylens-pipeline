@@ -1036,29 +1036,67 @@ def select_channel_archetype(account_id: str, history: list, exclude_archetypes:
     fleet_last_ts = {a["id"]: "" for a in all_archetypes}
     acc_counts = {a["id"]: 0 for a in all_archetypes}
 
+    arch_map = {a["id"]: a for a in all_archetypes}
+
+    def get_lens_channel(lens_entry):
+        if not lens_entry:
+            return None
+        if lens_entry.get("channel_id"):
+            return str(lens_entry.get("channel_id"))
+        if lens_entry.get("archetype") and str(lens_entry.get("archetype")) in arch_map:
+            return arch_map[str(lens_entry.get("archetype"))]["channel_id"]
+
+        lens_title = lens_entry.get("lens_name", "").lower()
+        for a in all_archetypes:
+            arch_title_stem = a["name"].split("&")[0].strip().lower()
+            if arch_title_stem and arch_title_stem in lens_title:
+                return a["channel_id"]
+
+        lens_text = (lens_entry.get("lens_name", "") + " " + lens_entry.get("prompt", "")).lower()
+        best_channel = None
+        max_score = 0
+        for a in all_archetypes:
+            matching_tokens = [tok for tok in a["signature_tokens"] if tok in lens_text]
+            if matching_tokens:
+                score = sum(len(tok) for tok in matching_tokens)
+                if score > max_score:
+                    max_score = score
+                    best_channel = a["channel_id"]
+        return best_channel
+
     for lens in history:
         full_text = (lens.get("lens_name", "") + " " + lens.get("prompt", "")).lower()
         ts = lens.get("timestamp", "")
+        lens_arch = str(lens.get("archetype", ""))
         for a in all_archetypes:
-            if any(tok in full_text for tok in a["signature_tokens"]):
+            is_match = False
+            if lens_arch and a["id"] == lens_arch:
+                is_match = True
+            elif not lens_arch and any(tok in full_text for tok in a["signature_tokens"]):
+                is_match = True
+            if is_match:
                 fleet_counts[a["id"]] += 1
                 if ts > fleet_last_ts[a["id"]]:
                     fleet_last_ts[a["id"]] = ts
+                if lens_arch:
+                    break
 
     for lens in acc_lenses:
         full_text = (lens.get("lens_name", "") + " " + lens.get("prompt", "")).lower()
+        lens_arch = str(lens.get("archetype", ""))
         for a in all_archetypes:
-            if any(tok in full_text for tok in a["signature_tokens"]):
+            is_match = False
+            if lens_arch and a["id"] == lens_arch:
+                is_match = True
+            elif not lens_arch and any(tok in full_text for tok in a["signature_tokens"]):
+                is_match = True
+            if is_match:
                 acc_counts[a["id"]] += 1
+                if lens_arch:
+                    break
 
     # Detect channel of the account's most recent published lens to enforce cross-genre alternation
-    last_acc_channel = None
-    if acc_lenses:
-        last_lens_text = (acc_lenses[-1].get("lens_name", "") + " " + acc_lenses[-1].get("prompt", "")).lower()
-        for a in all_archetypes:
-            if any(tok in last_lens_text for tok in a["signature_tokens"]):
-                last_acc_channel = a["channel_id"]
-                break
+    last_acc_channel = get_lens_channel(acc_lenses[-1]) if acc_lenses else None
 
     # Universal Omni-Niche Fleet: ALL accounts cater to ALL 12 top viral genres:
     # 1. Mythic Beasts & Celestial Crowns (Channel 1)
@@ -1078,11 +1116,7 @@ def select_channel_archetype(account_id: str, history: list, exclude_archetypes:
     most_recent_other_channel = None
     for other_x in reversed(history):
         if str(other_x.get("account_id")) != aid:
-            other_text = (other_x.get("lens_name", "") + " " + other_x.get("prompt", "")).lower()
-            for a in all_archetypes:
-                if any(tok in other_text for tok in a["signature_tokens"]):
-                    most_recent_other_channel = a["channel_id"]
-                    break
+            most_recent_other_channel = get_lens_channel(other_x)
             if most_recent_other_channel:
                 break
 
@@ -1102,20 +1136,20 @@ def select_channel_archetype(account_id: str, history: list, exclude_archetypes:
         cat_fleet_counts[a["channel_id"]] += fleet_counts[a["id"]]
 
     # Category-First Deterministic LRU Selection:
-    # 1. Least used CATEGORY by this account (ensures every account rotates through all 12 categories equally)
-    # 2. Least used CATEGORY across entire fleet
-    # 3. Least used archetype across fleet
-    # 4. Least used archetype on this account
+    # 1. Least used archetype on THIS account (never repeat on same account while fresh archetypes exist)
+    # 2. Least used CATEGORY by this account (ensures every account rotates through all 12 categories equally)
+    # 3. Least used CATEGORY across entire fleet
+    # 4. Least used archetype across fleet
     # 5. Oldest publication timestamp
     # 6. Uniform hash distribution across remaining candidates
     import hashlib
     selected = min(
         candidates,
         key=lambda a: (
+            acc_counts[a["id"]],
             cat_acc_counts[a["channel_id"]],
             cat_fleet_counts[a["channel_id"]],
             fleet_counts[a["id"]],
-            acc_counts[a["id"]],
             fleet_last_ts[a["id"]] != "",
             fleet_last_ts[a["id"]],
             int(hashlib.md5((aid + str(len(history)) + a["id"]).encode()).hexdigest()[:8], 16)
