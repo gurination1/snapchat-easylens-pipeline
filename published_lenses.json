@@ -2396,5 +2396,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/E8TpigwAeSWhyx3pZOBXY?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-29T17:18:57Z",
+    "account_id": "1",
+    "lens_name": "Arcade Coin Catcher",
+    "lens_id": "bc7b4ce1-d25d-46d9-a9a1-19059440dd3a",
+    "checkpoint_id": "06abbee0-b56e-7d29-8000-a5cfcdaef4fe",
+    "prompt": "Wearable arc-shaped headpiece crafted from brushed titanium and 24k gold. Dropping physics-based metallic currency descends toward the chin. Mouth open triggers a high-energy particle burst and point-tally explosion. Smile releases a vibrant starburst flare. Eyebrow raise initiates a rapid gold-rush frenzy. Head tilt adjusts gravity for angled catches. Pure PBR physical materials, cinematic 3-point rim lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "arcade",
+      "game",
+      "coin",
+      "gold",
+      "crown",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "arcade_neon_coin_catcher",
+    "channel_id": "6",
+    "visual_hook": "The high-contrast gold coin rain against a brushed titanium crown creates an instant addictive visual challenge.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/FiBLuWMnwMMTF7beKkMDB?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/paTtjlAPQUrIBiqzWmXHL?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/9eIlKyeAF3q9mSfimWk71?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
