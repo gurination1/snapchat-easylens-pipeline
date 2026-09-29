@@ -116,9 +116,9 @@ STATIC_FALLBACKS = {
             "tags": ["soapopera", "tears", "melodrama", "brokenheart", "coins", "comedy"]
         },
         {
-            "lens_name": "Steam Rage Valve",
-            "prompt": "Comic stylized polished brass steam boiler pressure valve mounted securely to forehead with vibrating needle gauge. 3-point warm lighting with baked shadows. Opening mouth releases explosive pressurized cartoon steam clouds blasting sideways from ears with comic red face flush; smiling vents gentle harmless rainbow bubble streams from the whistle valve. Zero UI, high viral comedy.",
-            "tags": ["rage", "steam", "cartoon", "whistle", "funny"]
+            "lens_name": "Anime Rage Horns",
+            "prompt": "Comic stylized 3D red anime rage exclamation mark horns anchored to temples with dramatic blazing cartoon flame aura. 3-point contrast comic lighting. Opening mouth releases explosive comic steam burst blasting sideways from ears with stylized anime blush; smiling transitions flames into playful golden sparkle stars; head tilt sways dynamic flame horns. Zero UI, high viral comedy.",
+            "tags": ["anime", "rage", "flame", "horns", "cartoon", "comedy"]
         },
         {
             "lens_name": "Pop-Out Hypno Goggles",

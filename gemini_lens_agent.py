@@ -269,12 +269,12 @@ CHANNEL_PROMPT_MATRICES = {
                 "visual_hook": "Viral meme reaction: exaggerated 3D Meme Melodrama Waterfall Tears detonates comical chaos on mouth open."
             },
             {
-                "id": "steam_rage_valve",
-                "name": "Cartoon Steam-Whistle Pressure Valve & Rainbow Exhaust",
-                "signature_tokens": ['steam-whistle', 'steam plumes', 'boiler valve', 'rage whistle'],
-                "focus": "Comic stylized PBR polished brass steam boiler pressure valve mounted securely to forehead with vibrating needle gauge. 3-point warm lighting with baked shadows. Opening mouth releases explosive pressurized cartoon steam clouds blasting from ears with comic red face flush; smiling vents gentle harmless rainbow bubble streams; eyebrow raise pops valve cap with fiery sparks; head tilt rattles valve vigorously. Zero UI.",
+                "id": "anime_rage_horns",
+                "name": "Comic Anime Flame Horns & Dramatic Vein Pulse",
+                "signature_tokens": ['anime rage', 'flame horns', 'rage horns', 'vein pulse', 'exclamation marks'],
+                "focus": "Comic stylized 3D red anime rage exclamation mark horns anchored to temples with dramatic blazing cartoon flame aura. PBR stylized flame shaders with ray-traced contact shadows. Opening mouth releases explosive comic steam burst blasting sideways from ears with stylized anime blush; smiling transitions flames into playful golden sparkle stars; eyebrow raise sparks fiery cartoon lightning; head tilt sways dynamic flame horns. Zero UI, high viral comedy.",
                 "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
-                "visual_hook": "Viral meme reaction: exaggerated 3D Cartoon Steam-Whistle Pressure Valve detonates comical chaos on mouth open."
+                "visual_hook": "Viral meme reaction: exaggerated 3D Comic Anime Flame Horns detonates comical chaos on mouth open."
             },
             {
                 "id": "laughing_gold_skull",
@@ -317,12 +317,12 @@ CHANNEL_PROMPT_MATRICES = {
                 "visual_hook": "Viral meme reaction: exaggerated 3D Mind-Blown Pop-Top Head detonates comical chaos on mouth open."
             },
             {
-                "id": "pepper_fire_breath",
-                "name": "Flaming Red Hot Pepper Crown & Comic Fire Jet",
-                "signature_tokens": ['hot pepper', 'fire breath', 'chili horns', 'cartoon flame'],
-                "focus": "Cartoony glowing red chili pepper horns mounted to temples with sizzling PBR smoke embers. 3-point contrast lighting. Opening mouth blasts giant comic cartoon flame geyser forward with bouncing sweating teardrops; smiling cools face into icy cartoon frost with soothing blue halo sparkles; eyebrow raise ignites sizzling chili pepper tips; head tilt wafts spicy smoke puffs. High-impact viral reaction AR.",
+                "id": "spicy_ramen_fire_horns",
+                "name": "Spicy Ramen Fire Demon Horns & Comic Flame Geyser",
+                "signature_tokens": ['spicy demon', 'fire horns', 'flame geyser', 'comic fire'],
+                "focus": "Curling 3D translucent crimson fire demon horns contoured to temples with sizzling PBR flame embers. 3-point contrast lighting. Opening mouth blasts giant comic cartoon flame geyser forward with bouncing sweating teardrops; smiling cools face into icy cartoon frost with soothing blue halo sparkles; eyebrow raise ignites blazing horn tips; head tilt wafts spicy smoke puffs. High-impact viral reaction AR.",
                 "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
-                "visual_hook": "Viral meme reaction: exaggerated 3D Flaming Red Hot Pepper Crown detonates comical chaos on mouth open."
+                "visual_hook": "Viral meme reaction: exaggerated 3D Spicy Ramen Fire Demon Horns detonates comical chaos on mouth open."
             },
             {
                 "id": "karaoke_lyric_headpiece",
@@ -641,12 +641,12 @@ CHANNEL_PROMPT_MATRICES = {
                 "visual_hook": "Decades nostalgia hit: Y2K Holographic Cyber Butterfly Diadem taps the surging viral Millennium aesthetic."
             },
             {
-                "id": "grunge_90s_analog",
-                "name": "90s Grunge 35mm Polaroid Frame & Film Burn Bloom",
-                "signature_tokens": ['grunge 90s', 'polaroid frame', 'film burn', 'light leaks'],
-                "focus": "Vintage weathered Polaroid camera frame floating around face with nostalgic sepia color grading and authentic light leaks. Opening mouth ignites brilliant orange film burn flare and floating amber dust motes; smiling softens portrait into warm 90s indie cinema grain; eyebrow raise flashes vintage camera xenon strobe; head tilt shifts light leak hues. Raw 90s grunge film aesthetic, zero UI.",
+                "id": "y2k_frameless_butterfly_shades",
+                "name": "Y2K Frameless Tinted Shades & Crystal Butterfly Accents",
+                "signature_tokens": ['y2k shades', 'frameless sunglasses', 'butterfly shades', 'gradient eyewear', 'crystal rhinestones'],
+                "focus": "Sleek Y2K frameless gradient rose-tinted sunglasses contoured across eyes with faceted crystal rhinestone butterfly hinges on temples. Opening mouth flutters holographic crystal butterfly wings releasing sparkling diamond dust; smiling radiates warm golden-hour glow across cheekbones; eyebrow raise flashes prismatic diamond glints; head tilt catches brilliant rose-gold reflections. Authentic Y2K high-fashion eyewear, zero UI.",
                 "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
-                "visual_hook": "Decades nostalgia hit: 90s Grunge 35mm Polaroid Frame wraps selfies in authentic lo-fi indie nostalgia."
+                "visual_hook": "Decades nostalgia hit: Y2K Frameless Tinted Shades captures the viral early-2000s supermodel aesthetic."
             },
             {
                 "id": "arcade_80s_pixel",
@@ -848,12 +848,12 @@ CHANNEL_PROMPT_MATRICES = {
                 "visual_hook": "Epic cosmic journey: Deep Space Cosmic Nebula Glass Dome captures the swirling majesty of deep interstellar space."
             },
             {
-                "id": "zero_g_spacewalk_satellite",
-                "name": "Zero-G Spacewalk Orbital Satellite & Solar Array Wings",
-                "signature_tokens": ['spacewalk satellite', 'zero-g satellite', 'solar arrays', 'space station', 'docking ring'],
-                "focus": "Miniature detailed 3D space station satellite hovering weightlessly over right shoulder with rotating gold photovoltaic solar panels and docking ring. Opening mouth fires blue ion engine thruster pulse with floating space dust motes; smiling pulses solar panel telemetry glints; eyebrow raise activates laser navigation beam; head tilt drifts satellite smoothly in zero-G orbit. Authentic space hardware, zero UI.",
+                "id": "starlight_cosmic_shades",
+                "name": "Supernova Starlight Chrome Shades & Interstellar Halo",
+                "signature_tokens": ['cosmic shades', 'starlight sunglasses', 'supernova shades', 'galaxy visor', 'chrome eyewear'],
+                "focus": "Sleek aerodynamic Y3K wrap-around chrome sunglasses resting across the eyes with deep violet polarized lenses reflecting distant spiral galaxies. Floating microscopic stardust motes orbit the temples. Opening mouth triggers a blinding supernova stellar flare and floating golden starburst sparks; smiling illuminates neon cyan frame edge lighting; eyebrow raise pulses violet laser glints through the lenses; head tilt catches brilliant ray-traced chrome reflections. High-fashion sci-fi eyewear, zero UI, pure PBR.",
                 "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
-                "visual_hook": "Epic cosmic journey: Zero-G Spacewalk Orbital Satellite orbits head with micro-gravity physics and satellite maneuvers."
+                "visual_hook": "Futuristic high-fashion silhouette: sleek chrome galaxy sunglasses lock onto face with deep space polarized luster."
             },
             {
                 "id": "black_hole_accretion_halo",
@@ -1442,10 +1442,14 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "", e
         "5. 100% ANTI-SLOP ENFORCEMENT: Strictly ban generic purple gradients, floating disembodied blobs, rubbery plastic textures, and 2D canvas spinners. Enforce authentic physical materials (24k gold leaf, freshwater pearls, liquid mercury, brushed titanium, Portra 400 analog grain, Ghibli cel-shading).\n"
         "6. MANDATORY PBR CRAFT & 3-POINT CONTRAST LIGHTING: Key light + contrasting 6500K/2800K directional rim lighting + ray-traced contact shadows.\n"
         "7. MANDATORY FRONT-CAMERA SELFIE ANCHORING: Primary 3D asset MUST anchor directly to HEAD or FOREHEAD (sculpted crown, halo, visor, helmet, or horns spanning temple-to-temple). NEVER cover, obstruct, or place veils, masks, mists, or cloth over the nose, mouth, or central face. Keep nose, mouth, and eyes completely unobscured so facial tracking and expression remain 100% visible.\n"
-        "8. STRICT JAVASCRIPT ENGINE COMPATIBILITY (ZERO TWEEN / ZERO EASING CURVES):\n"
+        "8. STRICT WEARABILITY & ANTI-AWKWARD CONSTRAINT (ZERO STUPID / CLUMSY PROPS):\n"
+        "   - Every primary 3D asset MUST be an exceptionally flattering, wearable cosmetic item, high-fashion eyewear, royal diadem/crown, celestial halo, sculpted fantasy horns, or hilarious expressive face morph.\n"
+        "   - NEVER generate literal machinery, vehicles, satellites, space stations, engines, valves, appliances, cardboard frames, or random tools attached to the forehead or face.\n"
+        "   - The user must look genuinely cool, gorgeous, or humorously dramatic on a selfie — never like an awkward clip-art sticker was glued to their hairline.\n"
+        "9. STRICT JAVASCRIPT ENGINE COMPATIBILITY (ZERO TWEEN / ZERO EASING CURVES):\n"
         "   - NEVER use the words 'smooth tween', 'bezier curve', 'ease-in', 'ease-out', or 'easing curve'. Use discrete visual triggers and particle streams only.\n"
-        "9. STRICT PROMPT LENGTH CONSTRAINT: The 'prompt' field MUST be between 300 and 460 characters (hard backend limit is 480).\n"
-        "10. SNAPCHAT LENS SEARCH SEO & KEYWORD ARCHITECTURE (CRITICAL FOR VIRAL DISCOVERY & 100M+ REACH):\n"
+        "10. STRICT PROMPT LENGTH CONSTRAINT: The 'prompt' field MUST be between 300 and 460 characters (hard backend limit is 480).\n"
+        "11. SNAPCHAT LENS SEARCH SEO & KEYWORD ARCHITECTURE (CRITICAL FOR VIRAL DISCOVERY & 100M+ REACH):\n"
         "   - 'lens_name': 2 to 4 words. MUST directly incorporate the highest-volume search query for this concept (e.g., 'Dragon Horns 3D', 'Cyberpunk Neon Visor', 'Ghibli Cloud Crown', 'Vintage Y2K Camcorder', 'Gothic Vampire Fangs'). Lens Name matches account for ~70% of Snapchat search ranking weight.\n"
         "   - 'tags': Exactly 8 high-velocity, intent-targeted keywords matching Snapchat's 3-Tier SEO Framework:\n"
         "     * Tier 1 (Broad Category - 2 tags): e.g., 'anime', 'fantasy', 'cyberpunk', 'beauty', 'retro', 'cosplay'.\n"
