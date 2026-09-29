@@ -2595,5 +2595,31 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/A6ek3SydmpB1Fu5ckFqrq?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-29T23:31:25Z",
+    "account_id": "5",
+    "lens_name": "Pop-Out Hypno Goggles",
+    "lens_id": "531c2dd3-9218-4447-9e64-17d5eb00861e",
+    "checkpoint_id": "06abc466-2e55-7821-8000-59c169b7b353",
+    "prompt": "Exaggerated 3D glowing cartoon spiral hypno-goggles anchored over eyes that comical stretch and pop forward 10cm on face trigger. PBR stylized materials with ray-traced contact shadows. Opening mouth triggers shockwave rings with floating animated comic exclamation marks and bouncing question mark stars; smiling snaps goggles back with hilarious kaleidoscope optic swirl. Physics-driven, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "hypno",
+      "spiral",
+      "goggles",
+      "cartoon",
+      "comedy"
+    ],
+    "archetype": "",
+    "channel_id": "",
+    "visual_hook": "The instant 0.2s silhouette of fluffy, high-fidelity golden puppy ears creates an immediate cute-factor aesthetic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/DC58d6r769Ntw6UGfFdtf?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/bEWftSJ7jvfupHgNAg4HV?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/TL8591U98gvQFeCxY4Gh7?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
