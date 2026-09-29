@@ -2537,5 +2537,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/j20TgH4ct2Iemd0f048AD?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-29T22:36:48Z",
+    "account_id": "1",
+    "lens_name": "Cupid Rose Gold Diadem",
+    "lens_id": "1ecc091f-c333-4688-a9ec-42a8a9584357",
+    "checkpoint_id": "06abc375-1211-7059-8000-ee5e81be800b",
+    "prompt": "Sculpted 18k rose-gold diadem with miniature wings resting at hairline. Floating translucent ruby glass spheres orbit temples. Opening mouth fires glowing golden cupid projectiles forward into blooming explosions of sparkling pink confetti. Smiling triggers cascading rosy blush and vibrant pupil glints. Eyebrow raise accelerates orbiting spheres. Head tilt catches metallic luster. High-contrast PBR finish, zero UI, full-screen AR. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "fantasy",
+      "cupid",
+      "diadem",
+      "wings",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "cupid_arrow_heart_diadem",
+    "channel_id": "15",
+    "visual_hook": "The immediate 0.2s silhouette of a delicate, high-contrast rose-gold diadem framing the face creates instant luxury status.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/hL5HCBP0A80Yxc02kqBNE?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/3bxh3woOgR2lao27TDXfi?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/vDUt1A7mAbfxLghi62GD9?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
