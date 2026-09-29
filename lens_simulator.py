@@ -882,6 +882,95 @@ class LensSimulator:
             d.line([(cx - 25, 80), (cx + 25, 80)], fill=(255, 235, 180, 220), width=2)
             return im
 
+        elif niche == "kawaii" or any(w in p_lower for w in ["kawaii", "kitty", "cat ears", "bunny", "chibi", "puppy ears", "pandacorn", "jingle bell"]):
+            # 3D Kawaii Anime Kitty / Bunny Ears with Golden Jingle Bells
+            w, h = 540, 280
+            cx = w // 2
+            im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            d = ImageDraw.Draw(im)
+            left_ear_outer = [(cx - 180, 210), (cx - 140, 40), (cx - 70, 190)]
+            right_ear_outer = [(cx + 70, 190), (cx + 140, 40), (cx + 180, 210)]
+            d.polygon(left_ear_outer, fill=(255, 245, 240, 255), outline=(240, 220, 210, 255))
+            d.polygon(right_ear_outer, fill=(255, 245, 240, 255), outline=(240, 220, 210, 255))
+            left_ear_inner = [(cx - 160, 195), (cx - 138, 75), (cx - 85, 185)]
+            right_ear_inner = [(cx + 85, 185), (cx + 138, 75), (cx + 160, 195)]
+            d.polygon(left_ear_inner, fill=(255, 180, 195, 240))
+            d.polygon(right_ear_inner, fill=(255, 180, 195, 240))
+            for bx in [cx - 150, cx + 150]:
+                d.ellipse([bx - 14, 210, bx + 14, 238], fill=(255, 215, 50, 255), outline=(255, 245, 140, 255), width=2)
+                d.ellipse([bx - 4, 226, bx + 4, 234], fill=(180, 120, 20, 255))
+            for sx, sy in [(cx - 90, 110), (cx + 90, 110), (cx, 80)]:
+                d.ellipse([sx - 6, sy - 6, sx + 6, sy + 6], fill=(255, 230, 150, 220))
+            return im
+
+        elif niche == "floral" or any(w in p_lower for w in ["floral", "sunflower", "marigold", "botanical", "butterfly tiara", "moss wreath", "rose diadem", "wreath", "petals"]):
+            # 3D Botanical Sunflower & Monarch Butterfly Headdress
+            w, h = 540, 260
+            cx = w // 2
+            im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            d = ImageDraw.Draw(im)
+            d.arc([50, 140, w - 50, 260], start=190, end=350, fill=(70, 130, 60, 230), width=6)
+            for rad_angle in [-0.8, -0.4, 0.0, 0.4, 0.8]:
+                bx = int(cx + 90 * math.sin(rad_angle))
+                by = int(120 - 30 * math.cos(rad_angle))
+                d.ellipse([bx - 22, by - 22, bx + 22, by + 22], fill=(255, 190, 30, 250), outline=(255, 230, 80, 255), width=2)
+                d.ellipse([bx - 10, by - 10, bx + 10, by + 10], fill=(140, 80, 20, 255))
+            d.polygon([(cx, 80), (cx - 30, 45), (cx - 15, 65), (cx, 75)], fill=(255, 120, 30, 240))
+            d.polygon([(cx, 80), (cx + 30, 45), (cx + 15, 65), (cx, 75)], fill=(255, 120, 30, 240))
+            for dx, dy in [(cx - 70, 150), (cx + 70, 150), (cx - 130, 175), (cx + 130, 175)]:
+                d.ellipse([dx - 5, dy - 5, dx + 5, dy + 5], fill=(230, 245, 255, 220), outline=(255, 255, 255, 255))
+            return im
+
+        elif niche == "manga" or any(w in p_lower for w in ["manga", "shonen", "super saiyan", "scouter", "flame corona", "kunai", "talisman", "speedline"]):
+            # 3D Super Saiyan Golden Flame Corona & Shonen Headband
+            w, h = 540, 270
+            cx = w // 2
+            im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            d = ImageDraw.Draw(im)
+            d.polygon([(60, 200), (w - 60, 200), (w - 70, 230), (70, 230)], fill=(30, 40, 60, 255))
+            d.rectangle([cx - 70, 195, cx + 70, 235], fill=(200, 210, 225, 255), outline=(240, 245, 255, 255), width=2)
+            flame_spires = [
+                [(cx, 20), (cx - 30, 130), (cx + 30, 130)],
+                [(cx - 65, 45), (cx - 95, 150), (cx - 40, 150)],
+                [(cx + 65, 45), (cx + 40, 150), (cx + 95, 150)],
+                [(cx - 130, 80), (cx - 160, 170), (cx - 100, 170)],
+                [(cx + 130, 80), (cx + 100, 170), (cx + 160, 170)]
+            ]
+            for sp in flame_spires:
+                d.polygon(sp, fill=(255, 205, 30, 235))
+                inner = [(p[0], p[1] + 25) for p in sp]
+                d.polygon(inner, fill=(255, 255, 160, 250))
+            for ex, ey in [(cx - 40, 90), (cx + 40, 90), (cx - 110, 120), (cx + 110, 120)]:
+                d.line([(ex, ey), (ex + 8, ey - 10), (ex + 4, ey - 18)], fill=(120, 220, 255, 255), width=2)
+            return im
+
+        elif niche == "sports" or any(w in p_lower for w in ["sports", "f1", "racing visor", "boxing", "headguard", "ski goggles", "victory laurel", "snapback"]):
+            # 3D Aerodynamic Carbon-Fiber F1 Race Visor with Tachometer LEDs
+            w, h = 580, 220
+            cx, cy = w // 2, h // 2
+            im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            d = ImageDraw.Draw(im)
+            visor_pts = [(50, 90), (cx, 65), (w - 50, 90), (w - 70, 170), (cx, 150), (70, 170)]
+            d.polygon(visor_pts, fill=(25, 28, 35, 235), outline=(60, 65, 75, 255), width=3)
+            d.polygon([(90, 105), (cx, 85), (w - 90, 105), (w - 105, 150), (cx, 138), (105, 150)], fill=(40, 80, 120, 160), outline=(255, 200, 50, 180), width=2)
+            for i, lx in enumerate(range(cx - 110, cx + 120, 22)):
+                col = (0, 255, 120) if i < 5 else ((255, 210, 0) if i < 8 else (255, 40, 60))
+                d.ellipse([lx - 5, 72, lx + 5, 82], fill=(*col, 255), outline=(255, 255, 255, 220), width=1)
+            return im
+
+        elif niche == "social" or any(w in p_lower for w in ["cupid", "love", "heart radar", "red flag", "green flag", "soulmate", "crush compatibility", "drama queen"]):
+            # 3D Rose-Gold Cupid Diadem with Floating Interactive Ruby Hearts
+            w, h = 520, 240
+            cx = w // 2
+            im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            d = ImageDraw.Draw(im)
+            d.arc([60, 110, w - 60, 230], start=190, end=350, fill=(235, 150, 155, 255), width=5)
+            d.ellipse([cx - 28, 70, cx + 28, 120], fill=(225, 30, 80, 250), outline=(255, 210, 220, 255), width=2)
+            for hx, hy in [(cx - 110, 100), (cx + 110, 100), (cx - 170, 140), (cx + 170, 140)]:
+                d.ellipse([hx - 14, hy - 14, hx + 14, hy + 14], fill=(240, 60, 100, 230), outline=(255, 190, 210, 240), width=1)
+                d.ellipse([hx - 5, hy - 8, hx + 1, hy - 3], fill=(255, 255, 255, 240))
+            return im
+
         else:
             # Cyber HUD Visor / Goggles / Optics (3D Cylindrical PBR Dichroic Visor)
             w, h = 600, 220

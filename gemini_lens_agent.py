@@ -978,6 +978,324 @@ CHANNEL_PROMPT_MATRICES = {
                 "visual_hook": "Dark fantasy power: Necromancer Stygian Skull Crown unleashes swirling necrotic soulfire under creator command."
             }
         ]
+    },
+    "13": {
+        "channel_name": "Kawaii_CuteAnimals",
+        "genre": "Pastel Anime Animal Companions, Fluffy Cat & Bunny Hoods, Kitsune Spirit Whispers & Chibi Aesthetics",
+        "craft_dials": {
+            "design_variance": 0.88,
+            "visual_density": 0.94,
+            "motion_intensity": 0.92
+        },
+        "forbidden_cross_contamination": ['dark horror blood', 'military weaponry', 'developer UI sliders', 'grotesque facial deformities', 'heavy industrial machinery'],
+        "tag_pool": ['kawaii', 'anime', 'catears', 'bunny', 'kitsune', 'chibi', 'pastel', 'cute', 'ears', 'pbr'],
+        "archetypes": [
+            {
+                "id": "fluffy_anime_cat_ears",
+                "name": "Fluffy Anime Kitty Ears & Golden Jingle Bell Choker",
+                "signature_tokens": ['kitty ears', 'cat ears', 'jingle bell', 'pawprints', 'anime whiskers'],
+                "focus": "Fluffy plush anime cat ears contoured to hairline with twin dangling 24k gold jingle bells and delicate blush whiskers on cheeks. Opening mouth unleashes playful floating pastel pawprint shockwaves and soft heart motes; smiling triggers happy cat ear twitch with musical golden bell chimes; eyebrow raise wiggles ear tips; head tilt sways dangling bells. Pure kawaii vanity AR, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Viral kawaii charm: Fluffy Anime Kitty Ears frames selfie with irresistible cute twitch physics in 0.2s."
+            },
+            {
+                "id": "lop_eared_bunny_hood",
+                "name": "Pastel Lop-Eared Bunny Hood & Floating Strawberry Sparks",
+                "signature_tokens": ['bunny hood', 'lop ears', 'strawberry sparks', 'chibi bunny', 'pastel fleece'],
+                "focus": "Cozy pastel-pink lop-eared bunny hood sculpted over hair with floppy velvet physics and soft fleece micro-texture. Opening mouth unleashes fountain of bouncing cartoon strawberries and star dust; smiling triggers cute nose-twitch animation with rosy cheek blush bloom; eyebrow raise lifts floppy bunny ears; head tilt drapes soft velvet ears across shoulders. Irresistible cute aesthetic, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Viral kawaii charm: Pastel Lop-Eared Bunny Hood delights viewers with bouncy floppy ear physics in 0.2s."
+            },
+            {
+                "id": "ethereal_spirit_kitsune_ears",
+                "name": "Celestial Spirit Fox Kitsune Ears & Floating Azure Foxfire",
+                "signature_tokens": ['spirit kitsune', 'fox ears', 'azure foxfire', 'vermilion tassels', 'spirit bell'],
+                "focus": "Ethereal white fur spirit fox ears resting on crown with vermilion silk ribbons and twin floating azure foxfire orbs hovering near temples. Opening mouth unleashes swirling blizzard of glowing spirit sakura petals and azure flame motes; smiling illuminates warm golden anime eye flares and delicate red eye-corner liner; eyebrow raise flares foxfire brilliance; head tilt sways silk tassels. Dreamy anime spirit aesthetic, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Viral kawaii charm: Celestial Spirit Fox Kitsune Ears combines mythic beauty with mesmerizing foxfire orbs."
+            },
+            {
+                "id": "shiba_inu_puppy_ears",
+                "name": "Golden Shiba Inu Puppy Ears & Sparkling Heart Blush",
+                "signature_tokens": ['shiba inu', 'puppy ears', 'heart blush', 'golden puppy', 'floating bones'],
+                "focus": "Sculpted golden-honey shiba inu puppy ears perched atop head with soft fur shader and sparkling peach heart blush on cheeks. Opening mouth releases floating cascade of bouncing golden dog bones and happy star sparkles; smiling causes puppy ears to pin back adorably with joyful eye squint sparkles; eyebrow raise perks ears straight up; head tilt flops ears in playful puppy curiosity. Pure dopamine AR, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Viral kawaii charm: Golden Shiba Inu Puppy Ears captures instant viral adoration with expressive puppy ear reactions."
+            },
+            {
+                "id": "pandacorn_rainbow_horn",
+                "name": "Pastel Pandacorn Bear Ears & Iridescent Rainbow Horn",
+                "signature_tokens": ['pandacorn', 'panda ears', 'rainbow horn', 'bamboo sparkles', 'pastel horn'],
+                "focus": "Round fluffy panda bear ears flanking a twisting iridescent pearlescent unicorn horn at center brow with floating bamboo leaf sparkles. Opening mouth detonates pastel rainbow light beam shockwave forward with floating smiling star particles; smiling illuminates pearlescent cheek sheen and rainbow eye catches; eyebrow raise spirals horn light beam; head tilt catches prismatic horn caustics. Magical kawaii transformation, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Viral kawaii charm: Pastel Pandacorn Bear Ears enchants selfies with iridescent pastel unicorn horn magic."
+            }
+        ]
+    },
+    "14": {
+        "channel_name": "Floral_NatureEthereal",
+        "genre": "Lush Botanical Headdresses, Monarch Butterfly Tiaras, Bioluminescent Forest Wreaths & Blooming Vines",
+        "craft_dials": {
+            "design_variance": 0.85,
+            "visual_density": 0.96,
+            "motion_intensity": 0.75
+        },
+        "forbidden_cross_contamination": ['cyberpunk optics', 'crying meme comedy', 'heavy industrial machinery', 'developer UI sliders', 'dark demonic skulls'],
+        "tag_pool": ['floral', 'flowers', 'butterfly', 'nature', 'botanical', 'wreath', 'tiara', 'bloom', 'pbr'],
+        "archetypes": [
+            {
+                "id": "golden_sunflower_marigold_crown",
+                "name": "Golden Sunflower & Marigold Solstice Crown & Pollen Dust",
+                "signature_tokens": ['sunflower crown', 'marigold', 'solstice crown', 'pollen dust', 'sunbeams'],
+                "focus": "Lush headdress of sculpted velvet sunflowers and golden marigolds crowned with dewy honey-amber droplets resting along hairline. Warm 2800K summer solstice lighting with volumetric sunbeams. Opening mouth releases cascading cloud of glowing golden pollen dust floating around temples; smiling triggers radiant sun-halo eye flares and warm peach cheek bloom; eyebrow raise blooms outer sunflower petals; head tilt sways golden petals. Summer solstice royalty, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Botanical nature majesty: Golden Sunflower & Marigold Solstice Crown frames selfies in lush golden-hour floral warmth."
+            },
+            {
+                "id": "monarch_butterfly_tiara",
+                "name": "Fluttering Monarch Butterfly Tiara & Amber Sunbeams",
+                "signature_tokens": ['monarch butterfly', 'butterfly tiara', 'amber wings', 'wing flutter', 'golden sunbeams'],
+                "focus": "Delicate crown of sculpted 3D Monarch butterflies resting across brow and hair with iridescent orange-amber wings and micro-vein translucency. Opening mouth sends butterflies fluttering outward in swirling vortex around head before returning; smiling illuminates warm golden-hour cheek sheen with sparkling wing-dust; eyebrow raise flutters butterfly wings in unison; head tilt catches translucent amber light transmission. Ethereal nature poetry, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Botanical nature majesty: Fluttering Monarch Butterfly Tiara creates breathtaking live butterfly flight across portrait in 0.2s."
+            },
+            {
+                "id": "bioluminescent_forest_wreath",
+                "name": "Bioluminescent Moss Wreath & Orbiting Emerald Fireflies",
+                "signature_tokens": ['moss wreath', 'bioluminescent', 'fireflies', 'forest wreath', 'glowing spores'],
+                "focus": "Enchanted forest wreath of velvet emerald moss, miniature glowing mushrooms, and silver fern fronds resting on crown with orbiting fireflies. Opening mouth pulses radiant bioluminescent cyan wave across wreath releasing floating glowing spore motes; smiling illuminates emerald eye glints and ethereal forest glow; eyebrow raise awakens firefly swarm in bright spiral; head tilt ripples bioluminescent frond sheen. Avatar forest magic, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Botanical nature majesty: Bioluminescent Moss Wreath immerses user in glowing deep-forest fantasy wonderland."
+            },
+            {
+                "id": "royal_english_rose_diadem",
+                "name": "Royal Climbing Rose Diadem & Dewy Morning Mist",
+                "signature_tokens": ['rose diadem', 'climbing roses', 'dewy petals', 'crimson roses', 'morning mist'],
+                "focus": "Intricately sculpted English garden climbing diadem of deep crimson and blush roses with gold-tipped thorns contouring temples and brow. Ray-traced water droplets cling to velvety petals. Opening mouth releases swirling shower of soft falling rose petals; smiling activates dewy English rose cheek flush and glossy lip shine; eyebrow raise unfolds rosebuds into full blossoms; head tilt catches sparkling morning dew glints. Regal romantic luxury, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Botanical nature majesty: Royal Climbing Rose Diadem crowns face with timeless English romantic grandeur."
+            },
+            {
+                "id": "crystalline_frost_lily_crown",
+                "name": "Crystalline Ice Lily Crown & Prismatic Winter Glints",
+                "signature_tokens": ['ice lily', 'frost crown', 'crystalline petals', 'winter glints', 'prismatic ice'],
+                "focus": "Sculpted translucent ice lily flowers and frosted silver willow twigs resting delicately at hairline with caustic diamond dispersion. Opening mouth unleashes swirling flurry of sparkling crystalline snowflakes and diamond dust; smiling illuminates radiant frosted cheekbone sheen and glacial blue eye reflections; eyebrow raise blooms crystalline ice petals outward; head tilt refracts rainbow light through ice. Winter fairytale elegance, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Botanical nature majesty: Crystalline Ice Lily Crown transforms creator into ethereal winter ice queen."
+            }
+        ]
+    },
+    "15": {
+        "channel_name": "Social_Relationship",
+        "genre": "Cupid Hearts, Green Flag vs Red Flag Scanners, Soulmate Radars & Viral Love Dilemmas",
+        "craft_dials": {
+            "design_variance": 0.94,
+            "visual_density": 0.90,
+            "motion_intensity": 0.96
+        },
+        "forbidden_cross_contamination": ['somber historical armor', 'heavy military hardware', 'dark macabre horror', 'developer UI sliders', 'confusing multi-step tutorials'],
+        "tag_pool": ['cupid', 'love', 'redflag', 'greenflag', 'soulmate', 'crush', 'relationship', 'viral', 'quiz'],
+        "archetypes": [
+            {
+                "id": "cupid_arrow_heart_diadem",
+                "name": "Cupid Rose-Gold Arrow Diadem & Floating Love Heart Radar",
+                "signature_tokens": ['cupid diadem', 'love arrow', 'heart radar', 'rose-gold cupid', 'floating hearts'],
+                "focus": "Sculpted 18k rose-gold cupid diadem with miniature sculpted wings resting at hairline with floating translucent ruby glass hearts orbiting temples. Opening mouth fires glowing golden cupid love-arrow forward into blooming explosion of sparkling pink heart confetti; smiling triggers cascading rosy love blush and heart pupil glints; eyebrow raise speeds up orbiting hearts; head tilt catches rose-gold luster. High viral shareability, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Viral social challenge: Cupid Rose-Gold Arrow Diadem detonates explosive love-heart celebration on mouth open in 0.2s."
+            },
+            {
+                "id": "flag_scanner_halo",
+                "name": "Viral Green Flag Red Flag Scanner Halo & Verdict Confetti",
+                "signature_tokens": ['green flag', 'red flag', 'flag scanner', 'verdict halo', 'funny verdict'],
+                "focus": "Curved holographic twin flag scanner floating above forehead alternating between emerald green and crimson red neon beacons. Smiling or head tilt snaps the scanner to reveal hilarious random verdict badge with explosive green confetti or dramatic red siren flash; opening mouth resets scanner for friends; eyebrow raise speeds up alternating frequency. Viral friendship/couple challenge magnet, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Viral social challenge: Green Flag Red Flag Scanner fuels endless couple debates and friend roast videos."
+            },
+            {
+                "id": "soulmate_constellation_radar",
+                "name": "Soulmate Constellation Radar Diadem & Distance Tracker",
+                "signature_tokens": ['soulmate radar', 'constellation diadem', 'distance tracker', 'zodiac radar', 'starlight beam'],
+                "focus": "Polished platinum celestial radar diadem anchored across brow with spinning holographic starlight compass pointing toward user's soulmate. Head tilt locks directional tracking beam with expanding golden starlight ripples; opening mouth unleashes celebratory supernova starburst with floating golden zodiac glyphs; smiling pulses warm astral glow across cheekbones; eyebrow raise sweeps radar beam. Romantic viral predictor, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Viral social challenge: Soulmate Constellation Radar taps the deepest romantic curiosity with mesmerizing cosmic tracking."
+            },
+            {
+                "id": "crush_compatibility_meter",
+                "name": "Crush Compatibility 100% Love Meter & Golden Angel Wings",
+                "signature_tokens": ['compatibility meter', 'love meter', 'angel wings', 'heart meter', 'jackpot love'],
+                "focus": "Sculpted golden baroque heart meter resting regally on brow with rapid neon percentage ticker needle. Smiling freezes the ticker at 99.9% Soulmate Match, erupting massive 3D golden angel wings expanding behind head and sparkling diamond rain; opening mouth re-spins meter; eyebrow raise pulses golden heartbeats; head tilt catches gold filigree glints. Ultimate viral couple flex AR, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Viral social challenge: Crush Compatibility Meter delivers suspenseful match reveals and instant reaction gold."
+            },
+            {
+                "id": "drama_queen_siren_tiara",
+                "name": "Dramatic Gossip Siren Tiara & Spilled Tea Splash",
+                "signature_tokens": ['drama queen', 'gossip tiara', 'spilled tea', 'comic siren', 'drama alert'],
+                "focus": "Stylized neon magenta drama queen tiara with spinning miniature comic emergency beacons and orbiting porcelain teacup. Opening mouth unleashes hilarious cartoon splashed tea wave with floating comic exclamation badges and drama sparks; smiling defuses siren into angelic golden halo; eyebrow raise sounds silent comic siren spin; head tilt tips teacup. Peak comedy storytelling filter, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Viral social challenge: Dramatic Gossip Siren Tiara turns everyday tea and gossip into hilarious viral drama."
+            }
+        ]
+    },
+    "16": {
+        "channel_name": "Manga_ComicAction",
+        "genre": "Shonen Power Auras, Super Saiyan Flame Coronas, Halftone Impact Speedlines & Kanji Scouter Visors",
+        "craft_dials": {
+            "design_variance": 0.93,
+            "visual_density": 0.95,
+            "motion_intensity": 0.98
+        },
+        "forbidden_cross_contamination": ['bland corporate stock photography', 'slow luxury fashion pearls', 'developer UI sliders', 'cheap 2D stickers'],
+        "tag_pool": ['manga', 'anime', 'shonen', 'supersaiyan', 'aura', 'comic', 'speedlines', 'scouter', 'kanji'],
+        "archetypes": [
+            {
+                "id": "super_saiyan_golden_corona",
+                "name": "Super Saiyan Golden Flame Corona & Crackling Electric Arcs",
+                "signature_tokens": ['super saiyan', 'golden flame', 'electric arcs', 'saiyan hair', 'power aura'],
+                "focus": "Blazing 3D sculpted golden plasma flame spikes rising dynamically from hairline with crackling blue lightning bio-electricity arcs surrounding temples. Opening mouth unleashes roaring kinetic ki-burst shockwave with ground-shattering dust motes and pulsing energy crater rings; smiling flares golden power aura around eyes; eyebrow raise intensifies electric lightning sparks; head tilt whips golden flame crest. Epic anime transformation, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "High-octane anime power: Super Saiyan Golden Flame Corona delivers legendary anime power-up adrenaline in 0.2s."
+            },
+            {
+                "id": "manga_speedline_impact_headband",
+                "name": "Manga Speedline Impact Headband & Halftone Dot Screentone",
+                "signature_tokens": ['manga headband', 'speedlines', 'halftone', 'impact burst', 'screentone', 'comic ink'],
+                "focus": "Stylized black-and-white ink manga action headband with radiating dynamic 3D focal speedlines and authentic halftone screentone shading across brow. Opening mouth triggers thunderous Japanese manga comic impact burst with flying stylized kanji onomatopoeia particles; smiling sharpens crisp ink line-art contours; eyebrow raise accelerates speedline zoom; head tilt angles action perspective. Authentic Shonen Jump manga aesthetic, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "High-octane anime power: Manga Speedline Impact Headband thrusts creator into the heart of a climax manga battle."
+            },
+            {
+                "id": "cyber_shonen_scouter_monocle",
+                "name": "Cyber Shonen Power Scouter Monocle & Kanji Energy Scanner",
+                "signature_tokens": ['scouter monocle', 'power level', 'kanji scanner', 'energy monocle', 'over 9000'],
+                "focus": "Translucent emerald green aerodynamic combat scouter monocle clipped to left brow with glowing kanji power level glyphs cycling across lens. Opening mouth overloads scouter into shattering green energy shockwave with explosive spark shower; smiling locks target with high-pitch tactical laser glint; eyebrow raise calculates power level reading; head tilt catches polarized lens reflections. Iconic anime battle gear, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "High-octane anime power: Cyber Shonen Power Scouter Monocle gives fans the iconic battle scanner experience."
+            },
+            {
+                "id": "cursed_spirit_seal_headband",
+                "name": "Cursed Spirit Talisman Headband & Swirling Ink Marks",
+                "signature_tokens": ['cursed seal', 'talisman headband', 'black ink', 'curse marks', 'spirit flame'],
+                "focus": "Weathered linen sorcerer talisman headband anchored across forehead inscribed with glowing vermilion sealing glyphs and creeping black ink curse marks around cheekbones. Opening mouth unleashes billowing vortex of purple cursed spirit flames and swirling ink tentacles; smiling clears curse marks into serene purification glow; eyebrow raise ignites talisman in crimson fire; head tilt sways linen ribbons. Dark anime sorcery, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "High-octane anime power: Cursed Spirit Talisman Headband summons thrilling dark anime sorcerer power."
+            },
+            {
+                "id": "ninja_shadow_clone_headband",
+                "name": "Hidden Village Metal Headband & Swirling Kunai Vortex",
+                "signature_tokens": ['ninja headband', 'village plate', 'kunai vortex', 'shadow clone', 'smoke poof'],
+                "focus": "Forged steel ninja forehead plate on dark navy cloth headband with carved leaf crest and twin floating shadow kunai blades orbiting temples. Opening mouth detonates classic cartoon shadow-clone white smoke poof with flying explosive tags; smiling glints metallic steel plate reflectively; eyebrow raise spins floating kunai blades rapidly; head tilt catches ray-traced steel highlights. Legendary ninja warrior AR, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "High-octane anime power: Hidden Village Metal Headband delivers instant nostalgic ninja warrior transformation."
+            }
+        ]
+    },
+    "17": {
+        "channel_name": "Sports_ActionAthlete",
+        "genre": "F1 Carbon Fiber Visors, Championship Victory Laurels, Cyber Boxing Headgear & Extreme Sports Goggles",
+        "craft_dials": {
+            "design_variance": 0.91,
+            "visual_density": 0.94,
+            "motion_intensity": 0.92
+        },
+        "forbidden_cross_contamination": ['gothic horror blood', 'kawaii pastel bunnies', 'baroque historical pearls', 'developer UI sliders', 'cheap 2D stickers'],
+        "tag_pool": ['sports', 'f1', 'champion', 'racing', 'boxing', 'athlete', 'goggles', 'gold', 'trophy'],
+        "archetypes": [
+            {
+                "id": "f1_carbon_racing_visor",
+                "name": "F1 Aerodynamic Carbon Fiber Visor & Kinetic RPM Lights",
+                "signature_tokens": ['f1 visor', 'carbon fiber', 'racing visor', 'rpm lights', 'nitro boost'],
+                "focus": "Curved matte woven carbon-fiber race visor contoured across eyes with progressive red-and-green LED tachometer shift lights along upper brow. Opening mouth revs engine triggering blinding nitro-blue exhaust flame trail and supersonic wind warp lines; smiling flashes checkered flag victory glints across lenses; eyebrow raise redlines tachometer LEDs; head tilt catches polarized iridescent visor caustics. High-velocity motorsport AR, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Athletic adrenaline: F1 Aerodynamic Carbon Fiber Visor straps users directly into the Formula 1 cockpit."
+            },
+            {
+                "id": "championship_victory_laurel",
+                "name": "24k Gold Championship Victory Laurel & Confetti Cannon",
+                "signature_tokens": ['victory laurel', 'championship gold', 'confetti cannon', 'gold trophy', 'world champion'],
+                "focus": "Heavy beaten 24k gold Olympian laurel leaf wreath fitted firmly to hairline with floating diamond champion stars above crown. Opening mouth detonates explosive stadium victory confetti cannons showering shimmering gold and platinum foil particles; smiling triggers warm golden stadium floodlight bloom across face; eyebrow raise flares laurel leaf tips; head tilt catches blinding metallic gold luster. Euphoric winner celebration, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Athletic adrenaline: 24k Gold Championship Victory Laurel crowns creators as undisputed world champions in 0.2s."
+            },
+            {
+                "id": "cyber_boxing_headguard",
+                "name": "Neon Cyber Boxing Headguard & Shockwave Impact Burst",
+                "signature_tokens": ['boxing headguard', 'cyber boxing', 'ko flash', 'sweat sparks', 'champion fighter'],
+                "focus": "Sleek ergonomic matte-black and neon red padded combat headguard framing forehead and temples with reinforced titanium cheek shields. Opening mouth delivers devastating kinetic sonic shockwave burst forward with flying electric sweat sparks and floating KO impact badge; smiling triggers championship belt gold flare; eyebrow raise pulses red neon guard rims; head tilt dodges incoming phantom punches. High-impact combat sports, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Athletic adrenaline: Neon Cyber Boxing Headguard delivers raw fighting spirit and explosive knockout payoffs."
+            },
+            {
+                "id": "alpine_ski_snow_goggles",
+                "name": "Polarized Alpine Ski Goggles & Snowy Blizzard Vortex",
+                "signature_tokens": ['ski goggles', 'alpine snow', 'blizzard vortex', 'polarized lens', 'mountain reflection'],
+                "focus": "Frameless oversized iridescent alpine ski goggles mirrored across eyes reflecting snow-capped mountain peaks and crisp blue sky. Opening mouth unleashes pressurized powdery snow blizzard vortex whooshing around face with floating ice crystals; smiling warms lens with rosy mountain sun-glow; eyebrow raise clears snow dust from lenses; head tilt sweeps polarized mountain reflections. Winter sports high-fashion, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Athletic adrenaline: Polarized Alpine Ski Goggles transports creators straight to alpine slopes in high-fashion style."
+            },
+            {
+                "id": "street_skate_snapback_sparks",
+                "name": "Street Skater Graphic Snapback & Grinding Rail Spark Trails",
+                "signature_tokens": ['skater snapback', 'grinding sparks', 'street style', 'boombox soundwaves', 'urban skater'],
+                "focus": "Authentic flat-brim streetwear snapback cap resting backwards on crown with embroidered chrome logo and floating kinetic grinding spark particles. Opening mouth releases explosive skateboard kickflip spark burst with expanding bass boom shockwave rings; smiling activates warm golden street-lamp halation; eyebrow raise tips snapback brim; head tilt trails kinetic orange grind sparks across temples. High-energy street culture, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Athletic adrenaline: Street Skater Graphic Snapback radiates authentic urban skate energy and kinetic sparks."
+            }
+        ]
+    },
+    "18": {
+        "channel_name": "Zodiac_ElementalPowers",
+        "genre": "12 Zodiac Constellation Coronas, Solar Fire Elementals, Bioluminescent Ocean Corals & Storm Tempests",
+        "craft_dials": {
+            "design_variance": 0.94,
+            "visual_density": 0.97,
+            "motion_intensity": 0.94
+        },
+        "forbidden_cross_contamination": ['cheap 2D stickers', 'developer UI sliders', 'modern plastic sunglasses', 'grotesque meme comedy', 'bland corporate tech'],
+        "tag_pool": ['zodiac', 'astrology', 'constellation', 'elemental', 'fire', 'ocean', 'storm', 'earth', 'magic'],
+        "archetypes": [
+            {
+                "id": "zodiac_constellation_corona",
+                "name": "12 Zodiac Golden Constellation Corona & Rotating Astrological Glyphs",
+                "signature_tokens": ['zodiac corona', 'constellation crown', 'astrological glyphs', 'golden horoscope', 'celestial wheel'],
+                "focus": "Floating celestial crown of spinning 24k gold astrological glyphs and connected starlight constellation lines orbiting above hairline. Opening mouth triggers cosmic alignment shockwave releasing expanding nebula gas cloud and floating golden star clusters; smiling flashes user's zodiac sign in brilliant gold flare; eyebrow raise accelerates constellation rotation; head tilt tilts orbital plane. Supreme astrological majesty, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Cosmic elemental majesty: 12 Zodiac Golden Constellation Corona crowns creator with personal destiny power in 0.2s."
+            },
+            {
+                "id": "solar_fire_elemental_diadem",
+                "name": "Solar Fire Elemental Diadem & Blazing Coronal Loops",
+                "signature_tokens": ['solar fire', 'fire diadem', 'coronal loops', 'magma embers', 'blazing crown'],
+                "focus": "Sculpted molten magma and 24k gold solar diadem resting on brow with looping 3D solar flares and floating magma embers. Opening mouth erupts pressurized crimson-and-gold fire dragon breath vortex shooting forward with crackling embers; smiling illuminates burning amber solar eye glare; eyebrow raise loops solar flares higher into crown; head tilt wafts convective heat distortion waves. Untamed fire element majesty, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Cosmic elemental majesty: Solar Fire Elemental Diadem commands blazing solar authority with live looping flares."
+            },
+            {
+                "id": "oceanic_bioluminescent_coral_tiara",
+                "name": "Oceanic Bioluminescent Coral Tiara & Drifting Jellyfish Tendrils",
+                "signature_tokens": ['coral tiara', 'bioluminescent coral', 'jellyfish tendrils', 'abyssal ocean', 'water caustics'],
+                "focus": "Living branching deep-sea coral tiara glowing with neon cyan and magenta bioluminescence, draped with translucent drifting jellyfish tendrils. Opening mouth unleashes swirling underwater tidal whirlpool with floating luminescent micro-plankton and air bubbles; smiling illuminates iridescent oceanic eye reflections; eyebrow raise pulses bioluminescent coral branches; head tilt sways floating jellyfish tentacles. Deep ocean royalty, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Cosmic elemental majesty: Oceanic Bioluminescent Coral Tiara submerges the portrait in magical deep-sea wonder."
+            },
+            {
+                "id": "tempest_storm_thunder_diadem",
+                "name": "Tempest Storm Thunder Diadem & Swirling Hurricane Vortex",
+                "signature_tokens": ['storm diadem', 'thunder crown', 'hurricane vortex', 'lightning arcs', 'storm cloud'],
+                "focus": "Swirling miniature dark thundercloud circlet floating above hairline with crackling violet lightning bolts and rain droplet mist. Opening mouth summons blinding lightning strike blast with concussive thunder shockwave expanding outward; smiling illuminates glowing electric purple eye gaze; eyebrow raise sparks crackling plasma crown spires; head tilt swirls storm cloud vortex. Unstoppable tempest ruler, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Cosmic elemental majesty: Tempest Storm Thunder Diadem commands supreme meteorological power."
+            },
+            {
+                "id": "terra_crystal_geode_crown",
+                "name": "Terra Amethyst Geode Crown & Levitating Runestone Crystals",
+                "signature_tokens": ['amethyst geode', 'crystal crown', 'levitating stones', 'earth elemental', 'purple quartz'],
+                "focus": "Raw fractured amethyst geode crown resting along brow with deep violet quartz crystals and levitating floating runestones orbiting temples. Opening mouth unleashes grounding terrestrial earthquake shockwave ripple with floating glowing crystal shards; smiling activates crystalline violet cheekbone glints; eyebrow raise lifts levitating stones higher; head tilt shifts caustic amethyst crystal refractions. Sacred earth guardian, zero UI.",
+                "primary_trigger": "MouthOpen / Smile / EyebrowRaise / HeadTilt",
+                "visual_hook": "Cosmic elemental majesty: Terra Amethyst Geode Crown radiates ancient crystalline earth wisdom."
+            }
+        ]
     }
 }
 
@@ -1012,14 +1330,15 @@ def select_channel_archetype(account_id: str, history: list, exclude_archetypes:
     Analyzes publication history across the entire fleet and deterministically selects
     the least-recently-used archetype to guarantee 100% rotating diversity across all
     viral topics without repetition. ALL accounts (1, 2, 3, 4, 5+) have full access to
-    all 12 viral omni-niche categories (Beauty, Astronaut/Space, Games, Retro, Greek, Gothic, etc.).
+    all 18 viral omni-niche categories (Beauty, Astronaut/Space, Games, Retro, Greek, Gothic,
+    Kawaii, Floral, Social, Manga, Sports, Zodiac, etc.).
     Supports exclude_archetypes to prevent repeating a failed concept during retry attempts.
     Returns: (selected_archetype_dict, banned_recent_nouns)
     """
     aid = str(account_id)
     excluded = set(exclude_archetypes or [])
 
-    # Aggregate master pool of all archetypes across all 12 channels
+    # Aggregate master pool of all archetypes across all 18 channels
     all_archetypes = []
     for cid, spec in CHANNEL_PROMPT_MATRICES.items():
         for arch in spec["archetypes"]:
@@ -1098,7 +1417,7 @@ def select_channel_archetype(account_id: str, history: list, exclude_archetypes:
     # Detect channel of the account's most recent published lens to enforce cross-genre alternation
     last_acc_channel = get_lens_channel(acc_lenses[-1]) if acc_lenses else None
 
-    # Universal Omni-Niche Fleet: ALL accounts cater to ALL 12 top viral genres:
+    # Universal Omni-Niche Fleet: ALL accounts cater to ALL 18 top viral genres:
     # 1. Mythic Beasts & Celestial Crowns (Channel 1)
     # 2. Cyberpunk HUD & 90s Camcorder VHS Glitch Optics (Channel 2)
     # 3. Viral Memes & Kinetic Morphs (Channel 3: Gigachad, crying stormclouds, melodrama waterfall)
@@ -1111,6 +1430,12 @@ def select_channel_archetype(account_id: str, history: list, exclude_archetypes:
     # 10. Cosmic Space & Astronaut (Channel 10: Apollo gold-visor helmet, orbiting planetarium, nebula dome)
     # 11. Viral Randomizer Wheels (Channel 11: Celestial tarot wheel, which vibe picker, aura scanner)
     # 12. Gothic Dark Fantasy (Channel 12: Vampire fangs, blood moon coronet, phantom wraith shroud)
+    # 13. Kawaii & Cute Anime Animals (Channel 13: Fluffy kitty ears, lop-eared bunny hood, kitsune spirit ears)
+    # 14. Floral & Nature Ethereal (Channel 14: Sunflower crown, monarch butterfly tiara, moss wreath, rose diadem)
+    # 15. Social & Relationship Dynamics (Channel 15: Cupid arrow diadem, green/red flag scanner, soulmate radar)
+    # 16. Manga & Shonen Action (Channel 16: Super Saiyan golden flame corona, manga speedline headband, scouter)
+    # 17. Sports & Athletic Glory (Channel 17: F1 carbon race visor, gold victory laurel, cyber boxing headguard)
+    # 18. Zodiac & Elemental Powers (Channel 18: 12 Zodiac constellation corona, solar fire diadem, coral tiara)
     # Enforces strict cross-genre rotation so the same account never publishes the same genre back-to-back,
     # and diversifies away from the fleet's most recently published topic.
     most_recent_other_channel = None
