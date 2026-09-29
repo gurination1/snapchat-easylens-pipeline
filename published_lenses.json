@@ -2309,7 +2309,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/MHtLuzUOIgTHerPo6B4Hw?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/F5MnlcaZsUs8ggc5BrNDN?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -2424,6 +2424,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/9eIlKyeAF3q9mSfimWk71?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-29T17:54:01Z",
+    "account_id": "4",
+    "lens_name": "Baroque Heart Match",
+    "lens_id": "cb02d773-d82c-4606-a9e9-b0fc4c9bc5d6",
+    "checkpoint_id": "06abbf4b-296e-7434-8000-49f5da3870e2",
+    "prompt": "Sculpted 24k gold filigree heart diadem rests on forehead with high-contrast PBR light rays. Smile triggers massive shimmering wings blooming from shoulders and sparkling diamond rain. Mouth open resets the rapid heart-rate pulse animation. Eyebrow raise causes the central heart to beat with rhythmic pulses. Head tilt activates volumetric caustic refractions. Pure 3D geometry, no screen text, no menus. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "romance",
+      "heart",
+      "diadem",
+      "filigree",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "crush_compatibility_meter",
+    "channel_id": "15",
+    "visual_hook": "The immediate 0.2s silhouette of a regally sculpted, high-contrast gold heart crown commands instant attention.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/PN0qlMHeXPhufnl2wZYx7?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/CXGQ5hpudxR2cddrIHSNb?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/web25ey4mRi3TsjZrWBjT?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
