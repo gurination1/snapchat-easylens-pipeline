@@ -65,6 +65,8 @@ class TestSnapchatLensSEO(unittest.TestCase):
             mock_payload = json
             class DummyRes:
                 status_code = 200
+                ok = True
+                text = "{}"
                 def raise_for_status(self): pass
                 def json(self): return {"status": "success", "lens_central_lens_id": "test_id"}
             return DummyRes()
@@ -84,6 +86,43 @@ class TestSnapchatLensSEO(unittest.TestCase):
         for t in mock_payload.get("tags"):
             self.assertTrue(t.isalnum())
             self.assertEqual(t, t.lower())
+
+    def test_publish_fallback_on_phone_verification_required(self):
+        """Verify publish_lens retries cleanly without enroll_in_payouts when phone verification is required."""
+        client = EasyLensClient()
+        attempts = []
+
+        def mock_request(method, url, json=None, **kwargs):
+            attempts.append(dict(json))
+            if len(attempts) == 1:
+                class FailRes:
+                    status_code = 400
+                    ok = False
+                    text = '{"detail":"Phone verification is required to publish an exclusive lens","code":"PHONE_VERIFICATION_REQUIRED"}'
+                    def raise_for_status(self):
+                        raise Exception("400 Client Error")
+                    def json(self):
+                        return {"detail": "Phone verification is required to publish an exclusive lens", "code": "PHONE_VERIFICATION_REQUIRED"}
+                return FailRes()
+            else:
+                class SuccessRes:
+                    status_code = 200
+                    ok = True
+                    text = '{"status":"success"}'
+                    def raise_for_status(self): pass
+                    def json(self): return {"status": "success", "lens_central_lens_id": "fallback_id"}
+                return SuccessRes()
+
+        client._request_with_retry = mock_request
+        res = client.publish_lens(
+            conversation_id="conv_123",
+            lens_name="Fallback Test Lens",
+            tags=["Test", "Ar"]
+        )
+        self.assertEqual(res.get("lens_central_lens_id"), "fallback_id")
+        self.assertEqual(len(attempts), 2, "Expected 2 attempts: with enroll_in_payouts then without")
+        self.assertTrue(attempts[0].get("enroll_in_payouts"))
+        self.assertNotIn("enroll_in_payouts", attempts[1], "Second attempt must omit enroll_in_payouts")
 
     def test_gemini_lens_agent_seo_spec(self):
         """Verify prompt generator produces 8-tag SEO output with alphanumeric tokens."""

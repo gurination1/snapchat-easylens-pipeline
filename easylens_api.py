@@ -400,8 +400,19 @@ class EasyLensClient:
             payload["lens_icon_encryption_key"] = icon_encryption_key
 
         res = self._request_with_retry("POST", url, json=payload, timeout=25)
-        if not res.ok:
-            print(f"[PUBLISH ERROR] Snapchat API {res.status_code}: {res.text}")
+        is_ok = getattr(res, "ok", getattr(res, "status_code", 500) < 400)
+        # Auto-fallback: if account is not phone-verified for Creator Rewards payouts,
+        # retry immediately as standard public community lens (omitting enroll_in_payouts)
+        if not is_ok and getattr(res, "status_code", 0) == 400:
+            resp_text = getattr(res, "text", "")
+            if "PHONE_VERIFICATION_REQUIRED" in resp_text or "Phone verification is required" in resp_text:
+                print("[PUBLISH NOTICE] Account lacks phone verification for Creator Rewards. Retrying as standard public community lens...")
+                payload.pop("enroll_in_payouts", None)
+                res = self._request_with_retry("POST", url, json=payload, timeout=25)
+                is_ok = getattr(res, "ok", getattr(res, "status_code", 500) < 400)
+
+        if not is_ok:
+            print(f"[PUBLISH ERROR] Snapchat API {getattr(res, 'status_code', '?')}: {getattr(res, 'text', '')}")
         res.raise_for_status()
         data = res.json()
         print(f"[PUBLISH SUBMITTED] Response: {json.dumps(data)}")
