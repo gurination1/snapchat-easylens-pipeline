@@ -1600,15 +1600,15 @@ class LensSimulator:
             rd = rim_dot[idx]
 
             if is_trigger:
-                b = int(np.clip(220 + kd * 35 + rd * 20 + pulse * 15, 0, 255))
-                g = int(np.clip(190 + kd * 45 + rd * 20 + pulse * 20, 0, 255))
                 r = int(np.clip(10 + kd * 40, 0, 255))
+                g = int(np.clip(190 + kd * 45 + rd * 20 + pulse * 20, 0, 255))
+                b = int(np.clip(220 + kd * 35 + rd * 20 + pulse * 15, 0, 255))
             else:
-                b = int(np.clip(140 + kd * 50 + rd * 65, 0, 255))
-                g = int(np.clip(120 + kd * 40 + rd * 50, 0, 255))
                 r = int(np.clip(25 + kd * 60 + rd * 15, 0, 255))
+                g = int(np.clip(120 + kd * 40 + rd * 50, 0, 255))
+                b = int(np.clip(140 + kd * 50 + rd * 65, 0, 255))
 
-            color = (b, g, r, 255)
+            color = (r, g, b, 255)
             pts = proj_pts[faces[idx]]
             cv2.fillPoly(mesh_layer, [pts], color)
 
@@ -1621,7 +1621,7 @@ class LensSimulator:
             px = int(fx + rx * cos_r - ry * sin_r)
             py = int(fy + rx * sin_r + ry * cos_r)
             p_sz = int(max(2, (2 + np.random.rand() * 4) * scale))
-            cv2.circle(mesh_layer, (px, py), p_sz, (254, 242, 0, 230), -1, cv2.LINE_AA)
+            cv2.circle(mesh_layer, (px, py), p_sz, (0, 242, 254, 230), -1, cv2.LINE_AA)
 
         return Image.fromarray(mesh_layer)
 

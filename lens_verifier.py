@@ -88,8 +88,13 @@ def audit_video_frames_visual_defects(video_path: str) -> dict:
                     bx, by = int(np.clip(mx - 8 * nx, 0, w - 1)), int(np.clip(my - 8 * ny, 0, sky_crop.shape[0] - 1))
                     sa = sky_hsv[ay, ax, 1]
                     sb = sky_hsv[by, bx, 1]
-                    if sa > 80 or sb > 80:
-                        continue  # Solid wearable mesh interior, not an isolated ray
+                    va = sky_hsv[ay, ax, 2]
+                    vb = sky_hsv[by, bx, 2]
+                    pa = sky_crop[ay, ax].astype(float)
+                    pb = sky_crop[by, bx].astype(float)
+                    diff_ab = np.linalg.norm(pa - pb)
+                    if sa > 45 or sb > 45 or diff_ab > 30 or abs(int(va) - int(vb)) > 25:
+                        continue  # Solid wearable mesh interior / shaded facet, not an isolated ray
 
                     vx, vy = mx - cx, my - cy
                     v_len = np.hypot(vx, vy)
@@ -998,24 +1003,34 @@ class LensVerifier:
 
             # Render authentic 9:16 vertical looping preview video & split comparison
             temp_lns = "/tmp/gate7_active_bundle.lns"
-            try:
-                with open(temp_lns, "wb") as f:
-                    f.write(bundle_bytes)
-                from camerakit_renderer import render_camerakit_preview
-                ck_res = render_camerakit_preview(
-                    lens_path=temp_lns,
-                    video_path=simulator.resolve_portrait_video(account_id=sim_lens_data.get("account_id")) or "assets/test_portrait.mp4",
-                    out_video="preview_video.mp4",
-                    out_neutral=out_neutral,
-                    out_trigger=out_trigger,
-                    out_split="preview_split_comparison.png",
-                    lens_name=sim_lens_data.get("lens_name", "Camera Kit AR Effect"),
-                    lens_data=sim_lens_data,
-                    account_id=sim_lens_data.get("account_id", "1")
-                )
-                preview_video = ck_res.get("preview_video", "preview_video.mp4")
-            except Exception as ck_err:
-                print(f"[LensVerifier] CameraKit renderer integration notice ({ck_err}), falling back to direct simulator...")
+            preview_video = None
+            use_ck = os.getenv("USE_CAMERAKIT_HEADLESS", "false").lower() == "true"
+            if use_ck:
+                try:
+                    with open(temp_lns, "wb") as f:
+                        f.write(bundle_bytes)
+                    from camerakit_renderer import render_camerakit_preview
+                    ck_res = render_camerakit_preview(
+                        lens_path=temp_lns,
+                        video_path=simulator.resolve_portrait_video(account_id=sim_lens_data.get("account_id")) or "assets/test_portrait.mp4",
+                        out_video="preview_video.mp4",
+                        out_neutral=out_neutral,
+                        out_trigger=out_trigger,
+                        out_split="preview_split_comparison.png",
+                        lens_name=sim_lens_data.get("lens_name", "Camera Kit AR Effect"),
+                        lens_data=sim_lens_data,
+                        account_id=sim_lens_data.get("account_id", "1")
+                    )
+                    cand_video = ck_res.get("preview_video", "preview_video.mp4")
+                    cand_audit = audit_preview_video(cand_video)
+                    if cand_audit.get("passed", False):
+                        preview_video = cand_video
+                    else:
+                        print(f"[LensVerifier] CameraKit preview video had freeze/quality defects, falling back to simulator...")
+                except Exception as ck_err:
+                    print(f"[LensVerifier] CameraKit renderer integration notice ({ck_err}), falling back to direct simulator...")
+
+            if not preview_video:
                 preview_video = simulator.render_simulation_video(
                     out_path="preview_video.mp4",
                     out_neutral=out_neutral,
