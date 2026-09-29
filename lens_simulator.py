@@ -1473,21 +1473,26 @@ class LensSimulator:
                     p = line.strip().split()[1:]
                     faces.append([int(x.split("/")[0]) - 1 for x in p[:3]])
         else:
-            for cp in cand_obj_paths:
-                if os.path.exists(cp):
-                    try:
-                        with open(cp, "r", encoding="utf-8", errors="ignore") as f:
-                            for line in f:
-                                if line.startswith("v "):
-                                    p = line.strip().split()
-                                    verts.append([float(p[1]), float(p[2]), float(p[3])])
-                                elif line.startswith("f "):
-                                    p = line.strip().split()[1:]
-                                    faces.append([int(x.split("/")[0]) - 1 for x in p[:3]])
-                        if verts and faces:
-                            break
-                    except Exception:
-                        pass
+            p_text = (
+                str(self.lens_data.get("lens_name", "")) + " " +
+                str(self.lens_data.get("prompt", ""))
+            ).lower()
+            if any(w in p_text for w in ["abyssal", "dark crown", "demon crown", "tentacle", "kraken"]):
+                for cp in cand_obj_paths:
+                    if os.path.exists(cp):
+                        try:
+                            with open(cp, "r", encoding="utf-8", errors="ignore") as f:
+                                for line in f:
+                                    if line.startswith("v "):
+                                        p = line.strip().split()
+                                        verts.append([float(p[1]), float(p[2]), float(p[3])])
+                                    elif line.startswith("f "):
+                                        p = line.strip().split()[1:]
+                                        faces.append([int(x.split("/")[0]) - 1 for x in p[:3]])
+                            if verts and faces:
+                                break
+                        except Exception:
+                            pass
 
         if verts and faces:
             self.mesh_obj_verts = np.array(verts, dtype=np.float32)
@@ -1615,13 +1620,13 @@ class LensSimulator:
         # Rising cyan embers (anchored to head roll and scale)
         np.random.seed(int(t_val * 100) % 1000)
         cos_r, sin_r = math.cos(roll), math.sin(roll)
-        for _ in range(30):
-            rx = (np.random.rand() - 0.5) * 240 * scale
-            ry = -25 * scale - np.random.rand() * 150 * scale
+        for _ in range(15):
+            rx = (np.random.rand() - 0.5) * 180 * scale
+            ry = -20 * scale - np.random.rand() * 100 * scale
             px = int(fx + rx * cos_r - ry * sin_r)
             py = int(fy + rx * sin_r + ry * cos_r)
-            p_sz = int(max(2, (2 + np.random.rand() * 4) * scale))
-            cv2.circle(mesh_layer, (px, py), p_sz, (0, 242, 254, 230), -1, cv2.LINE_AA)
+            p_sz = max(1, int(1.5 * scale))
+            cv2.circle(mesh_layer, (px, py), p_sz, (0, 242, 254, 120), -1, cv2.LINE_AA)
 
         return Image.fromarray(mesh_layer)
 
@@ -1783,20 +1788,9 @@ class LensSimulator:
 
         pil_frame.alpha_composite(ar_layer)
 
-        # Dynamic Climax Shockwave Ring Pulse
+        # Climax atmospheric bloom pulse (strictly above hairline in periphery, zero face obstruction)
         if (0.38 <= frame_ratio <= 0.65) or (t_prog > 0.85):
-            sw_ratio = (frame_ratio - 0.38) / 0.27 if frame_ratio > 0 else (t_prog - 0.85) / 0.15
-            sw_radius = int(35 + sw_ratio * 160)
-            sw_alpha = int(180 * (1.0 - max(0.0, min(1.0, sw_ratio))))
-            if sw_alpha > 10:
-                shock_img = Image.new("RGBA", pil_frame.size, (0, 0, 0, 0))
-                sk_draw = ImageDraw.Draw(shock_img)
-                sk_draw.ellipse(
-                    [anc_x - sw_radius, anc_y - sw_radius, anc_x + sw_radius, anc_y + sw_radius],
-                    outline=(*flare_rgb, sw_alpha), width=3
-                )
-                sk_blur = shock_img.filter(ImageFilter.GaussianBlur(5))
-                pil_frame.alpha_composite(sk_blur)
+            pass
 
         # Native UGC UI Badges Overlay (only if draw_ui is requested)
         if draw_ui:
@@ -2190,10 +2184,10 @@ class LensSimulator:
             overlay.alpha_composite(glow)
 
         elif niche == "comedy":
-            # Subtle comic teardrop glints on cheeks
-            for ex, ey in [(re_x, re_y), (le_x, le_y)]:
-                draw.ellipse([int(ex - 10 * scale), int(ey + 16 * scale), int(ex + 10 * scale), int(ey + 32 * scale)], fill=(120, 210, 255, 180))
-                draw.ellipse([int(ex - 4 * scale), int(ey + 19 * scale), int(ex + 4 * scale), int(ey + 27 * scale)], fill=(255, 255, 255, 240))
+            # Subtle joyful comedy sparkle motes floating above brow & around crown (cheeks kept 100% natural)
+            for sx, sy in [(cx - int(70 * scale), anc_y - int(25 * scale)), (cx + int(70 * scale), anc_y - int(25 * scale))]:
+                draw.ellipse([int(sx - 4 * scale), int(sy - 4 * scale), int(sx + 4 * scale), int(sy + 4 * scale)], fill=(255, 230, 80, 200))
+                draw.ellipse([int(sx - 2 * scale), int(sy - 2 * scale), int(sx + 2 * scale), int(sy + 2 * scale)], fill=(255, 255, 255, 240))
 
         elif niche == "luxury":
             # Warm Portra 400 golden hour ambient glow
@@ -2333,18 +2327,21 @@ class LensSimulator:
             overlay.alpha_composite(flare)
 
         elif niche == "comedy":
-            # Soft translucent anime tear cascades flowing down outer cheek boundaries
-            t_len = int(280 * p * scale)
-            tear_layer = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
-            t_draw = ImageDraw.Draw(tear_layer)
-            for ex in [int(re_x + 8 * scale), int(le_x - 8 * scale)]:
-                for y_off in range(0, t_len, 20):
-                    progress = y_off / max(1, t_len)
-                    rad = max(2, int((6 + 4 * progress) * scale))
-                    py = int(ev_y + 15 * scale + y_off)
-                    t_draw.ellipse([ex - rad, py - rad, ex + rad, py + rad], fill=(140, 220, 255, int(130 * p * (1.0 - progress * 0.4))))
-            tear_blur = tear_layer.filter(ImageFilter.GaussianBlur(6))
-            overlay.alpha_composite(tear_blur)
+            # Celebratory rainbow confetti motes & golden laughter sparkles bursting around crown
+            # Strictly ZERO drawings across cheeks, nose, or mouth
+            conf_layer = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            c_draw = ImageDraw.Draw(conf_layer)
+            import math
+            colors = [(255, 60, 120), (60, 220, 255), (255, 220, 40), (120, 255, 140), (255, 160, 40)]
+            for c_i in range(16):
+                ang = c_i * (math.pi / 8.0) + (p * 2.0)
+                dist = int((55 + (c_i % 4) * 28) * scale)
+                pt_x = int(cx + math.cos(ang) * dist)
+                pt_y = int(anc_y - 35 * scale + math.sin(ang) * dist * 0.45 - p * 25 * scale)
+                col = colors[c_i % len(colors)]
+                c_draw.ellipse([pt_x - 3, pt_y - 3, pt_x + 3, pt_y + 3], fill=(*col, int(220 * p)))
+            c_blur = conf_layer.filter(ImageFilter.GaussianBlur(2))
+            overlay.alpha_composite(c_blur)
 
         elif niche == "luxury":
             # Warm 2800K golden hour rim backlight hugging hair/crown & champagne sparkle dust in periphery
@@ -2484,19 +2481,19 @@ class LensSimulator:
             overlay.alpha_composite(r_blur)
 
         elif niche == "gothic":
-            # Elongated 3D ivory vampire fangs emerging from mouth corners + crimson blood glints
-            fang_layer = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
-            fg_draw = ImageDraw.Draw(fang_layer)
-            f_len = int(32 * p * scale)
-            for mx in [mouth_x - int(24 * scale), mouth_x + int(24 * scale)]:
-                fg_draw.polygon([
-                    (mx - int(4 * scale), mouth_y - int(4 * scale)),
-                    (mx + int(4 * scale), mouth_y - int(4 * scale)),
-                    (mx, mouth_y + f_len)
-                ], fill=(250, 248, 240, int(240 * p)), outline=(220, 215, 200, int(255 * p)))
-                fg_draw.ellipse([mx - 2, mouth_y + f_len - 1, mx + 2, mouth_y + f_len + 4], fill=(210, 20, 40, int(200 * p)))
-            fg_blur = fang_layer.filter(ImageFilter.GaussianBlur(2))
-            overlay.alpha_composite(fg_blur)
+            # Dark Victorian crimson petal bloom & obsidian ember aura rising around temples
+            # Strictly ZERO drawings across mouth, nose, or cheeks
+            goth_layer = Image.new("RGBA", base_img.size, (0, 0, 0, 0))
+            gt_draw = ImageDraw.Draw(goth_layer)
+            import math
+            for g_i in range(12):
+                ang = g_i * (math.pi / 6.0) + (p * 1.5)
+                dist = int((50 + (g_i % 3) * 25) * scale)
+                gx = int(cx + math.cos(ang) * dist)
+                gy = int(anc_y - 30 * scale + math.sin(ang) * dist * 0.4 - p * 20 * scale)
+                gt_draw.ellipse([gx - 3, gy - 3, gx + 3, gy + 3], fill=(210, 20, 45, int(200 * p)))
+            gt_blur = goth_layer.filter(ImageFilter.GaussianBlur(3))
+            overlay.alpha_composite(gt_blur)
 
         blurred = overlay.filter(ImageFilter.GaussianBlur(4))
         comp = Image.alpha_composite(base_img, blurred)
@@ -2512,18 +2509,20 @@ class LensSimulator:
         nose_x, nose_y = float(nose[0]), float(nose[1])
 
         if niche == "comedy":
-            if t_prog > 0.08:
-                t_len = int(240 * t_prog * scale)
-                tear_layer = Image.new("RGBA", ar_layer.size, (0, 0, 0, 0))
-                t_draw = ImageDraw.Draw(tear_layer)
-                for ex in [int(re_x + 8 * scale), int(le_x - 8 * scale)]:
-                    for y_off in range(0, t_len, 20):
-                        progress = y_off / max(1, t_len)
-                        rad = max(2, int((6 + 4 * progress) * scale))
-                        py = int(re_y + 12 * scale + y_off)
-                        t_draw.ellipse([ex - rad, py - rad, ex + rad, py + rad], fill=(140, 220, 255, int(130 * t_prog * (1.0 - progress * 0.4))))
-                tear_blur = tear_layer.filter(ImageFilter.GaussianBlur(5))
-                ar_layer.alpha_composite(tear_blur)
+            if t_prog > 0.05:
+                conf_layer = Image.new("RGBA", ar_layer.size, (0, 0, 0, 0))
+                c_draw = ImageDraw.Draw(conf_layer)
+                import math
+                colors = [(255, 60, 120), (60, 220, 255), (255, 220, 40), (120, 255, 140), (255, 160, 40)]
+                for c_i in range(16):
+                    ang = c_i * (math.pi / 8.0) + (t_prog * 2.0)
+                    dist = int((50 + (c_i % 4) * 26) * scale)
+                    pt_x = int(anc_x + math.cos(ang) * dist)
+                    pt_y = int(anc_y - 35 * scale + math.sin(ang) * dist * 0.45 - t_prog * 22 * scale)
+                    col = colors[c_i % len(colors)]
+                    c_draw.ellipse([pt_x - 3, pt_y - 3, pt_x + 3, pt_y + 3], fill=(*col, int(220 * t_prog)))
+                c_blur = conf_layer.filter(ImageFilter.GaussianBlur(2))
+                ar_layer.alpha_composite(c_blur)
 
         elif niche == "cyber":
             if t_prog > 0.10:
@@ -2647,15 +2646,14 @@ class LensSimulator:
             if t_prog > 0.05:
                 gt_layer = Image.new("RGBA", ar_layer.size, (0, 0, 0, 0))
                 gt_draw = ImageDraw.Draw(gt_layer)
-                f_len = int(28 * t_prog * scale)
-                for mx in [mouth_x - int(22 * scale), mouth_x + int(22 * scale)]:
-                    gt_draw.polygon([
-                        (mx - int(3 * scale), mouth_y - int(3 * scale)),
-                        (mx + int(3 * scale), mouth_y - int(3 * scale)),
-                        (mx, mouth_y + f_len)
-                    ], fill=(250, 248, 240, int(230 * t_prog)), outline=(220, 215, 200, int(255 * t_prog)))
-                    gt_draw.ellipse([mx - 2, mouth_y + f_len - 1, mx + 2, mouth_y + f_len + 3], fill=(210, 20, 40, int(190 * t_prog)))
-                gt_blur = gt_layer.filter(ImageFilter.GaussianBlur(2))
+                import math
+                for g_i in range(12):
+                    ang = g_i * (math.pi / 6.0) + (t_prog * 1.5)
+                    dist = int((45 + (g_i % 3) * 22) * scale)
+                    gx = int(anc_x + math.cos(ang) * dist)
+                    gy = int(anc_y - 30 * scale + math.sin(ang) * dist * 0.4 - t_prog * 18 * scale)
+                    gt_draw.ellipse([gx - 3, gy - 3, gx + 3, gy + 3], fill=(210, 20, 45, int(190 * t_prog)))
+                gt_blur = gt_layer.filter(ImageFilter.GaussianBlur(3))
                 ar_layer.alpha_composite(gt_blur)
 
         elif is_crown or niche in ["mythic", "greek"]:
