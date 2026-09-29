@@ -2338,5 +2338,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/AbxfODSj5ZKE0hyd7O4YZ?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-29T15:46:26Z",
+    "account_id": "2",
+    "lens_name": "Orbital Station Visor",
+    "lens_id": "ef14c753-da7a-4bc4-bf3f-5f14bf5e69ca",
+    "checkpoint_id": "06abbd8d-cfa8-7a9a-8000-687e7fcf9ba9",
+    "prompt": "Detailed 3D space station satellite orbits right temple in PBR brushed titanium. High contrast solar wings rotate on axis. MouthOpen triggers blue ion engine thruster pulse with space dust. Smile activates solar panel gold glints. EyebrowRaise fires precise laser navigation beam. HeadTilt initiates inertia orbit drift. Authentic hardware, 3point lighting, raytraced shadows, deep space physics. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "space",
+      "cosplay",
+      "satellite",
+      "station",
+      "visor",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "zero_g_spacewalk_satellite",
+    "channel_id": "10",
+    "visual_hook": "The high-contrast silhouette of a complex, mechanical satellite framing the temple provides an immediate high-tech curiosity hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/GVMjLT4PXUHaaHLIlPyc9?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/1LLWkcOqhuDAtzOBPA7DX?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/oQcnQjrgjCUyFdrfHThXm?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
