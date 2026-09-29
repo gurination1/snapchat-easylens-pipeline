@@ -2367,5 +2367,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/oQcnQjrgjCUyFdrfHThXm?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-29T16:13:14Z",
+    "account_id": "3",
+    "lens_name": "Celestial Fortune Dial",
+    "lens_id": "2f2713b6-a9f1-45b3-874a-b2d342a49ab0",
+    "checkpoint_id": "06abbdeb-5e81-7cff-8000-f89382d3cd42",
+    "prompt": "Ornate 24k gold celestial ring hovers above forehead with rotating zodiac emblems. High contrast 3 point lighting defines metallic surface textures. Smile stops wheel on random prediction with massive erupting golden trumpet confetti. Mouth open triggers rapid spin. Eyebrow raise flashes mystic runes. Head tilt shifts perspective with ray traced contact shadows. Pure 3D interaction, no text, no hud, full screen. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "fantasy",
+      "magic",
+      "fortune",
+      "zodiac",
+      "wheel",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "celestial_tarot_wheel",
+    "channel_id": "11",
+    "visual_hook": "The instant 0.2s silhouette of a rapidly spinning gilded celestial ring creates an elite, curiosity-driven fortune-telling focal point.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/sM6kzQviQ35cjv7Ud59zF?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/pEFNNIWlf9icFZgEFc0Lx?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/E8TpigwAeSWhyx3pZOBXY?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
