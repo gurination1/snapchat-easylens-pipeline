@@ -2872,5 +2872,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/BaAta435aOS4g0dlvFnyN?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-30T19:47:14Z",
+    "account_id": "5",
+    "lens_name": "Zodiac Star Crown",
+    "lens_id": "6cdb8c2a-ebc2-44cf-853c-c19dc70c739a",
+    "checkpoint_id": "06abd618-ba4d-784d-8000-f5dc78df6bda",
+    "prompt": "Floating 24k gold celestial diadem framing the forehead with orbiting astrological glyphs linked by starlight filaments. PBR materials feature brushed metal and caustic light refractions. Mouth open triggers a massive radial nebula shockwave. Smile ignites a golden supernova flare. Eyebrow raise speeds up constellation rotation. Head tilt shifts the orbital plane. Cinematic 3-point contrast lighting for supreme majesty. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "fantasy",
+      "beauty",
+      "zodiac",
+      "crown",
+      "stars",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "zodiac_constellation_corona",
+    "channel_id": "18",
+    "visual_hook": "The 0.2s silhouette of a glowing, architecturally complex 24k gold orbital crown creates immediate luxury status.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/eEfsQtbs06aDQOQeMsRzH?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/yWBgLmYUwjcQ9ef4gFCkz?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/qHureCNmd24mkcGUgo7lC?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
