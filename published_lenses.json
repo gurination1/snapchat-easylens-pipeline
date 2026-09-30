@@ -2814,5 +2814,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/4Hb5LTN3dd4fNUuEosz55?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-30T18:45:28Z",
+    "account_id": "1",
+    "lens_name": "Kawaii Kitsune Ears",
+    "lens_id": "8d118ee4-2cb9-44c4-8a45-130b8e56bfb1",
+    "checkpoint_id": "06abd526-b948-7b1b-8000-69eb2e01a6f2",
+    "prompt": "Ultra-soft plush anime fox ears contoured to hairline with twin dangling bronze charms and delicate blush cheek accents. PBR materials mimic realistic fur texture. Mouth open triggers playful floating pastel pawprint shockwaves and soft heart motes. Smile initiates happy ear twitch with musical bell chimes. Eyebrow raise wiggles ear tips. Head tilt sways charms. 3-point contrast lighting. Zero UI or text. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "anime",
+      "beauty",
+      "kitsune",
+      "ears",
+      "fox",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "fluffy_anime_cat_ears",
+    "channel_id": "13",
+    "visual_hook": "The 0.2s silhouette of oversized, ultra-soft plush fox ears creates an immediate, irresistible kawaii aesthetic hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/NJBkOFcQebjKG1gI94P2g?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/eOSV3Qhok92QHm42kRYo3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/ouQaj3irc60cwPoUeRSL7?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
