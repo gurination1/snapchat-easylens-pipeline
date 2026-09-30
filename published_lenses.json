@@ -2843,5 +2843,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/ouQaj3irc60cwPoUeRSL7?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-30T19:16:43Z",
+    "account_id": "4",
+    "lens_name": "Anime Ki Aura",
+    "lens_id": "12111d98-8e11-421f-b24f-736ecc95d833",
+    "checkpoint_id": "06abd5a3-e1dd-77d5-8000-57bbf41e3f8c",
+    "prompt": "Wearable 3D amber plasma hair spires rising from forehead with crackling cyan electric arcs encircling temples. 6500K rim lighting with ray-traced shadows over face. MouthOpen blasts kinetic radiant shockwave rings and disintegrating energy embers; smile summons fiery solar ocular flare glints; eyebrow raise discharges violent lightning bolts; head tilt sways sculpted fire crest dynamically. Volumetric cel-shaded anime battle VFX, no UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "anime",
+      "cosplay",
+      "aura",
+      "flame",
+      "lightning",
+      "mouthopen",
+      "selfie",
+      "vfx"
+    ],
+    "archetype": "super_saiyan_golden_corona",
+    "channel_id": "16",
+    "visual_hook": "Blazing amber plasma hair crest and crackling cyan electricity create an instantaneous shonen power awakening silhouette.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/bgd7LGYeT1OXwKLNkWMcN?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/qF84VJWpChwmJne3wvvTB?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/BaAta435aOS4g0dlvFnyN?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
