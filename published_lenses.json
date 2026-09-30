@@ -2647,5 +2647,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/UTx4rAHHBwQ7ZAmQWgHCj?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-30T03:24:33Z",
+    "account_id": "3",
+    "lens_name": "Stellar Soul Compass",
+    "lens_id": "2110fb22-8149-4e21-8341-af7d28c68789",
+    "checkpoint_id": "06abc7b5-ebcf-7020-8000-72964e89b448",
+    "prompt": "Polished platinum orbital arc anchored across brow with spinning holographic starlight compass. Head tilt locks directional tracking beam with expanding golden starlight ripples. Opening mouth unleashes celebratory supernova starburst with floating zodiac glyphs. Smiling pulses warm astral glow across cheekbones. Eyebrow raise sweeps radar beam. PBR metal, 6500K rim lighting, zero UI, pure 3D wearable accessory. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "fantasy",
+      "compass",
+      "starlight",
+      "zodiac",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "soulmate_constellation_radar",
+    "channel_id": "15",
+    "visual_hook": "The 0.2s silhouette of a high-contrast platinum orbital arc frames the face, creating an instant premium celestial aesthetic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/zJnQUCgr12vFqVLRp9ToO?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/w5sn4y7P5IpZMj4gBTYKF?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/AotZnJHD58IwgJLww4O0Y?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
