@@ -2930,5 +2930,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/9NH4eF4knvabNDBq8JCQ1?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-30T23:28:43Z",
+    "account_id": "3",
+    "lens_name": "70s Psychedelic Woodstock Flower Crown",
+    "lens_id": "30fef23f-385d-414d-a916-69880b0fd4b4",
+    "checkpoint_id": "06abd95b-c251-7ddb-8000-0d9dabb38792",
+    "prompt": "Undulating liquid-lava flow flower crown with warm psychedelic orange, mustard, and magenta swirls. Opening mouth releases floating kaleidoscope groovy flower petals and liquid light ripple waves; smiling warms complexion with retro Woodstock sunset halation; eyebrow raise blooms psychedelic petals; head tilt ripples lava patterns. Trippy 70s bohemian aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "retro",
+      "80s",
+      "90s",
+      "70s",
+      "synthwave",
+      "vhs",
+      "camcorder",
+      "disco"
+    ],
+    "archetype": "psychedelic_70s_groove",
+    "channel_id": "7",
+    "visual_hook": "Decades nostalgia hit: 70s Psychedelic Woodstock Flower Crown delivers mesmerizing bohemian liquid light waves.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/HkodPAbKe7M56tk17x3HT?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/fE9pZmYFTXSArWdMqBjeU?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Q8dQQ3mlKWQpnnWMFjnrR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
