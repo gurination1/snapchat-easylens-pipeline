@@ -2901,5 +2901,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/qHureCNmd24mkcGUgo7lC?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-30T22:58:39Z",
+    "account_id": "2",
+    "lens_name": "Velvet Shiba Crown",
+    "lens_id": "ab9fdc34-4a9e-42b5-9bb9-35911bad5277",
+    "checkpoint_id": "06abd8fa-cbf2-72f8-8000-d38e80379e26",
+    "prompt": "Ultra-fluffy honey-toned hound crest resting on head with brushed wool texture. Soft peach-toned heart-shaped cheek pigment. MouthOpen triggers a cascade of bouncing bone-shaped confetti and kinetic glitter. Smile causes the crest to pin back with joyful squint-line sparkles. EyebrowRaise perks the crest upright. HeadTilt induces playful floppy movement. 3-point contrast lighting, PBR fur fidelity, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "cute",
+      "fantasy",
+      "hound",
+      "crest",
+      "hearts",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "shiba_inu_puppy_ears",
+    "channel_id": "13",
+    "visual_hook": "The immediate 0.2s silhouette of oversized, luxurious honey-toned hound headwear creates an irresistible, high-fidelity fluffy aesthetic hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/3PnVF08BERFbkPuX7DvOC?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/dHIdnmErBHdHe1JQQha0V?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/9NH4eF4knvabNDBq8JCQ1?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
