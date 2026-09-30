@@ -2676,5 +2676,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/AotZnJHD58IwgJLww4O0Y?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-30T04:02:39Z",
+    "account_id": "1",
+    "lens_name": "Golden Solstice Bloom",
+    "lens_id": "901a3dcc-6fa0-456c-92b0-e81d8c126ff8",
+    "checkpoint_id": "06abc839-b3f7-7925-8000-03d23f16581e",
+    "prompt": "Lush headdress of sculpted velvet sunflowers and honey-amber marigolds resting along hairline. Warm 2800K solstice lighting, ray-traced contact shadows. Mouth open releases cascading cloud of glowing pollen particles. Smile triggers radiant sun-halo eye flares and soft peach cheek bloom. Eyebrow raise blooms outer sunflower petals. Head tilt sways golden petals. Pure 3D PBR wearable art, zero UI, zero overlays. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "nature",
+      "sunflower",
+      "marigold",
+      "solstice",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "golden_sunflower_marigold_crown",
+    "channel_id": "14",
+    "visual_hook": "The instant 0.2s high-contrast silhouette of a vibrant, oversized golden floral crown commands immediate attention.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/ZfaeZerinmUvn4U2pgwyc?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/XWiFhW1jXCDpGky9HVXr7?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/QvjuHpnyYW8DRKFvEPwJv?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
