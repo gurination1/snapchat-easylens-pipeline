@@ -1077,6 +1077,8 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
             or (browser_results.get("top_performer_toggled", False) and browser_results.get("final_checked", False))
             or enroll_results.get("target_lens_verified", False)
         )
+        if target_verified:
+            mark_lens_enrolled_in_history(target_lens_id)
     else:
         target_verified = bool(
             browser_results.get("top_performer_toggled", False)
@@ -1095,6 +1097,7 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
         "enrolled_lenses_count": enroll_results.get("count", 0) + sweep_results.get("remedied", 0),
         "top_performer_toggled": target_verified,
         "target_lens_verified": target_verified,
+        "final_checked": browser_results.get("final_checked", False),
         "sweep_results": sweep_results,
         "direct_graphql_details": enroll_results,
         "success": True
