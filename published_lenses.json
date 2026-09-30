@@ -2785,5 +2785,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/NsoDJMMiemEWtAGHN7CZz?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-09-30T18:07:12Z",
+    "account_id": "3",
+    "lens_name": "Alpine Blizzard Goggles",
+    "lens_id": "71ed1f1f-88ca-4b3f-9d33-66c6db73cdc0",
+    "checkpoint_id": "06abd49c-3f83-712c-8000-e2af6d6dbf69",
+    "prompt": "Frameless oversized iridescent alpine ski goggles mirrored across eyes reflecting sharp mountain peaks. Mouth open triggers a pressurized powdery snow blizzard vortex whooshing around the face with ice crystals. Smile warms lenses with vibrant sun-glow. Eyebrow raise clears frost dust from lenses. Head tilt sweeps polarized mountain reflections. PBR materials, 3-point contrast lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "sport",
+      "winter",
+      "goggles",
+      "ski",
+      "mountain",
+      "mouthopen",
+      "vfx",
+      "pbr"
+    ],
+    "archetype": "alpine_ski_snow_goggles",
+    "channel_id": "17",
+    "visual_hook": "The instant 0.2s silhouette of sleek, mirrored alpine goggles provides a premium, rugged extreme-sports aesthetic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/ajQxqLNGoqaPNul4Sa5NV?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/6fkEFkHnef3XpsRuCKtth?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/4Hb5LTN3dd4fNUuEosz55?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
