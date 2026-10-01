@@ -3288,5 +3288,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/PGBJzo40xBP6DRWV8R781?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-01T21:45:22Z",
+    "account_id": "5",
+    "lens_name": "Manga Impact Headband",
+    "lens_id": "abaec7c4-2329-4fac-ba4e-2e084c78afcf",
+    "checkpoint_id": "06abed0e-6d08-7191-8000-66c82fcd8352",
+    "prompt": "Authentic 3D ink headband with sculpted manga speedlines radiating from brow. 6500K rim lighting defines bold silhouette. MouthOpen triggers explosive 3D kanji burst with halftone debris. Smile shifts textures to high-contrast cell-shaded ink. EyebrowRaise accelerates radial speedline zoom. HeadTilt pivots perspective. PBR materials, zero UI, no obscuring geometry, pure 3D Shonen aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "anime",
+      "cosplay",
+      "manga",
+      "headband",
+      "impact",
+      "mouthopen",
+      "3d",
+      "pbr"
+    ],
+    "archetype": "manga_speedline_impact_headband",
+    "channel_id": "16",
+    "visual_hook": "The stark, high-contrast black-and-white ink aesthetic creates an immediate, iconic comic-book silhouette hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/Xlj39V3NusWsFLAMxSJpr?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/z5HxiKbA8RsXfL3SuwxKs?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/jFpfMs0I7Z8ymQSdO8NtY?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
