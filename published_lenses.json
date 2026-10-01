@@ -3175,5 +3175,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/p3TmAj5CtMnHcmja0YRc0?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-01T19:23:08Z",
+    "account_id": "2",
+    "lens_name": "Supernova Starlight Shades",
+    "lens_id": "2ebb0a5b-13a8-409d-8309-e63c593d5035",
+    "checkpoint_id": "06abeaea-cde8-7b3e-8000-38c1590522c2",
+    "prompt": "Ultra-sleek aerodynamic Y3K wrap-around chrome sunglasses resting across the eyes with deep violet polarized lenses reflecting distant spiral galaxies. Floating microscopic stardust motes orbit the temples. Opening mouth triggers a blinding supernova stellar flare and floating golden starburst sparks; smiling illuminates neon cyan frame edge lighting; eyebrow raise pulses violet laser glints through the lenses; head tilt catches brilliant ray-traced. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "cyberpunk",
+      "beauty",
+      "visor",
+      "halo",
+      "eyewear",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "starlight_cosmic_shades",
+    "channel_id": "10",
+    "visual_hook": "The 0.2s silhouette of high-contrast, reflective chrome eyewear creates an immediate futuristic luxury status hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/pvHmhqj9lTy6d9G4a1QQx?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/43vp8We3hGTC7g0yQ3hez?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/CmAbKxKbCRFzAfyqZr8Wt?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
