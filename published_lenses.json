@@ -3230,5 +3230,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/PdjBOhpKfiu6tlwIcGeMp?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-01T20:47:35Z",
+    "account_id": "1",
+    "lens_name": "Amethyst Geode Corona",
+    "lens_id": "baed092c-4e9d-43a2-82f1-2092a34f4532",
+    "checkpoint_id": "06abebfe-9ef4-7c9d-8000-465202d0397b",
+    "prompt": "Raw fractured amethyst geode crown resting along brow, deep violet quartz crystals, and levitating floating runestones orbiting temples. Opening mouth unleashes grounding terrestrial earthquake shockwave ripple with floating glowing crystal shards; smiling activates crystalline violet cheekbone glints; eyebrow raise lifts levitating stones higher; head tilt shifts caustic amethyst crystal refractions. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "fantasy",
+      "beauty",
+      "geode",
+      "crown",
+      "crystal",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "terra_crystal_geode_crown",
+    "channel_id": "18",
+    "visual_hook": "The instant 0.2s silhouette of a high-contrast, architecturally complex amethyst geode crown creates immediate mystic earth power.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/L1ndrnGEEP7Pej0HEaNSO?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Bahb4bGUlqma2Q1drjqJS?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/lKKjMoQWtgGyttfT3ngtO?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
