@@ -3014,5 +3014,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/UOyCgzyElGRTChwLQxHne?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-01T02:03:42Z",
+    "account_id": "5",
+    "lens_name": "Drama Queen Tiara",
+    "lens_id": "5f9b95e2-e5c6-4781-87c6-22a56691111e",
+    "checkpoint_id": "06abdbb5-5e64-7ed0-8000-078ee7a89837",
+    "prompt": "Wearable neon magenta drama queen tiara anchored to forehead with spinning comic beacons and an orbiting porcelain teacup. Ray-traced gold filigree and caustic rim lighting. MouthOpen triggers an explosive cartoon amber tea wave with spark bursts; Smile shifts beacons to a gentle warm halo; EyebrowRaise accelerates siren spin; HeadTilt spills dynamic droplet streams. Face fully visible with flattering blush lighting, zero on-screen text. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "comedy",
+      "tiara",
+      "teacup",
+      "crown",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "drama_queen_siren_tiara",
+    "channel_id": "15",
+    "visual_hook": "A vibrant neon magenta tiara paired with playful spinning beacons and an orbiting porcelain teacup creates instant comedic royalty drama.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/LGBEg3idxIucSeqQaosTk?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/9w2uzs3IKbEOPFogFTXIG?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/vt0AFt901An12uXLaKj1g?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
