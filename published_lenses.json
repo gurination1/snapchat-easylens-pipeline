@@ -3259,5 +3259,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/lKKjMoQWtgGyttfT3ngtO?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-01T21:21:06Z",
+    "account_id": "4",
+    "lens_name": "Pastel Pandacorn Ears",
+    "lens_id": "86beb615-589e-43e1-8a0f-5f8d6e12be0f",
+    "checkpoint_id": "06abec85-19f1-7910-8000-dfe0c86dc6da",
+    "prompt": "Fluffy white panda ears flank a twisting pearlescent iridescent spiral brow-spike. PBR textures display soft fur and refractive opal surfaces. MouthOpen triggers a vibrant rainbow particle torrent and smiling star burst. Smiling casts soft prismatic eye-glints and glowing cheek-blush. EyebrowRaise causes the spike to pulse with soft light. HeadTilt shifts caustic reflections. No UI, no text, 3-point contrast lighting. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "kawaii",
+      "beauty",
+      "panda",
+      "unicorn",
+      "ears",
+      "mouthopen",
+      "vfx",
+      "pbr"
+    ],
+    "archetype": "pandacorn_rainbow_horn",
+    "channel_id": "13",
+    "visual_hook": "The 0.2s silhouette of fluffy, high-contrast panda ears topped with a pearlescent spiral spike creates an immediate, irresistible kawaii hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/BDHremVjuxrG8es5DtPDK?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Oe7U0CWN4nWgKwu2skqli?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/PGBJzo40xBP6DRWV8R781?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
