@@ -3538,5 +3538,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/4ckKWM2FUWAsBvoxWjiSA?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-02T10:34:23Z",
+    "account_id": "4",
+    "lens_name": "Solar Flare Corona",
+    "lens_id": "77930033-8d16-4820-af8f-7d660f9ef78c",
+    "checkpoint_id": "06abf84b-45db-73df-8000-d9dc49d11a8b",
+    "prompt": "Sculpted liquid fire and brushed gold solar crown on forehead, featuring dynamic 3D coronal loops and drifting magma embers. Mouth open triggers a pressurized crimson-gold dragon breath vortex, crackling with embers; smile ignites burning amber solar eye glints; eyebrow raise extends solar flares into an ornate spire; head tilt creates wafting convective heat distortion. Untamed fire elemental majesty, PBR craft, 3-point contrast lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "fantasy",
+      "beauty",
+      "fire",
+      "crown",
+      "vfx",
+      "mouthopen",
+      "selfie",
+      "3d"
+    ],
+    "archetype": "solar_fire_elemental_diadem",
+    "channel_id": "18",
+    "visual_hook": "The instant 0.2s silhouette of a high-contrast, architecturally complex liquid fire and gold solar crown creates immediate elemental power.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/ADBjM6rs9aKjtNyoWeQx5?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/x4HbKqfSA2RVvbfgvRcOh?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/5uRYQ0i1rpXHGHFqrXT6C?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
