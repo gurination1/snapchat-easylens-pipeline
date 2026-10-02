@@ -3370,5 +3370,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/2WZgLYYms0dOgz4tCZyiQ?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-02T01:58:43Z",
+    "account_id": "1",
+    "lens_name": "Neon Boxing Headguard",
+    "lens_id": "7971e3f4-7ca2-4d9b-8648-7f85e22133b1",
+    "checkpoint_id": "06abf091-6167-7cf7-8000-9d2256c87155",
+    "prompt": "Sleek ergonomic carbon fiber combat headgear framing the forehead and temples with brushed titanium side plating. Mouth open triggers a massive kinetic sonic wave pulse and flying electric sparks. Smile releases a blinding championship gold lens flare. Eyebrow raise pulses red neon guard rims. Head tilt triggers agile motion blur trails. High-contrast PBR textures, 3-point studio lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "sports",
+      "cyberpunk",
+      "boxing",
+      "headguard",
+      "visor",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "cyber_boxing_headguard",
+    "channel_id": "17",
+    "visual_hook": "The aggressive, angular silhouette of the combat headgear provides an instant, high-intensity professional fighter aesthetic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/iBq3DbjLzSWHwfXoGLWiV?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/SGElJ7OcJolDRblFZ8C4m?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/YW8lXqB8M0fyao2uFJn95?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
