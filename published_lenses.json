@@ -3480,5 +3480,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/rerhBcGBIFsWZbOaMmfQ3?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-02T09:25:39Z",
+    "account_id": "3",
+    "lens_name": "Spartan Aegis WarHelm",
+    "lens_id": "76f3c7d3-1d76-468b-a59b-fd108445dfe0",
+    "checkpoint_id": "06abf74d-38df-7041-8000-ac44344ca41f",
+    "prompt": "Polished bronze battle helm with articulated gold owl crest and horsehair plume spanning the forehead. PBR materials feature ray-traced reflections and caustic rim lighting. MouthOpen triggers an explosive golden tactical shockwave with glyphs. Smile pulses warm light across cheekbones. EyebrowRaise flares the owl sigil wings. HeadTilt creates brilliant metallic sun-glints. High-impact mythological aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "fantasy",
+      "mythology",
+      "spartan",
+      "warhelm",
+      "bronze",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "athena_aegis_wisdom",
+    "channel_id": "8",
+    "visual_hook": "The bold, architectural silhouette of a legendary Greek battle helm provides instant, high-contrast authority.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/u1mOuy89nJ3fsFrc1RRxj?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Jql7XYzM4TTriRpRI682v?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/ZWJ9VVQIi3pHrYt43FhFw?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
