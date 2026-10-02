@@ -3677,5 +3677,32 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/FWS6TQXHG5vtApUkWejq2?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-02T22:12:06Z",
+    "account_id": "4",
+    "lens_name": "90s Cyber Camcorder Visor",
+    "lens_id": "18e1720a-c707-464e-9c7f-6de20a276543",
+    "checkpoint_id": "06ac0286-ba17-7e3c-8000-e2af08abac7a",
+    "prompt": "Retro-futuristic 90s cyber camcorder visor frame contoured across brow and temples with holographic rec timestamp and magnetic phosphor glass. PBR brushed titanium, cathode-ray scanline reflections. Opening mouth discharges magnetic tape-rip glitch shockwave and RGB chromatic particle split; smiling pulses neon REC battery flare; head tilt shifts scanlines. Zero strobing, pure 3D AR craft, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "camcorder",
+      "vhs",
+      "glitch",
+      "cyberpunk",
+      "visor",
+      "pbr"
+    ],
+    "archetype": "",
+    "channel_id": "",
+    "visual_hook": "The striking, high-contrast silhouette of a sprawling, architectural floral crown creates an immediate, high-fashion botanical authority.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/ycrcJALV7on8HP7FmloMm?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/CNYJz6pNPa7e8hYu90d6s?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/AVvjssjS9o46Ss150rDMr?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
