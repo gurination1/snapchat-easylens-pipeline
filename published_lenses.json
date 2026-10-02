@@ -3622,5 +3622,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/k9NNdQABMJzIJJlqmhWgJ?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-02T20:54:21Z",
+    "account_id": "3",
+    "lens_name": "Velvet Skin Glow",
+    "lens_id": "5e252114-8b81-42f6-8fd2-566784e25aab",
+    "checkpoint_id": "06ac0154-2d8b-746b-8000-5c065f283d6a",
+    "prompt": "Ultra-realistic 24k gold leaf and freshwater pearl hair accessory framing the temple. Velvet skin texture shader with laminated brow lift and dewy honey lip glaze. MouthOpen releases warm golden shimmer dust. Smile triggers soft ring-light reflections in pupils. EyebrowRaise sharpens brow arches. HeadTilt casts high-point cheekbone glints. PBR materials, 3-point studio lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "minimalist",
+      "pearl",
+      "gold",
+      "skin",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "clean_girl_soft_glam",
+    "channel_id": "9",
+    "visual_hook": "The 0.2s silhouette of a minimalist gold and pearl temple accessory creates instant high-fashion recognition.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/t8GjvTbJM3WwZw41Dqyjb?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/gg4MLx54s1FduTnlyoLBn?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/yFINhrz66OGNTLNBXlm8Q?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
