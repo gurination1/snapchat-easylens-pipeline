@@ -3425,5 +3425,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/EnCIaLp8tzq2CDgiHlQuf?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-02T02:57:24Z",
+    "account_id": "5",
+    "lens_name": "Velvet Bunny Hood",
+    "lens_id": "8ea77869-4565-4012-be0c-8eb1a9518d82",
+    "checkpoint_id": "06abf19e-d338-7f73-8000-d3ea9186ef8a",
+    "prompt": "Soft rosy pink fleece hood with oversized floppy velvet appendages framing the face. High-fidelity micro-fiber texture with 3-point rim lighting. Mouth open triggers a fountain of bouncing candy berries and glitter. Smiling activates rosy blush bloom. Eyebrows up lifts the hood flaps. Head tilt causes graceful fabric sway. PBR materials, no UI, ultra-cozy aesthetic, selfie-optimized, high-contrast silhouette. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "anime",
+      "kawaii",
+      "bunny",
+      "hood",
+      "fleece",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "lop_eared_bunny_hood",
+    "channel_id": "13",
+    "visual_hook": "The immediate 0.2s silhouette of oversized, luxurious velvet bunny hoods creates an instant, irresistible high-fashion kawaii aesthetic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/B98HnhHl99XSTxZF9NSni?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/LQvwi5wUPwXmOFYT9h1rT?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/ABlb0OsAKGVPZVWu0oJti?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
