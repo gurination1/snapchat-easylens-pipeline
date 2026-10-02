@@ -3593,5 +3593,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/frmjBh2W9GdpNzBkiO3m5?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-02T20:26:46Z",
+    "account_id": "2",
+    "lens_name": "Emerald Forest Diadem",
+    "lens_id": "ae119b75-58a1-4b7b-96d4-1a26883ce2d4",
+    "checkpoint_id": "06ac00e6-0c62-74b7-8000-e1251b6bff45",
+    "prompt": "Ornate crown of living moss and white birch bark anchored to head with bioluminescent mushrooms. Mouth open triggers pulsing cyan light wave through foliage and floating spore motes. Smile creates emerald sparkle eye highlights. Eyebrow raise activates swirling firefly orbit. Head tilt induces iridescent sheen on fern fronds. PBR textures, 3-point contrast lighting, zero UI, pure 3D mesh. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "fantasy",
+      "nature",
+      "moss",
+      "crown",
+      "forest",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "bioluminescent_forest_wreath",
+    "channel_id": "14",
+    "visual_hook": "The striking architectural silhouette of a high-contrast, organic moss crown provides instant mythical prestige.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/D2sNymhYKfg2oXXtEIoSi?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/vQqqvxNtHSfEb4HcUb0Rl?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/k9NNdQABMJzIJJlqmhWgJ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
