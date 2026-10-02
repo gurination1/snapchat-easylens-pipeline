@@ -3454,5 +3454,31 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/ABlb0OsAKGVPZVWu0oJti?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-02T09:03:48Z",
+    "account_id": "2",
+    "lens_name": "Cybernetic Ocular Scanner",
+    "lens_id": "08c783bc-e98c-487e-9a3b-2c44f4ecec25",
+    "checkpoint_id": "06abf6e9-cc21-793c-8000-618c400ab8da",
+    "prompt": "Asymmetrical carbon fiber and tungsten ocular optic anchored over left eye orbital bone and brow, leaving face and mouth unobstructed. Multi-layered refractive cyan glass lenses with micro-servo details. Opening mouth projects floating 3D wireframe mesh orb; smiling pulses glowing emerald light through ocular lenses. PBR materials, ray-traced shadows, zero text. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "cybernetic",
+      "monocle",
+      "scanner",
+      "reticle",
+      "hud"
+    ],
+    "archetype": "",
+    "channel_id": "",
+    "visual_hook": "The 0.2s silhouette of a sleek, rotating metallic arc creates an immediate, high-contrast curiosity hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/bqpr52YO0iZl1Di5JBbDz?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Z61k6ILjmGS72mxay1b7T?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/rerhBcGBIFsWZbOaMmfQ3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
