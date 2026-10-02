@@ -3509,5 +3509,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/ZWJ9VVQIi3pHrYt43FhFw?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-02T10:10:12Z",
+    "account_id": "1",
+    "lens_name": "Love Verdict Halo",
+    "lens_id": "5f6b0365-a83f-47e7-bbc5-5967b42fe6d8",
+    "checkpoint_id": "06abf7c1-49f2-7e98-8000-541dfe46e142",
+    "prompt": "Floating above forehead, a sleek, brushed titanium arc pulses with alternating emerald and ruby light beams. MouthOpen: Triggers an explosive burst of golden light particles and resets the arc. Smile: Engages a dynamic verdict display of a 'TRUE LOVE' or 'NOPE' badge with a shower of vibrant green confetti. EyebrowRaise: Accelerates the light beam oscillation frequency. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "fantasy",
+      "love",
+      "aura",
+      "vfx",
+      "mouthopen",
+      "smile",
+      "3d"
+    ],
+    "archetype": "flag_scanner_halo",
+    "channel_id": "15",
+    "visual_hook": "The instant 0.2s silhouette of a high-contrast, pulsing titanium arc creates immediate curiosity and romantic intrigue.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/rnX7qiAntZjIa8SokY9eK?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/4zRq9qvyoE8CAKmO1DbWR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/4ckKWM2FUWAsBvoxWjiSA?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
