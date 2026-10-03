@@ -4044,5 +4044,31 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/fmOlJP4khrVMkKlbIoBaI?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-03T23:49:23Z",
+    "account_id": "3",
+    "lens_name": "Stormcloud Tears",
+    "lens_id": "846ea92e-9bc5-46c9-8a37-6a9e54a90cd7",
+    "checkpoint_id": "06ac1901-2e60-76e1-8000-0c093ddc2fa3",
+    "prompt": "Fluffy 3D cartoon stormcloud hovering directly above head with gentle glowing rain droplets and soft ambient thunder light. PBR volumetric stylization, 3-point contrast lighting. Opening mouth erupts an exaggerated geyser of liquid mercury tears and spinning 24k gold coins bouncing off screen frame; smiling triggers a dramatic cartoon lightning rim flash. Physics-driven, zero strobe. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "meme",
+      "crying",
+      "funny",
+      "cloud",
+      "cartoon"
+    ],
+    "archetype": "",
+    "channel_id": "",
+    "visual_hook": "The instant high-contrast silhouette of a glowing, oscillating neon arc across the forehead creates immediate competitive intrigue.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/YG56Z7DPuWqfkGXX2BmLb?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/lJvrM3QByg2F0NOd4vl5M?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/H4fyQoypDvbYtV5wW0qlb?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
