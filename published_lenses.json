@@ -3844,5 +3844,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/rb6GttP4IKB0j7hH7BnkS?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-03T04:59:06Z",
+    "account_id": "5",
+    "lens_name": "Apollo Lunar Halo",
+    "lens_id": "decb5a44-b2c1-4457-8a98-925943d3b1d2",
+    "checkpoint_id": "06ac0871-77bd-79ab-8000-f056fc408c77",
+    "prompt": "Wearable 3d aerospace composite helmet frame anchored to temples. High-contrast 24k gold reflective sun-shield spans forehead, mirroring Earth and lunar horizon in ray-traced PBR. MouthOpen triggers pressurized white nitrogen vapor plumes. Smile emits blue auroral light pulses. EyebrowRaise flares caustic sunburst rays off glass. HeadTilt rotates orbital planetarium model. Zero UI, pure 3d, cinematic lighting. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "space",
+      "fantasy",
+      "apollo",
+      "helmet",
+      "halo",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "apollo_astronaut_helmet",
+    "channel_id": "10",
+    "visual_hook": "The instant 0.2s silhouette of a high-contrast, reflective gold aerospace headpiece creates immediate interstellar intrigue.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/dvxawD1d8LuHnZWz9tg2V?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/aAisgNcp0hAiLhGkt5daa?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/bSwQYkKXB8yqgop7TJ6Hs?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
