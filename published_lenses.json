@@ -3986,5 +3986,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/JIybPhCltS2bCi8vXdXgI?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-03T16:13:49Z",
+    "account_id": "5",
+    "lens_name": "Stygian Wraith Diadem",
+    "lens_id": "84dcb55c-2426-422f-bd44-488384807753",
+    "checkpoint_id": "06ac1252-4563-72d5-8000-5550f6075fcf",
+    "prompt": "Ethereal obsidian crown floating weightlessly above head, trailing tattered, semi-transparent indigo silk ribbons. Mouth open triggers a massive, swirling cryogenic soulfire geyser with piercing cyan embers. Smiling ignites intense supernatural white eye luminescence. Raising eyebrows billows the dark shroud outward. Head tilt creates fluid, rippling ectoplasmic auroral sparkles. PBR materials, high-contrast rim lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "fantasy",
+      "dark",
+      "wraith",
+      "crown",
+      "soul",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "phantom_wraith_shroud",
+    "channel_id": "12",
+    "visual_hook": "The striking 0.2s silhouette of a floating, obsidian-etched crown with dancing spectral indigo flames.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/sKGpgCRh3n2TdB8r0Ey6K?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/eXGEbwLcQUjRlQWgkkMXi?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/SGmBx9IUTiC8FxREEHzbM?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
