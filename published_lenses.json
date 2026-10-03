@@ -3902,5 +3902,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/TKf8AiWAJFaNXeAvlEPLx?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-03T14:19:08Z",
+    "account_id": "3",
+    "lens_name": "Synthwave Chrome Crown",
+    "lens_id": "b8f2d38d-b45f-40d4-8554-a846aeddef70",
+    "checkpoint_id": "06ac10a2-4ae2-7350-8000-af9a435dcf0d",
+    "prompt": "Sculpted neon-magenta wireframe perspective grid extending behind brow with a floating 80s chrome cassette circlet. Warm analog CRT scanline halation with cyan rim lighting. Mouth open accelerates wireframe grid into hyperspace speed warp with neon laser beams; smiling triggers warm neon sunset flare; eyebrow raise pulses synthwave bass-rings; head tilt shifts grid perspective. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "retro",
+      "cyberpunk",
+      "crown",
+      "grid",
+      "chrome",
+      "mouthopen",
+      "selfie",
+      "vfx"
+    ],
+    "archetype": "synthwave_80s_grid",
+    "channel_id": "7",
+    "visual_hook": "The 0.2s silhouette of a bold chrome cassette crown and radiant neon grid provides instant 80s synthwave recognition.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/yFo9HKA1NBkGZv7JT5Adg?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Ymcu8p3YxnxkN50DPKHsW?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/dWBDy1M9auwziokpSa6H6?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
