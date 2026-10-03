@@ -3759,5 +3759,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/exL6Hl5OIJ1AQoo3qVcRW?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-03T03:19:18Z",
+    "account_id": "3",
+    "lens_name": "Quantum Neural Monocular",
+    "lens_id": "69919b11-4a9b-41b4-8c3a-35cb552df0fd",
+    "checkpoint_id": "06ac070a-55fc-7ae4-8000-c9f3a1fcf476",
+    "prompt": "Sleek brushed titanium neural optic docked along right temple with floating magnetic focal rings. Anisotropic PBR surfaces reflect 6500K rim lighting. Mouth open projects spinning volumetric planetary hologram above brow. Smile triggers high-energy particle pulse. Eyebrow raise expands focal rings. Head tilt sways floating prism sparks. Zero UI. Pure 3D geometry with ray-traced shadows and liquid mercury physics. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "scifi",
+      "tech",
+      "monocular",
+      "quantum",
+      "hologram",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "quantum_neural_monocular",
+    "channel_id": "2",
+    "visual_hook": "The asymmetrical, high-contrast silhouette of the floating magnetic rings provides an instant, sophisticated sci-fi aesthetic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/urmiXIfUgfOXKAPPH9uFo?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/wRfnNXrvztgDZJZoMm02H?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/0FoFF2dNnZ8nm7oqTHZRR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
