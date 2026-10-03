@@ -3730,5 +3730,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/LsKM2IQ3XOEtlxVeqnbJA?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-03T02:22:37Z",
+    "account_id": "2",
+    "lens_name": "Soulmate Heart Meter",
+    "lens_id": "615f6cff-3dac-4ca4-977e-b06ec3c31fd9",
+    "checkpoint_id": "06ac0616-dd48-7d8b-8000-63df969a3046",
+    "prompt": "Sculpted baroque gold heart arch resting regally on brow with rapid spinning ticker needle. Smiling locks the ticker at 99 percent match erupting massive 3D iridescent angel wings and sparkling diamond rain. Opening mouth resets the meter. Eyebrow raise pulses rhythmic golden heartbeats. Head tilt catches intricate filigree light glints. PBR gold leaf finish with raytraced contact shadows. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "fantasy",
+      "heart",
+      "wings",
+      "meter",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "crush_compatibility_meter",
+    "channel_id": "15",
+    "visual_hook": "The instant 0.2s silhouette of a bold, ornate baroque heart crown creates immediate romantic curiosity.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/NvhktOzUawnZND6t2YMHI?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/UQbEVZhEtTDgxVsii4bp3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/exL6Hl5OIJ1AQoo3qVcRW?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
