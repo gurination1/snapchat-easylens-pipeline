@@ -3788,5 +3788,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/0FoFF2dNnZ8nm7oqTHZRR?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-03T04:04:06Z",
+    "account_id": "1",
+    "lens_name": "Crimson Rose Diadem",
+    "lens_id": "ef320d65-c59b-4239-af28-ebb1b249aac5",
+    "checkpoint_id": "06ac077a-430b-76df-8000-c32fb31afe22",
+    "prompt": "Intricately sculpted English garden climbing diadem of deep crimson and blush roses with gold-tipped thorns contouring temples and brow. Ray-traced water droplets cling to soft petals. Opening mouth releases swirling shower of falling petals. Smiling activates dewy cheek flush and glossy shine. Eyebrow raise unfolds buds into full blossoms. Head tilt catches sparkling morning dew glints. Regal romantic luxury. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "nature",
+      "rose",
+      "diadem",
+      "floral",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "royal_english_rose_diadem",
+    "channel_id": "14",
+    "visual_hook": "The 0.2s silhouette of a high-contrast, sculptural botanical rose crown provides instant, high-fashion botanical authority.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/h9wXgX4kkChF7nawCfbV5?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/pw9mtJo7rRyWIqZ0LupnP?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/QDpyTQn1ZsO9QpEgddyko?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
