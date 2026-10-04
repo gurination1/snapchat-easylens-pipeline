@@ -353,15 +353,22 @@ class EasyLensClient:
         if not tags:
             return []
         import re
+        banned = {"pbr", "vfx", "mouthopen", "mouth_open", "3d", "filigree", "diadem"}
         sanitized = []
         for t in tags:
             if not isinstance(t, str):
                 continue
             cleaned = re.sub(r'[^a-zA-Z0-9]', '', t)[:15].lower()
-            if cleaned and cleaned not in sanitized:
+            if cleaned and cleaned not in sanitized and cleaned not in banned:
                 sanitized.append(cleaned)
             if len(sanitized) >= 8:
                 break
+        # If tags dropped below 5 due to filtering, top up with viral consumer tags
+        for fallback_tag in ["aesthetic", "filter", "cute", "glow", "makeup", "selfie", "glam", "viral"]:
+            if len(sanitized) >= 8:
+                break
+            if fallback_tag not in sanitized:
+                sanitized.append(fallback_tag)
         return sanitized
 
     def publish_lens(
@@ -378,9 +385,20 @@ class EasyLensClient:
     ):
         url = f"{AILC_BASE}/assistant/publish"
         sanitized_tags = self.sanitize_tags(tags)
+        # Enforce strict <=18 char limit on lens_name to avoid mid-word truncation on Snapchat
+        import re
+        clean_n = re.sub(r'[^a-zA-Z0-9\s\-]', '', lens_name).strip()
+        clean_n = re.sub(r'\s+', ' ', clean_n)
+        if len(clean_n) > 18:
+            cut = clean_n[:18].strip()
+            sp = cut.rfind(' ')
+            safe_lens_name = cut[:sp].strip() if sp > 3 else cut
+        else:
+            safe_lens_name = clean_n or "Obsidian Crown"
+
         payload = {
             "conversation_id": conversation_id,
-            "lens_name": lens_name,
+            "lens_name": safe_lens_name,
             "source_application": "LensStudioWeb",
             "enroll_in_payouts": True,
             "remixable": True,

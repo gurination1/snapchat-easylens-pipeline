@@ -14,6 +14,7 @@ from lens_verifier import LensVerifier
 from gemini_lens_agent import (
     generate_lens_prompt,
     sanitize_lens_prompt,
+    sanitize_lens_name,
     compute_token_jaccard,
     load_published_history
 )
@@ -490,7 +491,7 @@ def main():
     if AUTO_PUBLISH:
         print("\n=== STEP 6: PUBLISHING VERIFIED LENS TO SNAPCHAT CATALOG ===")
         actual_lens_name = (lens_data.get("lens_name") or "").strip()
-        final_lens_name = (lens_name or actual_lens_name or "Obsidian Pyrodrake 3D").strip()
+        final_lens_name = sanitize_lens_name((lens_name or actual_lens_name or "Obsidian Pyrodrake").strip(), max_len=18)
         print(f"[METADATA BINDING] Bound final_lens_name strictly to SEO keyword title: '{final_lens_name}' (AI generated: '{actual_lens_name}')")
 
         # Check for simulated preview video from Gate 7
@@ -509,11 +510,12 @@ def main():
                 print(f"[PREVIEW VIDEO WARN] Bolt upload failed ({e}). Proceeding without preview video.")
 
         # Check for preview image matching Frame 0 poster of preview video 1:1 like EasyLens
+        # Prioritize triggered VFX state (full AR spectacle) as poster image for maximum CTR and Snap ML category recognition
         preview_img_url = None
         preview_img_key = None
-        preview_img_path = g7.get("neutral_preview") or "preview_neutral_simulated.png"
+        preview_img_path = g7.get("trigger_preview") or "preview_mouth_open_simulated.png"
         if not os.path.exists(preview_img_path):
-            preview_img_path = g7.get("trigger_preview") or "preview_mouth_open_simulated.png"
+            preview_img_path = g7.get("neutral_preview") or "preview_neutral_simulated.png"
         if os.path.exists(preview_img_path):
             print("\n=== STEP 5.6: UPLOADING HIGH-IMPACT PREVIEW IMAGE (FULL AR EFFECT) TO BOLT CDN ===")
             try:

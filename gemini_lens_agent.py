@@ -43,6 +43,19 @@ def get_gemini_api_keys():
     return keys
 
 
+def sanitize_lens_name(raw_name: str, max_len: int = 18) -> str:
+    """Ensures lens name is clean, strictly <= 18 characters, whole words only, with zero trailing truncation."""
+    clean = re.sub(r'[^a-zA-Z0-9\s\-]', '', raw_name).strip()
+    clean = re.sub(r'\s+', ' ', clean)
+    if len(clean) <= max_len:
+        return clean
+    truncated = clean[:max_len].strip()
+    last_space = truncated.rfind(' ')
+    if last_space > 3:
+        return truncated[:last_space].strip()
+    return clean[:max_len].strip()
+
+
 # ==============================================================================
 # 5-CHANNEL NICHE DIFFERENTIATION & PROMPT MATRICES (ZERO CROSS-CONTAMINATION)
 # ==============================================================================
@@ -56,7 +69,7 @@ CHANNEL_PROMPT_MATRICES = {
             "motion_intensity": 0.90
         },
         "forbidden_cross_contamination": ['cyberpunk HUD', 'neon visors', 'crying memes', 'cartoon stormcloud', 'modern sunglasses', 'cheap 2D stickers', 'canvas spinners', 'developer UI sliders'],
-        "tag_pool": ['dragon', 'phoenix', 'mythology', 'ghibli', 'headpiece', 'crown', 'fantasy', 'pbr'],
+        "tag_pool": ['dragon', 'phoenix', 'mythology', 'ghibli', 'headpiece', 'crown', 'fantasy', 'aesthetic'],
         "archetypes": [
             {
                 "id": "dragon_pyrodrake",
@@ -149,7 +162,7 @@ CHANNEL_PROMPT_MATRICES = {
             "motion_intensity": 0.85
         },
         "forbidden_cross_contamination": ['2D canvas spinners', 'flat screen overlays', 'dragons', 'mythical beasts', 'cartoon crying clouds', 'gold baroque filigree', 'medieval helmets', 'crying memes', 'developer UI sliders'],
-        "tag_pool": ['cyberpunk', 'visor', 'camcorder', 'vhs', 'optics', 'hud', 'scifi', 'pbr'],
+        "tag_pool": ['cyberpunk', 'visor', 'camcorder', 'vhs', 'optics', 'hud', 'scifi', 'aesthetic'],
         "archetypes": [
             {
                 "id": "titanium_holo_visor",
@@ -436,7 +449,7 @@ CHANNEL_PROMPT_MATRICES = {
             "motion_intensity": 0.88
         },
         "forbidden_cross_contamination": ['cartoon stormclouds', 'traditional historical filigree', 'retro cyan text HUDs', 'meme gags', 'medieval fantasy crowns', 'developer UI sliders'],
-        "tag_pool": ['surreal', 'chrome', 'mercury', 'y3k', 'zerog', 'halo', 'fluid', 'pbr'],
+        "tag_pool": ['surreal', 'chrome', 'mercury', 'y3k', 'zerog', 'halo', 'fluid', 'aesthetic'],
         "archetypes": [
             {
                 "id": "liquid_mercury_halo",
@@ -529,7 +542,7 @@ CHANNEL_PROMPT_MATRICES = {
             "motion_intensity": 0.96
         },
         "forbidden_cross_contamination": ['traditional historical filigree', 'dark fantasy monsters', 'slow cinematic luxury', 'confusing multi-step tutorials', 'touchscreen buttons', 'developer UI sliders'],
-        "tag_pool": ['game', 'arcade', 'challenge', 'interactive', 'racer', 'catcher', 'reflex', 'pbr'],
+        "tag_pool": ['game', 'arcade', 'challenge', 'interactive', 'racer', 'catcher', 'reflex', 'viral'],
         "archetypes": [
             {
                 "id": "arcade_neon_coin_catcher",
@@ -760,7 +773,7 @@ CHANNEL_PROMPT_MATRICES = {
             "motion_intensity": 0.72
         },
         "forbidden_cross_contamination": ['grotesque cartoon memes', 'heavy sci-fi military HUD', 'dark horror fangs', 'monster horns', 'developer UI sliders'],
-        "tag_pool": ['beauty', 'glow', 'glassskin', 'goldenhour', 'freckles', 'glam', 'aesthetic', 'pbr'],
+        "tag_pool": ['beauty', 'glow', 'glassskin', 'goldenhour', 'freckles', 'glam', 'aesthetic', 'filter'],
         "archetypes": [
             {
                 "id": "glass_skin_dewy",
@@ -821,7 +834,7 @@ CHANNEL_PROMPT_MATRICES = {
             "motion_intensity": 0.90
         },
         "forbidden_cross_contamination": ['cartoon crying memes', 'medieval filigree tiaras', 'cheap 2D stickers', 'developer UI sliders'],
-        "tag_pool": ['space', 'astronaut', 'helmet', 'orbiting', 'planetarium', 'nebula', 'cosmic', 'pbr'],
+        "tag_pool": ['space', 'astronaut', 'helmet', 'orbiting', 'planetarium', 'nebula', 'cosmic', 'aesthetic'],
         "archetypes": [
             {
                 "id": "apollo_astronaut_helmet",
@@ -935,7 +948,7 @@ CHANNEL_PROMPT_MATRICES = {
             "motion_intensity": 0.89
         },
         "forbidden_cross_contamination": ['cute pastel stickers', 'bubblegum pop', 'neon corporate tech', 'developer UI sliders'],
-        "tag_pool": ['gothic', 'vampire', 'fangs', 'darkfantasy', 'bloodmoon', 'wraith', 'phantom', 'pbr'],
+        "tag_pool": ['gothic', 'vampire', 'fangs', 'darkfantasy', 'bloodmoon', 'wraith', 'phantom', 'grunge'],
         "archetypes": [
             {
                 "id": "vampire_sovereign_fangs",
@@ -988,7 +1001,7 @@ CHANNEL_PROMPT_MATRICES = {
             "motion_intensity": 0.92
         },
         "forbidden_cross_contamination": ['dark horror blood', 'military weaponry', 'developer UI sliders', 'grotesque facial deformities', 'heavy industrial machinery'],
-        "tag_pool": ['kawaii', 'anime', 'catears', 'bunny', 'kitsune', 'chibi', 'pastel', 'cute', 'ears', 'pbr'],
+        "tag_pool": ['kawaii', 'anime', 'catears', 'bunny', 'kitsune', 'chibi', 'pastel', 'cute', 'ears', 'filter'],
         "archetypes": [
             {
                 "id": "fluffy_anime_cat_ears",
@@ -1041,7 +1054,7 @@ CHANNEL_PROMPT_MATRICES = {
             "motion_intensity": 0.75
         },
         "forbidden_cross_contamination": ['cyberpunk optics', 'crying meme comedy', 'heavy industrial machinery', 'developer UI sliders', 'dark demonic skulls'],
-        "tag_pool": ['floral', 'flowers', 'butterfly', 'nature', 'botanical', 'wreath', 'tiara', 'bloom', 'pbr'],
+        "tag_pool": ['floral', 'flowers', 'butterfly', 'nature', 'botanical', 'wreath', 'tiara', 'bloom', 'aesthetic'],
         "archetypes": [
             {
                 "id": "golden_sunflower_marigold_crown",
@@ -1651,6 +1664,14 @@ def validate_candidate_concept(candidate: dict, account_id: str, history: list, 
     if any(tok in prompt.lower() for tok in banned_spinner_tokens):
         return False, "Contains banned 2D canvas spinner or frequency bar keywords"
 
+    # Rule 8: Strict Lens Name Length (<= 18 chars) to prevent mid-word truncation on Snapchat
+    cleaned_name = sanitize_lens_name(lens_name, max_len=18)
+    if cleaned_name != lens_name:
+        candidate["lens_name"] = cleaned_name
+        lens_name = cleaned_name
+    if len(lens_name) > 18:
+        return False, f"Lens name '{lens_name}' exceeds 18 chars limit"
+
     # Rule 8: Zero HUD Text, Telemetry, Diagnostic, Indicators (Anti-UI text slop)
     banned_ui_tokens = [
         "telemetry", "diagnostic", "indicator", "indicators", "readout",
@@ -1775,15 +1796,16 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "", e
         "   - NEVER use the words 'smooth tween', 'bezier curve', 'ease-in', 'ease-out', or 'easing curve'. Use discrete visual triggers and particle streams only.\n"
         "10. STRICT PROMPT LENGTH CONSTRAINT: The 'prompt' field MUST be between 300 and 460 characters (hard backend limit is 480).\n"
         "11. SNAPCHAT LENS SEARCH SEO & KEYWORD ARCHITECTURE (CRITICAL FOR VIRAL DISCOVERY & 100M+ REACH):\n"
-        "   - 'lens_name': 2 to 4 words. MUST directly incorporate the highest-volume search query for this concept (e.g., 'Dragon Horns 3D', 'Cyberpunk Neon Visor', 'Ghibli Cloud Crown', 'Vintage Y2K Camcorder', 'Gothic Vampire Fangs'). Lens Name matches account for ~70% of Snapchat search ranking weight.\n"
+        "   - 'lens_name': Strictly 2 to 3 words, MAXIMUM 18 CHARACTERS TOTAL (e.g., 'Dragon Horns', 'Cyber Neon Visor', 'Ghibli Crown', 'Y2K Camcorder', 'Vampire Fangs', 'Love Verdict', 'Pastel Panda', 'Chrome Mirage'). Snapchat has a hard 18-char truncation limit. NEVER exceed 18 chars or title will be sliced mid-word! Lens Name matches account for ~70% of Snapchat search ranking weight.\n"
         "   - 'tags': Exactly 8 high-velocity, intent-targeted keywords matching Snapchat's 3-Tier SEO Framework:\n"
-        "     * Tier 1 (Broad Category - 2 tags): e.g., 'anime', 'fantasy', 'cyberpunk', 'beauty', 'retro', 'cosplay'.\n"
-        "     * Tier 2 (Specific Object / Feature - 3 tags): e.g., 'dragon', 'horns', 'crown', 'visor', 'halo', 'freckles'.\n"
-        "     * Tier 3 (Trigger / Style / Engagement - 3 tags): e.g., 'mouthopen', 'selfie', 'glow', '3d', 'vfx', 'pbr'.\n"
+        "     * Tier 1 (Broad Viral Aesthetic - 2 tags): e.g., 'aesthetic', 'cute', 'filter', 'beauty', 'retro', 'anime', 'cosplay'.\n"
+        "     * Tier 2 (Specific Object / Feature - 3 tags): e.g., 'dragon', 'horns', 'crown', 'visor', 'halo', 'blush', 'makeup', 'glam'.\n"
+        "     * Tier 3 (Viral Intent & Style - 3 tags): e.g., 'selfie', 'glow', 'y2k', 'vintage', 'couple', 'eyes', 'trendy', 'viral'.\n"
+        "     * STRICTLY BANNED TAGS: NEVER use developer jargon or engine triggers ('pbr', 'vfx', 'mouthopen', 'mouth_open', '3d', 'filigree', 'diadem'). Only use words real users search for in Snapchat!\n"
         "     * STRICT FORMAT: Alphanumeric only [a-z0-9], single words, no spaces, no punctuation, no underscores, max 15 chars per tag.\n\n"
         "Return ONLY a JSON object with this exact schema:\n"
         "{\n"
-        '  "lens_name": "High-Intent 2-4 Word Title Matching Primary Search Query",\n'
+        '  "lens_name": "High-Intent 2-3 Word Title <= 18 Chars",\n'
         '  "prompt": "Dense, single-paragraph EasyLens prompt between 300 and 460 characters",\n'
         '  "tags": ["cat1", "cat2", "feat1", "feat2", "feat3", "trig1", "trig2", "style1"],\n'
         '  "visual_hook": "1-line explanation of the 0.2s psychological hook",\n'
@@ -1823,12 +1845,12 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "", e
 
     user_prompt += (
         "Generate a fresh, stunning, distinctive concept that matches the assigned rotating archetype while feeling completely unique. "
-        "Strictly ensure prompt length is between 300 and 460 characters."
+        "Strictly ensure prompt length is between 300 and 460 characters. Strictly ensure lens_name length <= 18 characters."
     )
 
     # Static fallback prepared in case of complete API failure
     static_fallback = {
-        "lens_name": selected_archetype["name"].split("&")[0].strip(),
+        "lens_name": sanitize_lens_name(selected_archetype["name"].split("&")[0].strip(), max_len=18),
         "prompt": sanitize_lens_prompt(selected_archetype["focus"]),
         "tags": [re.sub(r'[^a-zA-Z0-9]', '', t)[:15].lower() for t in spec["tag_pool"][:8]],
         "visual_hook": selected_archetype["visual_hook"],
@@ -1884,6 +1906,7 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "", e
                             valid, reason = validate_candidate_concept(result, aid, history, banned_nouns)
 
                     if valid:
+                        result["lens_name"] = sanitize_lens_name(result.get("lens_name", "Obsidian Crown"), max_len=18)
                         result["archetype"] = selected_archetype["id"]
                         result["account_id"] = aid
                         result["channel_id"] = arch_channel_id
@@ -1893,15 +1916,20 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "", e
                             result["visual_hook"] = selected_archetype.get("visual_hook", f"Massive visual impact: bold 3D {result.get('lens_name', 'crown')} frames the face in 0.2s.")
                         if not result.get("trigger_sequence"):
                             result["trigger_sequence"] = selected_archetype.get("primary_trigger", "MouthOpen / Smile / EyebrowRaise / HeadTilt")
-                        if not result.get("tags") or len(result["tags"]) < 8:
-                            existing_tags = set(result.get("tags", []))
-                            sanitized_pool = [re.sub(r'[^a-zA-Z0-9]', '', t)[:15].lower() for t in spec.get("tag_pool", [])]
-                            for t in sanitized_pool + ["3d", "pbr", "selfie", "vfx", "glow", "viral"]:
-                                if t and t not in existing_tags:
-                                    result.setdefault("tags", []).append(t)
-                                    existing_tags.add(t)
-                                if len(result["tags"]) >= 8:
-                                    break
+
+                        banned_tags = {"pbr", "vfx", "mouthopen", "mouth_open", "3d", "filigree", "diadem"}
+                        raw_tags = [re.sub(r'[^a-zA-Z0-9]', '', t)[:15].lower() for t in result.get("tags", []) if t]
+                        filtered_tags = [t for t in raw_tags if t not in banned_tags]
+                        existing_tags = set(filtered_tags)
+                        sanitized_pool = [re.sub(r'[^a-zA-Z0-9]', '', t)[:15].lower() for t in spec.get("tag_pool", []) if t not in banned_tags]
+                        viral_defaults = ["aesthetic", "filter", "cute", "glow", "makeup", "selfie", "glam", "viral", "horns", "crown"]
+                        for t in sanitized_pool + viral_defaults:
+                            if t and t not in existing_tags and t not in banned_tags:
+                                filtered_tags.append(t)
+                                existing_tags.add(t)
+                            if len(filtered_tags) >= 8:
+                                break
+                        result["tags"] = filtered_tags[:8]
                         print(f"[GEMINI OK] Model: {model_name}")
                         print(f"[GEMINI OK] Generated Lens: {result.get('lens_name')}")
                         print(f"[GEMINI OK] Archetype: {selected_archetype['id']}")
