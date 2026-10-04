@@ -87,6 +87,11 @@ query getLensesList($limit: Int!, $offset: Int!, $sortBy: SortBy!, $sortDirectio
             name
             lensCreatorPayoutEligibility
             exclusiveLensStatus
+            primaryCategoryId
+            secondaryCategoryId
+            discoverability {
+                tagsList
+            }
         }
     }
 }
@@ -162,6 +167,25 @@ query getLens($lensId: ID!) {
             lensCreatorPayoutEligibility
             primaryCategoryId
             secondaryCategoryId
+            discoverability {
+                tagsList
+            }
+        }
+    }
+}
+"""
+
+GQL_SET_DISCOVERABILITY = """
+mutation setDiscoverability($lensId: ID!, $discoverability: DiscoverabilityInput!) {
+    setDiscoverability(input: { lensId: $lensId, discoverability: $discoverability }) {
+        lens {
+            id
+            discoverability {
+                tagsList
+                description
+                locationsList
+                daysTimesHolidaysList
+            }
         }
     }
 }
@@ -404,14 +428,19 @@ def direct_enroll_lenses(ticket: str, cookie_header: str, target_lens_id: str = 
             if target_lens_id and lid == target_lens_id:
                 target_lens_verified = True
 
-        cat_res = None
-        if preferred_primary_cat_id:
-            time.sleep(1.0)
-            cat_res = execute_direct_graphql(
-                ticket, cookie_header, GQL_SET_CATEGORY,
-                variables={"lensId": lid, "primaryCategoryId": preferred_primary_cat_id},
-                operation_name="setLensCategory"
-            )
+        # Category Standardization (Primary + Secondary)
+        cur_pri = preferred_primary_cat_id
+        cur_sec = None
+        try:
+            l_info = execute_direct_graphql(ticket, cookie_header, GQL_GET_LENS, variables={"lensId": lid}, operation_name="getLens")
+            cur_lens_obj = ((l_info.get("data") or {}).get("getLens") or {}).get("lens") or {}
+            if cur_lens_obj.get("primaryCategoryId"):
+                cur_pri = cur_lens_obj.get("primaryCategoryId")
+            cur_sec = cur_lens_obj.get("secondaryCategoryId")
+        except Exception:
+            pass
+
+        cat_res = repair_lens_category(ticket, cookie_header, lid, current_primary=cur_pri, current_secondary=cur_sec)
 
         # Autonomous WebAR Publishing & Discovery Funnel
         webar_res = publish_hosted_webar(ticket, cookie_header, lid)
@@ -438,13 +467,70 @@ def publish_hosted_webar(ticket: str, cookie_header: str, lens_id: str) -> dict:
         return {"error": str(e)}
 
 
-def update_lens_tags(ticket: str, cookie_header: str, lens_id: str, tags: list) -> dict:
-    """Updates tags on a published lens using active setTags mutation."""
+def repair_lens_category(ticket: str, cookie_header: str, lens_id: str, current_primary: str = None, current_secondary: str = None) -> dict:
+    """Standardizes primary category and sets complementary secondary category if missing."""
     try:
-        filtered_tags = sanitize_tags(tags)
-        res = execute_direct_graphql(ticket, cookie_header, GQL_SET_TAGS, variables={"lensId": lens_id, "tagsList": filtered_tags}, operation_name="setTags")
-        print(f"  ✓ [TAGS SET] Lens {lens_id} tags set to: {filtered_tags}")
-        return res
+        pri = current_primary
+        sec = current_secondary
+
+        # 1. Determine primary if missing
+        if not pri:
+            pri = "CAT_7"  # Default Fashion & Retail
+
+        # 2. Determine secondary category based on primary
+        if not sec:
+            pri_str = str(pri).upper()
+            if "CAT_7" in pri_str or pri_str.startswith("SCAT_") or any(w in pri_str for w in ["FASHION", "BEAUTY", "ACCESSORY"]):
+                sec = "CAT_1"  # Self-Expression
+            elif pri == "CAT_1":
+                sec = "CAT_14" # Entertainment
+            elif pri == "CAT_3":
+                sec = "CAT_14" # Entertainment
+            elif pri == "CAT_2":
+                sec = "CAT_1"  # Self-Expression
+            else:
+                sec = "CAT_14" if pri != "CAT_14" else "CAT_1"
+
+        if sec == current_secondary and pri == current_primary:
+            return {"skipped": True, "primary": pri, "secondary": sec}
+
+        res = execute_direct_graphql(
+            ticket, cookie_header, GQL_SET_CATEGORY,
+            variables={"lensId": lens_id, "primaryCategoryId": pri, "secondaryCategoryId": sec},
+            operation_name="setLensCategory"
+        )
+        print(f"  ✓ [CATEGORY SET] Lens {lens_id}: Primary={pri} | Secondary={sec}")
+        return {"repaired": True, "primary": pri, "secondary": sec, "res": res}
+    except Exception as e:
+        print(f"  [CATEGORY WARN] Error setting category for {lens_id}: {e}")
+        return {"error": str(e)}
+
+
+def update_lens_tags(ticket: str, cookie_header: str, lens_id: str, tags: list) -> dict:
+    """Updates tags on a published lens using both modern setDiscoverability and legacy setTags mutations."""
+    try:
+        filtered_tags = sanitize_tags(tags)[:8]
+        # 1. Modern Discoverability (used by my-lenses.snapchat.com UI & algorithm)
+        disc_input = {
+            "tagsList": filtered_tags,
+            "description": "",
+            "locationsList": [],
+            "daysTimesHolidaysList": []
+        }
+        res_disc = execute_direct_graphql(
+            ticket, cookie_header, GQL_SET_DISCOVERABILITY,
+            variables={"lensId": lens_id, "discoverability": disc_input},
+            operation_name="setDiscoverability"
+        )
+        time.sleep(0.5)
+        # 2. Legacy setTags for backwards compatibility
+        res_tags = execute_direct_graphql(
+            ticket, cookie_header, GQL_SET_TAGS,
+            variables={"lensId": lens_id, "tagsList": filtered_tags},
+            operation_name="setTags"
+        )
+        print(f"  ✓ [TAGS & DISCOVERABILITY SET] Lens {lens_id} tags set to: {filtered_tags}")
+        return {"discoverability": res_disc, "legacy_tags": res_tags}
     except Exception as e:
         print(f"  [TAGS WARN] Error updating tags for {lens_id}: {e}")
         return {"error": str(e)}
@@ -521,7 +607,7 @@ def sweep_fleet_seo_repair(ticket: str, cookie_header: str) -> dict:
                         h_entry["lens_name"] = r_res["new_name"]
                         history_modified = True
 
-                # 2. Purge dev tags & enrich with viral tags
+                # 2. Purge dev tags & enrich with viral tags (sets modern discoverability tags)
                 current_tags = h_entry.get("tags", [])
                 new_tags = sanitize_tags(current_tags)
                 t_res = update_lens_tags(ticket, cookie_header, lid, new_tags)
@@ -531,7 +617,14 @@ def sweep_fleet_seo_repair(ticket: str, cookie_header: str) -> dict:
                         h_entry["tags"] = new_tags
                         history_modified = True
 
-                # 3. Publish Hosted WebAR
+                # 3. Heal secondary category if missing
+                cur_pri = item.get("primaryCategoryId")
+                cur_sec = item.get("secondaryCategoryId")
+                c_res = repair_lens_category(ticket, cookie_header, lid, current_primary=cur_pri, current_secondary=cur_sec)
+                if c_res.get("repaired"):
+                    categories_count = locals().get("categories_count", 0) + 1
+
+                # 4. Publish Hosted WebAR
                 w_res = publish_hosted_webar(ticket, cookie_header, lid)
                 if w_res.get("link"):
                     webar_count += 1
@@ -547,7 +640,7 @@ def sweep_fleet_seo_repair(ticket: str, cookie_header: str) -> dict:
         except Exception as e:
             print(f"[HISTORY SYNC WARN] Failed to save {history_file}: {e}")
 
-    return {"repaired_titles": repaired, "tags_updated": tags_count, "webar_enabled": webar_count}
+    return {"repaired_titles": repaired, "tags_updated": tags_count, "categories_repaired": locals().get("categories_count", 0), "webar_enabled": webar_count}
 
 
 
@@ -1175,7 +1268,7 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
     return results
 
 
-def approve_account_monetization(account_id: str = "1", cookie_str: str = None, ticket: str = None, user: dict = None, target_lens_id: str = None, target_lens_url: str = None, skip_browser: bool = False) -> dict:
+def approve_account_monetization(account_id: str = "1", cookie_str: str = None, ticket: str = None, user: dict = None, target_lens_id: str = None, target_lens_url: str = None, target_tags: list = None, skip_browser: bool = False) -> dict:
     aid = str(account_id)
     print(f"\n{'='*65}\n[AUTONOMOUS MONETIZATION] Processing Account #{aid}...\n{'='*65}")
     if not ticket or not cookie_str:
@@ -1215,13 +1308,16 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
     # Permanent fix: If a target lens was just published, wait for Snapchat catalog ingestion to exit PROCESSING state
     if target_lens_id:
         wait_for_lens_ready(my_lenses_ticket, cookie_str, target_lens_id, max_wait_sec=240)
+        if target_tags:
+            print(f"[TARGET SEO] Setting discoverability tags for new lens {target_lens_id}...")
+            update_lens_tags(my_lenses_ticket, cookie_str, target_lens_id, target_tags)
 
     enroll_results = direct_enroll_lenses(my_lenses_ticket, cookie_str, target_lens_id=target_lens_id)
 
     # Permanent fix: Fleet sweep to find and heal ANY unenrolled lenses on the account
     sweep_results = sweep_unenrolled_fleet_lenses(my_lenses_ticket, cookie_str)
 
-    # Permanent SEO fix: sweep fleet to fix truncated titles, purge dev tags, enable WebAR
+    # Permanent SEO fix: sweep fleet to fix truncated titles, purge dev tags, enable WebAR, and heal secondary categories
     seo_sweep_results = sweep_fleet_seo_repair(my_lenses_ticket, cookie_str)
 
     # Permanent verification: Query getLens on target to confirm eligibility status

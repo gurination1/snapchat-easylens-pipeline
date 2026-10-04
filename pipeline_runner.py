@@ -582,7 +582,8 @@ def main():
                         ticket=client.sso_token,
                         user=user,
                         target_lens_id=pub_lens_id,
-                        target_lens_url=f"https://my-lenses.snapchat.com/lens/{pub_lens_id}"
+                        target_lens_url=f"https://my-lenses.snapchat.com/lens/{pub_lens_id}",
+                        target_tags=tags
                     )
                     payout_enrolled = bool(
                         enroll_res.get("target_lens_verified", False)
