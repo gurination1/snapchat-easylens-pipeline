@@ -367,23 +367,24 @@ def direct_enroll_lenses(ticket: str, cookie_header: str, target_lens_id: str = 
     except Exception as ce:
         print(f"[DIRECT GRAPHQL WARN] Error querying category list: {ce}")
 
-    # Discover lenses from COMMUNITY and PROFILE tabs
-    for gType in ["COMMUNITY", "PROFILE"]:
-        try:
-            res = execute_direct_graphql(
-                ticket, cookie_header, GQL_GET_LENSES,
-                variables={"limit": 50, "offset": 0, "sortBy": "SORT_BY_DATE", "sortDirection": "SORT_DIRECTION_DESC", "type": gType},
-                operation_name="getLensesList"
-            )
-            data = res.get("data") or {}
-            l_list = (data.get("lenses") or {}).get("lensesList") or []
-            for item in l_list:
-                if item and item.get("id"):
-                    target_ids.add(item["id"])
-                    print(f"  [DISCOVERED LENS] {item.get('name')} (ID: {item.get('id')}) | Payout: {item.get('lensCreatorPayoutEligibility')}")
-        except Exception as e:
-            print(f"[DIRECT GRAPHQL WARN] Error discovering lenses for {gType}: {e}")
-        time.sleep(1.0)
+    # Discover lenses from COMMUNITY and PROFILE tabs (only if target_lens_id not provided)
+    if not target_lens_id:
+        for gType in ["COMMUNITY", "PROFILE"]:
+            try:
+                res = execute_direct_graphql(
+                    ticket, cookie_header, GQL_GET_LENSES,
+                    variables={"limit": 50, "offset": 0, "sortBy": "SORT_BY_DATE", "sortDirection": "SORT_DIRECTION_DESC", "type": gType},
+                    operation_name="getLensesList"
+                )
+                data = res.get("data") or {}
+                l_list = (data.get("lenses") or {}).get("lensesList") or []
+                for item in l_list:
+                    if item and item.get("id"):
+                        target_ids.add(item["id"])
+                        print(f"  [DISCOVERED LENS] {item.get('name')} (ID: {item.get('id')}) | Payout: {item.get('lensCreatorPayoutEligibility')}")
+            except Exception as e:
+                print(f"[DIRECT GRAPHQL WARN] Error discovering lenses for {gType}: {e}")
+            time.sleep(1.0)
 
     enrolled = []
     success_count = 0
@@ -1268,7 +1269,7 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
     return results
 
 
-def approve_account_monetization(account_id: str = "1", cookie_str: str = None, ticket: str = None, user: dict = None, target_lens_id: str = None, target_lens_url: str = None, target_tags: list = None, skip_browser: bool = False) -> dict:
+def approve_account_monetization(account_id: str = "1", cookie_str: str = None, ticket: str = None, user: dict = None, target_lens_id: str = None, target_lens_url: str = None, target_tags: list = None, skip_browser: bool = False, sweep_seo: bool = False) -> dict:
     aid = str(account_id)
     print(f"\n{'='*65}\n[AUTONOMOUS MONETIZATION] Processing Account #{aid}...\n{'='*65}")
     if not ticket or not cookie_str:
@@ -1314,11 +1315,14 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
 
     enroll_results = direct_enroll_lenses(my_lenses_ticket, cookie_str, target_lens_id=target_lens_id)
 
-    # Permanent fix: Fleet sweep to find and heal ANY unenrolled lenses on the account
-    sweep_results = sweep_unenrolled_fleet_lenses(my_lenses_ticket, cookie_str)
-
-    # Permanent SEO fix: sweep fleet to fix truncated titles, purge dev tags, enable WebAR, and heal secondary categories
-    seo_sweep_results = sweep_fleet_seo_repair(my_lenses_ticket, cookie_str)
+    # Run fleet sweep and retroactive SEO repairs only in full fleet mode or if explicitly requested
+    sweep_results = {}
+    seo_sweep_results = {}
+    if not target_lens_id or sweep_seo:
+        sweep_results = sweep_unenrolled_fleet_lenses(my_lenses_ticket, cookie_str)
+        seo_sweep_results = sweep_fleet_seo_repair(my_lenses_ticket, cookie_str)
+    else:
+        print("[FLEET SWEEP] Skipped full fleet scan (targeted lens mode active).")
 
     # Permanent verification: Query getLens on target to confirm eligibility status
     verified_payout = False
@@ -1419,12 +1423,8 @@ def main():
     overall_results = {}
     for aid in target_accounts:
         try:
-            res = approve_account_monetization(aid, target_lens_id=args.lens_id, target_lens_url=args.lens_url, skip_browser=skip_browser)
+            res = approve_account_monetization(aid, target_lens_id=args.lens_id, target_lens_url=args.lens_url, skip_browser=skip_browser, sweep_seo=args.sweep_seo)
             overall_results[aid] = res
-        except Exception as e:
-            print(f"[FATAL APPROVAL ERROR] Account #{aid}: {e}")
-            overall_results[aid] = {"account_id": aid, "error": str(e), "success": False}
-
         except Exception as e:
             print(f"[FATAL APPROVAL ERROR] Account #{aid}: {e}")
             overall_results[aid] = {"account_id": aid, "error": str(e), "success": False}
