@@ -164,12 +164,24 @@ query getLens($lensId: ID!) {
             id
             name
             status
+            tagsList
             lensCreatorPayoutEligibility
             primaryCategoryId
             secondaryCategoryId
             discoverability {
                 tagsList
             }
+        }
+    }
+}
+"""
+
+GQL_UPDATE_LENS_TAGS = """
+mutation updateLensTags($lensId: ID!, $tags: [String!]!) {
+    updateLens(input: { lensId: $lensId, tags: $tags }) {
+        lens {
+            id
+            tagsList
         }
     }
 }
@@ -530,8 +542,20 @@ def update_lens_tags(ticket: str, cookie_header: str, lens_id: str, tags: list) 
             variables={"lensId": lens_id, "tagsList": filtered_tags},
             operation_name="setTags"
         )
-        print(f"  ✓ [TAGS & DISCOVERABILITY SET] Lens {lens_id} tags set to: {filtered_tags} | disc: {json.dumps(res_disc)[:100]} | tags: {json.dumps(res_tags)[:100]}")
-        return {"discoverability": res_disc, "legacy_tags": res_tags}
+        time.sleep(0.5)
+        # 3. Web UI native updateLens tags mutation (used by CommunityTags and useLensChangeTracker)
+        res_update = {}
+        try:
+            res_update = execute_direct_graphql(
+                ticket, cookie_header, GQL_UPDATE_LENS_TAGS,
+                variables={"lensId": lens_id, "tags": filtered_tags},
+                operation_name="updateLensTags"
+            )
+        except Exception as ue:
+            res_update = {"error": str(ue)}
+
+        print(f"  ✓ [TAGS TRIPLE-WRITE SET] Lens {lens_id} tags set to: {filtered_tags} | disc: {json.dumps(res_disc)[:80]} | tags: {json.dumps(res_tags)[:80]} | updateLens: {json.dumps(res_update)[:80]}")
+        return {"discoverability": res_disc, "legacy_tags": res_tags, "update_lens": res_update}
     except Exception as e:
         print(f"  [TAGS WARN] Error updating tags for {lens_id}: {e}")
         return {"error": str(e)}
@@ -1343,8 +1367,9 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
         v_res = execute_direct_graphql(my_lenses_ticket, cookie_str, GQL_GET_LENS, variables={"lensId": target_lens_id}, operation_name="getLens")
         v_lens = ((v_res.get("data") or {}).get("getLens") or {}).get("lens") or {}
         v_elig = v_lens.get("lensCreatorPayoutEligibility", "")
+        tags_list = v_lens.get("tagsList")
         disc_tags = (v_lens.get("discoverability") or {}).get("tagsList")
-        print(f"[FINAL GRAPHQL VERIFICATION {target_lens_id}] Status: {v_lens.get('status')} | Payout: '{v_elig}' | PrimaryCat: '{v_lens.get('primaryCategoryId')}' | SecCat: '{v_lens.get('secondaryCategoryId')}' | DiscTags: {disc_tags}")
+        print(f"[FINAL GRAPHQL VERIFICATION {target_lens_id}] Status: {v_lens.get('status')} | Payout: '{v_elig}' | PrimaryCat: '{v_lens.get('primaryCategoryId')}' | SecCat: '{v_lens.get('secondaryCategoryId')}' | TagsList: {tags_list} | DiscTags: {disc_tags}")
         if v_elig in ("LENS_CREATOR_PAYOUT_ELIGIBILITY_PENDING", "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE"):
             verified_payout = True
 
