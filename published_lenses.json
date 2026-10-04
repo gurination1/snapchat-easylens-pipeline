@@ -144,7 +144,10 @@
       "visor",
       "rave",
       "music",
-      "audioreactive"
+      "audioreactive",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "Instant 0.2s snap of anisotropic brushed titanium and refractive glass catching live environment reflections.",
     "has_preview_video": true,
@@ -184,7 +187,10 @@
       "visor",
       "rave",
       "music",
-      "audioreactive"
+      "audioreactive",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "Instantaneous, high-fidelity titanium visor snap creates a premium, futuristic transformation in under 0.2s.",
     "has_preview_video": true,
@@ -206,8 +212,8 @@
       "hud",
       "scifi",
       "tech",
-      "pbr",
-      "audioreactive"
+      "audioreactive",
+      "aesthetic"
     ],
     "visual_hook": "Elite cyberpunk tactical scanner locks onto eye with animated focal reticles and sharp volumetric telemetry.",
     "has_preview_video": true,
@@ -306,11 +312,11 @@
       "dragon",
       "phoenix",
       "mythology",
-      "3d",
       "headpiece",
       "crown",
       "fantasy",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "Imposing ancient Egyptian jackal coronet rises with dark basalt geometry and swirling golden sandstorm vortex.",
     "has_preview_video": true,
@@ -347,10 +353,13 @@
     "prompt": "Art Nouveau floral tiara sculpted from antiqued 24k yellow gold with deep emerald cabochon accents anchored to brow. High-fidelity PBR materials with 6500K/2800K directional rim lighting. 35mm analog film aesthetic with soft warm highlights. Mouth open triggers a semi-translucent golden silk shimmer veil across temples. Smile activates subtle emerald light refraction flares across eye contours. Zero UI, pure Parisian couture craft. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
     "tags": [
       "luxury",
-      "art-nouveau",
+      "artnouveau",
       "couture",
       "analog",
-      "emerald"
+      "emerald",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "Instant 0.2s snap of ornate gold and emerald geometry creating a high-end, immediate fashion transformation.",
     "has_preview_video": true,
@@ -390,11 +399,14 @@
     "checkpoint_id": "06aafa96-ecf5-7251-8000-6223a5d04357",
     "prompt": "Organic polished metallic brow shell with beetle-wing iridescence fitted to forehead. PBR ray-traced shadows. Opening mouth releases expanding toroidal liquid mercury rings surging forward. Smiling triggers radiant rainbow chromatic dispersion wave across face contours. Eyebrow raise flares armor plates outward. Head tilt reflects dynamic iridescent sheen highlights across temples. High-concept Y3K aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
     "tags": [
-      "Y3K",
-      "LiquidMetal",
-      "BioSurreal",
-      "FashionTech",
-      "Futurism"
+      "y3k",
+      "liquidmetal",
+      "biosurreal",
+      "fashiontech",
+      "futurism",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The immediate 0.2s snap of high-gloss, alien-inspired chitin onto the forehead creates a striking, high-fashion silhouette.",
     "has_preview_video": true,
@@ -563,7 +575,10 @@
       "winged",
       "circlet",
       "aurora",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "Instantaneous 0.2s identification of a warm, high-contrast amber halo framing the upper face.",
     "has_preview_video": true,
@@ -696,7 +711,10 @@
       "mythology",
       "obsidian",
       "olympian",
-      "stygian"
+      "stygian",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The high-contrast silhouette of the obsidian crown against the skin creates an instant, authoritative mythic identity.",
     "has_preview_video": true,
@@ -795,7 +813,10 @@
       "aesthetic",
       "beauty",
       "sunlight",
-      "luxury"
+      "luxury",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "The striking architectural orbital gold ring provides an instant, high-contrast silhouette that defines the user's upper face.",
     "has_preview_video": true,
@@ -923,7 +944,10 @@
       "winged",
       "circlet",
       "aurora",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "The immediate 0.2s identification of a high-contrast neon grid framing the upper face creates an instant, authoritative gaming identity.",
     "has_preview_video": true,
@@ -1054,9 +1078,7 @@
       "synthwave",
       "vhs",
       "camcorder",
-      "disco",
-      "y2k",
-      "nostalgia"
+      "disco"
     ],
     "visual_hook": "Decades nostalgia hit: 70s Psychedelic Woodstock Flower Crown delivers mesmerizing bohemian liquid light waves.",
     "has_preview_video": true,
@@ -1185,7 +1207,10 @@
       "glamour",
       "disco",
       "vintage",
-      "fashion"
+      "fashion",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The high-contrast 24k gold mirror crown creates an immediate, recognizable silhouette the moment the camera opens.",
     "has_preview_video": true,
@@ -1323,7 +1348,10 @@
       "cosmic",
       "scanner",
       "energy",
-      "vibes"
+      "vibes",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The striking, high-contrast obsidian orbital ring creates an immediate, recognizable silhouette on the user's forehead.",
     "has_preview_video": true,
@@ -1449,9 +1477,7 @@
       "synthwave",
       "vhs",
       "camcorder",
-      "disco",
-      "y2k",
-      "nostalgia"
+      "disco"
     ],
     "visual_hook": "Decades nostalgia hit: Y2K Cyberspace Liquid Wireframe Visor commands instant attention with iconic falling digital code.",
     "has_preview_video": true,
@@ -1574,7 +1600,10 @@
       "winged",
       "circlet",
       "aurora",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "The high-contrast, rotating gold solar array creates an instant, unmistakable silhouette of a high-tech space station.",
     "has_preview_video": true,
@@ -1699,9 +1728,9 @@
       "gold",
       "scales",
       "fortune",
-      "mouthopen",
       "selfie",
-      "3d"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "The unmistakable silhouette of weightless, rotating 3D gold scales framing the user's face demands immediate attention.",
     "has_preview_video": true,
@@ -1834,9 +1863,9 @@
       "neon",
       "cards",
       "crown",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "Instant recognition of a high-speed, glowing 3D card carousel framing the face creates a curiosity-driven personality test.",
     "has_preview_video": true,
@@ -1966,9 +1995,9 @@
       "ring",
       "icons",
       "orbital",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "The 0.2s silhouette of a high-speed, prismatic glass orbital ring creates an immediate, high-status curiosity gap.",
     "has_preview_video": true,
@@ -2101,9 +2130,9 @@
       "visor",
       "halo",
       "crown",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "The instant 0.2s silhouette of high-speed, metallic orbital tablets framing the face creates an elite curiosity-driven personality test.",
     "has_preview_video": true,
@@ -2233,9 +2262,9 @@
       "aura",
       "scanner",
       "crown",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "The immediate 0.2s silhouette of a weightless, high-contrast floating crystalline halo creates an elite curiosity gap.",
     "has_preview_video": true,
@@ -2368,9 +2397,9 @@
       "satellite",
       "station",
       "visor",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "zero_g_spacewalk_satellite",
     "channel_id": "10",
@@ -2513,7 +2542,9 @@
       "melodrama",
       "brokenheart",
       "coins",
-      "comedy"
+      "comedy",
+      "aesthetic",
+      "filter"
     ],
     "archetype": "",
     "channel_id": "",
@@ -2653,7 +2684,10 @@
       "tiara",
       "emerald",
       "luxury",
-      "gold"
+      "gold",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -2794,7 +2828,9 @@
       "chrome",
       "zerog",
       "surreal",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -2937,9 +2973,9 @@
       "hound",
       "crest",
       "hearts",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "shiba_inu_puppy_ears",
     "channel_id": "13",
@@ -3078,7 +3114,10 @@
       "chrome",
       "platinum",
       "surreal",
-      "y3k"
+      "y3k",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3214,9 +3253,9 @@
       "visor",
       "halo",
       "eyewear",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "starlight_cosmic_shades",
     "channel_id": "10",
@@ -3353,9 +3392,12 @@
     "tags": [
       "phoenix",
       "firebird",
-      "diadem",
       "fantasy",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow",
+      "makeup"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3492,7 +3534,10 @@
       "monocle",
       "scanner",
       "reticle",
-      "hud"
+      "hud",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3635,9 +3680,9 @@
       "moss",
       "crown",
       "forest",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "bioluminescent_forest_wreath",
     "channel_id": "14",
@@ -3775,9 +3820,9 @@
       "heart",
       "wings",
       "meter",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "crush_compatibility_meter",
     "channel_id": "15",
@@ -3918,9 +3963,9 @@
       "ninja",
       "kunai",
       "headband",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "ninja_shadow_clone_headband",
     "channel_id": "16",
@@ -4060,9 +4105,9 @@
       "matrix",
       "shades",
       "code",
-      "mouthopen",
       "selfie",
-      "3d"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "matrix_y2k_cyberspace",
     "channel_id": "7",
@@ -4183,6 +4228,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/e26K9yRbhksy7Zykak0k7?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/KCuIIvuNginSMmuVJiw4X?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-04T05:57:27Z",
+    "account_id": "2",
+    "lens_name": "Monarch Bloom",
+    "lens_id": "2f93de06-e7e5-4a4b-a215-f325667ef1e8",
+    "checkpoint_id": "06ac1e5e-321c-777a-8000-9877fdcfee7c",
+    "prompt": "Delicate sculpted 3D Monarch butterflies form a radiant tiara across the brow and hair, featuring iridescent orange-amber wings with intricate micro-vein translucency. PBR craft with caustic shaders and 3-point contrast lighting. Opening mouth triggers a dynamic outward flutter of butterflies in a swirling vortex around the head before gracefully reforming. Smiling illuminates warm golden-hour cheek sheen with sparkling wing-dust. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "butterfly",
+      "crown",
+      "glam",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "monarch_butterfly_tiara",
+    "channel_id": "14",
+    "visual_hook": "Instantaneous 0.2s silhouette of a delicate, high-contrast monarch butterfly tiara with luminous amber wings creates immediate ethereal allure.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/N3M66f0herkJAYfnxmCyq?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/r4ijxExqk7TdKM40Pl7NK?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Mw0QwmImcaxhimL9tDnWr?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
