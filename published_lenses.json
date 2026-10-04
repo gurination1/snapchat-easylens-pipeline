@@ -4636,5 +4636,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/istm4PtVbPVWzTrKCzlKV?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-04T17:44:13Z",
+    "account_id": "5",
+    "lens_name": "Cupid Love Radar",
+    "lens_id": "f08517cf-4266-4085-b800-f11f4c5d577a",
+    "checkpoint_id": "06ac28cf-c2df-70a3-8000-0738cfc383b1",
+    "prompt": "18k rose-gold cupid diadem with delicate sculpted wings at hairline and floating ruby glass hearts orbiting temples. Opening mouth fires glowing golden love-arrows into blooming pink heart confetti. Smiling triggers rosy love blush and heart pupil glints. Eyebrow raise accelerates heart orbit speed; head tilt catches polished metal luster. High-contrast 3-point lighting, photorealistic materials, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "love",
+      "heart",
+      "blush",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "cupid_arrow_heart_diadem",
+    "channel_id": "15",
+    "visual_hook": "The instant 0.2s silhouette of a polished, rose-gold cupid diadem creates immediate high-contrast romantic intrigue.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/IRrL9vykbtyrBq8pXvNt4?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/ugpkaGaDvJ1GFEQqDupJm?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/sM83zWqv36WoazC01GgF6?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
