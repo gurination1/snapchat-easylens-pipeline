@@ -4513,5 +4513,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/Dt6K7e9zQp1JSGCareaDN?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-04T15:26:21Z",
+    "account_id": "2",
+    "lens_name": "Cloud Hop Bunny",
+    "lens_id": "8e76570d-9fd3-4c3b-bd6b-acd68707f86f",
+    "checkpoint_id": "06ac26ce-8738-72a2-8000-02c45eea8354",
+    "prompt": "A whimsical 3D pastel cloud platform game anchored to the forehead. A small animated bunny hops between floating platforms. Head tilt left or right steers the bunny. Mouth open triggers a high-energy jump with rainbow star trails. Smile collects floating golden tokens with sparkly chimes. Eyebrow raise toggles between sunset and midnight sky themes. High-contrast 3D materials, no UI, pure play. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "cute",
+      "bunny",
+      "game",
+      "cloud",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "bunny_cloud_jumper",
+    "channel_id": "6",
+    "visual_hook": "The 0.2s silhouette of a vibrant, bouncy bunny on a floating cloud crown provides an instant, playful gaming hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/7UgJwUCLsClSLUFtL7zxL?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/jn3aWTrtzAo6lU7ggsUdS?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/HL3l1Al7LfQblBpLRG6ZN?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
