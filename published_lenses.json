@@ -4484,5 +4484,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/fNaEYdEJnLrqc1V0h2X8n?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-04T10:23:58Z",
+    "account_id": "5",
+    "lens_name": "Y2K Crystal Vision",
+    "lens_id": "e6ed27d7-dbcb-48eb-9110-08b1e78937a0",
+    "checkpoint_id": "06ac2257-cd30-7e16-8000-92ed25da30b1",
+    "prompt": "Sleek frameless rose-tinted eyewear anchored to temples with faceted zircon butterfly hinges. Mouth open triggers a flurry of holographic butterfly wings releasing sparkling diamond dust. Smile casts a warm golden-hour glow across cheekbones. Eyebrow raise flashes prismatic flares. Head tilt catches brilliant rose-gold reflections. Authentic high-fashion aesthetic, 3D geometry, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "visor",
+      "makeup",
+      "glam",
+      "selfie",
+      "y2k",
+      "trendy"
+    ],
+    "archetype": "y2k_frameless_butterfly_shades",
+    "channel_id": "7",
+    "visual_hook": "The instant 0.2s silhouette of faceted, rose-tinted butterfly eyewear creates an immediate high-fashion Y2K aesthetic hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/KnbUOrikPQUD71TYRHnCl?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/AJ3NNVeSuvPNGu0ZHnm8Z?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Dt6K7e9zQp1JSGCareaDN?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
