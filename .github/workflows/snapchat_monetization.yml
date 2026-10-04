@@ -25,6 +25,16 @@ on:
         required: false
         default: ''
         type: string
+      sweep_seo:
+        description: 'Execute retroactive fleet SEO repair (rename truncated titles, purge dev tags, enable WebAR)'
+        required: false
+        default: false
+        type: boolean
+      skip_browser:
+        description: 'Skip Playwright browser UI step (direct GraphQL only)'
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -123,6 +133,12 @@ jobs:
           fi
           if [ -n "${{ inputs.lens_url }}" ]; then
             CMD="$CMD --lens-url ${{ inputs.lens_url }}"
+          fi
+          if [ "${{ inputs.sweep_seo }}" = "true" ]; then
+            CMD="$CMD --sweep-seo"
+          fi
+          if [ "${{ inputs.skip_browser }}" = "true" ]; then
+            CMD="$CMD --skip-browser"
           fi
           echo "Executing: $CMD"
           eval $CMD
