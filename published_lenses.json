@@ -4511,7 +4511,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/AJ3NNVeSuvPNGu0ZHnm8Z?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/Dt6K7e9zQp1JSGCareaDN?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]

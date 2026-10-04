@@ -1,101 +1,41 @@
 {
-  "4": {
-    "account_id": "4",
-    "username": "gilgalll",
-    "displayName": "Gil Galll",
+  "5": {
+    "account_id": "5",
+    "username": "yt_new2026",
+    "displayName": "Yt New",
     "LENS_CREATOR_PAYOUT_TOS": true,
     "ILDG_TOS": false,
     "ui_modals_accepted": 0,
-    "enrolled_lenses_count": 0,
-    "top_performer_toggled": false,
-    "target_lens_verified": false,
+    "enrolled_lenses_count": 1,
+    "top_performer_toggled": true,
+    "target_lens_verified": true,
     "final_checked": false,
     "sweep_results": {},
     "seo_sweep_results": {},
     "direct_graphql_details": {
-      "count": 0,
+      "count": 1,
       "attempted": 1,
       "lenses": [
         {
-          "id": "b64c31b6-5894-43b3-8362-d3cd22b9f8ba",
-          "enrolled": false,
+          "id": "e6ed27d7-dbcb-48eb-9110-08b1e78937a0",
+          "enrolled": true,
           "setPayoutRes": {
-            "errors": [
-              {
-                "message": "3 INVALID_ARGUMENT: Lens b64c31b6-5894-43b3-8362-d3cd22b9f8ba is currently locked.",
-                "locations": [
-                  {
-                    "line": 3,
-                    "column": 5
-                  }
-                ],
-                "path": [
-                  "setLensCreatorPayoutEnrollment"
-                ],
-                "extensions": {
-                  "code": "INTERNAL_SERVER_ERROR",
-                  "stacktrace": [
-                    "Error: 3 INVALID_ARGUMENT: Lens b64c31b6-5894-43b3-8362-d3cd22b9f8ba is currently locked.",
-                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
-                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
-                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
-                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
-                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
-                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
-                    "for call at",
-                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
-                    "    at ServiceClientImpl.setLensCreatorPayoutEnrollment (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
-                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
-                    "    at new Promise (<anonymous>)",
-                    "    at MyLensesV2DataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
-                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
-                    "    at async MyLensesV2DataSource.setLensCreatorPayoutEnrollment (/app/server/my-lenses-v2/MyLensesV2DataSource.js:323:52)"
-                  ]
-                }
-              }
-            ],
-            "data": null
+            "error": "max_retries_exceeded"
           },
           "updateLensRes": {
-            "errors": [
-              {
-                "message": "3 INVALID_ARGUMENT: Lens b64c31b6-5894-43b3-8362-d3cd22b9f8ba is currently locked.",
-                "locations": [
-                  {
-                    "line": 3,
-                    "column": 5
-                  }
-                ],
-                "path": [
-                  "updateLens"
-                ],
-                "extensions": {
-                  "code": "INTERNAL_SERVER_ERROR",
-                  "stacktrace": [
-                    "Error: 3 INVALID_ARGUMENT: Lens b64c31b6-5894-43b3-8362-d3cd22b9f8ba is currently locked.",
-                    "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
-                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
-                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
-                    "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)",
-                    "    at /app/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78",
-                    "    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)",
-                    "for call at",
-                    "    at ServiceClientImpl.makeUnaryRequest (/app/node_modules/@grpc/grpc-js/build/src/client.js:161:32)",
-                    "    at ServiceClientImpl.updateLens (/app/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)",
-                    "    at /app/server/apollo-grpc/data-source/GRPCDataSource.js:32:40",
-                    "    at new Promise (<anonymous>)",
-                    "    at LensServiceDataSource.rpcCall (/app/server/apollo-grpc/data-source/GRPCDataSource.js:30:16)",
-                    "    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
-                    "    at async LensServiceDataSource.updateLens (/app/server/lens-service/LensServiceDataSource.js:103:36)"
-                  ]
+            "data": {
+              "updateLens": {
+                "lens": {
+                  "id": "e6ed27d7-dbcb-48eb-9110-08b1e78937a0",
+                  "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_PENDING",
+                  "status": "LENS_STATUS_PROCESSING"
                 }
               }
-            ],
-            "data": null
+            }
           },
           "setCategoryRes": {
             "repaired": true,
-            "primary": "SCAT_3",
+            "primary": "SCAT_24",
             "secondary": "CAT_1",
             "res": {
               "errors": [
@@ -140,10 +80,10 @@
               "data": {
                 "generateHostedLens": {
                   "lens": {
-                    "id": "c4125e7d-ee61-4c8e-81d2-10f0d90ba7f6:b64c31b6-5894-43b3-8362-d3cd22b9f8ba",
-                    "link": "https://lens.snap.com/experience/943c07c9-80f1-4607-a386-7814b605a9b2",
+                    "id": "7522bd2c-71ee-4423-933e-e104e73c0102:e6ed27d7-dbcb-48eb-9110-08b1e78937a0",
+                    "link": "https://lens.snap.com/experience/901d2460-d2ab-4e75-92ca-8cdc1ea865e5",
                     "status": "HOSTED_LENS_STATUS_PUBLISHED",
-                    "organizationId": "c4125e7d-ee61-4c8e-81d2-10f0d90ba7f6"
+                    "organizationId": "7522bd2c-71ee-4423-933e-e104e73c0102"
                   }
                 }
               }
@@ -176,7 +116,7 @@
           }
         }
       ],
-      "target_lens_verified": false
+      "target_lens_verified": true
     },
     "success": true
   }
