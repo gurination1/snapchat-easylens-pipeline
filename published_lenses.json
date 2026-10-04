@@ -4099,5 +4099,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/0LPzPFuKfdhSGfnOaeBhR?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-04T02:58:02Z",
+    "account_id": "4",
+    "lens_name": "Spirit Animal Totem",
+    "lens_id": "dd44d144-8057-4f6e-a932-7b9178537c72",
+    "checkpoint_id": "06ac1bbb-d124-75b3-8000-680d9249039d",
+    "prompt": "Gilded 24k gold totem disc floats above forehead with intricate carvings. Spinning wheel halts on a smile to reveal a mythical animal avatar overlay. Mouth open triggers an explosive aura of spirit energy petals. Eyebrow raise restarts the high-speed spin. Head tilt shifts the perspective view. PBR textures, 3-point rim lighting, zero UI, full-screen immersive wearable 3D geometry. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "fantasy",
+      "spirit",
+      "animal",
+      "totem",
+      "crown",
+      "mouthopen",
+      "selfie",
+      "3d"
+    ],
+    "archetype": "spirit_animal_totem_wheel",
+    "channel_id": "11",
+    "visual_hook": "The instant 0.2s silhouette of a floating, gold-leaf totem ring creates immediate mythological intrigue.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/IbFOojYHndoQU4zOdukdf?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/c3T5jmmMXc3Nw7NLaqMlC?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/ehlv7KH6gons4Defbs4bR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
