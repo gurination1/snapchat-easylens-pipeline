@@ -529,7 +529,7 @@ def update_lens_tags(ticket: str, cookie_header: str, lens_id: str, tags: list) 
             variables={"lensId": lens_id, "tagsList": filtered_tags},
             operation_name="setTags"
         )
-        print(f"  ✓ [TAGS & DISCOVERABILITY SET] Lens {lens_id} tags set to: {filtered_tags}")
+        print(f"  ✓ [TAGS & DISCOVERABILITY SET] Lens {lens_id} tags set to: {filtered_tags} | disc: {json.dumps(res_disc)[:100]} | tags: {json.dumps(res_tags)[:100]}")
         return {"discoverability": res_disc, "legacy_tags": res_tags}
     except Exception as e:
         print(f"  [TAGS WARN] Error updating tags for {lens_id}: {e}")
@@ -1325,8 +1325,8 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
     if target_lens_id:
         v_res = execute_direct_graphql(my_lenses_ticket, cookie_str, GQL_GET_LENS, variables={"lensId": target_lens_id}, operation_name="getLens")
         v_lens = ((v_res.get("data") or {}).get("getLens") or {}).get("lens") or {}
-        v_elig = v_lens.get("lensCreatorPayoutEligibility", "")
-        print(f"[FINAL GRAPHQL VERIFICATION {target_lens_id}] Status: {v_lens.get('status')} | Payout: '{v_elig}'")
+        disc_tags = (v_lens.get("discoverability") or {}).get("tagsList")
+        print(f"[FINAL GRAPHQL VERIFICATION {target_lens_id}] Status: {v_lens.get('status')} | Payout: '{v_elig}' | PrimaryCat: '{v_lens.get('primaryCategoryId')}' | SecCat: '{v_lens.get('secondaryCategoryId')}' | DiscTags: {disc_tags}")
         if v_elig in ("LENS_CREATOR_PAYOUT_ELIGIBILITY_PENDING", "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE"):
             verified_payout = True
 
