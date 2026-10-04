@@ -536,7 +536,10 @@
       "vampire",
       "dark",
       "sentry",
-      "monumental"
+      "monumental",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The sudden transformation into a weathered, ancient cathedral sculpture creates an immediate, high-contrast silhouette.",
     "has_preview_video": true,
@@ -666,7 +669,10 @@
       "winged",
       "circlet",
       "aurora",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "Godly transformation: Aphrodite Seafoam Scallop Pearl Tiara elevates user to mythical Olympian beauty.",
     "has_preview_video": true,
@@ -762,7 +768,10 @@
       "ethereal",
       "luxury",
       "fashion",
-      "aura"
+      "aura",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The immediate silhouette of a structural, iridescent pearl tiara creates an instant, high-fashion, mythical identity.",
     "has_preview_video": true,
@@ -887,7 +896,10 @@
       "mars",
       "scifi",
       "exploration",
-      "helmet"
+      "helmet",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "Bold amber-tinted visor silhouette provides an instant, high-contrast interstellar identity.",
     "has_preview_video": true,
@@ -1015,7 +1027,7 @@
       "racer",
       "catcher",
       "reflex",
-      "pbr"
+      "aesthetic"
     ],
     "visual_hook": "Addictive gamified AR: Speed Pizza Chomp captures instant viral appetite with mouth-watering cartoon cheese physics.",
     "has_preview_video": true,
@@ -1146,7 +1158,10 @@
       "retrofuturism",
       "chrome",
       "80s",
-      "cyber"
+      "cyber",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The striking architectural silhouette of a brushed-titanium wireframe arch creates an instant, authoritative 80s tech identity.",
     "has_preview_video": true,
@@ -1281,7 +1296,10 @@
       "70sretro",
       "flowercrown",
       "psychedelic",
-      "lavalamp"
+      "lavalamp",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The vivid silhouette of molten lava tubes and velvet poppies produces an unmistakable 1970s bohemian Woodstock aesthetic instantly.",
     "has_preview_video": true,
@@ -1404,9 +1422,7 @@
       "synthwave",
       "vhs",
       "camcorder",
-      "disco",
-      "y2k",
-      "nostalgia"
+      "disco"
     ],
     "visual_hook": "Decades nostalgia hit: 70s Psychedelic Woodstock Flower Crown delivers mesmerizing bohemian liquid light waves.",
     "has_preview_video": true,
@@ -1522,7 +1538,7 @@
   {
     "timestamp": "2026-09-26T12:03:25Z",
     "account_id": "5",
-    "lens_name": "Y2K Cyber Butterfly",
+    "lens_name": "Y2K Cyber",
     "lens_id": "f8ab241d-3cd6-4e7f-8c9b-5dab771c76a0",
     "checkpoint_id": "06ab7b17-036c-7efc-8000-004bce2b8bea",
     "prompt": "Stunning iridescent chrome butterfly diadem anchored to forehead. MouthOpen triggers holographic wing flutter releasing glowing prismatic glitter particles. Smile activates radiant dewy skin gloss effect across cheekbones. EyebrowRaise expands wireframe butterfly geometry. HeadTilt reflects 3D caustic light. Physical PBR materials, ray-traced shadows, 6500K rim lighting. Zero UI. Full screen 3D immersion. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -1530,11 +1546,11 @@
       "retro",
       "cyberpunk",
       "butterfly",
-      "diadem",
       "holographic",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The high-contrast, reflective chrome butterfly diadem creates an instant, unmistakable silhouette that captures light dynamically.",
     "has_preview_video": true,
@@ -1646,7 +1662,7 @@
   {
     "timestamp": "2026-09-26T22:36:51Z",
     "account_id": "5",
-    "lens_name": "Aura Frequency Scanner",
+    "lens_name": "Aura Frequency",
     "lens_id": "3dacfbf9-aed7-4be7-a4fd-c35540a62931",
     "checkpoint_id": "06ab8444-3856-75db-8000-4ccac092c26e",
     "prompt": "A floating iridescent orbital ring anchors to the forehead. High-fidelity liquid mercury geometry pulses with 3-point ray-traced lighting. Smile triggers a vibrant, swirling aurora borealis cloud erupting from the halo. Mouth open discharges a high-energy, chromatic particle shockwave. Eyebrow raise initiates a rapid biometric scan shift. Head tilt cycles through rare, glowing spectral color frequencies. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -1656,9 +1672,9 @@
       "halo",
       "aura",
       "scanner",
-      "mouthopen",
-      "pbr",
-      "3d"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The instant 0.2s silhouette of a weightless, liquid-mercury orbital halo creates an authoritative and high-tech identity.",
     "has_preview_video": true,
@@ -1791,9 +1807,9 @@
       "tarot",
       "cards",
       "vibe",
-      "mouthopen",
       "selfie",
-      "3d"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "The unexpected, high-speed rotation of mysterious, glowing 3D cards creates an immediate curiosity gap.",
     "has_preview_video": true,
@@ -1913,7 +1929,7 @@
   {
     "timestamp": "2026-09-27T12:46:33Z",
     "account_id": "5",
-    "lens_name": "Dual Choice Compass",
+    "lens_name": "Dual Choice",
     "lens_id": "77aaf08f-354d-45c1-9125-68df26cb69ae",
     "checkpoint_id": "06ab90c5-2e15-7ad4-8000-01f64846d448",
     "prompt": "Two floating 24k gold decision pillars anchor to temples with a central diamond compass needle. Tilting head left or right locks the selection, triggering crystalline fractures. Mouth open resets the field, smile releases golden confetti bursts, and eyebrow raise swaps the icon set. Brushed titanium aesthetic, ray-traced shadows, high-contrast studio rim lighting, zero UI, pure 3D geometry. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -1923,9 +1939,9 @@
       "compass",
       "crown",
       "decision",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "The immediate 0.2s silhouette of a balanced, dual-pillar gold crown creates a high-status focal point.",
     "has_preview_video": true,
@@ -2048,7 +2064,7 @@
   {
     "timestamp": "2026-09-28T00:01:54Z",
     "account_id": "5",
-    "lens_name": "This or That Dual Neon Decision Pillars",
+    "lens_name": "This or That",
     "lens_id": "07e88593-b8d9-4f0c-b8cc-e1b31ce88a1c",
     "checkpoint_id": "06ab9a9a-4239-733c-8000-0384bd5da160",
     "prompt": "Floating twin neon decision cards anchored to left and right temples with oscillating center compass needle. Head tilt left or right decisively slams needle into chosen option, detonating winner particle explosions; opening mouth clears choice for next round; smiling triggers jackpot; eyebrow raise flips options. Social decision game, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2180,7 +2196,7 @@
   {
     "timestamp": "2026-09-28T09:33:50Z",
     "account_id": "5",
-    "lens_name": "Aphrodite Seafoam Tiara",
+    "lens_name": "Aphrodite",
     "lens_id": "9795cd71-6c7a-4070-a01a-281db69cf3a5",
     "checkpoint_id": "06aba2f8-9e70-7815-8000-92343c0982bd",
     "prompt": "Iridescent mother-of-pearl scallop crown anchored to forehead with floating baroque freshwater pearls. MouthOpen triggers explosive oceanic sea-auroral sparkles with luminescent bubbles. Smile activates warm Aegean sunlight and high-glamour pearlescent skin sheen. EyebrowRaise expands central seashell crest. HeadTilt sways floating pearls. PBR materials, 3-point lighting, ray-traced caustics, cinematic ocean goddess beauty. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2190,9 +2206,9 @@
       "shell",
       "pearl",
       "tiara",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "The bold, curved silhouette of an iridescent mother-of-pearl crown creates an instant high-status oceanic focal point.",
     "has_preview_video": true,
@@ -2315,7 +2331,7 @@
   {
     "timestamp": "2026-09-28T17:32:17Z",
     "account_id": "5",
-    "lens_name": "Which Vibe Are You? Neon Floating Card Carousel",
+    "lens_name": "Which Vibe Are",
     "lens_id": "9bff9ab9-6777-4116-a923-a36ba65422b4",
     "checkpoint_id": "06aba9ef-7149-7cee-8000-76eb99b0d433",
     "prompt": "High-energy floating neon cards flipping rapidly above brow with viral mood titles. Blinking or smiling locks the winner in a burst of sparkling neon confetti and celebratory sound chimes; opening mouth spins cards into hyper-speed blur; eyebrow raise resets the shuffle; head tilt tilts cards toward camera. Viral social challenge magnet, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2458,7 +2474,7 @@
   {
     "timestamp": "2026-09-29T18:20:24Z",
     "account_id": "5",
-    "lens_name": "Gold Victory Laurel",
+    "lens_name": "Gold Victory",
     "lens_id": "77a4cc8e-7f93-4cbb-a3b7-264976a9a1f3",
     "checkpoint_id": "06abbfc6-f746-7fbb-8000-331c0cabd9ef",
     "prompt": "Heavy beaten 24k gold Olympian laurel leaf wreath fitted firmly to hairline with diamond champion stars above crown. Opening mouth detonates explosive stadium victory confetti cannons showering shimmering gold and platinum foil particles; smiling triggers warm golden stadium floodlight bloom across face; eyebrow raise flares laurel leaf tips; head tilt catches blinding metallic gold luster. Euphoric winner celebration, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2468,9 +2484,9 @@
       "laurel",
       "gold",
       "wreath",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "championship_victory_laurel",
     "channel_id": "17",
@@ -2599,7 +2615,7 @@
   {
     "timestamp": "2026-09-29T23:31:25Z",
     "account_id": "5",
-    "lens_name": "Pop-Out Hypno Goggles",
+    "lens_name": "Pop-Out Hypno",
     "lens_id": "531c2dd3-9218-4447-9e64-17d5eb00861e",
     "checkpoint_id": "06abc466-2e55-7821-8000-59c169b7b353",
     "prompt": "Exaggerated 3D glowing cartoon spiral hypno-goggles anchored over eyes that comical stretch and pop forward 10cm on face trigger. PBR stylized materials with ray-traced contact shadows. Opening mouth triggers shockwave rings with floating animated comic exclamation marks and bouncing question mark stars; smiling snaps goggles back with hilarious kaleidoscope optic swirl. Physics-driven, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2608,7 +2624,10 @@
       "spiral",
       "goggles",
       "cartoon",
-      "comedy"
+      "comedy",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -2736,7 +2755,7 @@
   {
     "timestamp": "2026-09-30T05:28:55Z",
     "account_id": "5",
-    "lens_name": "Champagne Diamond Coronal",
+    "lens_name": "Champagne",
     "lens_id": "d612de8a-73a6-4b2a-bde3-db61023e5a06",
     "checkpoint_id": "06abc989-00e1-7930-8000-1382f25fcf3d",
     "prompt": "Precision micro-faceted champagne diamond coronal resting tightly along hairline. Micro-surface roughness maps catching golden hour sunlight with realistic chromatic dispersion. Opening mouth emits delicate suspended diamond dust particles orbiting crown; smiling triggers radiant starburst glints across cheekbone highlights with Portra warm tones. Zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2745,7 +2764,10 @@
       "coronal",
       "champagne",
       "35mm",
-      "luxury"
+      "luxury",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -2886,9 +2908,9 @@
       "zodiac",
       "crown",
       "stars",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "zodiac_constellation_corona",
     "channel_id": "18",
@@ -3028,9 +3050,9 @@
       "tiara",
       "teacup",
       "crown",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "drama_queen_siren_tiara",
     "channel_id": "15",
@@ -3153,7 +3175,7 @@
   {
     "timestamp": "2026-10-01T08:42:13Z",
     "account_id": "5",
-    "lens_name": "Liquid Platinum Tears",
+    "lens_name": "Liquid Platinum",
     "lens_id": "a0617d01-4ee7-4efa-8de2-d02befe5b21d",
     "checkpoint_id": "06abe197-203e-7909-8000-57d3019aef2a",
     "prompt": "Mirrored liquid platinum teardrop sculptures frozen weightlessly along cheekbones with a floating surreal chrome toroid halo above head. Anisotropic fluid reflections with ray-traced shadows. Opening mouth releases liquid metal ripple shockwave radiating across cheek sculptures; smiling inverts chrome surface reflections with chromatic prism sheen. Photosensitive safe, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3162,7 +3184,10 @@
       "tears",
       "toroid",
       "surreal",
-      "chrome"
+      "chrome",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3292,7 +3317,7 @@
   {
     "timestamp": "2026-10-01T21:45:22Z",
     "account_id": "5",
-    "lens_name": "Manga Impact Headband",
+    "lens_name": "Manga Impact",
     "lens_id": "abaec7c4-2329-4fac-ba4e-2e084c78afcf",
     "checkpoint_id": "06abed0e-6d08-7191-8000-66c82fcd8352",
     "prompt": "Authentic 3D ink headband with sculpted manga speedlines radiating from brow. 6500K rim lighting defines bold silhouette. MouthOpen triggers explosive 3D kanji burst with halftone debris. Smile shifts textures to high-contrast cell-shaded ink. EyebrowRaise accelerates radial speedline zoom. HeadTilt pivots perspective. PBR materials, zero UI, no obscuring geometry, pure 3D Shonen aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3302,9 +3327,9 @@
       "manga",
       "headband",
       "impact",
-      "mouthopen",
-      "3d",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "manga_speedline_impact_headband",
     "channel_id": "16",
@@ -3439,9 +3464,9 @@
       "bunny",
       "hood",
       "fleece",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "lop_eared_bunny_hood",
     "channel_id": "13",
@@ -3571,7 +3596,7 @@
   {
     "timestamp": "2026-10-02T11:00:26Z",
     "account_id": "5",
-    "lens_name": "Celestial Kitsune Crest",
+    "lens_name": "Celestial",
     "lens_id": "bbd02987-b256-4578-a097-86fea4233493",
     "checkpoint_id": "06abf8b1-6949-722d-8000-77c89b91b936",
     "prompt": "Carved porcelain and polished vermilion lacquer kitsune forehead crest anchored strictly to brow, leaving eyes and mouth clear. Shimmering spirit bells and twin floating foxfire tails contouring jawline. Opening mouth erupts swirling azure spirit flame orbs with dynamic volumetric embers; smiling reveals ethereal golden fox spirit eye reflections. Pure PBR craft, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3580,7 +3605,10 @@
       "foxfire",
       "spirit",
       "crest",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3717,7 +3745,10 @@
       "speed",
       "neon",
       "racing",
-      "optics"
+      "optics",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3858,9 +3889,9 @@
       "apollo",
       "helmet",
       "halo",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "apollo_astronaut_helmet",
     "channel_id": "10",
@@ -3990,7 +4021,7 @@
   {
     "timestamp": "2026-10-03T16:13:49Z",
     "account_id": "5",
-    "lens_name": "Stygian Wraith Diadem",
+    "lens_name": "Stygian Wraith",
     "lens_id": "84dcb55c-2426-422f-bd44-488384807753",
     "checkpoint_id": "06ac1252-4563-72d5-8000-5550f6075fcf",
     "prompt": "Ethereal obsidian crown floating weightlessly above head, trailing tattered, semi-transparent indigo silk ribbons. Mouth open triggers a massive, swirling cryogenic soulfire geyser with piercing cyan embers. Smiling ignites intense supernatural white eye luminescence. Raising eyebrows billows the dark shroud outward. Head tilt creates fluid, rippling ectoplasmic auroral sparkles. PBR materials, high-contrast rim lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -4000,9 +4031,9 @@
       "wraith",
       "crown",
       "soul",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "phantom_wraith_shroud",
     "channel_id": "12",
@@ -4126,6 +4157,32 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/c3T5jmmMXc3Nw7NLaqMlC?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/ehlv7KH6gons4Defbs4bR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-04T05:11:53Z",
+    "account_id": "5",
+    "lens_name": "Champagne",
+    "lens_id": "9f97a1a2-11f2-4ce4-9d14-0882a9c15d7c",
+    "checkpoint_id": "06ac1dab-5592-7ec6-8000-8b5eb5154027",
+    "prompt": "Precision micro-faceted champagne diamond coronal resting tightly along hairline. Micro-surface roughness maps catching golden hour sunlight with realistic chromatic dispersion. Opening mouth emits delicate suspended diamond dust particles orbiting crown; smiling triggers radiant starburst glints across cheekbone highlights with Portra warm tones. Zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "diamond",
+      "coronal",
+      "champagne",
+      "35mm",
+      "luxury"
+    ],
+    "archetype": "",
+    "channel_id": "",
+    "visual_hook": "The instant 0.2s silhouette of a chunky, glowing 8-bit arcade crown creates immediate high-contrast gaming nostalgia.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/IHHnibPiGcgHnXwWdTAq7?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/e26K9yRbhksy7Zykak0k7?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/KCuIIvuNginSMmuVJiw4X?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
