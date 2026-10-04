@@ -4665,5 +4665,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/sM83zWqv36WoazC01GgF6?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-04T22:22:04Z",
+    "account_id": "2",
+    "lens_name": "Storm Tempest",
+    "lens_id": "d463cdd8-4d75-4d2d-bb62-3603eb7557b2",
+    "checkpoint_id": "06ac2ce9-fd96-744d-8000-42614cf4ed4c",
+    "prompt": "A majestic diadem of swirling obsidian auroral sparkles and jagged violet lightning arcs hovers gracefully above the hairline. Mouth open triggers a concussive shockwave of strobe-lit plasma. Smile ignites a luminous ultraviolet eye glow. Eyebrow raise extends crackling electric spires. Head tilt accelerates the storm vortex. PBR brushed titanium finish, 6500K rim lighting, ray-traced shadows, zero UI, pure immersive high-fashion tempest energy. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "storm",
+      "lightning",
+      "selfie",
+      "glow",
+      "trendy",
+      "zodiac"
+    ],
+    "archetype": "tempest_storm_thunder_diadem",
+    "channel_id": "18",
+    "visual_hook": "The 0.2s silhouette of a dark, crackling obsidian diadem provides an immediate, high-contrast atmospheric power hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/MRrWaN6PHllOMZmG48atZ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/TgJUZhffQt0TayK7fOGlr?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Ozw8iQ5K8Gzv6kRmb6IhD?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
