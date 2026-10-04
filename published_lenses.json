@@ -4545,5 +4545,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/HL3l1Al7LfQblBpLRG6ZN?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-04T16:17:54Z",
+    "account_id": "3",
+    "lens_name": "Gold Medal Laurel",
+    "lens_id": "cb2c734b-caf1-4f8e-a8cc-e5ff191fcf87",
+    "checkpoint_id": "06ac278e-0128-7587-8000-0957eebf5365",
+    "prompt": "Hand-beaten 24k gold Olympian laurel wreath anchored firmly at the hairline. Features sharp, high-contrast metallic textures with deep ray-traced shadows. Mouth open triggers a massive burst of shimmering stadium foil confetti. Smiling activates warm, intense directional floodlight highlights on skin. Eyebrow raise causes leaf tips to flare outward with aggressive kinetic motion. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "crown",
+      "gold",
+      "laurel",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "championship_victory_laurel",
+    "channel_id": "17",
+    "visual_hook": "A bold, high-contrast 24k gold laurel silhouette provides an instant, prestigious visual status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/AZmDvZ6aydUM0Mve6dJGh?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/dUpOm4ZUcBuJ5YP3cTPfp?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Lfpg6237c2dl0HHj0jgcN?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
