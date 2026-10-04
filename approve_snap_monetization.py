@@ -19,6 +19,7 @@ Automates:
 
 import os
 import sys
+import re
 import json
 import time
 import asyncio
@@ -38,7 +39,8 @@ from snap_auth_automator import (
     human_click,
     get_gemini_api_keys
 )
-from easylens_api import update_github_secret
+from easylens_api import update_github_secret, sanitize_tags
+from gemini_lens_agent import sanitize_lens_name
 
 GRAPHQL_URL = "https://my-lenses.snapchat.com/graphql"
 
@@ -439,37 +441,32 @@ def publish_hosted_webar(ticket: str, cookie_header: str, lens_id: str) -> dict:
 def update_lens_tags(ticket: str, cookie_header: str, lens_id: str, tags: list) -> dict:
     """Updates tags on a published lens using active setTags mutation."""
     try:
-        banned = {"pbr", "vfx", "mouthopen", "mouth_open", "3d", "filigree", "diadem"}
-        cleaned_tags = [re.sub(r'[^a-zA-Z0-9]', '', t)[:15].lower() for t in tags if t]
-        filtered_tags = [t for t in cleaned_tags if t not in banned]
-        for fallback_tag in ["aesthetic", "filter", "cute", "glow", "makeup", "selfie", "glam", "viral"]:
-            if len(filtered_tags) >= 8:
-                break
-            if fallback_tag not in filtered_tags:
-                filtered_tags.append(fallback_tag)
-        res = execute_direct_graphql(ticket, cookie_header, GQL_SET_TAGS, variables={"lensId": lens_id, "tagsList": filtered_tags[:8]}, operation_name="setTags")
+        filtered_tags = sanitize_tags(tags)
+        res = execute_direct_graphql(ticket, cookie_header, GQL_SET_TAGS, variables={"lensId": lens_id, "tagsList": filtered_tags}, operation_name="setTags")
+        print(f"  ✓ [TAGS SET] Lens {lens_id} tags set to: {filtered_tags}")
         return res
     except Exception as e:
         print(f"  [TAGS WARN] Error updating tags for {lens_id}: {e}")
         return {"error": str(e)}
 
 
-def rename_lens_if_truncated(ticket: str, cookie_header: str, lens_id: str, current_name: str) -> dict:
+def rename_lens_if_truncated(ticket: str, cookie_header: str, lens_id: str, current_name: str, original_name: str = None) -> dict:
     """Fixes truncated lens name by setting a clean <=18 char whole-word title."""
-    clean_name = re.sub(r'[^a-zA-Z0-9\s\-]', '', current_name).strip()
-    clean_name = re.sub(r'\s+', ' ', clean_name)
-    if len(clean_name) > 18:
-        cut = clean_name[:18].strip()
-        sp = cut.rfind(' ')
-        safe_name = cut[:sp].strip() if sp > 3 else cut
-    else:
-        safe_name = clean_name
-    if safe_name == current_name:
-        return {"skipped": True}
+    candidate = original_name if original_name else current_name
+    safe_name = sanitize_lens_name(candidate, max_len=18)
+
+    # Detect if candidate was already chopped mid-word at exactly 18 chars without original
+    if not original_name and len(current_name) == 18 and " " in current_name:
+        sp = current_name.rfind(" ")
+        if sp > 3:
+            safe_name = current_name[:sp].strip()
+
+    if safe_name == current_name or not safe_name:
+        return {"skipped": True, "name": current_name}
     try:
         res = execute_direct_graphql(ticket, cookie_header, GQL_RENAME_LENS, variables={"lensId": lens_id, "lensName": safe_name}, operation_name="renameWebLens")
         print(f"  ✓ [RENAME FIX] Renamed '{current_name}' -> '{safe_name}' (Lens: {lens_id})")
-        return res
+        return {"renamed": True, "old_name": current_name, "new_name": safe_name, "res": res}
     except Exception as e:
         print(f"  [RENAME WARN] Error renaming {lens_id}: {e}")
         return {"error": str(e)}
@@ -478,8 +475,24 @@ def rename_lens_if_truncated(ticket: str, cookie_header: str, lens_id: str, curr
 def sweep_fleet_seo_repair(ticket: str, cookie_header: str) -> dict:
     """Scans all published lenses, repairs truncated names, purges dev tags, and publishes Hosted WebAR."""
     print("\n[SEO SWEEP] Running fleet SEO repair (renaming truncated titles, purging dev tags, enabling WebAR)...")
+    history_map = {}
+    history_list = []
+    history_file = "published_lenses.json"
+    if os.path.exists(history_file):
+        try:
+            with open(history_file, "r") as f:
+                history_list = json.load(f)
+                for h in history_list:
+                    if h.get("lens_id"):
+                        history_map[h["lens_id"]] = h
+        except Exception as e:
+            print(f"[SEO SWEEP WARN] Could not load {history_file}: {e}")
+
     repaired = 0
+    tags_count = 0
     webar_count = 0
+    history_modified = False
+
     for gType in ["COMMUNITY", "PROFILE"]:
         try:
             res = execute_direct_graphql(
@@ -493,16 +506,45 @@ def sweep_fleet_seo_repair(ticket: str, cookie_header: str) -> dict:
                     continue
                 lid = item["id"]
                 name = item.get("name", "")
-                r_res = rename_lens_if_truncated(ticket, cookie_header, lid, name)
-                if not r_res.get("skipped"):
+                h_entry = history_map.get(lid, {})
+                orig_name = h_entry.get("lens_name")
+
+                # 1. Rename if truncated or > 18
+                r_res = rename_lens_if_truncated(ticket, cookie_header, lid, name, original_name=orig_name)
+                if r_res.get("renamed"):
                     repaired += 1
+                    if h_entry:
+                        h_entry["lens_name"] = r_res["new_name"]
+                        history_modified = True
+
+                # 2. Purge dev tags & enrich with viral tags
+                current_tags = h_entry.get("tags", [])
+                new_tags = sanitize_tags(current_tags)
+                t_res = update_lens_tags(ticket, cookie_header, lid, new_tags)
+                if not t_res.get("error"):
+                    tags_count += 1
+                    if h_entry and h_entry.get("tags") != new_tags:
+                        h_entry["tags"] = new_tags
+                        history_modified = True
+
+                # 3. Publish Hosted WebAR
                 w_res = publish_hosted_webar(ticket, cookie_header, lid)
                 if w_res.get("link"):
                     webar_count += 1
                 time.sleep(1.0)
         except Exception as e:
             print(f"[SEO SWEEP WARN] Error in {gType} sweep: {e}")
-    return {"repaired_titles": repaired, "webar_enabled": webar_count}
+
+    if history_modified and history_list:
+        try:
+            with open(history_file, "w") as f:
+                json.dump(history_list, f, indent=2)
+            print(f"  ✓ [HISTORY SYNC] Updated {history_file} with repaired titles and viral tags.")
+        except Exception as e:
+            print(f"[HISTORY SYNC WARN] Failed to save {history_file}: {e}")
+
+    return {"repaired_titles": repaired, "tags_updated": tags_count, "webar_enabled": webar_count}
+
 
 
 def mark_lens_enrolled_in_history(lens_id: str):
@@ -1125,7 +1167,7 @@ async def _run_browser_approval(aid: str, user: dict, cookie_str: str, ticket: s
     return results
 
 
-def approve_account_monetization(account_id: str = "1", cookie_str: str = None, ticket: str = None, user: dict = None, target_lens_id: str = None, target_lens_url: str = None) -> dict:
+def approve_account_monetization(account_id: str = "1", cookie_str: str = None, ticket: str = None, user: dict = None, target_lens_id: str = None, target_lens_url: str = None, skip_browser: bool = False) -> dict:
     aid = str(account_id)
     print(f"\n{'='*65}\n[AUTONOMOUS MONETIZATION] Processing Account #{aid}...\n{'='*65}")
     if not ticket or not cookie_str:
@@ -1185,18 +1227,28 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
             verified_payout = True
 
     # 2. Execute browser UI automation for visual proof and on-screen toggle
-    print("\n--- PHASE 2: HEADLESS BROWSER UI VERIFICATION & TOGGLE ---")
-    exec_path = os.getenv("PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH")
-    if not exec_path:
-        for candidate in ["/usr/bin/chromium", "/usr/bin/chromium-browser", "/usr/bin/google-chrome"]:
-            if os.path.exists(candidate):
-                exec_path = candidate
-                break
+    if skip_browser:
+        print("\n--- PHASE 2: SKIPPED (Direct GraphQL Mode Active) ---")
+        browser_results = {
+            "top_performer_toggled": False,
+            "final_checked": False,
+            "ui_modals_accepted": 0,
+            "LENS_CREATOR_PAYOUT_TOS": False,
+            "ILDG_TOS": False
+        }
+    else:
+        print("\n--- PHASE 2: HEADLESS BROWSER UI VERIFICATION & TOGGLE ---")
+        exec_path = os.getenv("PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH")
+        if not exec_path:
+            for candidate in ["/usr/bin/chromium", "/usr/bin/chromium-browser", "/usr/bin/google-chrome"]:
+                if os.path.exists(candidate):
+                    exec_path = candidate
+                    break
 
-    browser_results = asyncio.run(_run_browser_approval(
-        aid, user, cookie_str, my_lenses_ticket, exec_path,
-        target_lens_id=target_lens_id, target_lens_url=target_lens_url
-    ))
+        browser_results = asyncio.run(_run_browser_approval(
+            aid, user, cookie_str, my_lenses_ticket, exec_path,
+            target_lens_id=target_lens_id, target_lens_url=target_lens_url
+        ))
 
     # Post-browser GraphQL double verification
     if target_lens_id and not verified_payout:
@@ -1253,15 +1305,21 @@ def main():
     parser.add_argument("--lens-id", type=str, default=None, help="Specific Lens ID to enroll in Top Performer Payouts")
     parser.add_argument("--lens-url", type=str, default=None, help="Direct URL to Lens page on my-lenses.snapchat.com")
     parser.add_argument("--sweep-seo", action="store_true", help="Execute retroactive fleet SEO repair (rename truncated titles, purge dev tags, enable WebAR)")
+    parser.add_argument("--skip-browser", action="store_true", help="Skip Playwright browser UI step (direct GraphQL only)")
     args = parser.parse_args()
 
     target_accounts = ["1", "2", "3", "4", "5"] if args.account == "all" else [args.account]
+    skip_browser = args.skip_browser or args.sweep_seo
 
     overall_results = {}
     for aid in target_accounts:
         try:
-            res = approve_account_monetization(aid, target_lens_id=args.lens_id, target_lens_url=args.lens_url)
+            res = approve_account_monetization(aid, target_lens_id=args.lens_id, target_lens_url=args.lens_url, skip_browser=skip_browser)
             overall_results[aid] = res
+        except Exception as e:
+            print(f"[FATAL APPROVAL ERROR] Account #{aid}: {e}")
+            overall_results[aid] = {"account_id": aid, "error": str(e), "success": False}
+
         except Exception as e:
             print(f"[FATAL APPROVAL ERROR] Account #{aid}: {e}")
             overall_results[aid] = {"account_id": aid, "error": str(e), "success": False}

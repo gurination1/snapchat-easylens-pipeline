@@ -453,3 +453,8 @@ class EasyLensClient:
                 print(f"[STATUS CHECK WARN] Polling transient error: {e}")
             time.sleep(4)
         return None
+
+
+# Module-level alias for convenient importing
+sanitize_tags = EasyLensClient.sanitize_tags
+
