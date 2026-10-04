@@ -492,6 +492,7 @@ def sweep_fleet_seo_repair(ticket: str, cookie_header: str) -> dict:
     tags_count = 0
     webar_count = 0
     history_modified = False
+    seen_lids = set()
 
     for gType in ["COMMUNITY", "PROFILE"]:
         try:
@@ -505,6 +506,9 @@ def sweep_fleet_seo_repair(ticket: str, cookie_header: str) -> dict:
                 if not item or not item.get("id"):
                     continue
                 lid = item["id"]
+                if lid in seen_lids:
+                    continue
+                seen_lids.add(lid)
                 name = item.get("name", "")
                 h_entry = history_map.get(lid, {})
                 orig_name = h_entry.get("lens_name")
@@ -591,6 +595,7 @@ def sweep_unenrolled_fleet_lenses(ticket: str, cookie_header: str) -> dict:
     """Scans all published lenses under the account and auto-enrolls any lens with unset payout eligibility."""
     print("\n[FLEET SWEEP] Scanning account lenses for unset Top Performer Payout eligibility...")
     unenrolled_ids = []
+    seen_ids = set()
     for gType in ["COMMUNITY", "PROFILE"]:
         try:
             res = execute_direct_graphql(
@@ -602,8 +607,11 @@ def sweep_unenrolled_fleet_lenses(ticket: str, cookie_header: str) -> dict:
             for item in l_list:
                 if not item or not item.get("id"):
                     continue
-                elig = item.get("lensCreatorPayoutEligibility", "")
                 lid = item["id"]
+                if lid in seen_ids:
+                    continue
+                seen_ids.add(lid)
+                elig = item.get("lensCreatorPayoutEligibility", "")
                 name = item.get("name", "Unnamed")
                 if elig in ("LENS_CREATOR_PAYOUT_ELIGIBILITY_UNSET", "UNSET", "", None):
                     print(f"  [UNENROLLED DETECTED] '{name}' ({lid}) -> Eligibility: '{elig}'. Queued for auto-enrollment.")
