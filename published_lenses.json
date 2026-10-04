@@ -4070,5 +4070,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/H4fyQoypDvbYtV5wW0qlb?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-04T02:08:24Z",
+    "account_id": "1",
+    "lens_name": "Neon Reflex Gauge",
+    "lens_id": "7243d5f8-acda-47bd-bd8b-aad7fe00abc8",
+    "checkpoint_id": "06ac1adb-d035-75d7-8000-c34d3666d053",
+    "prompt": "Floating holographic precision timing arc across forehead with oscillating laser pointer. PBR brushed titanium finish. Smile instantly freezes needle. Head tilt locks needle into center green zone for massive golden confetti burst. Mouth open resets gauge with vibrant plasma shockwave. Eyebrow raise increases needle oscillation frequency. High contrast 3 point lighting. No UI. Pure wearable 3D geometry. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "game",
+      "arcade",
+      "reflex",
+      "gauge",
+      "neon",
+      "mouthopen",
+      "selfie",
+      "pbr"
+    ],
+    "archetype": "reaction_timing_meter",
+    "channel_id": "6",
+    "visual_hook": "The high-contrast, glowing neon arc creates an immediate competitive silhouette that signals a reflex challenge.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/QiSFs1CHQMh3tlroQsdCf?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/wX1wPDNOOwOGLPr5PLJlb?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/0LPzPFuKfdhSGfnOaeBhR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
