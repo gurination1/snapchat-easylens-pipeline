@@ -1309,9 +1309,22 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
     # Permanent fix: If a target lens was just published, wait for Snapchat catalog ingestion to exit PROCESSING state
     if target_lens_id:
         wait_for_lens_ready(my_lenses_ticket, cookie_str, target_lens_id, max_wait_sec=240)
-        if target_tags:
-            print(f"[TARGET SEO] Setting discoverability tags for new lens {target_lens_id}...")
-            update_lens_tags(my_lenses_ticket, cookie_str, target_lens_id, target_tags)
+        if not target_tags:
+            try:
+                if os.path.exists("published_lenses.json"):
+                    with open("published_lenses.json", "r") as pf:
+                        p_data = json.load(pf)
+                        for p_item in p_data:
+                            if p_item.get("lens_id") == target_lens_id and p_item.get("tags"):
+                                target_tags = p_item["tags"]
+                                break
+            except Exception as e:
+                print(f"[TARGET SEO WARN] Could not read tags from history: {e}")
+        if not target_tags:
+            target_tags = ["aesthetic", "beauty", "glam", "selfie", "glow", "trendy", "filter", "cute"]
+
+        print(f"[TARGET SEO] Setting discoverability tags for lens {target_lens_id}: {target_tags}")
+        update_lens_tags(my_lenses_ticket, cookie_str, target_lens_id, target_tags)
 
     enroll_results = direct_enroll_lenses(my_lenses_ticket, cookie_str, target_lens_id=target_lens_id)
 
