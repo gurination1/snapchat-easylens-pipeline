@@ -8,10 +8,13 @@
     "prompt": "A photorealistic, ancient sentinel wyvern perches securely on the user's outer shoulder. Its body features PBR anisotropic obsidian scales with liquid mercury glints, porous basalt claws, and subtle 24k gold accents on its horns, with subsurface scattering on its leathery wings. Lit by 3-point contrast lighting (key, 6500K/2800K rim) with ray-traced contact shadows. Opening mouth triggers a powerful volumetric emerald breath weapon. Smiling creates a soft golden bloom.",
     "tags": [
       "dragon",
-      "3d",
       "creature",
       "fantasy",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow",
+      "makeup"
     ],
     "visual_hook": "A photorealistic, ancient wyvern instantly appears, perched with striking PBR materials and dramatic lighting.",
     "status": "pending",
@@ -29,7 +32,10 @@
       "fullbody",
       "rave",
       "music",
-      "audioreactive"
+      "audioreactive",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "Instantaneous appearance of dancing holographic clones mirroring the user's movement, surrounded by pulsing laser rings.",
     "status": "pending",
@@ -44,11 +50,13 @@
     "prompt": "Fitted mythic 3D dragon horn headpiece anchored strictly to head, crafted from anisotropic obsidian scales and liquid 24k gold filigree. 3-point contrast lighting with warm key light, cool 6500K rim light, and ray-traced contact shadows. Opening mouth triggers flowing emerald flame particles and rising embers. Smiling activates bright golden runic eye flares. PBR materials, no strobing, ultra-realistic.",
     "tags": [
       "dragon",
-      "3d",
       "headpiece",
       "horns",
       "fantasy",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "Instant appearance of gleaming obsidian and gold dragon horns fitted to the user's head with hyper-realistic reflections.",
     "status": "pending",
@@ -66,7 +74,10 @@
       "35mm",
       "crown",
       "gold",
-      "luxury"
+      "luxury",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "Instantaneous flash of opulent 24k gold leaf and caustic crystal light refraction framing the user's upper face with timeless analog warmth.",
     "status": "pending",
@@ -84,7 +95,10 @@
       "crying",
       "funny",
       "cloud",
-      "cartoon"
+      "cartoon",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "A fluffy 3D stormcloud instantly hovers above the head with soft glowing rain and gentle internal thunder.",
     "has_preview_video": true,
@@ -104,7 +118,10 @@
       "visor",
       "rave",
       "music",
-      "audioreactive"
+      "audioreactive",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "Instantaneous snap of a sleek brushed-titanium visor reflecting live environment lights with glowing cyan neon edges.",
     "has_preview_video": true,
@@ -124,7 +141,10 @@
       "chrome",
       "halo",
       "optical",
-      "cyber"
+      "cyber",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "Instantaneous appearance of a mesmerizing zero-g liquid mercury halo crown reflecting warped environment light in 0.2s.",
     "has_preview_video": true,
@@ -233,7 +253,10 @@
       "funny",
       "tears",
       "crown",
-      "confetti"
+      "confetti",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "Instant dramatic golden crown and hyper-reflective weeping tears that react instantly to facial expressions.",
     "has_preview_video": true,
@@ -251,9 +274,12 @@
     "tags": [
       "phoenix",
       "firebird",
-      "diadem",
       "fantasy",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow",
+      "makeup"
     ],
     "visual_hook": "Instantaneous flash of a molten rose-gold diadem and blinding solar flare corona around the brow.",
     "has_preview_video": true,
@@ -270,10 +296,13 @@
     "prompt": "Floating halo diadem of baroque freshwater pearls and hand-twisted 18k champagne gold wire resting above hairline. Subtle Portra 400 golden-hour film bloom with warm 2800K key light. Opening mouth summons gentle floating champagne light motes around face; smiling illuminates an ethereal high-fashion skin sheen and caustic crystal ear shimmer. Ultra-luxury vanity aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
     "tags": [
       "pearl",
-      "diadem",
       "luxury",
       "film",
-      "35mm"
+      "35mm",
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "Instantaneous flash of iridescent freshwater pearls and radiant 2800K sunlit film bloom crowning the brow in 0.2s.",
     "has_preview_video": true,
@@ -289,11 +318,14 @@
     "checkpoint_id": "06aae821-ba43-7beb-8000-260cc1781246",
     "prompt": "Zero-G platinum Mobius ribbon orbits the crown, rendered in anisotropic brushed titanium. Hyper-reflective surfaces cast caustic light, reflecting the scene with high-fidelity ray tracing. Mouth open: metallic tendrils surge forward. Smile: the geometry shatters into a hypnotic, kaleidoscopic mirror prism array. 3-point contrast lighting with 6500K rim highlights. No UI. Head-anchored PBR masterpiece. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
     "tags": [
-      "Y3K",
-      "Chrome",
-      "Surreal",
-      "Refraction",
-      "Futuristic"
+      "y3k",
+      "chrome",
+      "surreal",
+      "refraction",
+      "futuristic",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "Instantaneous zero-g metallic orbit capture creates an immediate high-end architectural silhouette.",
     "has_preview_video": true,
@@ -336,7 +368,10 @@
       "visor",
       "prismatic",
       "spectre",
-      "face-trigger"
+      "facetrigger",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "Instant 0.2s snap of faceted obsidian and dichroic glass casting sharp violet rim reflections across the temples.",
     "has_preview_video": true,
@@ -379,7 +414,10 @@
       "spirit",
       "foxfire",
       "mythic",
-      "porcelain"
+      "porcelain",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "High-contrast vermilion lacquer against porcelain instantly frames the forehead, creating a bold, recognizable silhouette.",
     "has_preview_video": true,
@@ -430,7 +468,10 @@
       "oceanic",
       "goddess",
       "beauty",
-      "aesthetic"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "The immediate emergence of a massive, shimmering seashell silhouette framing the face with high-contrast pearlescent light.",
     "has_preview_video": true,
@@ -455,7 +496,9 @@
       "anime",
       "clouds",
       "spirit",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "Hand-painted Ghibli watercolor cumulus cloud crown resting above hairline with floating soot spirit dust and celestial spirit serpent coils.",
     "has_preview_video": true,
@@ -476,7 +519,10 @@
       "astronaut",
       "future",
       "tech",
-      "cosmic"
+      "cosmic",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The immediate 0.2s identification of a high-fidelity, reflective space helmet silhouette frames the face for an instant transformation.",
     "has_preview_video": true,
@@ -500,7 +546,10 @@
       "spirit",
       "avatar",
       "vibe",
-      "runes"
+      "runes",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The sudden appearance of a rotating 3D obsidian disc creates an immediate, high-contrast silhouette that compels users to interact.",
     "has_preview_video": true,
@@ -524,7 +573,10 @@
       "vintage",
       "grunge",
       "polaroid",
-      "retro"
+      "retro",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The instant appearance of a weathered, physical polaroid frame creates an immediate nostalgic silhouette.",
     "has_preview_video": true,
@@ -602,7 +654,10 @@
       "winged",
       "circlet",
       "aurora",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "Godly transformation: Poseidon Oceanic Trident Crown submerges the viewer into an epic deep-ocean realm.",
     "has_preview_video": true,
@@ -626,7 +681,10 @@
       "celestial",
       "tarot",
       "gold",
-      "interactive"
+      "interactive",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "Instantaneous 0.2s snap of a massive, rotating gold wheel framing the forehead creates an high-impact silhouette.",
     "has_preview_video": true,
@@ -650,7 +708,10 @@
       "hovercraft",
       "neon",
       "racing",
-      "gameplay"
+      "gameplay",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "creator_rewards_enrolled": true,
     "status": "pending"
@@ -667,7 +728,10 @@
       "winged",
       "circlet",
       "aurora",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "creator_rewards_enrolled": true,
     "status": "pending"
@@ -738,7 +802,10 @@
       "winged",
       "circlet",
       "aurora",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "The immediate 0.2s identification of a radiant pearl halo framing the face creates an instant, high-fashion silhouette.",
     "has_preview_video": true,
@@ -762,7 +829,10 @@
       "sakura",
       "aesthetic",
       "soft",
-      "spring"
+      "spring",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "The immediate 0.2s silhouette of a delicate, crystalline floral crown creates an instant high-fashion, ethereal transformation.",
     "has_preview_video": true,
@@ -843,9 +913,7 @@
       "medusa",
       "aphrodite",
       "apollo",
-      "hades",
-      "gods",
-      "deity"
+      "hades"
     ],
     "visual_hook": "Godly transformation: Zeus Olympian Thunderbolt Laurel crowns user with crackling divine authority in 0.2s.",
     "has_preview_video": true,
@@ -869,7 +937,10 @@
       "gaming",
       "comedy",
       "chef",
-      "reflex"
+      "reflex",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The bold, recognizable silhouette of a glowing neon chef hat acts as an immediate, high-contrast visual anchor.",
     "has_preview_video": true,
@@ -893,7 +964,10 @@
       "winged",
       "circlet",
       "aurora",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "Godly transformation: Aphrodite Seafoam Scallop Pearl Tiara elevates user to mythical Olympian beauty.",
     "has_preview_video": true,
@@ -974,9 +1048,7 @@
       "medusa",
       "aphrodite",
       "apollo",
-      "hades",
-      "gods",
-      "deity"
+      "hades"
     ],
     "visual_hook": "Godly transformation: Poseidon Oceanic Trident Crown submerges the viewer into an epic deep-ocean realm.",
     "has_preview_video": true,
@@ -1000,7 +1072,10 @@
       "glow",
       "aesthetic",
       "quartz",
-      "glam"
+      "glam",
+      "filter",
+      "cute",
+      "makeup"
     ],
     "visual_hook": "The immediate 0.2s silhouette of a structural rose-quartz brow frame creates an instant, high-fashion, ethereal transformation.",
     "has_preview_video": true,
@@ -1024,7 +1099,10 @@
       "winged",
       "circlet",
       "aurora",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "The immediate silhouette of dual-weighted 24k gold scales framing the forehead creates an authoritative, high-contrast focal point.",
     "has_preview_video": true,
@@ -1103,7 +1181,7 @@
       "decision",
       "tarot",
       "vibe",
-      "which_are_you",
+      "whichareyou",
       "interactive",
       "viral"
     ],
@@ -1130,7 +1208,7 @@
       "decision",
       "tarot",
       "vibe",
-      "which_are_you",
+      "whichareyou",
       "interactive",
       "viral"
     ],
@@ -1156,7 +1234,10 @@
       "artemis",
       "lunar",
       "goddess",
-      "silver"
+      "silver",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The striking, high-contrast silhouette of a shimmering sterling silver crescent moon diadem anchors the brow instantly.",
     "has_preview_video": true,
@@ -1237,9 +1318,7 @@
       "medusa",
       "aphrodite",
       "apollo",
-      "hades",
-      "gods",
-      "deity"
+      "hades"
     ],
     "visual_hook": "Godly transformation: Aphrodite Seafoam Scallop Pearl Tiara elevates user to mythical Olympian beauty.",
     "has_preview_video": true,
@@ -1266,9 +1345,7 @@
       "synthwave",
       "vhs",
       "camcorder",
-      "disco",
-      "y2k",
-      "nostalgia"
+      "disco"
     ],
     "visual_hook": "Decades nostalgia hit: authentic 90s Hi-8 VHS Camcorder tape glitch captures the unmistakable warmth of analogue memories.",
     "has_preview_video": true,
@@ -1295,9 +1372,7 @@
       "synthwave",
       "vhs",
       "camcorder",
-      "disco",
-      "y2k",
-      "nostalgia"
+      "disco"
     ],
     "visual_hook": "Decades nostalgia hit: Y2K Cyberspace Liquid Wireframe Visor commands instant attention with iconic falling digital code.",
     "has_preview_video": true,
@@ -1375,7 +1450,10 @@
       "foxfire",
       "spirit",
       "crest",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "The immediate 0.2s silhouette of a glowing sun-temple crown provides an authoritative and majestic identity.",
     "has_preview_video": true,
@@ -1398,8 +1476,11 @@
       "arcade",
       "game",
       "retro",
-      "3d",
-      "interactive"
+      "interactive",
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "The instant recognizable silhouette of a neon-emissive arcade crown anchors to the forehead, signaling an immediate interactive game.",
     "has_preview_video": true,
@@ -1423,7 +1504,10 @@
       "gothic",
       "coronet",
       "halloween",
-      "darkfantasy"
+      "darkfantasy",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "A striking matte obsidian gothic bat-wing coronet with dripping ruby teardrops instantly commands the screen.",
     "has_preview_video": true,
@@ -1501,7 +1585,10 @@
       "winged",
       "circlet",
       "aurora",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "The high-contrast brushed titanium sun crown creates an immediate, regal silhouette against the face.",
     "has_preview_video": true,
@@ -1525,7 +1612,10 @@
       "game",
       "challenge",
       "interactive",
-      "kinetic"
+      "kinetic",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The high-contrast brushed titanium arch creates an immediate, recognizable structural silhouette.",
     "has_preview_video": true,
@@ -1549,7 +1639,10 @@
       "winged",
       "circlet",
       "aurora",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "The high-contrast, multifaceted mirror geometry creates an instant, unmistakable disco-ball silhouette that demands attention.",
     "has_preview_video": true,
@@ -1627,7 +1720,10 @@
       "foxfire",
       "spirit",
       "crest",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "visual_hook": "The instant 0.2s silhouette of a weightless, rotating chromatic gemstone halo creates an authoritative and high-tech identity.",
     "has_preview_video": true,
@@ -1652,7 +1748,9 @@
       "glitch",
       "cyberpunk",
       "visor",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "Instant visual recognition of falling, high-gloss 3D fruits against a clean, uncluttered face.",
     "has_preview_video": true,
@@ -1676,7 +1774,10 @@
       "speed",
       "neon",
       "racing",
-      "optics"
+      "optics",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "Instant 0.2s recognition of a playful 3D bunny character atop a floating pastel cloud platform game.",
     "has_preview_video": true,
@@ -1755,9 +1856,9 @@
       "planet",
       "orbit",
       "gold",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "The 0.2s silhouette of a dynamic, gold-leaf solar system crown creates an immediate, high-authority space-age aesthetic.",
     "has_preview_video": true,
@@ -1782,9 +1883,9 @@
       "coin",
       "gold",
       "token",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "Instant recognition of high-gloss gold tokens cascading toward the mouth creates a high-stakes dopamine reflex challenge.",
     "has_preview_video": true,
@@ -1809,9 +1910,9 @@
       "laser",
       "shield",
       "dodge",
-      "mouthopen",
       "selfie",
-      "3d"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "The immediate psychological hook is the high-stakes, obstacle-course silhouette that forces instinctive head movement.",
     "has_preview_video": true,
@@ -1890,9 +1991,9 @@
       "crown",
       "metal",
       "mercury",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "The instant 0.2s silhouette of shifting, reflective liquid-metal geometry framing the face creates an elite, high-fashion authority.",
     "has_preview_video": true,
@@ -1917,9 +2018,9 @@
       "angel",
       "crown",
       "halo",
-      "mouthopen",
-      "vfx",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The striking silhouette of an aggressive, floating blackened iron thorn crown creates an immediate, high-status dark fantasy aesthetic.",
     "has_preview_video": true,
@@ -1943,7 +2044,10 @@
       "stealth",
       "visor",
       "prismatic",
-      "hud"
+      "hud",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The high-contrast silhouette of a multifaceted, reflective disco crown provides an immediate, glamorous 0.2s visual hook.",
     "has_preview_video": true,
@@ -2022,9 +2126,9 @@
       "monolith",
       "prism",
       "crystals",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "The 0.2s silhouette of twin frosted-glass pillars creates an immediate high-status architectural focal point.",
     "has_preview_video": true,
@@ -2049,9 +2153,9 @@
       "blackhole",
       "gravity",
       "galaxy",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "The unmistakable, high-contrast silhouette of a gravitational light-bending black hole crown framing the forehead.",
     "has_preview_video": true,
@@ -2076,9 +2180,9 @@
       "disco",
       "crown",
       "glitter",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "The high-contrast silhouette of multifaceted spinning mirror facets provides an immediate, high-fashion 0.2s visual impact.",
     "has_preview_video": true,
@@ -2157,9 +2261,9 @@
       "tarot",
       "cards",
       "fortune",
-      "mouthopen",
       "selfie",
-      "3d"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "The instant 0.2s silhouette of rapidly orbiting, reflective glass cards creates an elite curiosity-driven personality test.",
     "has_preview_video": true,
@@ -2184,9 +2288,9 @@
       "zeus",
       "lightning",
       "laurel",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "The striking 0.2s silhouette of a jagged, hyper-reflective golden laurel crown immediately signals high-status divinity.",
     "has_preview_video": true,
@@ -2210,7 +2314,10 @@
       "crying",
       "funny",
       "cloud",
-      "cartoon"
+      "cartoon",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "Viral meme reaction: exaggerated 3D Mini Laughing Golden Skull detonates comical chaos on mouth open.",
     "has_preview_video": true,
@@ -2289,9 +2396,9 @@
       "skull",
       "crown",
       "soulfire",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "visual_hook": "The 0.2s silhouette of electrum skulls framing the forehead commands immediate elite status.",
     "has_preview_video": true,
@@ -2318,7 +2425,7 @@
       "freckles",
       "glam",
       "aesthetic",
-      "pbr"
+      "filter"
     ],
     "visual_hook": "Irresistible beauty glow-up: Angel Aura Iridescent Dew enchants selfies with ethereal heavenly glow.",
     "has_preview_video": true,
@@ -2345,7 +2452,7 @@
       "zerog",
       "halo",
       "fluid",
-      "pbr"
+      "aesthetic"
     ],
     "visual_hook": "Hypnotic Y3K surrealism: zero-G Zero-G Chrome Tesseract Halo ripples with warped environmental reflections in 0.2s.",
     "has_preview_video": true,
@@ -2426,9 +2533,9 @@
       "fortune",
       "zodiac",
       "wheel",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "celestial_tarot_wheel",
     "channel_id": "11",
@@ -2455,9 +2562,9 @@
       "coin",
       "gold",
       "crown",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "arcade_neon_coin_catcher",
     "channel_id": "6",
@@ -2482,11 +2589,11 @@
       "beauty",
       "romance",
       "heart",
-      "diadem",
-      "filigree",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "archetype": "crush_compatibility_meter",
     "channel_id": "15",
@@ -2571,7 +2678,9 @@
       "neon",
       "music",
       "meme",
-      "viral"
+      "viral",
+      "aesthetic",
+      "filter"
     ],
     "archetype": "",
     "channel_id": "",
@@ -2596,11 +2705,11 @@
       "beauty",
       "fantasy",
       "cupid",
-      "diadem",
       "wings",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "cupid_arrow_heart_diadem",
     "channel_id": "15",
@@ -2627,9 +2736,9 @@
       "snapback",
       "cap",
       "grind",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "street_skate_snapback_sparks",
     "channel_id": "17",
@@ -2714,9 +2823,9 @@
       "compass",
       "starlight",
       "zodiac",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "soulmate_constellation_radar",
     "channel_id": "15",
@@ -2743,9 +2852,9 @@
       "sunflower",
       "marigold",
       "solstice",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "golden_sunflower_marigold_crown",
     "channel_id": "14",
@@ -2772,7 +2881,9 @@
       "goldleaf",
       "pearls",
       "portra400",
-      "luxury"
+      "luxury",
+      "aesthetic",
+      "filter"
     ],
     "archetype": "",
     "channel_id": "",
@@ -2857,9 +2968,9 @@
       "goggles",
       "ski",
       "mountain",
-      "mouthopen",
-      "vfx",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "alpine_ski_snow_goggles",
     "channel_id": "17",
@@ -2886,9 +2997,9 @@
       "kitsune",
       "ears",
       "fox",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "fluffy_anime_cat_ears",
     "channel_id": "13",
@@ -2915,9 +3026,9 @@
       "aura",
       "flame",
       "lightning",
-      "mouthopen",
       "selfie",
-      "vfx"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "super_saiyan_golden_corona",
     "channel_id": "16",
@@ -3030,7 +3141,10 @@
       "chrome",
       "halo",
       "optical",
-      "cyber"
+      "cyber",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3057,9 +3171,9 @@
       "tiara",
       "winter",
       "ice",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "crystalline_frost_lily_crown",
     "channel_id": "14",
@@ -3143,7 +3257,10 @@
       "horns",
       "magnetic",
       "chrome",
-      "surreal"
+      "surreal",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3170,7 +3287,9 @@
       "flame",
       "horns",
       "cartoon",
-      "comedy"
+      "comedy",
+      "aesthetic",
+      "filter"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3193,11 +3312,13 @@
     "prompt": "Sculpted obsidian dragon horn crown anchored strictly to hairline and temples with liquid 24k gold filigree and caustic ruby gems, PBR anisotropic metallic reflections, 3-point contrast 6500K/2800K lighting with ray-traced contact shadows. Mouth open erupts turbulent emerald flame torrent with floating amber sparks; smiling ignites alpha-fading golden runic eye halos. Depth occlusion enabled, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
     "tags": [
       "dragon",
-      "3d",
       "headpiece",
       "horns",
       "fantasy",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3281,7 +3402,10 @@
       "35mm",
       "crown",
       "gold",
-      "luxury"
+      "luxury",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3308,9 +3432,9 @@
       "geode",
       "crown",
       "crystal",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "terra_crystal_geode_crown",
     "channel_id": "18",
@@ -3337,9 +3461,9 @@
       "panda",
       "unicorn",
       "ears",
-      "mouthopen",
-      "vfx",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "pandacorn_rainbow_horn",
     "channel_id": "13",
@@ -3424,7 +3548,9 @@
       "anime",
       "clouds",
       "spirit",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3451,9 +3577,9 @@
       "boxing",
       "headguard",
       "visor",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "cyber_boxing_headguard",
     "channel_id": "17",
@@ -3476,10 +3602,13 @@
     "prompt": "Floating halo diadem of baroque freshwater pearls and hand-twisted 18k champagne gold wire resting above hairline. Subtle Portra 400 golden-hour film bloom with warm 2800K key light. Opening mouth summons gentle floating champagne light motes around face; smiling illuminates an ethereal high-fashion skin sheen and caustic crystal ear shimmer. Ultra-luxury vanity aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
     "tags": [
       "pearl",
-      "diadem",
       "luxury",
       "film",
-      "35mm"
+      "35mm",
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3564,9 +3693,9 @@
       "spartan",
       "warhelm",
       "bronze",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "athena_aegis_wisdom",
     "channel_id": "8",
@@ -3592,10 +3721,10 @@
       "fantasy",
       "love",
       "aura",
-      "vfx",
-      "mouthopen",
       "smile",
-      "3d"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "flag_scanner_halo",
     "channel_id": "15",
@@ -3621,10 +3750,10 @@
       "beauty",
       "fire",
       "crown",
-      "vfx",
-      "mouthopen",
       "selfie",
-      "3d"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "solar_fire_elemental_diadem",
     "channel_id": "18",
@@ -3709,9 +3838,9 @@
       "pearl",
       "gold",
       "skin",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "clean_girl_soft_glam",
     "channel_id": "9",
@@ -3737,7 +3866,10 @@
       "winged",
       "circlet",
       "aurora",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3764,7 +3896,9 @@
       "glitch",
       "cyberpunk",
       "visor",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3849,9 +3983,9 @@
       "monocular",
       "quantum",
       "hologram",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "quantum_neural_monocular",
     "channel_id": "2",
@@ -3876,11 +4010,11 @@
       "beauty",
       "nature",
       "rose",
-      "diadem",
       "floral",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "royal_english_rose_diadem",
     "channel_id": "14",
@@ -3907,7 +4041,9 @@
       "melodrama",
       "brokenheart",
       "coins",
-      "comedy"
+      "comedy",
+      "aesthetic",
+      "filter"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3992,9 +4128,9 @@
       "crown",
       "grid",
       "chrome",
-      "mouthopen",
       "selfie",
-      "vfx"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "synthwave_80s_grid",
     "channel_id": "7",
@@ -4021,9 +4157,9 @@
       "visor",
       "nebula",
       "stars",
-      "mouthopen",
       "selfie",
-      "3d"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "deep_space_nebula_helmet",
     "channel_id": "10",
@@ -4049,7 +4185,10 @@
       "stealth",
       "visor",
       "prismatic",
-      "hud"
+      "hud",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -4133,7 +4272,10 @@
       "crying",
       "funny",
       "cloud",
-      "cartoon"
+      "cartoon",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -4160,9 +4302,9 @@
       "reflex",
       "gauge",
       "neon",
-      "mouthopen",
       "selfie",
-      "pbr"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "reaction_timing_meter",
     "channel_id": "6",
@@ -4189,9 +4331,9 @@
       "animal",
       "totem",
       "crown",
-      "mouthopen",
       "selfie",
-      "3d"
+      "aesthetic",
+      "filter"
     ],
     "archetype": "spirit_animal_totem_wheel",
     "channel_id": "11",
@@ -4217,7 +4359,10 @@
       "coronal",
       "champagne",
       "35mm",
-      "luxury"
+      "luxury",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
