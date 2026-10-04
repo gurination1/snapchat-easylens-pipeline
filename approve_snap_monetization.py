@@ -1325,6 +1325,7 @@ def approve_account_monetization(account_id: str = "1", cookie_str: str = None, 
     if target_lens_id:
         v_res = execute_direct_graphql(my_lenses_ticket, cookie_str, GQL_GET_LENS, variables={"lensId": target_lens_id}, operation_name="getLens")
         v_lens = ((v_res.get("data") or {}).get("getLens") or {}).get("lens") or {}
+        v_elig = v_lens.get("lensCreatorPayoutEligibility", "")
         disc_tags = (v_lens.get("discoverability") or {}).get("tagsList")
         print(f"[FINAL GRAPHQL VERIFICATION {target_lens_id}] Status: {v_lens.get('status')} | Payout: '{v_elig}' | PrimaryCat: '{v_lens.get('primaryCategoryId')}' | SecCat: '{v_lens.get('secondaryCategoryId')}' | DiscTags: {disc_tags}")
         if v_elig in ("LENS_CREATOR_PAYOUT_ELIGIBILITY_PENDING", "LENS_CREATOR_PAYOUT_ELIGIBILITY_ELIGIBLE"):
