@@ -44,7 +44,7 @@
   {
     "timestamp": "2026-09-18T19:17:04Z",
     "account_id": "1",
-    "lens_name": "Aether Dragon Crown",
+    "lens_name": "Aether Dragon",
     "lens_id": "0ad4547a-02ea-4cab-9e75-139fc1163d7a",
     "checkpoint_id": "06aad8de-39f2-7fe4-8000-a415df8fdbaf",
     "prompt": "Fitted mythic 3D dragon horn headpiece anchored strictly to head, crafted from anisotropic obsidian scales and liquid 24k gold filigree. 3-point contrast lighting with warm key light, cool 6500K rim light, and ray-traced contact shadows. Opening mouth triggers flowing emerald flame particles and rising embers. Smiling activates bright golden runic eye flares. PBR materials, no strobing, ultra-realistic.",
@@ -109,7 +109,7 @@
   {
     "timestamp": "2026-09-19T03:58:27Z",
     "account_id": "2",
-    "lens_name": "CyberPulse Holographic Visor",
+    "lens_name": "CyberPulse",
     "lens_id": "e94942b5-3a72-471e-81d7-186151cf74fe",
     "checkpoint_id": "06aae080-2392-74d9-8000-40e09c5590d6",
     "prompt": "Ergonomic 3D cyberpunk holographic visor fitted tightly across eyes, brushed titanium frame with pulsing cyan neon edge emission and refractive glass. Orbiting audio-reactive equalizer bars halo head. 3-point contrast lighting with ray-traced shadows. Opening mouth triggers radial laser shockwave with split-screen chromatic aberration; smiling flashes neon visor HUD readout.",
@@ -221,7 +221,7 @@
   {
     "timestamp": "2026-09-19T10:43:54Z",
     "account_id": "2",
-    "lens_name": "Cybernetic Ocular Scanner",
+    "lens_name": "Cybernetic",
     "lens_id": "fa4db348-6c69-4c65-a995-721c2d292530",
     "checkpoint_id": "06aae671-f27d-70ae-8000-02edf1daf849",
     "prompt": "Asymmetrical carbon fiber and tungsten ocular scanner anchored firmly over left orbital bone, leaving other eye and mouth unobstructed. Multi-layered refractive cyan targeting lenses with micro-servo details. Opening mouth projects floating 3D tactical holographic wireframe mesh; smiling cycles high-speed green diagnostic data stream through ocular optics. PBR materials, ray-traced shadows.",
@@ -244,7 +244,7 @@
   {
     "timestamp": "2026-09-19T11:56:43Z",
     "account_id": "3",
-    "lens_name": "Sobbing Sovereign Crown",
+    "lens_name": "Sobbing",
     "lens_id": "d948ca56-c58c-4904-8167-19a29175dc1a",
     "checkpoint_id": "06aae782-348e-7c08-8000-3cbb34a3b425",
     "prompt": "Ornate 3D tragicomic theatre crown of polished 24k gold leaf anchors to forehead. Physical crystalline 3D tears cascade down cheeks with refractive water caustics. MouthOpen triggers torrential twin weeping fountains of liquid mercury and floating ruby cracked-heart shards. Smile triggers an instant, violent burst of highly reflective PBR rainbow glitter confetti. High-contrast 6500K/2800K rim lighting defines every facet.",
@@ -267,7 +267,7 @@
   {
     "timestamp": "2026-09-19T12:18:53Z",
     "account_id": "1",
-    "lens_name": "Phoenix Solar Diadem",
+    "lens_name": "Phoenix Solar",
     "lens_id": "bb2f7b67-d8e4-4318-91bd-75639d9d7ad1",
     "checkpoint_id": "06aae7d5-fcb5-72ea-8000-bf1911a0cd6d",
     "prompt": "Sculpted molten 24k rose-gold phoenix diadem fitted to hairline with radiant solar ember crest. PBR feathered iridescent wings contouring temples with subsurface scattering and 3-point contrast rim lighting. Opening mouth unleashes blinding solar plasma plumage burst and rising golden ash particles; smiling triggers brilliant sun-flare corona around brow. Depth occlusion, zero UI.",
@@ -290,7 +290,7 @@
   {
     "timestamp": "2026-09-19T12:35:10Z",
     "account_id": "4",
-    "lens_name": "Pearl Celestial Diadem",
+    "lens_name": "Pearl Celestial",
     "lens_id": "cd5936f2-ae32-4ef8-9f99-8f0a1b8537c5",
     "checkpoint_id": "06aae810-f1d5-7c3a-8000-1a597bbddd24",
     "prompt": "Floating halo diadem of baroque freshwater pearls and hand-twisted 18k champagne gold wire resting above hairline. Subtle Portra 400 golden-hour film bloom with warm 2800K key light. Opening mouth summons gentle floating champagne light motes around face; smiling illuminates an ethereal high-fashion skin sheen and caustic crystal ear shimmer. Ultra-luxury vanity aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -313,7 +313,7 @@
   {
     "timestamp": "2026-09-19T12:39:26Z",
     "account_id": "5",
-    "lens_name": "Chrome Vortex Diadem",
+    "lens_name": "Chrome Vortex",
     "lens_id": "6712310e-c636-4c6d-9128-9fa83867de23",
     "checkpoint_id": "06aae821-ba43-7beb-8000-260cc1781246",
     "prompt": "Zero-G platinum Mobius ribbon orbits the crown, rendered in anisotropic brushed titanium. Hyper-reflective surfaces cast caustic light, reflecting the scene with high-fidelity ray tracing. Mouth open: metallic tendrils surge forward. Smile: the geometry shatters into a hypnotic, kaleidoscopic mirror prism array. 3-point contrast lighting with 6500K rim highlights. No UI. Head-anchored PBR masterpiece. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -336,7 +336,7 @@
   {
     "timestamp": "2026-09-19T17:02:15Z",
     "account_id": "2",
-    "lens_name": "Anubis Jackal Coronet",
+    "lens_name": "Anubis Jackal",
     "lens_id": "49a738b4-240c-4803-9c14-3d60f78371ef",
     "checkpoint_id": "06aaebfd-1057-73b2-8000-54a31b402b64",
     "prompt": "Anubis matte black basalt and electrum jackal coronet fitted securely to crown and temples with glowing lapis lazuli inlays. 3-point contrast 2800K desert key light with ray-traced contact shadows. Opening mouth triggers swirling golden sandstorm vortex and ancient hieroglyphic embers; smiling aligns a glowing solar eclipse halo behind crown. Zero strobing, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -359,7 +359,7 @@
   {
     "timestamp": "2026-09-20T04:04:58Z",
     "account_id": "1",
-    "lens_name": "Spectre Prism Visor",
+    "lens_name": "Spectre Prism",
     "lens_id": "123450e7-fd1c-450b-8a5a-d8e53cef5d8b",
     "checkpoint_id": "06aaf5b1-b66d-7b44-8000-ce62ad74190f",
     "prompt": "Faceted obsidian and dichroic glass stealth visor contoured across the brow. Premium PBR metallic luster, 3-point contrast violet rim highlights, and ray-traced contact shadows. Opening mouth triggers a radial sonic particle shockwave with refractive edge displacement. Smiling pulses brilliant violet prismatic reflections across the glass face. 100% pure 3D geometry and volumetric particle systems. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -382,7 +382,7 @@
   {
     "timestamp": "2026-09-20T04:55:37Z",
     "account_id": "2",
-    "lens_name": "Verdant Gilded Heirloom",
+    "lens_name": "Verdant Gilded",
     "lens_id": "725b62cb-407d-4acf-9562-1a1bd4574c29",
     "checkpoint_id": "06aaf66c-5191-76db-8000-ebe75608940d",
     "prompt": "Art Nouveau floral tiara sculpted from antiqued 24k yellow gold with deep emerald cabochon accents anchored to brow. High-fidelity PBR materials with 6500K/2800K directional rim lighting. 35mm analog film aesthetic with soft warm highlights. Mouth open triggers a semi-translucent golden silk shimmer veil across temples. Smile activates subtle emerald light refraction flares across eye contours. Zero UI, pure Parisian couture craft. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -405,7 +405,7 @@
   {
     "timestamp": "2026-09-20T09:26:08Z",
     "account_id": "1",
-    "lens_name": "Vermilion Kitsune Crest",
+    "lens_name": "Vermilion",
     "lens_id": "8af4feb6-84ab-4c68-bf57-b6dc49935852",
     "checkpoint_id": "06aafa64-580e-7360-8000-51c0f4a7b57b",
     "prompt": "Carved white porcelain and vermilion lacquer fox forehead crest anchored to brow. Shimmering brass bells and twin floating foxfire tails contour jawline. Mouth open triggers swirling azure spirit flame orbs with volumetric embers. Smile reveals ethereal golden spirit eye reflections. Eyebrow raise flashes crimson runes. Head tilt sways foxfire tails. PBR materials, 3-point 6500K/2800K lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -432,7 +432,7 @@
   {
     "timestamp": "2026-09-20T09:39:04Z",
     "account_id": "2",
-    "lens_name": "Liquid Alloy Chitin",
+    "lens_name": "Liquid Alloy",
     "lens_id": "2f98fb6e-ae3e-49fa-a3ef-3722a1d20c95",
     "checkpoint_id": "06aafa96-ecf5-7251-8000-6223a5d04357",
     "prompt": "Organic polished metallic brow shell with beetle-wing iridescence fitted to forehead. PBR ray-traced shadows. Opening mouth releases expanding toroidal liquid mercury rings surging forward. Smiling triggers radiant rainbow chromatic dispersion wave across face contours. Eyebrow raise flares armor plates outward. Head tilt reflects dynamic iridescent sheen highlights across temples. High-concept Y3K aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -486,7 +486,7 @@
   {
     "timestamp": "2026-09-20T17:40:12Z",
     "account_id": "3",
-    "lens_name": "Ghibli Watercolor Cloud Crown",
+    "lens_name": "Ghibli",
     "lens_id": "df5949af-42c5-487f-b4e4-29a075d1fc12",
     "checkpoint_id": "06ab01a1-ab35-71d5-8000-a180fe80325e",
     "prompt": "Hand-painted Ghibli watercolor cumulus cloud crown resting above hairline with floating soot spirit dust and celestial spirit serpent coils. Soft cel-shaded gouache textures with warm 2800K sunlight ray-traced highlights. Opening mouth erupts swirling sakura petal cyclone; smiling spawns cheerful soot sprites around temples; head tilt shifts floating spirit dust. Pure 3D PBR fantasy, zero strobing, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -1684,7 +1684,7 @@
   {
     "timestamp": "2026-09-26T12:34:48Z",
     "account_id": "2",
-    "lens_name": "Valkyrie Frost Circlet",
+    "lens_name": "Valkyrie Frost",
     "lens_id": "91f31d69-6e10-49dd-bfa8-0d1685602d95",
     "checkpoint_id": "06ab7b6a-b7cc-7ac1-8000-ec08408d544c",
     "prompt": "Brushed silver and iridescent mother-of-pearl Valkyrie winged circlet fitted firmly to forehead. Photorealistic PBR metal reflections with frosted runic engravings and cool 6500K Nordic key lighting. Opening mouth summons ethereal soaring spectral raven aura; smiling ignites crystalline glacial eye glints. Seamless head tracking, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -1711,7 +1711,7 @@
   {
     "timestamp": "2026-09-26T16:37:52Z",
     "account_id": "3",
-    "lens_name": "Celestial Kitsune Crest",
+    "lens_name": "Celestial",
     "lens_id": "4df2b87d-52eb-4ec3-bc0f-fd1919712256",
     "checkpoint_id": "06ab7f1b-c2d1-7781-8000-f2cd15fd7f3e",
     "prompt": "Carved porcelain and polished vermilion lacquer kitsune forehead crest anchored strictly to brow, leaving eyes and mouth clear. Shimmering spirit bells and twin floating foxfire tails contouring jawline. Opening mouth erupts swirling azure spirit flame orbs with dynamic volumetric embers; smiling reveals ethereal golden fox spirit eye reflections. Pure PBR craft, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -1738,7 +1738,7 @@
   {
     "timestamp": "2026-09-26T17:16:37Z",
     "account_id": "1",
-    "lens_name": "90s Cyber Camcorder Visor",
+    "lens_name": "90s Cyber",
     "lens_id": "3722b6d5-7bc6-4fd7-be06-9c22acbe2201",
     "checkpoint_id": "06ab7f8d-c318-7e62-8000-be036210905e",
     "prompt": "Retro-futuristic 90s cyber camcorder visor frame contoured across brow and temples with holographic rec timestamp and magnetic phosphor glass. PBR brushed titanium, cathode-ray scanline reflections. Opening mouth discharges magnetic tape-rip glitch shockwave and RGB chromatic particle split; smiling pulses neon REC battery flare; head tilt shifts scanlines. Zero strobing, pure 3D AR craft, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -1900,7 +1900,7 @@
   {
     "timestamp": "2026-09-27T06:36:27Z",
     "account_id": "4",
-    "lens_name": "Kinetic Laser Dodge",
+    "lens_name": "Kinetic Laser",
     "lens_id": "e833ff8f-3033-47af-9327-81f371c84173",
     "checkpoint_id": "06ab8b54-141e-717d-8000-263f7779cea4",
     "prompt": "Floating geometric barrier grid approaches face. Head tilt navigates left or right to weave through incoming light blades. Opening mouth deploys a hexagonal energy shield that shatters beams into brilliant white spark showers. Smiling triggers a vibrant green pulse across the environment. Eyebrow raise activates a localized chrono-stutter effect. Physically accurate 3D materials with high-contrast ray-traced lighting. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -1981,7 +1981,7 @@
   {
     "timestamp": "2026-09-27T11:09:04Z",
     "account_id": "3",
-    "lens_name": "Liquid Metal Fortune Crown",
+    "lens_name": "Liquid Metal",
     "lens_id": "600873db-eaf6-48d6-93fb-b67a766fb65a",
     "checkpoint_id": "06ab8f57-1197-72b9-8000-764e7f574124",
     "prompt": "Floating liquid mercury panels surround the forehead in a 3D ring. MouthOpen triggers an explosive chrome shockwave ripple. Smile releases golden dust particles. EyebrowRaise causes the panels to reconfigure into a new sequence. HeadTilt pivots the ring geometry toward the lens. High contrast 24k gold leaf reflections, ray traced shadows, brushed titanium finish. No text, no UI, pure physical material interaction. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2008,7 +2008,7 @@
   {
     "timestamp": "2026-09-27T11:38:18Z",
     "account_id": "1",
-    "lens_name": "Obsidian Angel Halo",
+    "lens_name": "Obsidian Angel",
     "lens_id": "517e8dc4-ef07-4d76-a279-3ff1c9749168",
     "checkpoint_id": "06ab8fae-aac1-73e3-8000-1334b5460c48",
     "prompt": "Architectural blackened iron thorn crown hovering above forehead. Features photorealistic raven feathers drifting in air. MouthOpen triggers explosive vortex of dark feathered shockwaves and violet lightning bursts. Smile pulses icy blue rim light across facial structure. EyebrowRaise extends sharp thorn spires outward. HeadTilt sways feathers with realistic inertia. PBR finish, 3-point contrast lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2089,7 +2089,7 @@
   {
     "timestamp": "2026-09-27T13:16:04Z",
     "account_id": "2",
-    "lens_name": "Kinetic Aura Spinner",
+    "lens_name": "Kinetic Aura",
     "lens_id": "95c103b6-30ee-4298-a60e-6dfc9589f872",
     "checkpoint_id": "06ab9115-62ab-7f00-8000-20413133e87f",
     "prompt": "Floating above brow, a rapid ring of prismatic glass icons rotates in high-speed orbital motion. MouthOpen triggers an explosive radial expansion of light particles. A Smile locks the central frame with a brilliant diamond flare. EyebrowRaise resets the sequence with a sharp kinetic snap. HeadTilt shifts the radial plane toward the lens. PBR materials of polished quartz and iridium. 3-point contrast lighting for depth. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2143,7 +2143,7 @@
   {
     "timestamp": "2026-09-27T18:23:53Z",
     "account_id": "1",
-    "lens_name": "Gargantua Event Horizon",
+    "lens_name": "Gargantua Event",
     "lens_id": "71365564-46b5-4caa-947a-594b5d69290b",
     "checkpoint_id": "06ab959d-69f3-7c17-8000-ad1815c9eb9f",
     "prompt": "A 3D gravitational light bending black hole crown floats above the forehead. Rendered in brushed titanium and ionized gold leaf with ray traced contact shadows. Mouth open triggers vertical blue plasma jets shooting upward. Smiling initiates a gravitational lensing swirl of stars. Eyebrow raise accelerates the accretion vortex. Head tilt distorts the event horizon ring geometry. Zero UI, high contrast 6500K lighting. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2278,7 +2278,7 @@
   {
     "timestamp": "2026-09-28T07:48:11Z",
     "account_id": "1",
-    "lens_name": "Zeus Olympian Thunderbolt",
+    "lens_name": "Zeus Olympian",
     "lens_id": "f12f2e80-f9d3-4208-bc55-7b8a0825e5f8",
     "checkpoint_id": "06aba15f-1689-7905-8000-b7386a28d361",
     "prompt": "Beaten 24k gold lightning laurel crown anchored to brow. High-contrast PBR textures, caustic gold light, 6500K rim lighting. MouthOpen triggers explosive celestial thunderbolt shockwave. Smile ignites brilliant electric blue iris flare. EyebrowRaise sparks crackling plasma crown. HeadTilt discharges golden lightning embers. Zero UI, zero overlays, pure 3D artifact anchoring. Photorealistic metallic brilliance, storm energy. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2359,7 +2359,7 @@
   {
     "timestamp": "2026-09-28T09:53:00Z",
     "account_id": "2",
-    "lens_name": "Chromatic Aura Scanner",
+    "lens_name": "Chromatic Aura",
     "lens_id": "59ba9f66-8cdd-466e-984c-d7c5df59b234",
     "checkpoint_id": "06aba35d-5055-7ac2-8000-4253872a8e9c",
     "prompt": "Floating crystalline ring crowns forehead, projecting iridescent biometric beams. Smile triggers radiant gold aura expansion. MouthOpen releases explosive prismatic shockwave. EyebrowRaise initiates rapid light frequency re-scan. HeadTilt cycles through seven spectral color states. 24k gold leaf and brushed titanium geometry, cinematic ray-traced lighting, 6500K rim light, zero UI, pure volumetric energy. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2386,7 +2386,7 @@
   {
     "timestamp": "2026-09-28T15:52:31Z",
     "account_id": "3",
-    "lens_name": "Necromancer Soul Crown",
+    "lens_name": "Necromancer Soul",
     "lens_id": "836a918a-d3b7-45e7-b72a-15eb84d16213",
     "checkpoint_id": "06aba886-ee0c-746c-8000-7ba565b4b993",
     "prompt": "Regal gothic coronet of brushed electrum skulls framing the forehead with PBR metallic finish. Floating cyan soulfire wisps orbit temples. Mouth open triggers a violent surge of ghostly soulfire rings expanding outward. Smiling ignites piercing cyan eye luminescence. Eyebrow raise flares crown spires in intense necrotic flame. Head tilt releases long trailing ghostly soul smoke. Sovereign underworld aesthetic, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2413,7 +2413,7 @@
   {
     "timestamp": "2026-09-28T16:31:43Z",
     "account_id": "1",
-    "lens_name": "Angel Aura Iridescent Dew",
+    "lens_name": "Angel Aura",
     "lens_id": "108399c1-6b19-49a2-8c11-c7aa97a63e9a",
     "checkpoint_id": "06aba904-a67a-7734-8000-b2505af0aecb",
     "prompt": "Ethereal pearlescent skin filter with pastel cloud blush and floating celestial micro-sparkles. Opening mouth summons gentle floating iridescent pearl orbs orbiting hair; smiling creates luminous high-fashion skin radiance and winged lash lift; eyebrow raise flares delicate pastel rainbow brow corona; head tilt shifts opalescent pink-to-gold cheek sheen. Dreamy aesthetic, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2440,7 +2440,7 @@
   {
     "timestamp": "2026-09-28T17:01:55Z",
     "account_id": "4",
-    "lens_name": "Zero-G Chrome Tesseract Halo",
+    "lens_name": "Zero-G Chrome",
     "lens_id": "d6ed491f-5aef-41b7-a64e-ffbde87411bf",
     "checkpoint_id": "06aba97d-e627-7ec1-8000-4a0f1fe1e66d",
     "prompt": "Weightless 4D liquid chrome tesseract frame rotating smoothly above head with mirrored vertices. Anisotropic reflections, ray-traced contact shadows. Opening mouth triggers gravitational shockwave ripple warping ambient reflections; smiling flashes prismatic chromatic aberration rings along cheek contours; eyebrow raise accelerates tesseract 4D rotation; head tilt distorts liquid chrome vertices. Y3K surrealism, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2494,7 +2494,7 @@
   {
     "timestamp": "2026-09-29T15:46:26Z",
     "account_id": "2",
-    "lens_name": "Orbital Station Visor",
+    "lens_name": "Orbital Station",
     "lens_id": "ef14c753-da7a-4bc4-bf3f-5f14bf5e69ca",
     "checkpoint_id": "06abbd8d-cfa8-7a9a-8000-687e7fcf9ba9",
     "prompt": "Detailed 3D space station satellite orbits right temple in PBR brushed titanium. High contrast solar wings rotate on axis. MouthOpen triggers blue ion engine thruster pulse with space dust. Smile activates solar panel gold glints. EyebrowRaise fires precise laser navigation beam. HeadTilt initiates inertia orbit drift. Authentic hardware, 3point lighting, raytraced shadows, deep space physics. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2523,7 +2523,7 @@
   {
     "timestamp": "2026-09-29T16:13:14Z",
     "account_id": "3",
-    "lens_name": "Celestial Fortune Dial",
+    "lens_name": "Celestial",
     "lens_id": "2f2713b6-a9f1-45b3-874a-b2d342a49ab0",
     "checkpoint_id": "06abbdeb-5e81-7cff-8000-f89382d3cd42",
     "prompt": "Ornate 24k gold celestial ring hovers above forehead with rotating zodiac emblems. High contrast 3 point lighting defines metallic surface textures. Smile stops wheel on random prediction with massive erupting golden trumpet confetti. Mouth open triggers rapid spin. Eyebrow raise flashes mystic runes. Head tilt shifts perspective with ray traced contact shadows. Pure 3D interaction, no text, no hud, full screen. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2552,7 +2552,7 @@
   {
     "timestamp": "2026-09-29T17:18:57Z",
     "account_id": "1",
-    "lens_name": "Arcade Coin Catcher",
+    "lens_name": "Arcade Coin",
     "lens_id": "bc7b4ce1-d25d-46d9-a9a1-19059440dd3a",
     "checkpoint_id": "06abbee0-b56e-7d29-8000-a5cfcdaef4fe",
     "prompt": "Wearable arc-shaped headpiece crafted from brushed titanium and 24k gold. Dropping physics-based metallic currency descends toward the chin. Mouth open triggers a high-energy particle burst and point-tally explosion. Smile releases a vibrant starburst flare. Eyebrow raise initiates a rapid gold-rush frenzy. Head tilt adjusts gravity for angled catches. Pure PBR physical materials, cinematic 3-point rim lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2581,7 +2581,7 @@
   {
     "timestamp": "2026-09-29T17:54:01Z",
     "account_id": "4",
-    "lens_name": "Baroque Heart Match",
+    "lens_name": "Baroque Heart",
     "lens_id": "cb02d773-d82c-4606-a9e9-b0fc4c9bc5d6",
     "checkpoint_id": "06abbf4b-296e-7434-8000-49f5da3870e2",
     "prompt": "Sculpted 24k gold filigree heart diadem rests on forehead with high-contrast PBR light rays. Smile triggers massive shimmering wings blooming from shoulders and sparkling diamond rain. Mouth open resets the rapid heart-rate pulse animation. Eyebrow raise causes the central heart to beat with rhythmic pulses. Head tilt activates volumetric caustic refractions. Pure 3D geometry, no screen text, no menus. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2639,7 +2639,7 @@
   {
     "timestamp": "2026-09-29T21:25:43Z",
     "account_id": "2",
-    "lens_name": "Soap Opera Melodrama Tears",
+    "lens_name": "Soap Opera",
     "lens_id": "d9a91c91-c959-43ee-910e-4559fd38b030",
     "checkpoint_id": "06abc296-44f5-7f28-8000-4eca4f0f4a1e",
     "prompt": "Wearable comedic 3D dramatic weeping theatre crown with physical crystalline tear waterfalls cascading comically from eyes across cheeks. PBR water caustics with soft romantic halo lighting. Opening mouth erupts torrential twin weeping waterfalls, broken-heart shards, and spinning 24k gold coin shower; smiling shatters drama into cheerful rainbow confetti; head tilt curves tear streams. Pure viral comedy AR. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2668,7 +2668,7 @@
   {
     "timestamp": "2026-09-29T22:00:25Z",
     "account_id": "3",
-    "lens_name": "Viral Karaoke Lyric Headpiece",
+    "lens_name": "Viral Karaoke",
     "lens_id": "aa033a44-adb9-41dd-889a-8b469c39ae1d",
     "checkpoint_id": "06abc2f2-c417-777d-8000-c99eafaef4a9",
     "prompt": "Pulsing 3D neon musical staff headpiece contoured around brow with orbiting treble clef notes and bouncing rhythm sphere balls. PBR emissive neon shaders with 3-point contrast lighting. Opening mouth unleashes explosive pulsing neon musical note shockwave and basswave rings; smiling makes rhythm spheres bounce in tempo across brow; head tilt sways musical staff. High virality, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2697,7 +2697,7 @@
   {
     "timestamp": "2026-09-29T22:36:48Z",
     "account_id": "1",
-    "lens_name": "Cupid Rose Gold Diadem",
+    "lens_name": "Cupid Rose Gold",
     "lens_id": "1ecc091f-c333-4688-a9ec-42a8a9584357",
     "checkpoint_id": "06abc375-1211-7059-8000-ee5e81be800b",
     "prompt": "Sculpted 18k rose-gold diadem with miniature wings resting at hairline. Floating translucent ruby glass spheres orbit temples. Opening mouth fires glowing golden cupid projectiles forward into blooming explosions of sparkling pink confetti. Smiling triggers cascading rosy blush and vibrant pupil glints. Eyebrow raise accelerates orbiting spheres. Head tilt catches metallic luster. High-contrast PBR finish, zero UI, full-screen AR. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2726,7 +2726,7 @@
   {
     "timestamp": "2026-09-29T23:04:45Z",
     "account_id": "4",
-    "lens_name": "Street Grind Snapback",
+    "lens_name": "Street Grind",
     "lens_id": "60ac987f-469f-4925-a01d-c0771758dd20",
     "checkpoint_id": "06abc3ed-8b76-78bd-8000-111b29657ad4",
     "prompt": "Authentic flat-brim streetwear cap worn backwards with brushed titanium chrome logo. Mouth open triggers explosive kinetic skateboard kickflip spark burst with expanding bass shockwave rings. Smile activates warm golden street-lamp halation across face. Eyebrow raise tilts snapback brim. Head tilt leaves trailing orange grind sparks across temples. High-contrast PBR street culture design, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2784,7 +2784,7 @@
   {
     "timestamp": "2026-09-30T02:54:31Z",
     "account_id": "2",
-    "lens_name": "Art Nouveau Emerald Tiara",
+    "lens_name": "Art Nouveau",
     "lens_id": "374e9960-305f-4b08-ba68-0a177d676cda",
     "checkpoint_id": "06abc757-78da-7a3c-8000-aaf180195871",
     "prompt": "Art Nouveau floral tiara sculpted from antiqued yellow gold with deep emerald cabochon accents anchored securely to brow. Soft 35mm analog vignette with delicate warm highlights. Opening mouth pulses radiant emerald crystal prism halo above crown; smiling activates subtle emerald light refraction flares across eye contours. Pure Parisian couture craft, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2813,7 +2813,7 @@
   {
     "timestamp": "2026-09-30T03:24:33Z",
     "account_id": "3",
-    "lens_name": "Stellar Soul Compass",
+    "lens_name": "Stellar Soul",
     "lens_id": "2110fb22-8149-4e21-8341-af7d28c68789",
     "checkpoint_id": "06abc7b5-ebcf-7020-8000-72964e89b448",
     "prompt": "Polished platinum orbital arc anchored across brow with spinning holographic starlight compass. Head tilt locks directional tracking beam with expanding golden starlight ripples. Opening mouth unleashes celebratory supernova starburst with floating zodiac glyphs. Smiling pulses warm astral glow across cheekbones. Eyebrow raise sweeps radar beam. PBR metal, 6500K rim lighting, zero UI, pure 3D wearable accessory. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2842,7 +2842,7 @@
   {
     "timestamp": "2026-09-30T04:02:39Z",
     "account_id": "1",
-    "lens_name": "Golden Solstice Bloom",
+    "lens_name": "Golden Solstice",
     "lens_id": "901a3dcc-6fa0-456c-92b0-e81d8c126ff8",
     "checkpoint_id": "06abc839-b3f7-7925-8000-03d23f16581e",
     "prompt": "Lush headdress of sculpted velvet sunflowers and honey-amber marigolds resting along hairline. Warm 2800K solstice lighting, ray-traced contact shadows. Mouth open releases cascading cloud of glowing pollen particles. Smile triggers radiant sun-halo eye flares and soft peach cheek bloom. Eyebrow raise blooms outer sunflower petals. Head tilt sways golden petals. Pure 3D PBR wearable art, zero UI, zero overlays. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2871,7 +2871,7 @@
   {
     "timestamp": "2026-09-30T04:57:24Z",
     "account_id": "4",
-    "lens_name": "High-Fashion Parisian Couture",
+    "lens_name": "High-Fashion",
     "lens_id": "64b31fd4-3c47-4821-9b5e-0e1c02c84cd2",
     "checkpoint_id": "06abc917-c282-71dd-8000-08d51d6193f5",
     "prompt": "High-fashion Parisian couture 24k gold leaf baroque crown fitted to hairline with draped raw freshwater pearls and caustic crystal prisms. Warm Kodak Portra 400 film grain and analog halation bloom. Opening mouth triggers radiant champagne spark motes orbiting crown; smiling cascades radiant golden sparkle dust across cheekbones; head tilt catches prismatic diamond dispersion. Pure Parisian luxury, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2929,7 +2929,7 @@
   {
     "timestamp": "2026-09-30T17:21:08Z",
     "account_id": "2",
-    "lens_name": "Y3K Liquid Mercury Halo",
+    "lens_name": "Y3K Liquid",
     "lens_id": "46272074-c9ec-48cb-b02c-3e417c30ef35",
     "checkpoint_id": "06abd40d-6de7-77cd-8000-0300741d12c3",
     "prompt": "Weightless Y3K zero-G liquid mercury halo crown morphing above head with sculpted chrome cheekbone armor. Anisotropic mirror PBR reflections with fluid surface tension and ray-traced contact shadows. Opening mouth erupts orbiting refractive liquid chrome spheres into expanding toroidal shockwave; smiling triggers fluid ripple normal-map distortion across armor; head tilt shifts mercury droplets. Zero strobing, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2958,7 +2958,7 @@
   {
     "timestamp": "2026-09-30T18:07:12Z",
     "account_id": "3",
-    "lens_name": "Alpine Blizzard Goggles",
+    "lens_name": "Alpine Blizzard",
     "lens_id": "71ed1f1f-88ca-4b3f-9d33-66c6db73cdc0",
     "checkpoint_id": "06abd49c-3f83-712c-8000-e2af6d6dbf69",
     "prompt": "Frameless oversized iridescent alpine ski goggles mirrored across eyes reflecting sharp mountain peaks. Mouth open triggers a pressurized powdery snow blizzard vortex whooshing around the face with ice crystals. Smile warms lenses with vibrant sun-glow. Eyebrow raise clears frost dust from lenses. Head tilt sweeps polarized mountain reflections. PBR materials, 3-point contrast lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -2987,7 +2987,7 @@
   {
     "timestamp": "2026-09-30T18:45:28Z",
     "account_id": "1",
-    "lens_name": "Kawaii Kitsune Ears",
+    "lens_name": "Kawaii Kitsune",
     "lens_id": "8d118ee4-2cb9-44c4-8a45-130b8e56bfb1",
     "checkpoint_id": "06abd526-b948-7b1b-8000-69eb2e01a6f2",
     "prompt": "Ultra-soft plush anime fox ears contoured to hairline with twin dangling bronze charms and delicate blush cheek accents. PBR materials mimic realistic fur texture. Mouth open triggers playful floating pastel pawprint shockwaves and soft heart motes. Smile initiates happy ear twitch with musical bell chimes. Eyebrow raise wiggles ear tips. Head tilt sways charms. 3-point contrast lighting. Zero UI or text. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3103,7 +3103,7 @@
   {
     "timestamp": "2026-09-30T23:28:43Z",
     "account_id": "3",
-    "lens_name": "70s Psychedelic Woodstock Flower Crown",
+    "lens_name": "70s Psychedelic",
     "lens_id": "30fef23f-385d-414d-a916-69880b0fd4b4",
     "checkpoint_id": "06abd95b-c251-7ddb-8000-0d9dabb38792",
     "prompt": "Undulating liquid-lava flow flower crown with warm psychedelic orange, mustard, and magenta swirls. Opening mouth releases floating kaleidoscope groovy flower petals and liquid light ripple waves; smiling warms complexion with retro Woodstock sunset halation; eyebrow raise blooms psychedelic petals; head tilt ripples lava patterns. Trippy 70s bohemian aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3132,7 +3132,7 @@
   {
     "timestamp": "2026-10-01T00:13:50Z",
     "account_id": "1",
-    "lens_name": "Liquid Chrome Mirage",
+    "lens_name": "Liquid Chrome",
     "lens_id": "e51a8e4c-7dc1-44c6-b042-20bed9c8d778",
     "checkpoint_id": "06abd9f0-443f-73c1-8000-47394e3af9c4",
     "prompt": "Zero-G floating liquid mercury halo crown morphing above head with sculpted chrome cheek plates. Anisotropic mirror PBR reflections with fluid surface tension, 3-point contrast lighting and ray-traced contact shadows. Opening mouth releases orbiting liquid chrome spheres with refractive rippling reflections; smiling ripples the ambient background. Seamless physics, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3161,7 +3161,7 @@
   {
     "timestamp": "2026-10-01T01:22:56Z",
     "account_id": "4",
-    "lens_name": "Crystalline Glacial Diadem",
+    "lens_name": "Crystalline",
     "lens_id": "2ab79866-2871-478e-bfa2-9a6c49971b9f",
     "checkpoint_id": "06abdb02-e907-7d69-8000-39664ebac5ce",
     "prompt": "Sculpted translucent frozen botanical tiara and frosted silver willow twigs rest at the hairline with caustic diamond dispersion. Mouth opening unleashes a swirling flurry of sparkling arctic snowflakes. Smiling illuminates radiant frosted cheekbone sheen and glacial blue eye reflections. Eyebrow raise causes icy petals to bloom outwards. Head tilt refracts vibrant rainbow light through the structure. PBR textures, 3-point contrast lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3219,7 +3219,7 @@
   {
     "timestamp": "2026-10-01T06:18:22Z",
     "account_id": "2",
-    "lens_name": "Mobius Platinum Ribbon",
+    "lens_name": "Mobius Platinum",
     "lens_id": "363e5a8b-85d6-4395-808e-6b7b0faef43c",
     "checkpoint_id": "06abdf6e-cab4-76ee-8000-3cfaf7322422",
     "prompt": "Interlocking liquid platinum Mobius strip ribbon undulating continuously in zero-g around upper crown. Hyper-reflective chrome shader reflecting ambient environment with fluid refraction. Opening mouth sends floating chrome ribbon tendrils surging forward; smiling shatters ambient reflection into a hypnotic kaleidoscopic mirror prism facet display. Surreal Y3K aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3248,7 +3248,7 @@
   {
     "timestamp": "2026-10-01T06:53:05Z",
     "account_id": "3",
-    "lens_name": "Ferrofluid Bio Horns",
+    "lens_name": "Ferrofluid Bio",
     "lens_id": "942caccc-30c5-4282-a9fd-79c5931e929c",
     "checkpoint_id": "06abdfdb-e3aa-7a74-8000-3521ee09e48b",
     "prompt": "Glossy obsidian ferrofluid horn sculptures rising organically from temples, dynamically morphing between fluid blobs and magnetic spikes. 3-point contrast lighting with cool 6500K rim. Opening mouth suspends dozens of zero-g liquid mercury droplets floating across face; smiling pulses an electromagnetic ripple wave through the ferrofluid geometry. Pure surrealism. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3306,7 +3306,7 @@
   {
     "timestamp": "2026-10-01T08:18:23Z",
     "account_id": "4",
-    "lens_name": "Aether Dragon Crown",
+    "lens_name": "Aether Dragon",
     "lens_id": "0fa9b6dd-16a7-4998-97aa-c4f4c9f5c378",
     "checkpoint_id": "06abe111-ef40-7ff9-8000-9ebae0ea87ad",
     "prompt": "Sculpted obsidian dragon horn crown anchored strictly to hairline and temples with liquid 24k gold filigree and caustic ruby gems, PBR anisotropic metallic reflections, 3-point contrast 6500K/2800K lighting with ray-traced contact shadows. Mouth open erupts turbulent emerald flame torrent with floating amber sparks; smiling ignites alpha-fading golden runic eye halos. Depth occlusion enabled, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3364,7 +3364,7 @@
   {
     "timestamp": "2026-10-01T19:23:08Z",
     "account_id": "2",
-    "lens_name": "Supernova Starlight Shades",
+    "lens_name": "Supernova",
     "lens_id": "2ebb0a5b-13a8-409d-8309-e63c593d5035",
     "checkpoint_id": "06abeaea-cde8-7b3e-8000-38c1590522c2",
     "prompt": "Ultra-sleek aerodynamic Y3K wrap-around chrome sunglasses resting across the eyes with deep violet polarized lenses reflecting distant spiral galaxies. Floating microscopic stardust motes orbit the temples. Opening mouth triggers a blinding supernova stellar flare and floating golden starburst sparks; smiling illuminates neon cyan frame edge lighting; eyebrow raise pulses violet laser glints through the lenses; head tilt catches brilliant ray-traced. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3422,7 +3422,7 @@
   {
     "timestamp": "2026-10-01T20:47:35Z",
     "account_id": "1",
-    "lens_name": "Amethyst Geode Corona",
+    "lens_name": "Amethyst Geode",
     "lens_id": "baed092c-4e9d-43a2-82f1-2092a34f4532",
     "checkpoint_id": "06abebfe-9ef4-7c9d-8000-465202d0397b",
     "prompt": "Raw fractured amethyst geode crown resting along brow, deep violet quartz crystals, and levitating floating runestones orbiting temples. Opening mouth unleashes grounding terrestrial earthquake shockwave ripple with floating glowing crystal shards; smiling activates crystalline violet cheekbone glints; eyebrow raise lifts levitating stones higher; head tilt shifts caustic amethyst crystal refractions. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3451,7 +3451,7 @@
   {
     "timestamp": "2026-10-01T21:21:06Z",
     "account_id": "4",
-    "lens_name": "Pastel Pandacorn Ears",
+    "lens_name": "Pastel Pandacorn",
     "lens_id": "86beb615-589e-43e1-8a0f-5f8d6e12be0f",
     "checkpoint_id": "06abec85-19f1-7910-8000-dfe0c86dc6da",
     "prompt": "Fluffy white panda ears flank a twisting pearlescent iridescent spiral brow-spike. PBR textures display soft fur and refractive opal surfaces. MouthOpen triggers a vibrant rainbow particle torrent and smiling star burst. Smiling casts soft prismatic eye-glints and glowing cheek-blush. EyebrowRaise causes the spike to pulse with soft light. HeadTilt shifts caustic reflections. No UI, no text, 3-point contrast lighting. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3509,7 +3509,7 @@
   {
     "timestamp": "2026-10-02T00:39:32Z",
     "account_id": "2",
-    "lens_name": "Phoenix Solar Diadem",
+    "lens_name": "Phoenix Solar",
     "lens_id": "37db2f84-ed79-4970-8344-fa866c186655",
     "checkpoint_id": "06abef89-4947-75b4-8000-a52cc2c7ba81",
     "prompt": "Sculpted molten 24k rose-gold phoenix diadem fitted to hairline with radiant solar ember crest. PBR feathered iridescent wings contouring temples with subsurface scattering and 3-point contrast rim lighting. Opening mouth unleashes blinding solar plasma plumage burst and rising golden ash particles; smiling triggers brilliant sun-flare corona around brow. Depth occlusion, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3538,7 +3538,7 @@
   {
     "timestamp": "2026-10-02T01:17:03Z",
     "account_id": "3",
-    "lens_name": "Ghibli Watercolor Cloud Crown",
+    "lens_name": "Ghibli",
     "lens_id": "aa9db47f-c2f9-478c-9042-fc66bcc1a204",
     "checkpoint_id": "06abeffb-fc98-7415-8000-ae0f4fafee36",
     "prompt": "Hand-painted Ghibli watercolor cumulus cloud crown resting above hairline with floating soot spirit dust and celestial spirit serpent coils. Soft cel-shaded gouache textures with warm 2800K sunlight ray-traced highlights. Opening mouth erupts swirling sakura petal cyclone; smiling spawns cheerful soot sprites around temples; head tilt shifts floating spirit dust. Pure 3D PBR fantasy, zero strobing, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3567,7 +3567,7 @@
   {
     "timestamp": "2026-10-02T01:58:43Z",
     "account_id": "1",
-    "lens_name": "Neon Boxing Headguard",
+    "lens_name": "Neon Boxing",
     "lens_id": "7971e3f4-7ca2-4d9b-8648-7f85e22133b1",
     "checkpoint_id": "06abf091-6167-7cf7-8000-9d2256c87155",
     "prompt": "Sleek ergonomic carbon fiber combat headgear framing the forehead and temples with brushed titanium side plating. Mouth open triggers a massive kinetic sonic wave pulse and flying electric sparks. Smile releases a blinding championship gold lens flare. Eyebrow raise pulses red neon guard rims. Head tilt triggers agile motion blur trails. High-contrast PBR textures, 3-point studio lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3596,7 +3596,7 @@
   {
     "timestamp": "2026-10-02T02:24:40Z",
     "account_id": "4",
-    "lens_name": "Pearl Celestial Diadem",
+    "lens_name": "Pearl Celestial",
     "lens_id": "bc8d6014-63e0-4f15-b005-c8b1b1e2d337",
     "checkpoint_id": "06abf125-d3f0-76cf-8000-c677ac753e02",
     "prompt": "Floating halo diadem of baroque freshwater pearls and hand-twisted 18k champagne gold wire resting above hairline. Subtle Portra 400 golden-hour film bloom with warm 2800K key light. Opening mouth summons gentle floating champagne light motes around face; smiling illuminates an ethereal high-fashion skin sheen and caustic crystal ear shimmer. Ultra-luxury vanity aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3654,7 +3654,7 @@
   {
     "timestamp": "2026-10-02T09:03:48Z",
     "account_id": "2",
-    "lens_name": "Cybernetic Ocular Scanner",
+    "lens_name": "Cybernetic",
     "lens_id": "08c783bc-e98c-487e-9a3b-2c44f4ecec25",
     "checkpoint_id": "06abf6e9-cc21-793c-8000-618c400ab8da",
     "prompt": "Asymmetrical carbon fiber and tungsten ocular optic anchored over left eye orbital bone and brow, leaving face and mouth unobstructed. Multi-layered refractive cyan glass lenses with micro-servo details. Opening mouth projects floating 3D wireframe mesh orb; smiling pulses glowing emerald light through ocular lenses. PBR materials, ray-traced shadows, zero text. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3683,7 +3683,7 @@
   {
     "timestamp": "2026-10-02T09:25:39Z",
     "account_id": "3",
-    "lens_name": "Spartan Aegis WarHelm",
+    "lens_name": "Spartan Aegis",
     "lens_id": "76f3c7d3-1d76-468b-a59b-fd108445dfe0",
     "checkpoint_id": "06abf74d-38df-7041-8000-ac44344ca41f",
     "prompt": "Polished bronze battle helm with articulated gold owl crest and horsehair plume spanning the forehead. PBR materials feature ray-traced reflections and caustic rim lighting. MouthOpen triggers an explosive golden tactical shockwave with glyphs. Smile pulses warm light across cheekbones. EyebrowRaise flares the owl sigil wings. HeadTilt creates brilliant metallic sun-glints. High-impact mythological aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3799,7 +3799,7 @@
   {
     "timestamp": "2026-10-02T20:26:46Z",
     "account_id": "2",
-    "lens_name": "Emerald Forest Diadem",
+    "lens_name": "Emerald Forest",
     "lens_id": "ae119b75-58a1-4b7b-96d4-1a26883ce2d4",
     "checkpoint_id": "06ac00e6-0c62-74b7-8000-e1251b6bff45",
     "prompt": "Ornate crown of living moss and white birch bark anchored to head with bioluminescent mushrooms. Mouth open triggers pulsing cyan light wave through foliage and floating spore motes. Smile creates emerald sparkle eye highlights. Eyebrow raise activates swirling firefly orbit. Head tilt induces iridescent sheen on fern fronds. PBR textures, 3-point contrast lighting, zero UI, pure 3D mesh. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3857,7 +3857,7 @@
   {
     "timestamp": "2026-10-02T21:46:05Z",
     "account_id": "1",
-    "lens_name": "Valkyrie Frost Circlet",
+    "lens_name": "Valkyrie Frost",
     "lens_id": "75ff636e-cf93-4d17-a039-d78a425b36f7",
     "checkpoint_id": "06ac01ed-ae48-7d21-8000-115bdbd903ad",
     "prompt": "Brushed silver and iridescent mother-of-pearl Valkyrie winged circlet fitted firmly to forehead. Photorealistic PBR metal reflections with frosted runic engravings and cool 6500K Nordic key lighting. Opening mouth summons ethereal soaring spectral raven aura; smiling ignites crystalline glacial eye glints. Seamless head tracking, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3886,7 +3886,7 @@
   {
     "timestamp": "2026-10-02T22:12:06Z",
     "account_id": "4",
-    "lens_name": "90s Cyber Camcorder Visor",
+    "lens_name": "90s Cyber",
     "lens_id": "18e1720a-c707-464e-9c7f-6de20a276543",
     "checkpoint_id": "06ac0286-ba17-7e3c-8000-e2af08abac7a",
     "prompt": "Retro-futuristic 90s cyber camcorder visor frame contoured across brow and temples with holographic rec timestamp and magnetic phosphor glass. PBR brushed titanium, cathode-ray scanline reflections. Opening mouth discharges magnetic tape-rip glitch shockwave and RGB chromatic particle split; smiling pulses neon REC battery flare; head tilt shifts scanlines. Zero strobing, pure 3D AR craft, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3944,7 +3944,7 @@
   {
     "timestamp": "2026-10-03T02:22:37Z",
     "account_id": "2",
-    "lens_name": "Soulmate Heart Meter",
+    "lens_name": "Soulmate Heart",
     "lens_id": "615f6cff-3dac-4ca4-977e-b06ec3c31fd9",
     "checkpoint_id": "06ac0616-dd48-7d8b-8000-63df969a3046",
     "prompt": "Sculpted baroque gold heart arch resting regally on brow with rapid spinning ticker needle. Smiling locks the ticker at 99 percent match erupting massive 3D iridescent angel wings and sparkling diamond rain. Opening mouth resets the meter. Eyebrow raise pulses rhythmic golden heartbeats. Head tilt catches intricate filigree light glints. PBR gold leaf finish with raytraced contact shadows. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -3973,7 +3973,7 @@
   {
     "timestamp": "2026-10-03T03:19:18Z",
     "account_id": "3",
-    "lens_name": "Quantum Neural Monocular",
+    "lens_name": "Quantum Neural",
     "lens_id": "69919b11-4a9b-41b4-8c3a-35cb552df0fd",
     "checkpoint_id": "06ac070a-55fc-7ae4-8000-c9f3a1fcf476",
     "prompt": "Sleek brushed titanium neural optic docked along right temple with floating magnetic focal rings. Anisotropic PBR surfaces reflect 6500K rim lighting. Mouth open projects spinning volumetric planetary hologram above brow. Smile triggers high-energy particle pulse. Eyebrow raise expands focal rings. Head tilt sways floating prism sparks. Zero UI. Pure 3D geometry with ray-traced shadows and liquid mercury physics. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -4002,7 +4002,7 @@
   {
     "timestamp": "2026-10-03T04:04:06Z",
     "account_id": "1",
-    "lens_name": "Crimson Rose Diadem",
+    "lens_name": "Crimson Rose",
     "lens_id": "ef320d65-c59b-4239-af28-ebb1b249aac5",
     "checkpoint_id": "06ac077a-430b-76df-8000-c32fb31afe22",
     "prompt": "Intricately sculpted English garden climbing diadem of deep crimson and blush roses with gold-tipped thorns contouring temples and brow. Ray-traced water droplets cling to soft petals. Opening mouth releases swirling shower of falling petals. Smiling activates dewy cheek flush and glossy shine. Eyebrow raise unfolds buds into full blossoms. Head tilt catches sparkling morning dew glints. Regal romantic luxury. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -4031,7 +4031,7 @@
   {
     "timestamp": "2026-10-03T04:31:55Z",
     "account_id": "4",
-    "lens_name": "Soap Opera Melodrama Tears",
+    "lens_name": "Soap Opera",
     "lens_id": "6e79521d-9bab-4936-8330-21cb506fc15b",
     "checkpoint_id": "06ac080f-23df-73c0-8000-8ca15a0f4ddc",
     "prompt": "Wearable comedic 3D dramatic weeping theatre crown with physical crystalline tear waterfalls cascading comically from eyes across cheeks. PBR water caustics with soft romantic halo lighting. Opening mouth erupts torrential twin weeping waterfalls, broken-heart shards, and spinning 24k gold coin shower; smiling shatters drama into cheerful rainbow confetti; head tilt curves tear streams. Pure viral comedy AR. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -4089,7 +4089,7 @@
   {
     "timestamp": "2026-10-03T13:50:51Z",
     "account_id": "2",
-    "lens_name": "Hidden Village Shinobi",
+    "lens_name": "Hidden Village",
     "lens_id": "d5b01522-1d66-436f-be12-3d4787d93907",
     "checkpoint_id": "06ac102a-d7c1-7f1d-8000-9e223b12d84a",
     "prompt": "Forged steel ninja forehead plate on navy cloth headband, carved leaf crest, twin shadow kunai blades orbiting temples. PBR brushed metal materials, 6500K rim lighting. MouthOpen triggers explosive white smoke poof with flying tags. Smile glints steel plate. EyebrowRaise spins floating kunai rapidly. HeadTilt shifts ray-traced highlights. Legendary ninja warrior AR, zero UI, pure 3D geometry. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -4118,7 +4118,7 @@
   {
     "timestamp": "2026-10-03T14:19:08Z",
     "account_id": "3",
-    "lens_name": "Synthwave Chrome Crown",
+    "lens_name": "Synthwave Chrome",
     "lens_id": "b8f2d38d-b45f-40d4-8554-a846aeddef70",
     "checkpoint_id": "06ac10a2-4ae2-7350-8000-af9a435dcf0d",
     "prompt": "Sculpted neon-magenta wireframe perspective grid extending behind brow with a floating 80s chrome cassette circlet. Warm analog CRT scanline halation with cyan rim lighting. Mouth open accelerates wireframe grid into hyperspace speed warp with neon laser beams; smiling triggers warm neon sunset flare; eyebrow raise pulses synthwave bass-rings; head tilt shifts grid perspective. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
@@ -4321,7 +4321,7 @@
   {
     "timestamp": "2026-10-04T02:58:02Z",
     "account_id": "4",
-    "lens_name": "Spirit Animal Totem",
+    "lens_name": "Spirit Animal",
     "lens_id": "dd44d144-8057-4f6e-a932-7b9178537c72",
     "checkpoint_id": "06ac1bbb-d124-75b3-8000-680d9249039d",
     "prompt": "Gilded 24k gold totem disc floats above forehead with intricate carvings. Spinning wheel halts on a smile to reveal a mythical animal avatar overlay. Mouth open triggers an explosive aura of spirit energy petals. Eyebrow raise restarts the high-speed spin. Head tilt shifts the perspective view. PBR textures, 3-point rim lighting, zero UI, full-screen immersive wearable 3D geometry. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
