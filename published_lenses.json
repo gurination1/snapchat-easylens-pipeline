@@ -4476,7 +4476,9 @@
       "anime",
       "clouds",
       "spirit",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -4487,7 +4489,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/vk82e8kovNpHxyrEHA4iD?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/fNaEYdEJnLrqc1V0h2X8n?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -4604,6 +4606,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/0JcbU3nbt1Ulxr6y0Qu2H?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-04T17:20:10Z",
+    "account_id": "4",
+    "lens_name": "Juicy Chomp",
+    "lens_id": "3bd8ce25-55d6-4c2c-8c3b-7f751e16357d",
+    "checkpoint_id": "06ac2873-3b72-7bdd-8000-895e94ee691f",
+    "prompt": "Floating 3D tropical fruits tumble downward toward the user. Highly detailed PBR mango, papaya, and lime textures with ray-traced caustics. Opening mouth triggers satisfying chomp with vibrant juice splatter particles. Smiling spawns a shimmering golden pineapple crown. Eyebrow raise activates a high-speed fruit rain frenzy. Head tilt angles the trajectory for precise catching. Full immersion, zero UI, pure kinetic fruit fun. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "cute",
+      "fruit",
+      "summer",
+      "makeup",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "chomp_fruit_frenzy",
+    "channel_id": "6",
+    "visual_hook": "The instant 0.2s silhouette of glossy, high-contrast falling tropical fruit creates an immediate, appetizing visual hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/4ii4t8iwvqjz5H8zs6WQd?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/RrMRF7i4ZVwcGBDDpqprb?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/istm4PtVbPVWzTrKCzlKV?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
