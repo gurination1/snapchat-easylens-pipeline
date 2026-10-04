@@ -1,8 +1,8 @@
 {
-  "1": {
-    "account_id": "1",
-    "username": "gman21478",
-    "displayName": "Gur Man",
+  "2": {
+    "account_id": "2",
+    "username": "edufunlearning",
+    "displayName": "Guri Nation",
     "LENS_CREATOR_PAYOUT_TOS": true,
     "ILDG_TOS": false,
     "ui_modals_accepted": 0,
@@ -17,12 +17,12 @@
       "attempted": 1,
       "lenses": [
         {
-          "id": "34dde5d8-382f-4e0c-aec5-c49d66b2ab9a",
+          "id": "2f93de06-e7e5-4a4b-a215-f325667ef1e8",
           "enrolled": true,
           "setPayoutRes": {
             "errors": [
               {
-                "message": "3 INVALID_ARGUMENT: Lens 34dde5d8-382f-4e0c-aec5-c49d66b2ab9a is currently locked.",
+                "message": "3 INVALID_ARGUMENT: Lens 2f93de06-e7e5-4a4b-a215-f325667ef1e8 is currently locked.",
                 "locations": [
                   {
                     "line": 3,
@@ -35,7 +35,7 @@
                 "extensions": {
                   "code": "INTERNAL_SERVER_ERROR",
                   "stacktrace": [
-                    "Error: 3 INVALID_ARGUMENT: Lens 34dde5d8-382f-4e0c-aec5-c49d66b2ab9a is currently locked.",
+                    "Error: 3 INVALID_ARGUMENT: Lens 2f93de06-e7e5-4a4b-a215-f325667ef1e8 is currently locked.",
                     "    at callErrorFromStatus (/app/node_modules/@grpc/grpc-js/build/src/call.js:32:19)",
                     "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client.js:193:76)",
                     "    at Object.onReceiveStatus (/app/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)",
@@ -60,7 +60,7 @@
             "data": {
               "updateLens": {
                 "lens": {
-                  "id": "34dde5d8-382f-4e0c-aec5-c49d66b2ab9a",
+                  "id": "2f93de06-e7e5-4a4b-a215-f325667ef1e8",
                   "lensCreatorPayoutEligibility": "LENS_CREATOR_PAYOUT_ELIGIBILITY_PENDING",
                   "status": "LENS_STATUS_IN_REVIEW"
                 }
@@ -69,7 +69,7 @@
           },
           "setCategoryRes": {
             "repaired": true,
-            "primary": "SCAT_3",
+            "primary": "SCAT_29",
             "secondary": "CAT_1",
             "res": {
               "errors": [
@@ -114,10 +114,10 @@
               "data": {
                 "generateHostedLens": {
                   "lens": {
-                    "id": "e19bb19a-60c8-4135-9920-1174aa329b30:34dde5d8-382f-4e0c-aec5-c49d66b2ab9a",
-                    "link": "https://lens.snap.com/experience/4707dcd8-70d0-4ee8-b4e8-d881409c896e",
+                    "id": "aa84884a-6c80-4b99-a81a-b624c41909a1:2f93de06-e7e5-4a4b-a215-f325667ef1e8",
+                    "link": "https://lens.snap.com/experience/0ca84978-73bd-43f5-bc56-8121a78cce7a",
                     "status": "HOSTED_LENS_STATUS_PUBLISHED",
-                    "organizationId": "e19bb19a-60c8-4135-9920-1174aa329b30"
+                    "organizationId": "aa84884a-6c80-4b99-a81a-b624c41909a1"
                   }
                 }
               }
