@@ -163,15 +163,34 @@ jobs:
         run: |
           git config --global user.name "Antigravity Autonomous Agent"
           git config --global user.email "antigravity-agent@users.noreply.github.com"
-          git fetch origin main
-          git checkout -B main origin/main
-          if [ -f published_lenses.json ]; then
-            git add -f published_lenses.json || true
-          fi
-          if [ -f monetization_approval_status.json ]; then
-            git add -f monetization_approval_status.json || true
-          fi
+          python3 -c '
+          import json, subprocess, os
+          try:
+              subprocess.run(["git", "fetch", "origin", "main"], check=True)
+              remote_content = subprocess.check_output(["git", "show", "origin/main:published_lenses.json"]).decode()
+              remote_data = json.loads(remote_content)
+              if os.path.exists("published_lenses.json"):
+                  with open("published_lenses.json", "r") as f:
+                      local_data = json.load(f)
+              else:
+                  local_data = []
+              merged = {x.get("lens_id") or x.get("checkpoint_id"): x for x in remote_data + local_data if x.get("lens_id") or x.get("checkpoint_id")}
+              final_list = sorted(merged.values(), key=lambda x: x.get("timestamp", ""))
+              with open("published_lenses.json", "w") as f:
+                  json.dump(final_list, f, indent=2)
+          except Exception as e:
+              print(f"Merge helper fallback: {e}")
+          '
+          git add published_lenses.json monetization_approval_status.json 2>/dev/null || true
           if git status --porcelain | grep -E 'monetization_approval_status.json|published_lenses.json'; then
-            git commit -m "chore(monetization): record updated TOS & Top Performer payout approvals [skip ci]"
-            git push origin main || true
+            git commit -m "chore(monetization): record updated TOS & Top Performer payout approvals [skip ci]" || true
+            for i in 1 2 3 4 5; do
+              git fetch origin main 2>/dev/null || true
+              git rebase -X ours origin/main 2>/dev/null || true
+              if git push origin main; then
+                echo "Successfully pushed monetization status to origin/main on attempt $i"
+                break
+              fi
+              sleep $((i * 2))
+            done
           fi
