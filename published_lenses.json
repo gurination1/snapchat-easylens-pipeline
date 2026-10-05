@@ -4721,5 +4721,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/bCbLhYEQxRdJjWOpEApiM?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-05T07:36:29Z",
+    "account_id": "1",
+    "lens_name": "Medusa Bronze Coil",
+    "lens_id": "0b95b223-9a70-453e-b5b3-29956ef4c1a6",
+    "checkpoint_id": "06ac3508-7ce7-7ad0-8000-4ccd9740be60",
+    "prompt": "Intricately sculpted living bronze serpents coil and writhe around the hairline with glowing emerald gemstone eyes. Mouth movement triggers ancient cracked marble textures and swirling stone auroral sparkles. Smiling releases brilliant venomous emerald glints from serpent fangs. Eyebrow raises flare hooded snake crests. Tilting the head ripples the metallic coils. Authentic 24k bronze textures, high-contrast PBR lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "medusa",
+      "mythology",
+      "serpent",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "medusa_gorgon_serpents",
+    "channel_id": "8",
+    "visual_hook": "The instant 0.2s silhouette of high-contrast, writhing bronze serpents framing the face creates a striking mythological status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/ozBwbECdPj9KhBJUaMRG3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/V0D5IuZs6nzJhiM5umuhR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/AMh0Cb6UVapjs4qh4oosl?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
