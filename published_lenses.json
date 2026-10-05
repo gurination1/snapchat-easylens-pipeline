@@ -4791,11 +4791,13 @@
     "prompt": "Sculpted obsidian dragon horn crown anchored strictly to hairline and temples with liquid 24k gold filigree and caustic ruby gems, PBR anisotropic metallic reflections, 3-point contrast 6500K/2800K lighting with ray-traced contact shadows. Mouth open erupts turbulent emerald flame torrent with floating amber sparks; smiling ignites alpha-fading golden runic eye halos. Depth occlusion enabled, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
     "tags": [
       "dragon",
-      "3d",
       "headpiece",
       "horns",
       "fantasy",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "archetype": "",
     "channel_id": "",
@@ -4918,6 +4920,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/b8oF3Hx6Z64HHq3PtfJ6k?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/UOBmNNzJkFxMSP9scpOw7?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-05T17:32:50Z",
+    "account_id": "5",
+    "lens_name": "Solstice Crown",
+    "lens_id": "3ce3aa75-6542-4a42-8dfb-fdb0e9e6303b",
+    "checkpoint_id": "06ac3dbc-0da9-7949-8000-5e1890bcc5d1",
+    "prompt": "Sculpted velvet sunflowers and blooming golden marigolds form a lush 3D tiara along the forehead with dewdrop honey caustics and warm 2800K summer rim light. MouthOpen bursts a shimmering cloud of golden pollen particles around temples. Smile blooms radiant sun-halo eye flares and soft peach blush. EyebrowRaise unfurls outer marigold petals into full bloom. HeadTilt cascades sparkling amber dust with responsive petal sway. Zero UI, pure 3D floral royalty. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "crown",
+      "flowers",
+      "makeup",
+      "glow",
+      "selfie",
+      "summer"
+    ],
+    "archetype": "golden_sunflower_marigold_crown",
+    "channel_id": "14",
+    "visual_hook": "Vibrant 3D velvet sunflowers and marigolds frame the forehead with warm amber caustics for an instant summer royalty look.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/x3zTxS3LGojTo5l8FTdG0?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/1lMtuMtI8wjkTF91eb5JP?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/k0z33pUi1BR7Cv3uobuou?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
