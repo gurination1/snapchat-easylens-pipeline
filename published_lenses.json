@@ -4895,7 +4895,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/LzVvsyqpwUYer7IupQpga?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/xy76Mu1BZXUdIhRBBKxfr?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -5011,6 +5011,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/uBZV1W870c2UIIIB2ltel?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/ZtE3awEuE2kYIPlO2ctt3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-05T23:13:46Z",
+    "account_id": "1",
+    "lens_name": "Alpine Peak Gear",
+    "lens_id": "39355a64-f30c-4405-b9b3-f4276cc0ff35",
+    "checkpoint_id": "06ac42bc-520b-76ae-8000-ce15695f5175",
+    "prompt": "Oversized iridescent alpine goggles anchor to temples featuring polished carbon fiber frames and polarized mercury lenses. Mouth open triggers a high-velocity swirling snow blizzard vortex orbiting the head. Smiling activates a warm golden mountain sun-glow tint across the glass. Eyebrow raise clears lens frost with a crisp chime. Head tilt shifts polarized mountain reflections. Pure PBR high-fashion mountain wear. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "ski",
+      "snow",
+      "mountain",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "alpine_ski_snow_goggles",
+    "channel_id": "17",
+    "visual_hook": "The high-contrast, oversized iridescent goggles create an instant, aggressive, and recognizable high-fashion silhouette.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/BY7JbtC1BEYBYJTUF9aD6?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/qYMJ69euArSWcDCm3CLUp?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/bFwz2bMpT0Oiidq56AOEu?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
