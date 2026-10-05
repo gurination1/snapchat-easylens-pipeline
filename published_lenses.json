@@ -4891,5 +4891,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/xy76Mu1BZXUdIhRBBKxfr?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-05T17:03:45Z",
+    "account_id": "4",
+    "lens_name": "Mars Rover Visor",
+    "lens_id": "206f79d1-4a8d-45a7-88d7-7936212b8a89",
+    "checkpoint_id": "06ac3d4e-3950-75c1-8000-71b9d833cc58",
+    "prompt": "A rugged carbon-fiber explorer helmet with a polarized amber glass visor. The design features sharp, industrial geometry framing the face. Mouth movement triggers a swirling red dust vortex with floating basalt shards. Smiling ignites twin white searchlights on temples. Raising eyebrows creates a flickering flare effect. Head tilting initiates a swaying crimson atmospheric subtle bloom. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "retro",
+      "space",
+      "helmet",
+      "visor",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "mars_rover_explorer_visor",
+    "channel_id": "10",
+    "visual_hook": "The striking, high-contrast amber visor silhouette creates an instant, premium interstellar status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/n1RAfFpIfJe0OqQgBV2Up?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/b8oF3Hx6Z64HHq3PtfJ6k?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/UOBmNNzJkFxMSP9scpOw7?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
