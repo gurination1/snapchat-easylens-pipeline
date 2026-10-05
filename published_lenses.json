@@ -4634,7 +4634,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/RrMRF7i4ZVwcGBDDpqprb?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/istm4PtVbPVWzTrKCzlKV?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -4748,6 +4748,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/V0D5IuZs6nzJhiM5umuhR?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/AMh0Cb6UVapjs4qh4oosl?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-05T08:00:04Z",
+    "account_id": "4",
+    "lens_name": "Gothic Onyx Crown",
+    "lens_id": "5cb9c5a2-a324-4fe8-aeb2-c166270e55ef",
+    "checkpoint_id": "06ac355e-64b8-70f9-8000-fd5462c324bd",
+    "prompt": "Chiseled ancient cathedral gargoyle stone crest anchored to brow with living glowing crimson eye fissures. Opening mouth cracks skin into ancient stone texture with billowing gothic incense smoke; smiling restores smooth alabaster marble sheen; eyebrow raise flares stone gargoyle wings; head tilt sways cathedral dust. Monumental stone metamorphosis, zero UI. High-fashion dark aesthetic, 24k gold inlay, ray-traced shadows, hyper-realistic PBR textures. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "dark",
+      "gothic",
+      "gargoyle",
+      "crown",
+      "selfie",
+      "glow",
+      "vintage"
+    ],
+    "archetype": "gargoyle_stone_cursed",
+    "channel_id": "12",
+    "visual_hook": "The 0.2s silhouette of a jagged, obsidian cathedral-style crown creates an immediate, high-contrast dark fantasy status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/IQEcH0JZpgZIb0uJDFbmS?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/732zOhqHfYTAAzqSbYT6G?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/pRfGBp1SY6g9imlJQCqjM?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
