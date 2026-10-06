@@ -5127,5 +5127,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/50NzlL5fmMz3g1cXq831e?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-06T02:59:19Z",
+    "account_id": "3",
+    "lens_name": "Pizza Chef Mania",
+    "lens_id": "026baa1d-5c43-4b6b-b838-9c5ad048807d",
+    "checkpoint_id": "06ac4608-1f10-7a38-8000-78a14d5a0b2a",
+    "prompt": "A stylized 3D neon chef toque hat sits on the forehead. Falling cartoon pepperoni pizza slices descend toward the mouth. Opening the mouth triggers an immediate chomp with elastic bubbling cheese strands. Smiling releases a burst of pepperoni confetti. Raising eyebrows tosses spinning dough discs into the air. Tilting the head catches pizza slices from wild angles. High contrast lighting with ray-traced shadows on all assets. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "filter",
+      "pizza",
+      "chef",
+      "food",
+      "selfie",
+      "funny",
+      "viral"
+    ],
+    "archetype": "pizza_slice_catcher",
+    "channel_id": "6",
+    "visual_hook": "The oversized, bright neon chef toque creates an instant, humorous, and recognizable silhouette against the user's head.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/WIjkwh1H98bQNJQSHrSZK?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/TnwkOHqWEKflFXzY3tZnq?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/5EteLLe9b0kUx5QDciOiD?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
