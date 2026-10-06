@@ -5198,9 +5198,12 @@
     "tags": [
       "phoenix",
       "firebird",
-      "diadem",
       "fantasy",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow",
+      "makeup"
     ],
     "archetype": "",
     "channel_id": "",
@@ -5211,7 +5214,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/Pvi40pmwDSIk63B9PH4P3?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/gJqrry8Ddw0ItX5a4cFuG?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -5327,6 +5330,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/VEzStzxGKBTgwdtCEGNb1?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/tWxuGavEHf1YxT4KNOeCQ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-06T18:13:50Z",
+    "account_id": "4",
+    "lens_name": "Dramatic Gossip",
+    "lens_id": "d5f4fa0d-77c5-44e6-b662-751e9936f5c2",
+    "checkpoint_id": "06ac5370-e767-73c7-8000-8c27988ae528",
+    "prompt": "Stylized neon magenta drama queen tiara with spinning miniature comic emergency beacons and orbiting porcelain teacup. Opening mouth unleashes hilarious cartoon splashed tea wave with floating comic exclamation badges and drama sparks; smiling defuses siren into angelic golden halo; eyebrow raise sounds silent comic siren spin; head tilt tips teacup. Peak comedy storytelling filter, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "cupid",
+      "love",
+      "redflag",
+      "greenflag",
+      "soulmate",
+      "crush",
+      "relationship",
+      "viral"
+    ],
+    "archetype": "drama_queen_siren_tiara",
+    "channel_id": "15",
+    "visual_hook": "Viral social challenge: Dramatic Gossip Siren Tiara turns everyday tea and gossip into hilarious viral drama.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/FoSocL4GhKY46sYtWr6Xj?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/hM7qI3tJjmwBUHAxZ9cpZ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/7OTCmf4wE6e7CefpG0liD?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
