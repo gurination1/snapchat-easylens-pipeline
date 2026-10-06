@@ -5156,7 +5156,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/TnwkOHqWEKflFXzY3tZnq?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/5EteLLe9b0kUx5QDciOiD?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -5270,6 +5270,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/qNf46kuMQZqh97hmvniuB?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-06T11:46:50Z",
+    "account_id": "3",
+    "lens_name": "Nebula Aura Scan",
+    "lens_id": "4da8f0e9-5d38-49b8-93b5-1805ffd6403b",
+    "checkpoint_id": "06ac4dc8-1b30-77b4-8000-0500f4f87ce7",
+    "prompt": "A radiant holographic energy ring floats around the user, emitting 6500K rim lighting. A sleek chromatic band oscillates across the forehead, reading emotional frequencies with high-contrast caustic glows. Smile to lock in a brilliant aura color with swirling liquid light particles. Open mouth to discharge a vibrant prismatic shockwave. Raise eyebrows to re-calibrate the scan. Tilt head to cycle through neon energy spectrums. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "aura",
+      "glow",
+      "halo",
+      "selfie",
+      "trendy",
+      "viral"
+    ],
+    "archetype": "aura_energy_scanner",
+    "channel_id": "11",
+    "visual_hook": "The 0.2s silhouette of a shimmering, iridescent energy halo framing the face triggers instant high-fashion curiosity.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/ABjHllC6B3RhTl5wHvS3C?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Nn0UBCkuW0bBnFaHVJ1Zh?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/jZnzr5tHYpO7ARp88wA6l?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
