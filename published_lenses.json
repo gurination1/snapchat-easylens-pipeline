@@ -5361,5 +5361,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/7OTCmf4wE6e7CefpG0liD?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-06T18:41:44Z",
+    "account_id": "5",
+    "lens_name": "Street Skater",
+    "lens_id": "282de579-5fc1-4a51-88a9-a6ff874baaa3",
+    "checkpoint_id": "06ac53dc-8069-7946-8000-695b10dac460",
+    "prompt": "Authentic flat-brim streetwear snapback cap resting backwards on crown with embroidered chrome logo and floating kinetic grinding spark particles. Opening mouth releases explosive skateboard kickflip spark burst with expanding bass boom shockwave rings; smiling activates warm golden street-lamp halation; eyebrow raise tips snapback brim; head tilt trails kinetic orange grind sparks across temples. High-energy street culture, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "sports",
+      "f1",
+      "champion",
+      "racing",
+      "boxing",
+      "athlete",
+      "goggles",
+      "gold"
+    ],
+    "archetype": "street_skate_snapback_sparks",
+    "channel_id": "17",
+    "visual_hook": "Athletic adrenaline: Street Skater Graphic Snapback radiates authentic urban skate energy and kinetic sparks.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/zTT7SWHiFTq1cvUcQhOOR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/L0tjBkc8MrWi3yu9o2Lx3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/21bLTosAjBz02M40giYEN?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
