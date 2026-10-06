@@ -5272,7 +5272,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/66TOYeAnqLxjXLE8tWXK0?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/qNf46kuMQZqh97hmvniuB?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -5388,6 +5388,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/L0tjBkc8MrWi3yu9o2Lx3?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/21bLTosAjBz02M40giYEN?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-06T19:20:29Z",
+    "account_id": "2",
+    "lens_name": "Super Saiyan",
+    "lens_id": "40c5d9ca-6530-499e-a4e5-11dbbc53d004",
+    "checkpoint_id": "06ac5465-a340-7ca2-8000-469ba5e17aec",
+    "prompt": "Blazing 3D sculpted golden plasma flame spikes rising dynamically from hairline with crackling blue lightning bio-electricity arcs surrounding temples. Opening mouth unleashes roaring kinetic ki-burst shockwave with ground-shattering dust motes and pulsing energy crater rings; smiling flares golden power aura around eyes; eyebrow raise intensifies electric lightning sparks; head tilt whips golden flame crest. Epic anime transformation, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "manga",
+      "anime",
+      "shonen",
+      "supersaiyan",
+      "aura",
+      "comic",
+      "speedlines",
+      "scouter"
+    ],
+    "archetype": "super_saiyan_golden_corona",
+    "channel_id": "16",
+    "visual_hook": "High-octane anime power: Super Saiyan Golden Flame Corona delivers legendary anime power-up adrenaline in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/BS5R85nXxKOF8oP9hXSR7?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/DT40HsPHaXxdI7YR5Z0C8?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/My3JcyOYYNRCVBVsIFZPA?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
