@@ -5156,5 +5156,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/5EteLLe9b0kUx5QDciOiD?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-06T09:55:36Z",
+    "account_id": "1",
+    "lens_name": "Stygian Soul Crown",
+    "lens_id": "88778cf5-b545-40b1-8c87-164182d5b75c",
+    "checkpoint_id": "06ac4c29-6cc9-780b-8000-b51481903345",
+    "prompt": "Regal electrum skull coronet featuring weathered metallic textures and 24k gold leaf accents. Floating cyan soulfire wisps orbit the temples in a haunting, high-contrast glow. Mouth open triggers a violent surge of ghostly soulfire rings expanding outward. Smiling ignites piercing cyan eye luminescence. Eyebrow raise flares crown spires in necrotic emerald flames. Head tilt leaves lingering trails of ethereal, dark spirit smoke. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "dark",
+      "gothic",
+      "skull",
+      "crown",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "necromancer_soul_reaper",
+    "channel_id": "12",
+    "visual_hook": "The stark, high-contrast silhouette of a jagged electrum skull coronet provides an instant, premium dark-fantasy status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/WDGLMOLZD82GVepIMZcfi?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/7x6xuzC9gROMl4oc9ilvJ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/4yKMir14CY9uAoJMEtk5D?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
