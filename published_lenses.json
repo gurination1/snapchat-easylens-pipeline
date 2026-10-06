@@ -5071,5 +5071,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/A3XFXcC2rQ7xXZYO3fenc?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-06T00:08:39Z",
+    "account_id": "5",
+    "lens_name": "Y2K Holographic",
+    "lens_id": "c98feea0-ec29-4f6e-8366-a0ab35e87a95",
+    "checkpoint_id": "06ac438c-226f-73e8-8000-a383709e157e",
+    "prompt": "Iridescent chrome and holographic translucent butterfly diadem fluttering above brow with frosted lip-gloss sheen and baby-blue Y2K aesthetic. Opening mouth flutters holographic wings releasing glowing glitter sparkles; smiling illuminates dewy cyber gloss sheen across cheekbones; eyebrow raise expands holographic wireframe wings; head tilt catches rainbow chrome reflection. Authentic Y2K cyber revival. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "retro",
+      "80s",
+      "90s",
+      "70s",
+      "synthwave",
+      "vhs",
+      "camcorder",
+      "disco"
+    ],
+    "archetype": "y2k_cyber_butterfly",
+    "channel_id": "7",
+    "visual_hook": "Decades nostalgia hit: Y2K Holographic Cyber Butterfly Diadem taps the surging viral Millennium aesthetic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/PfWVflDycR8BdYx89MhRB?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/3MPfScKq9PMFpvnQhG6Bn?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/elOkg8oG6xblcgJZoxCWT?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
