@@ -5678,5 +5678,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/gTj3PaVWbG2L9ZIieBVwO?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-07T16:38:08Z",
+    "account_id": "2",
+    "lens_name": "Neon Vibe Picker",
+    "lens_id": "e36fe886-407b-4c89-928b-30ecad606fe2",
+    "checkpoint_id": "06ac671c-e032-79b6-8000-c630070c5e8e",
+    "prompt": "A floating carousel of iridescent glass cards encircles the head. Each card features distinct holographic symbols. Mouth open triggers a high-speed centrifugal blur of cards. Smile locks a single card in a burst of refractive prism light and sparkling dust. Eyebrow raise reverses the spin direction. Head tilt shifts the carousel perspective. 3-point rim lighting highlights the glass edges with soft violet and cyan glows. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "cute",
+      "filter",
+      "beauty",
+      "aura",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "which_vibe_picker",
+    "channel_id": "11",
+    "visual_hook": "The instant 0.2s silhouette of a shimmering, refractive neon glass carousel framing the face compels users to discover their vibe.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/B0dWlALKJlfBZ1TAhI00l?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/RCe59bobxJlEp3RMH1haH?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/sRsQWHPgxL6YOdNIBMobt?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
