@@ -5475,5 +5475,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/cUKfUlSp0GFLvH4nRxvUv?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-07T01:52:38Z",
+    "account_id": "4",
+    "lens_name": "Neon Reflex Grid",
+    "lens_id": "6dad99d1-19ff-4656-812d-b83bd0716ba7",
+    "checkpoint_id": "06ac5a21-a1cd-7527-8000-7e526d9b28e7",
+    "prompt": "A floating neon laser obstacle grid orbits the head. Tilt left or right to dodge incoming barriers. Opening mouth deploys a hexagonal kinetic energy shield that deflects lasers into brilliant spark showers. Smiling triggers a pulsing emerald victory wave that illuminates the face. Raising eyebrows activates a chrono-drift effect. Brushed titanium and neon glass materials with ray-traced contact shadows. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "filter",
+      "game",
+      "challenge",
+      "laser",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "laser_dodge_matrix",
+    "channel_id": "6",
+    "visual_hook": "The instant 0.2s silhouette of a high-contrast neon grid framing the face compels users to start the reflex challenge.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/f8iuUY7rqwBvl4lPSxZ4m?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/5eSYrOMcYs1pMKpPJNWYG?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/zpi82iXnLccmwEpthEYCf?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
