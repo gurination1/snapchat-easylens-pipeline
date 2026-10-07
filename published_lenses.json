@@ -5388,7 +5388,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/L0tjBkc8MrWi3yu9o2Lx3?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/21bLTosAjBz02M40giYEN?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -5502,6 +5502,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/5eSYrOMcYs1pMKpPJNWYG?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/zpi82iXnLccmwEpthEYCf?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-07T02:22:08Z",
+    "account_id": "5",
+    "lens_name": "Artemis Lunar Halo",
+    "lens_id": "ff2195f0-8781-4506-924f-c78271da66e7",
+    "checkpoint_id": "06ac5a94-d43e-7c42-8000-e5525a38961b",
+    "prompt": "Hand-carved sterling silver crescent moon diadem rests on brow with delicate silver birch leaves and starlight motes. Mouth opening releases swirling silver arrow light trails and celestial moon-dust. Smiling triggers a luminous cool moonlight skin glow. Eyebrow raise flares brilliant crescent silver tips. Head tilt catches ethereal starlight gleams. Pure lunar huntress majesty with 3-point contrast lighting and ray-traced metal reflections. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "crown",
+      "halo",
+      "makeup",
+      "selfie",
+      "glow",
+      "vintage"
+    ],
+    "archetype": "artemis_lunar_huntress",
+    "channel_id": "8",
+    "visual_hook": "The striking, high-contrast silhouette of a polished sterling silver lunar diadem provides an instant, premium celestial status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/uJL3cMKqVwLlusvcQBn6M?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/ZCvoBAA9M0NSiENBjHZUO?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/bMAzjKiqzmaIlmIDj3ZzV?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
