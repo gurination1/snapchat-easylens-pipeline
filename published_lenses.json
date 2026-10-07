@@ -5417,7 +5417,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/DT40HsPHaXxdI7YR5Z0C8?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/My3JcyOYYNRCVBVsIFZPA?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -5532,6 +5532,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/bMAzjKiqzmaIlmIDj3ZzV?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-07T02:54:14Z",
+    "account_id": "2",
+    "lens_name": "BitWave Visor",
+    "lens_id": "810aada8-1ad1-4784-b855-1da0e71fb585",
+    "checkpoint_id": "06ac5b0d-f974-7b8c-8000-f3cca12c5c96",
+    "prompt": "Chunky 8-bit arcade visor contoured across brow with glowing phosphor coin insets and cathode-tube bloom. High-fashion brushed titanium hardware. Mouth open triggers explosive pixel level-up burst with floating arcade stars. Smiling pulses emerald 1UP glow. Eyebrow raise charges pixel laser cannon. Head tilt sweeps vintage scanlines. PBR ray-traced lighting. Authentic retro gaming aesthetic, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "retro",
+      "visor",
+      "gaming",
+      "vintage",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "arcade_80s_pixel",
+    "channel_id": "7",
+    "visual_hook": "The instant 0.2s silhouette of a chunky, high-fidelity 8-bit visor creates an immediate nostalgic gaming status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/DF37N6RzuZD6f3N8spI3g?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/UV2tc5hspqDnizrt6o0A2?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/yH5EIJzawc4kilU53ZqBj?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
