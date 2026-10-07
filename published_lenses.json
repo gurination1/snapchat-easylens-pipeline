@@ -5734,5 +5734,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/ytNpy1CSACSH1LljvGs5t?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-07T21:07:16Z",
+    "account_id": "1",
+    "lens_name": "Pastel Panda Horn",
+    "lens_id": "58f5d41e-312d-4f71-9af7-1c3f99b14e78",
+    "checkpoint_id": "06ac6b0b-8fa5-7fc1-8000-af06e81de572",
+    "prompt": "Soft fluffy panda ears anchor to temples with a central spiraling iridescent pearl unicorn horn. High-fidelity fur textures meet polished refractive caustics. Mouth open triggers a sprawling pastel rainbow shockwave and floating star particles. Smiling activates radiant iridescent cheek highlights and sparkling eye glints. Eyebrow raise causes the horn to pulse with light. Head tilt shifts prismatic reflections across the pearlescent surface. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "cute",
+      "panda",
+      "unicorn",
+      "pastel",
+      "selfie",
+      "glow",
+      "kawaii"
+    ],
+    "archetype": "pandacorn_rainbow_horn",
+    "channel_id": "13",
+    "visual_hook": "The instant 0.2s silhouette of soft, high-fidelity panda ears and a central iridescent horn creates an immediate, recognizable kawaii status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/DMfhxAjb5Ezo5aKlFIVux?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/l1BkIr74uANALLVKqCaQX?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/2FkQ13vD0LsEQIKCUnEpf?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
