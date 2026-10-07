@@ -5665,7 +5665,9 @@
       "anime",
       "clouds",
       "spirit",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -5676,7 +5678,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/xhJS0mCel2eQ3Z9RjFIqR?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/gTj3PaVWbG2L9ZIieBVwO?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -5791,6 +5793,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/zDmYjCA1uuhcG9C11NzBP?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-07T22:09:35Z",
+    "account_id": "5",
+    "lens_name": "Obsidian Archangel",
+    "lens_id": "34cdfe5a-48e5-4366-89b6-886a22841f0e",
+    "checkpoint_id": "06ac6c02-9a8e-7a17-8000-8f5d41f58955",
+    "prompt": "A heavy, blackened iron thorn halo floats weightlessly above the user, adorned with shifting raven feathers. Mouth opening triggers an explosive vortex of dark, chaotic feathers and violet lightning arcs. Smiling pulses cold, sharp violet rim lighting across the cheekbones. Raising eyebrows extends the thorny spires outward. Tilting the head creates a fluid, organic sway in the drifting dark plumage. PBR metal textures, cinematic contrast. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "cosplay",
+      "dark",
+      "angel",
+      "goth",
+      "selfie",
+      "glow",
+      "vintage"
+    ],
+    "archetype": "fallen_archangel_halo",
+    "channel_id": "12",
+    "visual_hook": "The stark, high-contrast silhouette of a jagged obsidian thorn halo provides an instant, premium dark fantasy status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/9SCZgydYZ9m78U1ZyepZt?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/3NNdw1wCzPgWBIjgCAA2K?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/laOjJZxS4RrC3wUQcV5Im?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
