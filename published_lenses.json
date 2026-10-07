@@ -5649,7 +5649,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/Ow5faqDExwVFuZnlxLBFl?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/d5KclzOcWfYvyKQnq1dbe?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -5761,6 +5761,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/l1BkIr74uANALLVKqCaQX?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/2FkQ13vD0LsEQIKCUnEpf?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-07T21:40:52Z",
+    "account_id": "4",
+    "lens_name": "Impact Guard",
+    "lens_id": "d337a89d-f917-4ed1-893e-1def901939ae",
+    "checkpoint_id": "06ac6b8b-d6f4-7ec5-8000-2f8f5f423b37",
+    "prompt": "Sleek ergonomic matte-black and crimson padded combat headguard framing forehead and temples with reinforced titanium cheek shields. MouthOpen delivers devastating kinetic sonic shockwave burst forward with electric sweat sparks and floating KO impact badge. Smile triggers championship belt shimmer. EyebrowRaise pulses crimson guard rims. HeadTilt dodges incoming phantom punches. Authentic brushed titanium, PBR craft, 3-point contrast lighting. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "filter",
+      "headguard",
+      "visor",
+      "sports",
+      "selfie",
+      "trendy",
+      "action"
+    ],
+    "archetype": "cyber_boxing_headguard",
+    "channel_id": "17",
+    "visual_hook": "The instant 0.2s silhouette of a high-contrast, padded combat headguard frames the face, signaling readiness for action.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/VEbUnl8vUXgRFREW5mDKi?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/b4A26a8m6aUK5Pjsnwzob?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/zDmYjCA1uuhcG9C11NzBP?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
