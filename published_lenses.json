@@ -5446,7 +5446,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/b2NLTB74ybkr0cSCufbTt?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/Ab6dV4rYpMQOB8Fl4e5BM?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -5560,6 +5560,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/UV2tc5hspqDnizrt6o0A2?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/yH5EIJzawc4kilU53ZqBj?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-07T06:57:03Z",
+    "account_id": "3",
+    "lens_name": "Cosmic Chrome Rim",
+    "lens_id": "dca739c1-2f7d-4cf2-bb65-10f4ab942515",
+    "checkpoint_id": "06ac5ea0-f171-7cf8-8000-7653a0764c89",
+    "prompt": "Aerodynamic wrap-around chrome shades with liquid mercury finish resting at the temples. Polarized lenses reflect deep space spiral galaxies. Mouth open triggers a blinding supernova stellar flare and floating golden starburst sparks. Smile activates vibrant cyan frame edge lighting. Eyebrow raise pulses violet laser glints through the glass. Head tilt catches brilliant ray-traced reflections. High-fashion sci-fi eyewear, zero UI, pure PBR. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "sunglasses",
+      "glam",
+      "makeup",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "starlight_cosmic_shades",
+    "channel_id": "10",
+    "visual_hook": "The striking, high-contrast silhouette of liquid mercury chrome shades creates an instant premium futuristic status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/wlstsYkxJC1vqvkh50JqM?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/DMFy6RW6tOpLAiToiIJhH?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/ls2EYoYfFdNbg16KWsDc1?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
