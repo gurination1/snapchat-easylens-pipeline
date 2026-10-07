@@ -5504,7 +5504,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/5eSYrOMcYs1pMKpPJNWYG?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/zpi82iXnLccmwEpthEYCf?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -5621,6 +5621,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/pIv7eBAuTLOJpa74JkpQa?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-07T15:28:51Z",
+    "account_id": "4",
+    "lens_name": "Ink Power Surge",
+    "lens_id": "c426d63d-c9a0-4e68-a0c9-3bc3b938742c",
+    "checkpoint_id": "06ac6617-1690-7084-8000-545bc082d5cb",
+    "prompt": "Dynamic black and white manga headband featuring sharp ink-brushed speedlines and authentic halftone dot screentone textures across the forehead. Opening mouth triggers a massive stylized comic impact burst with flying Japanese kanji onomatopoeia. Smiling sharpens ink contours. Raising eyebrows accelerates speedline zoom. Head tilt shifts the perspective. High-contrast 3D Shonen aesthetic, clean ink style, zero overlays. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "anime",
+      "manga",
+      "power",
+      "action",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "manga_speedline_impact_headband",
+    "channel_id": "16",
+    "visual_hook": "The instant 0.2s silhouette of high-contrast, hand-inked manga speedlines framing the face triggers immediate anime-style excitement.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/fHK76VZMlC9IWJq2cAJVM?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Ow5faqDExwVFuZnlxLBFl?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/d5KclzOcWfYvyKQnq1dbe?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
