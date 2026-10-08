@@ -5939,5 +5939,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/4EJ361rINRitwT5jXNV2F?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-08T07:45:45Z",
+    "account_id": "5",
+    "lens_name": "Poseidon Trident",
+    "lens_id": "a09b28ad-8375-4f70-970f-31e2f74b71c4",
+    "checkpoint_id": "06ac7467-d15d-7c1f-8000-24a09991396d",
+    "prompt": "Wearable trident circlet crafted from oxidized bronze and weathered sea-glass, resting elegantly upon the forehead. Features floating bioluminescent jellyfish motes. Mouth opening triggers a surging abyssal vortex of water spray. Smiling ignites piercing aquamarine eye sparks. Eyebrow raises generate a tidal storm crest. Head tilting ripples underwater caustics across the face. Hyper-realistic materials. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "ocean",
+      "trident",
+      "mythology",
+      "selfie",
+      "trendy",
+      "makeup"
+    ],
+    "archetype": "poseidon_ocean_trident",
+    "channel_id": "8",
+    "visual_hook": "The bold silhouette of a weathered bronze trident crown framing the forehead provides an instant, majestic oceanic status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/3EQYryFYtej7fcCmW1UVl?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/86lzqSTLZ0pRrp1F3on8D?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/OKwUFPqZzlk9OjgSCQF7X?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
