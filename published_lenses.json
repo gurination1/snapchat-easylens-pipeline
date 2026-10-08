@@ -6082,5 +6082,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/OdkW4q5B9OK0DQLgxdSYb?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-08T21:46:38Z",
+    "account_id": "5",
+    "lens_name": "Solar Orbit Crown",
+    "lens_id": "85efee54-777f-49ee-8bdf-16307efd0276",
+    "checkpoint_id": "06ac80bc-90ab-7861-8000-e3d906e2244f",
+    "prompt": "Photorealistic 3D celestial planetarium orbiting user head with radiant Sun at crown, ringed Saturn, swirling Jupiter, and Earth traversing smooth elliptical orbits with floating stardust. Opening mouth triggers supernova starburst with expanding asteroid ring shockwave; smiling illuminates golden solar flare from brow; eyebrow raise expands planetary orbits; head tilt shifts ring planes. Kinetic space wonder, no UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "halo",
+      "space",
+      "makeup",
+      "selfie",
+      "trendy",
+      "viral"
+    ],
+    "archetype": "interstellar_orbiting_planetarium",
+    "channel_id": "10",
+    "visual_hook": "The instant 0.2s silhouette of a complex, high-fidelity mechanical orrery framing the forehead creates an elite, futuristic celestial status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/RpgQ1rFlZVO3bG3NBHENr?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/WfiYvTkyN3UoVYCJdCLLe?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/akDqAn2lushPzQ6WwN8yE?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
