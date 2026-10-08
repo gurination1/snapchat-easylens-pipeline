@@ -6111,5 +6111,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/akDqAn2lushPzQ6WwN8yE?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-08T22:26:44Z",
+    "account_id": "2",
+    "lens_name": "Plush Kitty Ears",
+    "lens_id": "5018e1d5-c8f8-4cdc-9a2b-cbc11b4083e0",
+    "checkpoint_id": "06ac814b-d0fe-7dd0-8000-84bcbf999e61",
+    "prompt": "Ultra-soft plush anime cat ears anchor securely to the hairline with high-fidelity fur texture. Twin dangling 24k gold jingle bells hang gracefully near the jawline. Mouth open triggers a flurry of floating pastel pawprint particles. Smiling activates rapid ear twitches with chime sound effects. Eyebrow raise wiggles ear tips. Head tilt causes physics-based swaying of golden bells. Pure kawaii aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "cute",
+      "cat",
+      "kitty",
+      "ears",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "fluffy_anime_cat_ears",
+    "channel_id": "13",
+    "visual_hook": "The instant 0.2s silhouette of fluffy, high-fidelity cat ears creates an immediate, recognizable kawaii status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/WTYdFppeqx7R6ToQiIX7H?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/TbQJQ2xPgj4dx9lvXIokm?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/pOtA1pLLvu7kfetFpzuR3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
