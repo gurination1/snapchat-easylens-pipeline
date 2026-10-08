@@ -6053,5 +6053,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/JGScdOdpOHA3Z9hIHUonk?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-08T21:14:06Z",
+    "account_id": "4",
+    "lens_name": "Velvet Rose Crown",
+    "lens_id": "db2ef201-d116-4546-a77f-60ac0e69222a",
+    "checkpoint_id": "06ac8037-ef28-7a02-8000-06d0febbb629",
+    "prompt": "Intricately sculpted garden diadem of deep crimson and blush roses with gold-tipped thorns contouring temples and brow. Ray-traced water droplets cling to velvety petals. Opening mouth releases swirling shower of soft falling rose petals; smiling activates dewy English rose cheek flush and glossy lip shine; eyebrow raise unfolds rosebuds into full blossoms; head tilt catches sparkling morning dew glints. Regal romantic luxury. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "rose",
+      "floral",
+      "crown",
+      "selfie",
+      "vintage",
+      "trendy"
+    ],
+    "archetype": "royal_english_rose_diadem",
+    "channel_id": "14",
+    "visual_hook": "The instant 0.2s silhouette of a lush, hyper-realistic crimson rose diadem framing the forehead provides an immediate, premium romantic status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/H75VuRSiYRyf9WoEyGAq9?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/ZGReKw84EcM2orWZNdt6Q?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/OdkW4q5B9OK0DQLgxdSYb?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
