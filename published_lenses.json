@@ -5765,7 +5765,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/l1BkIr74uANALLVKqCaQX?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/2FkQ13vD0LsEQIKCUnEpf?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -5880,6 +5880,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/dZH7rP4z8RpLGK1p4dUyW?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-08T06:37:24Z",
+    "account_id": "1",
+    "lens_name": "Monarch Sun Halo",
+    "lens_id": "db183a9e-4c51-4a33-b974-f211da73138b",
+    "checkpoint_id": "06ac736f-7427-79c3-8000-850fbc4cc0b4",
+    "prompt": "A delicate, high-fidelity crown of sculpted Monarch butterflies rests across the brow. Each wing features translucent amber veining and physical 24k gold leaf accents. Opening the mouth triggers a kinetic swarm of butterflies that orbit the head in a swirling vortex. Smiling casts a warm golden-hour cheek sheen with radiant wing-dust. Eyebrow raise flutters wings in unison. Head tilt reflects light through thin membranes. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "butterfly",
+      "nature",
+      "crown",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "monarch_butterfly_tiara",
+    "channel_id": "14",
+    "visual_hook": "The striking, high-contrast silhouette of sculpted amber wings framing the forehead provides an instant, premium ethereal status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/uINOahSkpaQYMOojWiPi3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/rFUg7unl5hGb167siIV6o?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/OtNlBGcnO0p49gymOn3GR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
