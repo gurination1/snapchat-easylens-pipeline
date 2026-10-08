@@ -5794,7 +5794,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/b4A26a8m6aUK5Pjsnwzob?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/zDmYjCA1uuhcG9C11NzBP?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -5909,6 +5909,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/OtNlBGcnO0p49gymOn3GR?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-08T07:14:23Z",
+    "account_id": "4",
+    "lens_name": "Crystal Aura Glow",
+    "lens_id": "c4b9df0a-d8cf-47a3-bfc3-f3255eb22a92",
+    "checkpoint_id": "06ac73f0-33ec-751c-8000-04dd5eaa2f15",
+    "prompt": "Faceted diamond rhinestones precision-mapped along eyebrow arches and cheekbones. PBR caustic light refractions with 3-point studio lighting. Opening mouth triggers a brilliant prismatic starburst flare. Smiling intensifies dewy lavender skin shimmer. Raising eyebrows causes diamond brow tips to glow with white light. Tilting head catches shifting fiery rainbow caustic fire reflections. Editorial red-carpet beauty, 100% immersive, no UI, zero overlay. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "rhinestone",
+      "glam",
+      "makeup",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "euphoria_crystal_rhinestones",
+    "channel_id": "9",
+    "visual_hook": "The instant 0.2s silhouette of sparkling, high-fidelity diamond constellations framing the eyes creates an elite, luxury status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/frUa6qwcS8pt4pCvSyzgD?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/BWu0aBQy6v9Ajtxiw0oU3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/4EJ361rINRitwT5jXNV2F?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
