@@ -6013,7 +6013,9 @@
       "anime",
       "clouds",
       "spirit",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -6138,6 +6140,33 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/TbQJQ2xPgj4dx9lvXIokm?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/pOtA1pLLvu7kfetFpzuR3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-08T22:59:57Z",
+    "account_id": "3",
+    "lens_name": "Ghibli",
+    "lens_id": "4bc830af-43db-4d4c-8284-17d80a1dca09",
+    "checkpoint_id": "06ac81ce-24f8-74c7-8000-1dcbd0a55b14",
+    "prompt": "Hand-painted Ghibli watercolor cumulus cloud crown resting above hairline with floating soot spirit dust and celestial spirit serpent coils. Soft cel-shaded gouache textures with warm 2800K sunlight ray-traced highlights. Opening mouth erupts swirling sakura petal cyclone; smiling spawns cheerful soot sprites around temples; head tilt shifts floating spirit dust. Pure 3D PBR fantasy, zero strobing, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "ghibli",
+      "watercolor",
+      "anime",
+      "clouds",
+      "spirit",
+      "pbr"
+    ],
+    "archetype": "",
+    "channel_id": "",
+    "visual_hook": "The instant 0.2s silhouette of a weightless, iridescent pearl halo framing the forehead creates an elite, luxury status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/QnWcgYvXjTZcqS3naIswy?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/OeJG9voqzYxEymHXYVske?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/5fjzqP4NjxagAe91IZLJX?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
