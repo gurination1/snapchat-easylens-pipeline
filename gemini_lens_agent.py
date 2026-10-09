@@ -356,7 +356,7 @@ CHANNEL_PROMPT_MATRICES = {
             "motion_intensity": 0.70
         },
         "forbidden_cross_contamination": ['cartoon memes', 'crying coins', 'cyberpunk neon HUDs', 'monster horns', 'cheap plastic stickers', 'grotesque elements', 'developer UI sliders'],
-        "tag_pool": ['film', '35mm', 'parisian', 'couture', 'crown', 'gold', 'pearls', 'luxury'],
+        "tag_pool": ['jwellery', 'jewelry', 'gold', 'accessories', 'aesthetic', 'cinematic', 'trending', 'viral', 'couture', 'luxury', 'pearls'],
         "archetypes": [
             {
                 "id": "haute_baroque_gold",
@@ -1917,12 +1917,12 @@ def generate_lens_prompt(account_id: str = "1", custom_instructions: str = "", e
                         if not result.get("trigger_sequence"):
                             result["trigger_sequence"] = selected_archetype.get("primary_trigger", "MouthOpen / Smile / EyebrowRaise / HeadTilt")
 
-                        banned_tags = {"pbr", "vfx", "mouthopen", "mouth_open", "3d", "filigree", "diadem"}
+                        banned_tags = {"pbr", "vfx", "mouthopen", "mouth_open", "3d", "filigree", "diadem", "portra400", "toroid", "liquidplatinum"}
                         raw_tags = [re.sub(r'[^a-zA-Z0-9]', '', t)[:15].lower() for t in result.get("tags", []) if t]
                         filtered_tags = [t for t in raw_tags if t not in banned_tags]
                         existing_tags = set(filtered_tags)
                         sanitized_pool = [re.sub(r'[^a-zA-Z0-9]', '', t)[:15].lower() for t in spec.get("tag_pool", []) if t not in banned_tags]
-                        viral_defaults = ["aesthetic", "filter", "cute", "glow", "makeup", "selfie", "glam", "viral", "horns", "crown"]
+                        viral_defaults = ["aesthetic", "trending", "cinematic", "filter", "cute", "viral", "glam", "makeup", "selfie", "gold", "jwellery", "crown"]
                         for t in sanitized_pool + viral_defaults:
                             if t and t not in existing_tags and t not in banned_tags:
                                 filtered_tags.append(t)

@@ -187,7 +187,10 @@
       "visor",
       "rave",
       "music",
-      "audioreactive"
+      "audioreactive",
+      "aesthetic",
+      "filter",
+      "cute"
     ],
     "visual_hook": "The instant, seamless snap of high-fidelity titanium and glass onto the user's face creates an immediate 'future-tech' transformation.",
     "has_preview_video": true,
@@ -2880,10 +2883,10 @@
       "couture",
       "goldleaf",
       "pearls",
-      "portra400",
       "luxury",
       "aesthetic",
-      "filter"
+      "filter",
+      "cute"
     ],
     "archetype": "",
     "channel_id": "",
@@ -3340,14 +3343,14 @@
     "checkpoint_id": "06abe197-203e-7909-8000-57d3019aef2a",
     "prompt": "Mirrored liquid platinum teardrop sculptures frozen weightlessly along cheekbones with a floating surreal chrome toroid halo above head. Anisotropic fluid reflections with ray-traced shadows. Opening mouth releases liquid metal ripple shockwave radiating across cheek sculptures; smiling inverts chrome surface reflections with chromatic prism sheen. Photosensitive safe, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
     "tags": [
-      "liquidplatinum",
       "tears",
-      "toroid",
       "surreal",
       "chrome",
       "aesthetic",
       "filter",
-      "cute"
+      "cute",
+      "trending",
+      "cinematic"
     ],
     "archetype": "",
     "channel_id": "",
@@ -4413,14 +4416,14 @@
     "checkpoint_id": "06ac1f08-5006-798a-8000-7f3e9f02402b",
     "prompt": "Mirrored liquid platinum teardrop sculptures frozen weightlessly along cheekbones with a floating surreal chrome toroid halo above head. Anisotropic fluid reflections with ray-traced shadows. Opening mouth releases liquid metal ripple shockwave radiating across cheek sculptures; smiling inverts chrome surface reflections with chromatic prism sheen. Photosensitive safe, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
     "tags": [
-      "liquidplatinum",
       "tears",
-      "toroid",
       "surreal",
       "chrome",
       "aesthetic",
       "filter",
-      "cute"
+      "cute",
+      "trending",
+      "cinematic"
     ],
     "archetype": "",
     "channel_id": "",

@@ -353,7 +353,7 @@ class EasyLensClient:
         if not tags:
             return []
         import re
-        banned = {"pbr", "vfx", "mouthopen", "mouth_open", "3d", "filigree", "diadem"}
+        banned = {"pbr", "vfx", "mouthopen", "mouth_open", "3d", "filigree", "diadem", "portra400", "toroid", "liquidplatinum"}
         sanitized = []
         for t in tags:
             if not isinstance(t, str):
@@ -364,7 +364,7 @@ class EasyLensClient:
             if len(sanitized) >= 8:
                 break
         # If tags dropped below 5 due to filtering, top up with viral consumer tags
-        for fallback_tag in ["aesthetic", "filter", "cute", "glow", "makeup", "selfie", "glam", "viral"]:
+        for fallback_tag in ["aesthetic", "filter", "cute", "trending", "cinematic", "viral", "glam", "makeup", "selfie", "gold", "jwellery"]:
             if len(sanitized) >= 8:
                 break
             if fallback_tag not in sanitized:
