@@ -6553,5 +6553,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/1vIzVCCRDDUuixS97BnzT?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-09T23:22:15Z",
+    "account_id": "2",
+    "lens_name": "Kawaii Bunny Hood",
+    "lens_id": "949558ab-f771-4345-8129-5ee9f342dea1",
+    "checkpoint_id": "06ac9734-4814-7c1c-8000-241cfb6a5e5f",
+    "prompt": "Wearable pastel pink velvet bunny hood sculpted atop the head with soft fleece micro-texture. Mouth opening spawns a vertical fountain of bouncing red strawberries and gold star dust. Smiling triggers an animated nose twitch with glowing rosy cheek blush bloom. Eyebrow raise causes floppy bunny ears to lift instantly. Head tilt drapes plush velvet ears across shoulders. Immersive high-fidelity 3D anime aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "cute",
+      "bunny",
+      "hood",
+      "makeup",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "lop_eared_bunny_hood",
+    "channel_id": "13",
+    "visual_hook": "The immediate 0.2s silhouette of oversized, ultra-soft, pastel-pink bunny ears provides an irresistible, high-fashion kawaii status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/DJRbw6RdgvJxz02HSrHJp?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/hPs3iI8BSTM4jjMlF7eas?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/QFYvmjWGUbCnucwDulyEk?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
