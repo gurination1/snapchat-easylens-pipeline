@@ -6241,11 +6241,13 @@
     "prompt": "Sculpted obsidian dragon horn crown anchored strictly to hairline and temples with liquid 24k gold filigree and caustic ruby gems, PBR anisotropic metallic reflections, 3-point contrast 6500K/2800K lighting with ray-traced contact shadows. Mouth open erupts turbulent emerald flame torrent with floating amber sparks; smiling ignites alpha-fading golden runic eye halos. Depth occlusion enabled, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
     "tags": [
       "dragon",
-      "3d",
       "headpiece",
       "horns",
       "fantasy",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "archetype": "",
     "channel_id": "",
@@ -6370,6 +6372,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/6xkXLceNCNOYxXm5bzKOa?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/AxjoiRhcIYtdQGALxTBRe?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-09T09:39:17Z",
+    "account_id": "5",
+    "lens_name": "Cosmic Fortune",
+    "lens_id": "8e349d67-660e-4203-9ef0-65b04d788886",
+    "checkpoint_id": "06ac8b32-ad88-7797-8000-a94d6e94974e",
+    "prompt": "Ornate gilded celestial wheel hovering above forehead featuring intricate zodiac icons. High-fidelity 24k gold leaf textures with caustic light reflections. Mouth open triggers high-speed kinetic spin with blurring light streaks. Smile locks the ticker on a fortune, bursting golden trumpet fanfare confetti. Head tilt activates a soft, glowing starlight aura. Eyebrow raise flashes ancient cosmic runes in bright white light across the face. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "crown",
+      "halo",
+      "fortune",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "celestial_tarot_wheel",
+    "channel_id": "11",
+    "visual_hook": "The bold 0.2s silhouette of a spinning, ornate celestial wheel creates an elite, mysterious fortune-teller status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/CD1Sc4aiZiCOAY1H8JSEP?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/qpfTQlJUQzqEDbWEr8DHr?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/u37wlpuBd52JsHw7y5Nce?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
