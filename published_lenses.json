@@ -6113,7 +6113,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/WfiYvTkyN3UoVYCJdCLLe?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/akDqAn2lushPzQ6WwN8yE?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -6227,6 +6227,33 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/Xfrppljmm96Nm4VUAPx7g?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/epeGlJyVGyVxXINQF9G0i?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-09T02:49:42Z",
+    "account_id": "5",
+    "lens_name": "Aether Dragon",
+    "lens_id": "a152b811-ceae-4be0-aaef-19f164074056",
+    "checkpoint_id": "06ac8533-2795-75d1-8000-7eea6ea80f84",
+    "prompt": "Sculpted obsidian dragon horn crown anchored strictly to hairline and temples with liquid 24k gold filigree and caustic ruby gems, PBR anisotropic metallic reflections, 3-point contrast 6500K/2800K lighting with ray-traced contact shadows. Mouth open erupts turbulent emerald flame torrent with floating amber sparks; smiling ignites alpha-fading golden runic eye halos. Depth occlusion enabled, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "dragon",
+      "3d",
+      "headpiece",
+      "horns",
+      "fantasy",
+      "pbr"
+    ],
+    "archetype": "",
+    "channel_id": "",
+    "visual_hook": "The high-contrast silhouette of a weathered ninja headband and floating steel blades creates an instant, edgy warrior status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/M1ukFKS5nIJtr9D4ubAjh?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/5ARNJ3dYGUFBLxmEWupmL?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/16YYYYKSKFFC5gEnFi7au?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
