@@ -6314,5 +6314,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/FbYO8rk8AKAfFCQftrqrt?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-09T08:34:54Z",
+    "account_id": "1",
+    "lens_name": "Shadow Shinobi",
+    "lens_id": "71d0dcfe-c2a3-4437-93df-e3bf5afcef26",
+    "checkpoint_id": "06ac8a3d-2cb5-7ddb-8000-10a7224dc241",
+    "prompt": "Forged charcoal steel ninja forehead plate on worn dark navy cloth headband with a deep-etched leaf crest and two floating shadow kunai blades orbiting temples. Opening mouth triggers a dense white smoke poof with flying explosive paper tags. Smiling makes the steel plate glint with high-contrast ray-traced reflections. Raising eyebrows spins the floating kunai blades rapidly. Tilting head catches crisp metallic highlights on the brushed iron surfaces. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "cosplay",
+      "ninja",
+      "headband",
+      "makeup",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "ninja_shadow_clone_headband",
+    "channel_id": "16",
+    "visual_hook": "The instant 0.2s silhouette of a rugged, weathered steel ninja headband creates an immediate, high-impact warrior status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/csxmZ9U0yoPXzsf9IwmU0?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/CiGCys2bPDZ67ZNUpS7Iq?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/6C8w2b11VyXzrxTrxB9IY?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
