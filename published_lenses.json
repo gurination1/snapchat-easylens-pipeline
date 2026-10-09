@@ -6084,7 +6084,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/ZGReKw84EcM2orWZNdt6Q?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/OdkW4q5B9OK0DQLgxdSYb?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -6198,6 +6198,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/YgDeWUpd1NYgxkUFMwowP?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/pTYGoNJKXaLCFk0Ng4c43?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-09T02:15:39Z",
+    "account_id": "4",
+    "lens_name": "Groovy Lava Crown",
+    "lens_id": "bf695359-0a67-4dd9-83e0-9f893e3e1347",
+    "checkpoint_id": "06ac84b4-e85f-7a7c-8000-f237816b04c0",
+    "prompt": "A stunning 70s psychedelic flower crown crafted from swirling liquid lava glass in warm mustard, sunset orange, and magenta. The crown rests elegantly on the forehead with high-contrast ray-traced caustics. Mouth open triggers a burst of floating kaleidoscope flower petals. A smile adds a warm retro sunset halation to the skin. Eyebrow raise blooms vibrant liquid petals, while head tilt initiates a rhythmic ripple effect through the lava glass. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "retro",
+      "flower",
+      "vintage",
+      "boho",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "psychedelic_70s_groove",
+    "channel_id": "7",
+    "visual_hook": "The instant 0.2s silhouette of a bold, swirling liquid-lava flower crown creates a premium, hypnotic bohemian status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/nPXw30SapKULiDeNEjkNz?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Xfrppljmm96Nm4VUAPx7g?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/epeGlJyVGyVxXINQF9G0i?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
