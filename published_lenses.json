@@ -6466,5 +6466,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/vNV1Urhx7OojWPd9VIQcH?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-09T21:31:44Z",
+    "account_id": "1",
+    "lens_name": "Oceanic Diadem",
+    "lens_id": "05201b2e-69ae-4999-a792-3a13b7e9ab9f",
+    "checkpoint_id": "06ac959e-6ffd-7e25-8000-18ab14bc32ac",
+    "prompt": "An iridescent mother-of-pearl scallop shell tiara sits atop the forehead, adorned with floating baroque sea-gems. Opening mouth triggers a torrent of crystalline water droplets and bubbles. Smiling creates a radiant, wet-look skin sheen with warm sunlight reflections. Raising eyebrows expands the central shell crest outward. Tilting the head causes the dangling gems to sway with physical inertia. Pure 3D geometry. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "crown",
+      "makeup",
+      "sea",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "aphrodite_seafoam_pearl",
+    "channel_id": "8",
+    "visual_hook": "The striking, high-contrast silhouette of the iridescent shell tiara provides an instant, high-fashion oceanic status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/njUEmsSyXpl2HFhTwhYDP?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/FOlinQEYleDdx1lAdxSXG?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/C1G4h1Qn6fjMxjWKRZXwL?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
