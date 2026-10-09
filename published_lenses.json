@@ -6524,5 +6524,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/OxKSv3eVGrYKf22s0NoAT?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-09T22:43:33Z",
+    "account_id": "5",
+    "lens_name": "Coin Blitz",
+    "lens_id": "4acca87b-e8e5-41e1-9c34-1876339e6b96",
+    "checkpoint_id": "06ac96af-ebb5-7ac8-8000-dd3b5456a108",
+    "prompt": "Retro-futuristic brushed titanium cyber-visor anchoring to forehead, with bold emissive neon green and magenta rim lighting. PBR metallic golden arcade coins tumble from above, reflecting key light and contrasting 6500K/2800K rim lighting. MouthOpen triggers an explosive torrent of +100 COMBO point bursts and golden sparkle dust. Smile activates a vibrant rainbow jackpot starburst flare. EyebrowRaise initiates a double-coin frenzy. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "filter",
+      "visor",
+      "coins",
+      "neon",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "arcade_neon_coin_catcher",
+    "channel_id": "6",
+    "visual_hook": "A bold, high-contrast cyber-visor with emissive neon edges and tumbling golden coins creates an instant, gamified status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/3E9W9HP67L6Syx9RyFRSR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/LS8rVz789Y6pdC7cRPoTt?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/1vIzVCCRDDUuixS97BnzT?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
