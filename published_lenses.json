@@ -6403,5 +6403,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/u37wlpuBd52JsHw7y5Nce?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-09T10:13:59Z",
+    "account_id": "2",
+    "lens_name": "Cupid Heart Radar",
+    "lens_id": "720c924e-9641-41bc-89c1-b3ce19eab662",
+    "checkpoint_id": "06ac8bb0-2935-7075-8000-acf874705c57",
+    "prompt": "Sculpted 18k rose-gold diadem with miniature wings at hairline. Translucent ruby glass hearts orbit temples. Opening mouth fires a glowing golden love-arrow into a blooming explosion of pink heart confetti. Smiling triggers cascading rosy cheek blush and shimmering heart pupil glints. Eyebrow raise accelerates orbiting heart velocity. Head tilt catches rich metallic luster. High-fashion PBR aesthetic, zero UI, pure lens. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "heart",
+      "love",
+      "glam",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "cupid_arrow_heart_diadem",
+    "channel_id": "15",
+    "visual_hook": "The instant 0.2s silhouette of a premium rose-gold diadem and orbiting ruby hearts creates an elite, high-fashion romantic status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/7dwL9Zg8Nec963pby9vyF?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/MtnFHbmnrdps0Sctjy2Am?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Ij3xo8io9ZN9TmWMKfcRB?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
