@@ -6038,11 +6038,13 @@
     "prompt": "Sculpted obsidian dragon horn crown anchored strictly to hairline and temples with liquid 24k gold filigree and caustic ruby gems, PBR anisotropic metallic reflections, 3-point contrast 6500K/2800K lighting with ray-traced contact shadows. Mouth open erupts turbulent emerald flame torrent with floating amber sparks; smiling ignites alpha-fading golden runic eye halos. Depth occlusion enabled, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
     "tags": [
       "dragon",
-      "3d",
       "headpiece",
       "horns",
       "fantasy",
-      "pbr"
+      "aesthetic",
+      "filter",
+      "cute",
+      "glow"
     ],
     "archetype": "",
     "channel_id": "",
@@ -6168,6 +6170,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/5fjzqP4NjxagAe91IZLJX?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-09T01:47:12Z",
+    "account_id": "1",
+    "lens_name": "Neon Jet Racer",
+    "lens_id": "b7cac370-9545-4a13-a4b9-ddc2ada11fce",
+    "checkpoint_id": "06ac8444-b0d8-7115-8000-052d2d685e5b",
+    "prompt": "Wearable aerodynamic cyber-speeder anchored above brow. Head tilt left or right banks the craft with kinetic thruster trails. Mouth open triggers intense nitro-warp with chromatic speed lines. Smile executes sonic blast ring to clear floating neon obstacles. Eyebrow raise flares dual ion engine exhausts. Brushed titanium finish with 6500K rim lighting. No UI. High-velocity arcade racing, full screen AR. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "retro",
+      "racer",
+      "speed",
+      "neon",
+      "selfie",
+      "trendy",
+      "viral"
+    ],
+    "archetype": "tilt_speed_racer",
+    "channel_id": "6",
+    "visual_hook": "The bold silhouette of a sleek, glowing cyber-speeder hovering above the brow creates an instant, high-tech status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/TupLmznWWtkmMTHiMZwCI?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/YgDeWUpd1NYgxkUFMwowP?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/pTYGoNJKXaLCFk0Ng4c43?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
