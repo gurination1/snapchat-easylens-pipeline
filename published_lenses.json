@@ -6142,7 +6142,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/TbQJQ2xPgj4dx9lvXIokm?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/pOtA1pLLvu7kfetFpzuR3?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -6254,6 +6254,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/5ARNJ3dYGUFBLxmEWupmL?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/16YYYYKSKFFC5gEnFi7au?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-09T03:23:02Z",
+    "account_id": "2",
+    "lens_name": "Magma Crown",
+    "lens_id": "a853b057-375d-4159-bde3-ad05686592f3",
+    "checkpoint_id": "06ac85ae-8646-76f3-8000-dd0569b19ac3",
+    "prompt": "Sculpted molten obsidian and 24k gold diadem resting on brow with looping incandescent flares and floating embers. Opening mouth erupts pressurized crimson fire vortex shooting forward. Smiling illuminates burning amber eye glare. Eyebrow raise loops flares higher into crown. Head tilt wafts convective heat waves. High-fashion PBR materials with ray-traced shadows. Zero HUD. Pure wearable 3D majesty. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "crown",
+      "gold",
+      "fire",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "solar_fire_elemental_diadem",
+    "channel_id": "18",
+    "visual_hook": "The instant 0.2s silhouette of a bold, burning 24k gold and obsidian diadem creates an elite, high-fashion elemental status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/gVTntY8n1GuxEG8VqLlgT?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/wsZkZfpdJgMnG9OSYUF25?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/ldOmQBKey5hq77L06pqlY?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
