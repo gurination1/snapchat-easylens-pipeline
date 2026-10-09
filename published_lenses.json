@@ -6495,5 +6495,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/C1G4h1Qn6fjMxjWKRZXwL?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-09T22:11:51Z",
+    "account_id": "4",
+    "lens_name": "Phoenix Solar",
+    "lens_id": "03e0024d-6841-4c45-bfb7-c533a6db4d9e",
+    "checkpoint_id": "06ac9636-a944-789a-8000-3a734f84b13e",
+    "prompt": "Sculpted molten 24k rose-gold phoenix diadem fitted to hairline with radiant solar ember crest. PBR feathered iridescent wings contouring temples with subsurface scattering and 3-point contrast rim lighting. Opening mouth unleashes blinding solar plasma plumage burst and rising golden ash particles; smiling triggers brilliant sun-flare corona around brow. Depth occlusion, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "phoenix",
+      "firebird",
+      "crown",
+      "fantasy",
+      "gold",
+      "aesthetic",
+      "trending",
+      "viral"
+    ],
+    "archetype": "",
+    "channel_id": "",
+    "visual_hook": "The instant 0.2s silhouette of oversized, soft-textured bunny ears creates an irresistible, high-fashion kawaii status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/XVidHn0rBpvMMlriNXu00?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/va4IqqnyAQWHVUffi3NF6?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/OxKSv3eVGrYKf22s0NoAT?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
