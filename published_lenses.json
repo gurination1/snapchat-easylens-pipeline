@@ -6343,5 +6343,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/6C8w2b11VyXzrxTrxB9IY?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-09T09:08:20Z",
+    "account_id": "4",
+    "lens_name": "Gold Laurels",
+    "lens_id": "44305f9d-dba7-411b-afa0-8181fa0020d1",
+    "checkpoint_id": "06ac8abc-0481-752d-8000-8c4bae356697",
+    "prompt": "Heavy beaten 24k gold Olympian laurel leaf wreath fitted firmly to hairline with floating diamond champion stars above crown, rendered with authentic PBR materials, 3-point contrast lighting (key, 6500K rim, 2800K rim) and ray-traced contact shadows. MouthOpen detonates explosive stadium victory confetti cannons showering shimmering gold and platinum foil particles; Smile triggers warm golden stadium floodlight bloom across face; EyebrowRaise flares. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "crown",
+      "laurel",
+      "gold",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "championship_victory_laurel",
+    "channel_id": "17",
+    "visual_hook": "The instant 0.2s silhouette of a heavy, beaten 24k gold Olympian laurel wreath creates an elite champion status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/GuenNtgoNqHZRJtW5GkkI?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/6xkXLceNCNOYxXm5bzKOa?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/AxjoiRhcIYtdQGALxTBRe?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
