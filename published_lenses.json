@@ -6843,5 +6843,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/ziIqPo9mckyOGkIXkZw20?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-10T11:29:46Z",
+    "account_id": "2",
+    "lens_name": "Frost Lily Crown",
+    "lens_id": "cc72051f-7fed-4d02-9d1e-8b6e9284889c",
+    "checkpoint_id": "06aca1df-de8a-7293-8000-ce0f546873dc",
+    "prompt": "Sculpted translucent ice lily flowers and frosted silver willow twigs rest at the hairline with caustic diamond dispersion. Mouth open triggers a flurry of sparkling crystalline snowflakes. Smiling illuminates radiant frosted cheekbone sheen and glacial blue eye reflections. Eyebrow raise causes frozen petals to bloom outward. Head tilt refracts rainbow light through ice. Winter fairytale elegance with pure 3D geometry. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "crown",
+      "flower",
+      "winter",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "crystalline_frost_lily_crown",
+    "channel_id": "14",
+    "visual_hook": "The striking silhouette of an intricate, light-refracting ice-lily tiara provides instant high-fashion winter elegance.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/s3292tYF48MWqAwALWNQM?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/rWgkLjIZ6a0cU1V2Gz3hj?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/F09mVjve2KLdXPLnCVbjo?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
