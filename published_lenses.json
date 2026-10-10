@@ -6669,5 +6669,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/SlPyJuiKsWI8eFYXMHWwK?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-10T04:40:49Z",
+    "account_id": "5",
+    "lens_name": "Tempest Crown",
+    "lens_id": "81629898-07ba-4bb7-8e44-bf93c0f9ca8a",
+    "checkpoint_id": "06ac9be1-2b56-7d86-8000-3ee2c12a90dc",
+    "prompt": "A regal, hyper-detailed diadem of brushed titanium floats above the hairline, featuring intricate lightning-bolt spires. Dark, swirling thundercloud particles rotate slowly around the crown. Mouth open triggers an explosive, blinding white lightning strike and a concussive shockwave. Smiling adds intense violet electric eye irises. Eyebrow raise extends glowing plasma shards upward. Head tilt accelerates the storm vortex rotation. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "filter",
+      "crown",
+      "storm",
+      "lightning",
+      "selfie",
+      "eyes",
+      "trendy"
+    ],
+    "archetype": "tempest_storm_thunder_diadem",
+    "channel_id": "18",
+    "visual_hook": "The striking, high-contrast silhouette of a jagged titanium lightning crown creates an instant, elite storm-god status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/s2cjGppeen1oB1WX9ecaa?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/TqD5HETqmshyhT3aorArx?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/gyUTlVKlAMiYgyBGAeu5h?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
