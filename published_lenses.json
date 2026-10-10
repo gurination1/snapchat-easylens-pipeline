@@ -6754,7 +6754,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/N2YS0Vv9KSHhY3LAa4y41?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/lTRsbtFKWWf32hXB2blom?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -6871,6 +6871,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/F09mVjve2KLdXPLnCVbjo?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-10T12:04:06Z",
+    "account_id": "3",
+    "lens_name": "Olympus Bolt",
+    "lens_id": "07824947-ff54-4fbb-bcb3-feb85aa801e6",
+    "checkpoint_id": "06aca266-870c-7632-8000-20fffbb0c683",
+    "prompt": "Wearable 24k gold laurel wreath forged from jagged lightning bolts, resting elegantly on the forehead. High-contrast brushed metal textures with ray-traced reflections. Opening mouth triggers a blinding celestial shockwave of crackling plasma. Smiling fills the eyes with electric blue radiance. Raising eyebrows causes the crown to spark with golden discharge. Tilting head releases cascading lightning embers. Pure 3D geometry, no overlays. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "crown",
+      "gold",
+      "lightning",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "zeus_olympian_thunder",
+    "channel_id": "8",
+    "visual_hook": "The 0.2s silhouette of a jagged, high-contrast gold lightning crown creates instant god-like status.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/2Aak2ZYpFplMR4RtQjfGa?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/LI0i6N4Caj6SWFrGNUdhr?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/ICKjOFOm6Bu7hjbbT3TiN?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
