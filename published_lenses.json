@@ -6727,5 +6727,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/qDqGA6fYj0lko6kZ0t1fV?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-10T05:53:14Z",
+    "account_id": "3",
+    "lens_name": "Apex Race Shield",
+    "lens_id": "9b86c2b4-9cf5-4b13-8ff2-2457ba638352",
+    "checkpoint_id": "06ac9cf4-d215-75cf-8000-97dade702525",
+    "prompt": "Matte woven carbon fiber headpiece contoured to the brow with embedded emerald tachometer LEDs. Opening mouth ignites a roaring kinetic exhaust burst and shimmering heat subtle bloom. Smiling triggers golden checkered flag spark showers. Eyebrow raise snaps the tachometer into redline intensity. Head tilt reveals polished ray-traced reflections on the frame. High-end motorsport luxury, zero UI, pure 3D. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "race",
+      "sport",
+      "speed",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "f1_carbon_racing_visor",
+    "channel_id": "17",
+    "visual_hook": "The aggressive 0.2s silhouette of a high-fashion carbon fiber racing frame commands instant visual authority.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/180bDahK5vJyiPJ8KmJiw?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/N2YS0Vv9KSHhY3LAa4y41?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/lTRsbtFKWWf32hXB2blom?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
