@@ -6580,7 +6580,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/hPs3iI8BSTM4jjMlF7eas?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/QFYvmjWGUbCnucwDulyEk?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -6697,6 +6697,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/gyUTlVKlAMiYgyBGAeu5h?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-10T05:16:52Z",
+    "account_id": "2",
+    "lens_name": "Spirit Totem Wheel",
+    "lens_id": "a8bf7bd7-00ff-4785-a9db-58348bf787f3",
+    "checkpoint_id": "06ac9c6e-100c-71f6-8000-c23fa192ce20",
+    "prompt": "A rotating gilded disc floats above the forehead, adorned with intricate, hand-carved mythic silhouettes. A smile halts the spinning totem, instantly manifesting ethereal spirit animal ears and radiant particle glows. Tilting the head shifts the perspective, while raising eyebrows accelerates the wheel. Opening the mouth triggers a powerful, volumetric burst of golden essence and radiant light, crowning the user with majestic power. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "filter",
+      "totem",
+      "animal",
+      "crown",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "spirit_animal_totem_wheel",
+    "channel_id": "11",
+    "visual_hook": "The instant identification of a spinning, high-contrast gold artifact creates a premium, mystical status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/tS7yiUJV629yHNph80ldQ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/GfMAlCesHXyucNOksuMKv?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/qDqGA6fYj0lko6kZ0t1fV?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
