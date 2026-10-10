@@ -6667,7 +6667,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/nfCcgdddCiy418RPhvmC2?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/SlPyJuiKsWI8eFYXMHWwK?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -6783,6 +6783,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/KwxiuvcaMAlBDfgusWCdR?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/CHssXIZtAxqSPLkzOaAF9?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-10T10:13:27Z",
+    "account_id": "4",
+    "lens_name": "Shonen Scouter",
+    "lens_id": "c8d19760-d7c4-416d-a2df-333fdc238e4c",
+    "checkpoint_id": "06aca0cc-4708-76ea-8000-28b496add4c0",
+    "prompt": "Aerodynamic emerald combat monocle anchored to the left brow, featuring glowing kanji glyphs pulsing across the lens surface. Mouth open triggers an explosive green energy shockwave with intense spark torrents. Smiling emits a precise tactical laser glint. Eyebrow raise projects floating combat metrics. Head tilt shifts polarized lens reflections. High-contrast PBR titanium build with cinematic anime lighting. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "anime",
+      "cosplay",
+      "scouter",
+      "combat",
+      "power",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "cyber_shonen_scouter_monocle",
+    "channel_id": "16",
+    "visual_hook": "The instant 0.2s silhouette of a high-contrast, glowing anime combat monocle establishes an immediate elite shonen warrior aesthetic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/b0e3QVPyVB3h6etdeGmFN?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/fsJPQevv1YVW645tupNnx?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/0ta1U402XFDJeV4mJThfT?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
