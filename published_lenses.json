@@ -6696,7 +6696,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/TqD5HETqmshyhT3aorArx?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/gyUTlVKlAMiYgyBGAeu5h?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -6812,6 +6812,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/fsJPQevv1YVW645tupNnx?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/0ta1U402XFDJeV4mJThfT?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-10T10:49:19Z",
+    "account_id": "5",
+    "lens_name": "Cupid Soul Meter",
+    "lens_id": "643313c6-e44d-41ef-bd1c-1052fe98c42b",
+    "checkpoint_id": "06aca148-5ba1-7e70-8000-347c33035336",
+    "prompt": "Regal 24k gold baroque heart diadem anchored to forehead with a shimmering floating needle particle glints. Smile triggers an explosive golden angel wing expansion behind the head and a cascade of diamond rain particles. Mouth open resets the meter spin. Eyebrow raise pulses radiant heartbeat light flares. Head tilt refracts caustic 3-point lighting across the gold filigree. Pure 3D wearable elegance. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "heart",
+      "gold",
+      "love",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "crush_compatibility_meter",
+    "channel_id": "15",
+    "visual_hook": "The immediate silhouette of a high-fashion, polished 24k gold heart crown creates an instant luxury status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/5cKlgYcPEL84yKWiHwpWl?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/0aRXOTPnmKCfThzjlmc8p?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/ziIqPo9mckyOGkIXkZw20?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
