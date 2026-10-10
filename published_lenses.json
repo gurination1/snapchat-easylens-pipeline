@@ -6582,5 +6582,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/QFYvmjWGUbCnucwDulyEk?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-10T00:42:31Z",
+    "account_id": "3",
+    "lens_name": "Cryo Tech Visor",
+    "lens_id": "aeec1381-69f2-4b6a-b444-78b0bf84d76d",
+    "checkpoint_id": "06ac986b-4ad2-7d9b-8000-3c737ec62543",
+    "prompt": "Sleek cryogenic tactical visor crafted from brushed tungsten and frost-etched polymer rests across the eyes. Features high-contrast 6500K rim lighting and ray-traced shadows. Mouth open triggers pressurized sub-zero nitrogen particle jets erupting from temple vents. Smile activates a vibrant cyan optic lens glow. Eyebrow raise generates a crystalline frost lattice across the brow. Head tilt initiates a swirling sub-zero auroral sparkles flow. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "filter",
+      "visor",
+      "cyber",
+      "tech",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "subzero_cryo_optics",
+    "channel_id": "2",
+    "visual_hook": "The striking, futuristic silhouette of a high-fashion, frost-covered tactical visor provides an instant, elite cybernetic status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/MpVjQLdfTmc1zLQG7R5xC?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/N0umjNEFhOtOefT0Uqfeu?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/KOvIHe8FVv3ybPpnf8Dcl?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
