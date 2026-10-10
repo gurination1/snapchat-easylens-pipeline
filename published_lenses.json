@@ -6756,5 +6756,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/lTRsbtFKWWf32hXB2blom?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-10T09:37:30Z",
+    "account_id": "1",
+    "lens_name": "Phantom Sovereign",
+    "lens_id": "67595b14-7a95-482f-8550-8b1862505a09",
+    "checkpoint_id": "06aca042-21a7-712a-8000-4c982c6e901f",
+    "prompt": "Ethereal obsidian crown floating weightlessly above forehead with jagged, crystalline charcoal shards. Mouth open triggers a violent eruption of cold azure flames and swirling dark cinder particles. Smiling ignites intense, piercing white supernatural eye glow. Eyebrow raise causes the obsidian shards to orbit rapidly. Head tilt creates a flowing, translucent ink-like distortion field. PBR dark fantasy aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "dark",
+      "crown",
+      "fantasy",
+      "gothic",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "phantom_wraith_shroud",
+    "channel_id": "12",
+    "visual_hook": "The striking, high-contrast silhouette of a jagged obsidian crown creates an instant, elite dark-sovereign status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/Y1CUsm648QRzjue5t7tlk?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/KwxiuvcaMAlBDfgusWCdR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/CHssXIZtAxqSPLkzOaAF9?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
