@@ -6640,5 +6640,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/cPEgzG2t0jbwM9HER1dBh?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-10T04:06:20Z",
+    "account_id": "4",
+    "lens_name": "Nebula Dome",
+    "lens_id": "c28e4490-d784-447c-92fe-0f2f429519b1",
+    "checkpoint_id": "06ac9b67-82fb-78c1-8000-bd5c80cd2b35",
+    "prompt": "Transparent spherical pressure glass dome anchored to forehead, filled with swirling violet, cyan, and magenta cosmic nebula gas and twinkling star clusters. Mouth open triggers a supernova stellar flash inside. Smile surges auroral plasma waves throughout. Eyebrow raise flares intense stellar eye glints. Head tilt creates a swirling gas vortex. PBR caustic lighting, zero UI, pure space majesty. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "space",
+      "galaxy",
+      "stars",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "deep_space_nebula_helmet",
+    "channel_id": "10",
+    "visual_hook": "The instant 0.2s silhouette of a glowing, translucent deep-space nebula dome creates an elite, mysterious celestial status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/IFgqJjOmPt8OMm9Em5A7m?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/nfCcgdddCiy418RPhvmC2?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/SlPyJuiKsWI8eFYXMHWwK?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
