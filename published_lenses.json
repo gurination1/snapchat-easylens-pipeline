@@ -6493,7 +6493,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/FOlinQEYleDdx1lAdxSXG?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/C1G4h1Qn6fjMxjWKRZXwL?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -6609,6 +6609,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/N0umjNEFhOtOefT0Uqfeu?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/KOvIHe8FVv3ybPpnf8Dcl?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-10T02:57:25Z",
+    "account_id": "1",
+    "lens_name": "Disco Ball Glam",
+    "lens_id": "28d040ff-dad4-45d7-a16a-b79f4721f766",
+    "checkpoint_id": "06ac9a64-0967-7787-8000-697fff5abcfd",
+    "prompt": "A multifaceted 24k gold and chrome mirror headpiece sits elegantly at the hairline, catching 3-point studio lighting with high-contrast ray-traced reflections. Mouth open triggers a massive cascade of golden glitter and spinning sequins. Smiling projects vibrant rainbow prism light streaks across the cheeks. Eyebrow raise ignites a warm funk dancefloor glow; head tilt pulses the mirror facets. Pure 70s luxury, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "retro",
+      "disco",
+      "glam",
+      "fashion",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "disco_70s_studio54",
+    "channel_id": "7",
+    "visual_hook": "The instant 0.2s silhouette of a luxury mirror-ball headpiece creates an elite, high-fashion 70s dancefloor status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/tQJFwkS2PuLDpMclNDDC2?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/7WS602Ztppyj5M08Ptbfi?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/cPEgzG2t0jbwM9HER1dBh?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
