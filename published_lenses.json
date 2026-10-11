@@ -6928,7 +6928,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/zEQxNlNz8OnERh2Wz2n1t?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/TYdEC85xQk7MkmUZGZ6fH?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -7073,7 +7073,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/zQWgt12VvT88ZKyJ4hk88?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/S3Ebpw5KfIq1o7RhS2P2E?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -7189,6 +7189,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/VltI53QYohMjstkAr725H?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/7cuLRca7v6KiG3nbPx1Lr?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-11T14:02:35Z",
+    "account_id": "1",
+    "lens_name": "Lunar Gold Visor",
+    "lens_id": "564da058-ad92-42ce-b5ff-59bd4ce21c0c",
+    "checkpoint_id": "06acb93f-9491-7815-8000-67b06a8952cf",
+    "prompt": "A premium 3D Apollo astronaut helmet frame fits perfectly over the head with a curved 24k gold reflective visor. The visor displays a high-fidelity Earthrise reflection. Mouth opening releases pressurized white lunar dust clouds. Smiling triggers a pulsing blue ring of light on the helmet collar. Eyebrow raises flare a sharp solar burst off the visor surface. Head tilting shifts the orbital Earth reflection. Zero UI, pure cinematic space immersion. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "space",
+      "visor",
+      "gold",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "apollo_astronaut_helmet",
+    "channel_id": "10",
+    "visual_hook": "The unmistakable, high-contrast silhouette of a gold-mirrored astronaut visor creates immediate, aspirational luxury space-explorer status.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/6qTz17l25XF1VvSMbvucL?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/vSM5BTpDWrTLK3bhhZaMo?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/3AW5kYuYd8MymhjISuI9c?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
