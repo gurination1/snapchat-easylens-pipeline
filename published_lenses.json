@@ -7102,7 +7102,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/83tjQn9RymgVEl5GNTc5y?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/opXo8KThksRBcYhJ8pvmY?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -7218,6 +7218,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/vSM5BTpDWrTLK3bhhZaMo?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/3AW5kYuYd8MymhjISuI9c?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-11T14:36:44Z",
+    "account_id": "4",
+    "lens_name": "Soulmate Compass",
+    "lens_id": "c710089b-7592-4712-8738-de7c5782a254",
+    "checkpoint_id": "06acb9c1-e797-7cd5-8000-e350a9371bc3",
+    "prompt": "Polished platinum celestial radar diadem anchored on brow with spinning holographic starlight rings pointing toward soulmate. Head tilt locks directional tracking beam with sharp starlight ripples; mouth open unleashes celebratory supernova starburst with floating golden zodiac glyphs; smile pulses warm astral glow across cheekbones; eyebrow raise sweeps radar beam. High contrast 3D PBR materials, zero UI, pure lens. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "soulmate",
+      "love",
+      "glam",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "soulmate_constellation_radar",
+    "channel_id": "15",
+    "visual_hook": "The striking, high-contrast silhouette of a rotating platinum celestial diadem creates an immediate, aspirational luxury status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/mod1TLENqmlnxrAseAk3Q?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/VShxgMTti1l0TT2yWMjeH?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/2GGWef6M1FduskWXnwdrH?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
