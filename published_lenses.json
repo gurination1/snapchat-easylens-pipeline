@@ -7133,5 +7133,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/6E7qMvZW1KTo2er2StEDp?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-11T08:39:50Z",
+    "account_id": "2",
+    "lens_name": "Velvet Aura",
+    "lens_id": "819cc1d8-eb87-4f1d-a0be-c0de1859ecc0",
+    "checkpoint_id": "06acb47d-4e9a-7348-8000-971deeaebb9e",
+    "prompt": "Elevated no-makeup aesthetic with velvet skin texture, fluffy laminated brow lift, and dewy honey lip glaze. A weightless, sculpted halo of polished rose gold, adorned with micro-faceted freshwater pearls, frames the forehead. Key light with contrasting 6500K/2800K rim lighting. MouthOpen triggers a burst of warm golden shimmer dust; Smile activates soft, natural ring-light reflections in pupils; EyebrowRaise sharpens defined brow arches; HeadTilt. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "glow",
+      "halo",
+      "makeup",
+      "selfie",
+      "glam",
+      "viral"
+    ],
+    "archetype": "clean_girl_soft_glam",
+    "channel_id": "9",
+    "visual_hook": "The instant 0.2s silhouette of a weightless, sculpted rose gold halo with freshwater pearls creates an immediate luxury beauty status.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/exEvbrmnnMiUc7DAnFii9?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/iDzDTX1SUevn4buXu0gCA?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/NbPRrZUJfP8UFLSukPCEm?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
