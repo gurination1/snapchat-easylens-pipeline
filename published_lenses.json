@@ -7075,5 +7075,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/S3Ebpw5KfIq1o7RhS2P2E?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-11T07:27:42Z",
+    "account_id": "4",
+    "lens_name": "Ghibli",
+    "lens_id": "777442b3-9718-4e0d-8bca-d84d2da360ac",
+    "checkpoint_id": "06acb36c-bdb2-7b22-8000-8f1654114790",
+    "prompt": "Hand-painted Ghibli watercolor cumulus cloud crown resting above hairline with floating soot spirit dust and celestial spirit serpent coils. Soft cel-shaded gouache textures with warm 2800K sunlight ray-traced highlights. Opening mouth erupts swirling sakura petal cyclone; smiling spawns cheerful soot sprites around temples; head tilt shifts floating spirit dust. Pure 3D PBR fantasy, zero strobing, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "ghibli",
+      "watercolor",
+      "anime",
+      "clouds",
+      "spirit",
+      "aesthetic",
+      "trending",
+      "viral"
+    ],
+    "archetype": "",
+    "channel_id": "",
+    "visual_hook": "The instant 0.2s silhouette of a delicate 24k gold hairline circlet creates immediate high-fashion luxury status.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/wQZJJLUH1R0SxyiZyYRal?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/83tjQn9RymgVEl5GNTc5y?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/opXo8KThksRBcYhJ8pvmY?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
