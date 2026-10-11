@@ -7160,7 +7160,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/iDzDTX1SUevn4buXu0gCA?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/NbPRrZUJfP8UFLSukPCEm?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -7276,6 +7276,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/JTUiWmboa7YHLB6HP3Phf?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/1gpQdipen0ZRGiiwDHuwY?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-11T16:09:48Z",
+    "account_id": "2",
+    "lens_name": "Alpine Ice Goggles",
+    "lens_id": "4abe6ea7-bd88-445a-8720-a9c4c896b0a5",
+    "checkpoint_id": "06acbb13-c4d5-7ba1-8000-c0f8b2336635",
+    "prompt": "Frameless oversized iridescent alpine ski goggles mirrored across eyes reflecting sharp mountain peaks and crisp blue sky. Opening mouth unleashes pressurized powdery snow blizzard vortex whooshing around face with floating ice crystals. Smiling warms the lens with rosy mountain sun glow. Raising eyebrows clears snow dust from lenses. Tilting head sweeps polarized mountain reflections. High fashion winter sports, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "ski",
+      "goggles",
+      "snow",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "alpine_ski_snow_goggles",
+    "channel_id": "17",
+    "visual_hook": "High-contrast iridescent mirrored lenses provide an immediate, premium extreme-sports status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/uJvCWEacyrmPzF3Hy8L9o?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/flGNh4e0P1QBrJBAe31K8?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/bldtOqQQapKfNWcmCIYjl?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
