@@ -7336,5 +7336,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/ixMSfIHH4C6fw1CMhufZl?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-11T23:02:23Z",
+    "account_id": "1",
+    "lens_name": "Aura Pulse",
+    "lens_id": "7bc7aebe-385b-4d6e-8918-43a4eae4f268",
+    "checkpoint_id": "06acc124-9119-719c-8000-cdf2b49de8e9",
+    "prompt": "An ethereal, sculpted halo of brushed titanium with embedded chromatic light filaments anchors to the forehead. A holographic biometric bar oscillates across the face, scanning. Smile to reveal a radiant, personalized aura color, manifesting as billowing volumetric energy clouds and golden sparkle dust around the head. Head tilt cycles through vivid chromatic energy frequencies. Mouth open triggers an explosive, multi-hued rainbow energy shockwave. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "filter",
+      "aura",
+      "halo",
+      "glow",
+      "selfie",
+      "trendy",
+      "viral"
+    ],
+    "archetype": "aura_energy_scanner",
+    "channel_id": "11",
+    "visual_hook": "The instant 0.2s silhouette of a sculpted titanium halo with oscillating light filaments creates an immediate sense of futuristic energy and mystery.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/eZlaGZWF7vOE5LjhNGMgp?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/nzJDPreMdyWZekNWafo9r?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/BsPfRrKg0H2jUDAVnPgKO?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
