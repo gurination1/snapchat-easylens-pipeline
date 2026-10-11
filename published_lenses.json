@@ -7162,5 +7162,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/NbPRrZUJfP8UFLSukPCEm?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-11T09:12:56Z",
+    "account_id": "3",
+    "lens_name": "Zenith Reflex",
+    "lens_id": "c0d04ef5-aef7-4f71-8228-31701ce8f2bd",
+    "checkpoint_id": "06acb4ff-906f-7a4f-8000-c317005f517f",
+    "prompt": "Sculpt a hyper-real, brushed platinum arc across the forehead, featuring a rapidly oscillating emerald laser needle on a curved timing bar. Key light + cool/warm rim lighting, ray-traced shadows. Smile freezes the needle instantly. HeadTilt precisely hits the central green 'jackpot' zone, triggering a colossal burst of golden shimmer confetti. MouthOpen resets the needle with a sharp, iridescent spark shockwave. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "filter",
+      "timing",
+      "challenge",
+      "bar",
+      "selfie",
+      "viral",
+      "trendy"
+    ],
+    "archetype": "reaction_timing_meter",
+    "channel_id": "6",
+    "visual_hook": "The instant 0.2s silhouette of the sleek, high-contrast platinum arc with its rapidly moving emerald laser needle creates an immediate gamified reflex challenge.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/fRQeTU73VRLIp4YnB0s1B?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/VltI53QYohMjstkAr725H?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/7cuLRca7v6KiG3nbPx1Lr?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
