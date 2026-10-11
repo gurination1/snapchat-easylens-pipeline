@@ -7104,5 +7104,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/opXo8KThksRBcYhJ8pvmY?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-11T08:03:07Z",
+    "account_id": "5",
+    "lens_name": "Moss Forest Crown",
+    "lens_id": "69d8e8c1-b69b-44b9-9f13-26d58af0ba4d",
+    "checkpoint_id": "06acb3fc-cb7b-78f5-8000-c86505ef56a8",
+    "prompt": "An intricate, wearable crown of velvet emerald moss, silver fern fronds, and tiny glowing mushrooms rests on the forehead. High-fidelity PBR textures with ray-traced lighting. Mouth open triggers a rhythmic pulse of radiant cyan light across the wreath releasing floating spore motes. Smiling adds soft emerald eye glints. Eyebrow raise awakens a spiral firefly swarm. Head tilt causes a shimmering bioluminescent sheen to flow through the vines. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "nature",
+      "forest",
+      "flowers",
+      "glow",
+      "makeup",
+      "viral"
+    ],
+    "archetype": "bioluminescent_forest_wreath",
+    "channel_id": "14",
+    "visual_hook": "The vibrant emerald moss silhouette provides an immediate, lush, and high-fashion organic status symbol.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/4D2KjHMdOsDQ0OZE94NYr?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/KPVOqo0IRE5hnWuXWQT5K?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/6E7qMvZW1KTo2er2StEDp?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
