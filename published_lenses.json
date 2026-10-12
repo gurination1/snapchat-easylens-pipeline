@@ -7713,5 +7713,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/0KpjwTogcOL1RXki2fNLj?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-12T22:39:35Z",
+    "account_id": "2",
+    "lens_name": "Fruit Chomp Splash",
+    "lens_id": "95bdccfc-92d5-4318-bb2c-657b48c8c5f6",
+    "checkpoint_id": "06acd5d7-d8ad-7e0d-8000-04cf047bcdaa",
+    "prompt": "Tumbling glossy 3D watermelons, pineapples, and strawberries fall around head. Bright tropical fruit crowns temples without obscuring eyes or mouth. Opening mouth chomps fruit into juicy 3D splash droplets. Smiling expands a glowing golden pineapple diadem overhead. Eyebrow raise launches a burst of tumbling mangoes. Head tilt shifts falling fruit trajectory instantly. High contrast sunlight and PBR caustics on rich tropical materials. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "cute",
+      "fruit",
+      "summer",
+      "food",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "chomp_fruit_frenzy",
+    "channel_id": "6",
+    "visual_hook": "Tumbling glossy 3D tropical fruit and a glowing pineapple diadem create an instant high-energy gaming hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/WRbJ5E7HyzYJq8hVV1gj0?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/RUXyDnmp3fjjkdAZmaPBK?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/CN4OL6OxhZ6y02U3aNzed?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
