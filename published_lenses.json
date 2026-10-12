@@ -7305,7 +7305,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/flGNh4e0P1QBrJBAe31K8?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/bldtOqQQapKfNWcmCIYjl?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -7422,6 +7422,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/VnoQOPw619gfYV8ChCDrB?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-12T01:17:27Z",
+    "account_id": "2",
+    "lens_name": "Shonen Power Lens",
+    "lens_id": "6a26b11c-0abe-4930-bbfd-6ce0a607800f",
+    "checkpoint_id": "06acc315-bfff-78f3-8000-4cce02c8ea03",
+    "prompt": "A sharp, translucent cyan combat visor sits on the left brow, crafted from brushed titanium and iridescent crystal. Glowing kanji energy glyphs orbit the lens. Mouth open triggers a violent, outward-expanding green shockwave with intense particle sparks. Smiling initiates a focused laser holographic focus ring with a sharp white lens flare. Eyebrow raise causes the visor to expand with jagged electric spikes. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "anime",
+      "visor",
+      "power",
+      "energy",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "cyber_shonen_scouter_monocle",
+    "channel_id": "16",
+    "visual_hook": "The high-contrast, angular geometry of the cyan combat visor creates an immediate, recognizable shonen anime protagonist silhouette.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/4KZApkau1iQpfwAL7A1JZ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/SzFqJ0zRJiCtmQq45gbve?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/f9QsdDzZYXKDblfWwaKYa?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
