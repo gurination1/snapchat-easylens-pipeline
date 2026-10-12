@@ -7392,7 +7392,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/n0xQh4mjAzsFAc7bacBRv?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/uQcFgltNoJowDPWPb71CI?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -7508,6 +7508,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/XX8cuk1Q7l1LlatHbDqXG?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/XdxPXjWdSo1oVevQfmadF?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-12T11:12:53Z",
+    "account_id": "4",
+    "lens_name": "Berry Bunny Hood",
+    "lens_id": "e0acb7f6-50f3-43c5-a7e2-2ee738b7d15b",
+    "checkpoint_id": "06accbd0-08b7-713a-8000-26236b84e4b4",
+    "prompt": "Cozy pastel-pink lop-eared bunny hood sculpted over hair with soft velvet physics and fleece micro-texture. Opening mouth releases fountain of bouncing 3D strawberries and star dust. Smiling triggers cute nose-twitch and rosy cheek blush bloom. Eyebrow raise lifts floppy bunny ears; head tilt drapes velvet ears across shoulders. Flawless PBR materials, rim lighting, zero UI, zero obstruction of face. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "cute",
+      "bunny",
+      "hood",
+      "makeup",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "lop_eared_bunny_hood",
+    "channel_id": "13",
+    "visual_hook": "The instant 0.2s silhouette of fluffy, high-fidelity lop-ears creates an irresistible, high-dopamine, and playful aesthetic hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/L7E1J7aHAmRjN0UN17Y5G?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/8rTuuIKYJzYgXPwKb4jiL?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/sz2qSro2489eT2cFoP2sW?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
