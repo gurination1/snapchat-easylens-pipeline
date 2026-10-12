@@ -7334,7 +7334,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/EtuqnugORlzo3YJZP2u6N?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/ixMSfIHH4C6fw1CMhufZl?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -7450,6 +7450,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/SzFqJ0zRJiCtmQq45gbve?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/f9QsdDzZYXKDblfWwaKYa?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-12T09:43:43Z",
+    "account_id": "3",
+    "lens_name": "Amethyst Crown",
+    "lens_id": "92a52731-a7f1-4c36-9be9-692d4c2831d3",
+    "checkpoint_id": "06acca7e-87f2-7438-8000-41b748baf318",
+    "prompt": "Raw fractured amethyst geode crown anchors along the brow with deep violet quartz crystals and floating runestones orbiting temples. Pure PBR raw quartz materials, 3-point contrast lighting. MouthOpen triggers an explosive grounding earth shockwave with floating crystal shards. Smile illuminates crystalline violet cheekbone glints. EyebrowRaise lifts orbiting runestones upward. HeadTilt shifts caustic amethyst refractions across the face. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "crown",
+      "crystals",
+      "makeup",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "terra_crystal_geode_crown",
+    "channel_id": "18",
+    "visual_hook": "A bold, jagged deep-violet geode crown creates an instant high-fashion earth deity silhouette.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/NUSIe1o3ADlp3LiST3rWE?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/M9LKyy6PyXIEnrNyToHYF?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/4fLoWVdUwQ3OnHEBs07e9?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
