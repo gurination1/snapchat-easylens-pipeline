@@ -7539,5 +7539,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/sz2qSro2489eT2cFoP2sW?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-12T11:50:21Z",
+    "account_id": "5",
+    "lens_name": "Retro Pixel Visor",
+    "lens_id": "1f447f3f-ce3d-4c42-9aff-fbc9e1d3098a",
+    "checkpoint_id": "06accc5e-d3e6-72e7-8000-c4941199c0ed",
+    "prompt": "Chunky 8-bit neon arcade visor contoured across the brow with luminous CRT phosphor insets and cathode-ray bloom. Mouth opening triggers an explosive pixel level-up burst with floating arcade stars. Smiling pulses emerald 1UP glow. Raising eyebrows charges a rapid-fire pixel cannon. Tilting the head sweeps vertical scanlines. Brushed titanium frames with gold leaf accents. High-contrast 3-point lighting, ray-traced shadows. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "retro",
+      "arcade",
+      "visor",
+      "gaming",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "arcade_80s_pixel",
+    "channel_id": "7",
+    "visual_hook": "The instant 0.2s silhouette of a chunky, glowing neon-grid visor provides an immediate, high-energy 80s arcade protagonist status.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/S3fnUPhFdQcfu5Awuf0yq?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Yi1iMcYIZ38WMRca537Qa?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/jnhzS768dr6RjTBQLhnWk?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
