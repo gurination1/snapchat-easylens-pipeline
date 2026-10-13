@@ -7972,7 +7972,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/cKH73N3rL43KxlQse42Fi?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/0qv4dcqMBMI6m5LnUdXGV?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -8089,6 +8089,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/tg2L3x0dBcAVAdfTJbvJ5?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-13T23:38:32Z",
+    "account_id": "4",
+    "lens_name": "Solstice Bloom",
+    "lens_id": "ec978fae-76f1-41e7-8e03-9a8b5f78055f",
+    "checkpoint_id": "06acebd9-e5bf-793a-8000-fb7776efd861",
+    "prompt": "Lush headdress of sculpted velvet sunflowers and honey-amber marigolds resting along the hairline. Warm 2800K summer solstice lighting with ray-traced soft shadows. Opening mouth releases cascading clouds of glowing golden pollen particles. Smiling triggers radiant sun-halo eye flares and warm peach cheek blooms. Eyebrow raise blooms outer sunflower petals; head tilt sways golden petals. Pure wearable botanical royalty. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "sunflower",
+      "flower",
+      "halo",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "golden_sunflower_marigold_crown",
+    "channel_id": "14",
+    "visual_hook": "The bold, symmetrical silhouette of a vibrant, golden botanical crown provides an immediate, high-status summer deity aesthetic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/ughhnI2lzxEysmSv5MmzC?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/3dYOxhhMv3ho9sm6s3bIM?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/yjvZFNZ48Th6SMtjhWKDL?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
