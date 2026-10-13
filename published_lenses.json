@@ -7827,7 +7827,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/FXZ9IWy7F4u14yiMXUSxY?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/LNNjFzpAWQM6W94ZjICWh?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -7943,6 +7943,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/lAhnpNz5v4D6ZEscS6Btq?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/tkNHPqsep8mh91elWdJSa?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-13T18:36:50Z",
+    "account_id": "4",
+    "lens_name": "Medusa Coiling",
+    "lens_id": "722027fe-8280-44b3-9a46-3121fa08e1ea",
+    "checkpoint_id": "06ace770-6051-72c4-8000-0c5a44d4ef0d",
+    "prompt": "Intricately sculpted living bronze serpents coiling and writhing around hairline with glowing emerald gemstone venom eyes. Opening mouth turns background into cracked ancient marble with swirling petrification auroral sparkles; smiling flashes brilliant emerald venom glints from serpent fangs; eyebrow raise makes bronze serpents hiss and flare hooded crests; head tilt ripples serpentine coils. Mythic transformation, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "greek",
+      "mythology",
+      "olympus",
+      "zeus",
+      "medusa",
+      "aphrodite",
+      "apollo",
+      "hades"
+    ],
+    "archetype": "medusa_gorgon_serpents",
+    "channel_id": "8",
+    "visual_hook": "Godly transformation: Medusa Coiling Bronze Serpents commands supreme viral intrigue with live writhing serpents.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/zNulyePSVd2Cv2n18Rxl9?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/cKH73N3rL43KxlQse42Fi?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/0qv4dcqMBMI6m5LnUdXGV?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
