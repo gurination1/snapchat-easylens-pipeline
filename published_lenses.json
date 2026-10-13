@@ -7769,7 +7769,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/lZ0OthwZTDpbBIV2RV3IY?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/unxSI6F2OTrNRwcEASoAT?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -7886,6 +7886,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/5n4MQ5hPArvgB4BUQVUkn?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-13T17:00:39Z",
+    "account_id": "3",
+    "lens_name": "Luxe Dewy Glow",
+    "lens_id": "d5505728-8b89-4132-b101-38b4a7a20b73",
+    "checkpoint_id": "06ace602-8e17-72c0-8000-01c7d076b40f",
+    "prompt": "Ultra-refined porcelain skin smoothing with dewy high-fashion cheekbone highlight and subtle micro-freckles across the nose. Mouth opening triggers a cascade of champagne micro-glitter dust; smiling intensifies pearlescent facial sheen and glossy lip shine; eyebrow raise sharpens feline winged liner; head tilt adds realistic studio ring-light eye catches. Pure high-end beauty aesthetic, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "glam",
+      "makeup",
+      "glow",
+      "selfie",
+      "trendy",
+      "viral"
+    ],
+    "archetype": "glass_skin_dewy",
+    "channel_id": "9",
+    "visual_hook": "The instant 0.2s silhouette of hyper-realistic dewy skin radiance creates an immediate, high-fashion red-carpet beauty status.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/32XwSMxT8MPxyPGZ7cO3a?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/crEPhce44PHHoRgKUbCOb?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Jr3geqkPMwjKpMcle098x?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
