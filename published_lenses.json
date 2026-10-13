@@ -7914,7 +7914,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/crEPhce44PHHoRgKUbCOb?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/Jr3geqkPMwjKpMcle098x?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -8030,6 +8030,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/njacdgQMLTE9LS6GUwLt7?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/H1EalFETVIZioiyiOuT4L?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-13T22:10:57Z",
+    "account_id": "3",
+    "lens_name": "Stone Sovereign",
+    "lens_id": "60875352-0784-4431-af30-6f6bd52be24b",
+    "checkpoint_id": "06acea8c-7b75-7cb8-8000-e545a07ee449",
+    "prompt": "Chiseled ancient cathedral gargoyle crest anchored to brow with living crimson fissures. Mouth open cracks skin into textured basalt with billowing gothic incense smoke. Smile restores smooth alabaster marble sheen. Eyebrow raise flares massive stone wings. Head tilt sways cathedral dust. Monumental stone metamorphosis, high contrast 3-point lighting, zero UI, photorealistic gothic architecture. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "dark",
+      "gothic",
+      "statue",
+      "crown",
+      "selfie",
+      "vintage",
+      "trendy"
+    ],
+    "archetype": "gargoyle_stone_cursed",
+    "channel_id": "12",
+    "visual_hook": "The instant 0.2s silhouette of a monumental, weathered stone crest creates an immediate, high-status dark fantasy transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/JzMR0JCrI1QXUuuFsajdQ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/HbEtTSz4Z29WO6YhENX5C?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/hnr1hhc3jBe1gHLEiRn54?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
