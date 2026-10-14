@@ -8030,7 +8030,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/njacdgQMLTE9LS6GUwLt7?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/H1EalFETVIZioiyiOuT4L?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -8146,6 +8146,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/TYBji7x8JmEABWcuddaA9?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/uipr3yaKwdH6FHsO982is?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-14T00:55:41Z",
+    "account_id": "2",
+    "lens_name": "Cosmic Orbit Halo",
+    "lens_id": "9bbe0040-d9dc-442d-b937-bc8d55efb1b7",
+    "checkpoint_id": "06acecf3-26ec-7ba0-8000-502298bb5fa3",
+    "prompt": "A photorealistic 3D celestial planetarium orbits the forehead with a glowing central star, ringed gas giants, and rocky moons traversing elliptical paths. Features brushed titanium and 24k gold leaf textures. Mouth open triggers a kinetic starburst with radiating asteroid rings. Smile ignites warm solar flares. Eyebrow raise expands orbital rings. Head tilt pivots the Saturn ring plane. High-contrast 3-point lighting ensures deep PBR shadows. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "halo",
+      "space",
+      "planet",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "interstellar_orbiting_planetarium",
+    "channel_id": "10",
+    "visual_hook": "The striking, high-contrast silhouette of a kinetic 3D planetary crown creates an immediate, high-status interstellar deity aesthetic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/GgJKrCjSZN9I3VJTI5QD7?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/TSwjjiq6xrWMJagL3ArwQ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/pSH44U53syAJWAeVba4A3?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
