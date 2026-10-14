@@ -8119,5 +8119,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/yjvZFNZ48Th6SMtjhWKDL?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-14T00:16:14Z",
+    "account_id": "5",
+    "lens_name": "Nova Aura Surge",
+    "lens_id": "8b6ef7e9-fbc7-4296-9076-cde3f3a2467a",
+    "checkpoint_id": "06acec65-1b09-75ba-8000-e306c5f6e500",
+    "prompt": "Bold 3D sculpted plasma flame spikes emerge from the hairline, framing the face with high-contrast golden light. Blue electrical arcs crackle across temples. Mouth open triggers a massive kinetic energy shockwave with intense particle bursts. Smile ignites a radiant golden halo around eyes. Eyebrow raise intensifies blue lightning sparks. Head tilt whips flame crest. PBR materials, cinematic lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "anime",
+      "aura",
+      "power",
+      "glow",
+      "selfie",
+      "viral",
+      "trendy"
+    ],
+    "archetype": "super_saiyan_golden_corona",
+    "channel_id": "16",
+    "visual_hook": "The immediate silhouette of jagged, high-energy plasma spikes creates an instant, high-status anime transformation hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/Ccp8mLiCMfwoa4NQUYNrY?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/TYBji7x8JmEABWcuddaA9?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/uipr3yaKwdH6FHsO982is?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
