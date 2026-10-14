@@ -8117,7 +8117,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/3dYOxhhMv3ho9sm6s3bIM?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/yjvZFNZ48Th6SMtjhWKDL?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -8233,6 +8233,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/3Wx8ZSmO9UFT02iwMJWnw?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/nnWv4dLBD17qEuqGmfbko?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-14T07:19:49Z",
+    "account_id": "4",
+    "lens_name": "Zodiac Gold Crown",
+    "lens_id": "f3833663-ac5d-4c2e-918f-4e02a042193e",
+    "checkpoint_id": "06acf29d-8824-7b17-8000-6053806c0f60",
+    "prompt": "Wearable 24k gold diadem featuring floating astrological glyphs connected by radiant starlight filaments. Anchored to forehead. Mouth open releases a brilliant flare of golden star clusters and swirling nebula gas. Smile triggers a sharp, luminous flash of the user zodiac symbol. Eyebrow raise increases the rotation speed of the golden ring. Head tilt shifts the orbital plane. High-contrast 3-point lighting. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "crown",
+      "gold",
+      "zodiac",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "zodiac_constellation_corona",
+    "channel_id": "18",
+    "visual_hook": "The instant 0.2s silhouette of a regal, kinetic golden astrological crown creates an immediate high-status deity aesthetic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/98AkmvtIRjN7mrI7RUhfg?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/2rXB0MwQnli8AKxhLlYjU?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/GWgUSDvYm8uVW7paM7y5N?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
