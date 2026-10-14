@@ -8351,5 +8351,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/dQAtKsNBR4bsavxqST2Un?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-14T20:19:38Z",
+    "account_id": "1",
+    "lens_name": "Love Match Aura",
+    "lens_id": "3bca2139-fa0e-4ac6-8fd6-70f7a43b7c18",
+    "checkpoint_id": "06acfe09-f046-7b14-8000-b8366a4d235b",
+    "prompt": "Regal baroque gold heart crown sits atop forehead with kinetic shimmering needle. Smile triggers instant explosion of massive 3D white angel wings and cascading diamond rain particles. Mouth open causes needle to spin rapidly through neon spectrum. Eyebrow raise pulses center heart with glowing golden light. Head tilt catches caustic light on polished filigree. Photorealistic metal textures, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "heart",
+      "crown",
+      "makeup",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "crush_compatibility_meter",
+    "channel_id": "15",
+    "visual_hook": "The regal, high-contrast golden heart crown silhouette provides an immediate, high-status romantic transformation hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/4XMmmhWIe9TV0HPrNWXW7?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/5EYm5R5RHe5ccMvOk5Tlm?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/UTjHwKs996PJ5qt2Va7al?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
