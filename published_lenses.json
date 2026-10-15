@@ -8610,7 +8610,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/VVtebzrJdp3cfgFYgyiV3?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/a4W0dRMSQz0P0KuF0UXmD?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -8727,6 +8727,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/3iZBQ7Pity9OTMEzrjZJD?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-15T11:13:14Z",
+    "account_id": "2",
+    "lens_name": "Athena War Helm",
+    "lens_id": "d3d0a61e-a4bf-4daf-afc7-67d1c65a2cef",
+    "checkpoint_id": "06ad0b1d-8597-75fc-8000-de19b497b7ce",
+    "prompt": "Polished spartan bronze battle helm with sculpted golden owl crest and horsehair plume contouring the forehead. Mouth open releases a shimmering golden tactical shockwave with drifting runic glyphs. Smiling pulses warm bronze rim light across cheekbones. Eyebrow raise flares the owl sigil wings outward. Head tilt catches brilliant metallic sun glints. High-fashion ancient greek goddess of wisdom aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "crown",
+      "makeup",
+      "glam",
+      "selfie",
+      "eyes",
+      "trendy"
+    ],
+    "archetype": "athena_aegis_wisdom",
+    "channel_id": "8",
+    "visual_hook": "The bold, metallic geometry of the Spartan bronze helm provides an instant, authoritative high-fashion silhouette.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/ba8uUwOnGx5TT65O3wMZk?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/wDZm7uqugUHazP03rJiDX?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/B3HsOB4G6JiPmrR0l2xEC?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
