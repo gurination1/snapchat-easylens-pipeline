@@ -8407,7 +8407,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/9uNy7DSlN4AdckQIavoiY?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/GSI4yz0QPDSxWyegMe9wt?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -8524,6 +8524,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/EHkcAGTSIYO88RE7fOr64?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-15T05:05:32Z",
+    "account_id": "4",
+    "lens_name": "Dewy Glass Glow",
+    "lens_id": "da39980d-90d4-494b-92c3-381ba563b799",
+    "checkpoint_id": "06ad05c0-56fd-7baf-8000-9998c407ec9c",
+    "prompt": "Ultra-refined porcelain skin smoothing with dewy high-fashion cheekbone highlight and subtle micro-freckles across nose bridge. Opening mouth triggers cascading champagne micro-glitter dust; smiling illuminates warm pearlescent facial sheen and glossy lip shine; eyebrow raise sharpens feline winged liner; head tilt activates realistic studio ring-light reflections in eyes. Pure high-end vanity, zero UI, no forehead crest. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "glow",
+      "makeup",
+      "glam",
+      "selfie",
+      "trendy",
+      "viral"
+    ],
+    "archetype": "glass_skin_dewy",
+    "channel_id": "9",
+    "visual_hook": "Instantaneous silhouette of hyper-radiant, flawless glass skin creates an immediate, irresistible high-fashion vanity transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/JpV90eYPOKv36VUY31w4k?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/dnvp7HCF4fqt5Cyf7yhwn?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/SVsqI018VFjMM7BWiuoMn?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
