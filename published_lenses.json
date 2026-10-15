@@ -8639,7 +8639,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/y1WD0Fm8ngoYMvyb3g5o3?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/RtpUOIYK9y3ljywxkLQvx?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -8756,6 +8756,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/B3HsOB4G6JiPmrR0l2xEC?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-15T19:15:55Z",
+    "account_id": "3",
+    "lens_name": "Event Horizon Ring",
+    "lens_id": "7a8badca-09e4-48d4-b27e-2f18c1b6a411",
+    "checkpoint_id": "06ad1231-722b-74cc-8000-5c537b4011d8",
+    "prompt": "A majestic black hole accretion disk crown floats gracefully above the hairline. The ring features polished liquid mercury textures and a central singularity of deep violet light. Mouth open triggers a massive, vertical plasma jet emission. Smiling distorts the background into a gravitational lensing ripple. Raising eyebrows causes the ring to pulse rapidly. Tilting the head shifts the event horizon axis. 3-point contrast lighting. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "space",
+      "halo",
+      "glow",
+      "selfie",
+      "trendy",
+      "viral"
+    ],
+    "archetype": "black_hole_accretion_halo",
+    "channel_id": "10",
+    "visual_hook": "The stark, high-contrast silhouette of a glowing gravitational ring creates an instant, authoritative sci-fi vanity transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/iVoQoAPajgR4PG9svJJ85?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/uuMQIhzDLX1n960v0lQKH?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/XmLcdgiDD1OTN99QNl8OE?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
