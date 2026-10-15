@@ -8436,7 +8436,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/28RruFoxcrWTSEFoac4DZ?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/YJfuAbnaBzgO8P4pGwHoX?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -8552,6 +8552,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/dnvp7HCF4fqt5Cyf7yhwn?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/SVsqI018VFjMM7BWiuoMn?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-15T05:44:20Z",
+    "account_id": "5",
+    "lens_name": "Puppy Love Aura",
+    "lens_id": "bb569de7-8bca-4f42-afa3-4d1a907d1525",
+    "checkpoint_id": "06ad0648-51d1-7347-8000-bf85c16d5034",
+    "prompt": "Sculpted honey-toned canine ears rest atop the head with soft fur shaders and warm peach heart blush on cheeks. Opening mouth releases a cascade of bouncing golden dog bones and happy star sparkles. Smiling pins ears back with joyful eye squint effects. Raising eyebrows perks ears straight up, while head tilting flops them in curious, rhythmic motion. High-fidelity fur textures, 3-point rim lighting. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "cute",
+      "puppy",
+      "shiba",
+      "heart",
+      "selfie",
+      "trendy",
+      "viral"
+    ],
+    "archetype": "shiba_inu_puppy_ears",
+    "channel_id": "13",
+    "visual_hook": "The unmistakable silhouette of fluffy, high-fidelity canine ears creates an immediate, irresistible kawaii transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/fCZR6qXx0jd1PRwBUR7N2?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/qJyDnSV2ULNbaZyDk128u?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/eBpuS8lP5sSXzDUFKXI3B?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
