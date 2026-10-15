@@ -8670,5 +8670,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/hLGqCRqkbMWkH3Xpkp3fR?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-15T09:57:54Z",
+    "account_id": "4",
+    "lens_name": "Sky Bunny Jump",
+    "lens_id": "14ed07f2-2aa4-4c57-9e55-dc2db359a470",
+    "checkpoint_id": "06ad0a00-f1bf-7b61-8000-e16dbf65e391",
+    "prompt": "A whimsical 3D platformer anchored to the forehead featuring a cute bunny traversing fluffy cotton-candy clouds. Head tilt steers the bunny across floating paths. Opening the mouth triggers a high-energy spring jump with vibrant rainbow trails. Smiling releases melodic star showers. Raising eyebrows swaps the cloud sky palette between sunset orange and midnight blue. Pure 3D gameplay, no UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "cute",
+      "bunny",
+      "cloud",
+      "platformer",
+      "selfie",
+      "trendy",
+      "viral"
+    ],
+    "archetype": "bunny_cloud_jumper",
+    "channel_id": "6",
+    "visual_hook": "The instant 0.2s silhouette of a playful, animated bunny atop the forehead creates an immediate, irresistible gamified transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/wh2bDwrbEXzvxiCGWZzEa?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/KmELgdXDeudXlQVAUlg1w?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/vk6P0axZ6WeVESkRHA9rj?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
