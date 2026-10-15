@@ -8641,5 +8641,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/RtpUOIYK9y3ljywxkLQvx?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-15T08:46:38Z",
+    "account_id": "1",
+    "lens_name": "Solar Flare Crown",
+    "lens_id": "9bf6ba46-567a-4d47-b03b-42d2b515b7a5",
+    "checkpoint_id": "06ad08fc-1673-74de-8000-c86806281891",
+    "prompt": "Sculpted molten magma and 24k gold solar diadem resting on brow with looping 3D solar flares and floating magma embers. Opening mouth erupts pressurized crimson-and-gold fire dragon breath vortex shooting forward with crackling embers; smiling illuminates burning amber solar eye glare; eyebrow raise loops solar flares higher into crown; head tilt wafts convective heat distortion waves. Untamed fire element majesty. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "crown",
+      "fire",
+      "element",
+      "selfie",
+      "trendy",
+      "viral"
+    ],
+    "archetype": "solar_fire_elemental_diadem",
+    "channel_id": "18",
+    "visual_hook": "High-contrast silhouette of a molten gold diadem creates an immediate, high-status solar transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/TeuoTfHswe7YfAGSLW1Sa?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/n2uVilqe4wNDd9rJsjvCx?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/hLGqCRqkbMWkH3Xpkp3fR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
