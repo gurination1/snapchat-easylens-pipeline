@@ -9047,5 +9047,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/QSIDYwGDI2AVpSRM3S7o3?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-16T09:09:40Z",
+    "account_id": "3",
+    "lens_name": "Manga Impactband",
+    "lens_id": "a6d90e47-6d92-469c-b21b-e1d815c77e28",
+    "checkpoint_id": "06ad1e6b-54e3-75ae-8000-1be9bf054261",
+    "prompt": "Authentic Shonen Jump black-and-white ink manga action headband with radiating dynamic 3D focal speedlines and halftone screentone shading across the brow. Mouth open triggers a thunderous Japanese comic impact burst with flying stylized kanji onomatopoeia particles; smiling sharpens crisp ink line-art contours; eyebrow raise accelerates speedline zoom with fluid inertia drift; head tilt angles the action perspective. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "anime",
+      "aesthetic",
+      "manga",
+      "headband",
+      "comic",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "manga_speedline_impact_headband",
+    "channel_id": "16",
+    "visual_hook": "The stark, high-contrast silhouette of the Manga Impactband with radiating speedlines creates an instant, powerful Shonen hero transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/18s6ZgGzXFA53xVoOrtTs?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/kbQZUgWL1iLwOHxgjFx4J?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/cJVMbJn5LSTVI99CFnq3V?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
