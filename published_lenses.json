@@ -8958,7 +8958,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/rkuaJMDGbNCnuRjaYYgVt?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/yU4uHGJNEtXTJA0jQMMEl?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -9075,6 +9075,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/cJVMbJn5LSTVI99CFnq3V?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-16T11:55:23Z",
+    "account_id": "1",
+    "lens_name": "Euphoria Faceted",
+    "lens_id": "a63ad350-5055-4296-be23-cef74e7f92d1",
+    "checkpoint_id": "06ad20cd-10ec-75c6-8000-da43586e5882",
+    "prompt": "3D precision-cut faceted Swarovski rhinestones contoured along eyebrow arches and upper cheekbones. PBR caustic diamond refractions. Opening mouth sparks dazzling rainbow prismatic starburst glints from crystals; smiling enhances dewy lavender cheek shimmer; eyebrow raise flares crystal brow tips; head tilt catches brilliant diamond fire reflections. Editorial red-carpet glam, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "glow",
+      "glassskin",
+      "goldenhour",
+      "freckles",
+      "glam",
+      "aesthetic",
+      "filter"
+    ],
+    "archetype": "euphoria_crystal_rhinestones",
+    "channel_id": "9",
+    "visual_hook": "Irresistible beauty glow-up: Euphoria Faceted Crystal Rhinestones turns brow lines into sparkling high-fashion jewelry.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/Cos9sl1LSFBfjAPl5dFHW?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/CmcQtXlB57XvyQ8kO4XSU?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/j131LkAXNsT9h2JzkA5tQ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
