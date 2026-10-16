@@ -9163,5 +9163,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/q47StAEL9Scu7fcAA5PzM?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-16T13:52:12Z",
+    "account_id": "2",
+    "lens_name": "80s Outrun",
+    "lens_id": "17670b23-92a5-467d-af19-4de4e9bbbf50",
+    "checkpoint_id": "06ad2286-5932-7855-8000-1de6d97bc777",
+    "prompt": "Sculpted neon-magenta wireframe perspective grid extending behind brow with floating 80s chrome cassette diadem. Warm analog CRT scanline halation with cyan rim lighting. Opening mouth accelerates wireframe grid into hyperspace speed warp with neon laser beams; smiling triggers warm neon sunset flare; eyebrow raise pulses synthwave bass-rings; head tilt shifts grid perspective. Pure 80s nostalgia, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "retro",
+      "80s",
+      "90s",
+      "70s",
+      "synthwave",
+      "vhs",
+      "camcorder",
+      "disco"
+    ],
+    "archetype": "synthwave_80s_grid",
+    "channel_id": "7",
+    "visual_hook": "Decades nostalgia hit: 80s Outrun Synthwave Horizon Grid transports users directly into iconic retro arcade aesthetic in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/4a9GyzXYkPV19hhsVikKE?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/F0SJtICWHP34puxWj2Wp5?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/z2jcNOP7LyGBR8cydHqHs?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
