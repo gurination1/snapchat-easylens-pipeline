@@ -9192,5 +9192,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/z2jcNOP7LyGBR8cydHqHs?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-16T22:21:01Z",
+    "account_id": "3",
+    "lens_name": "Fluttering",
+    "lens_id": "86814c15-87fd-40ed-8524-09f9f147e6fe",
+    "checkpoint_id": "06ad29fe-e263-76fe-8000-8f1e00e5a9ac",
+    "prompt": "Delicate crown of sculpted 3D Monarch butterflies resting across brow and hair with iridescent orange-amber wings and micro-vein translucency. Opening mouth sends butterflies fluttering outward in swirling vortex around head before returning; smiling illuminates warm golden-hour cheek sheen with sparkling wing-dust; eyebrow raise flutters butterfly wings in unison; head tilt catches translucent amber light transmission. Ethereal nature poetry, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "floral",
+      "flowers",
+      "butterfly",
+      "nature",
+      "botanical",
+      "wreath",
+      "tiara",
+      "bloom"
+    ],
+    "archetype": "monarch_butterfly_tiara",
+    "channel_id": "14",
+    "visual_hook": "Botanical nature majesty: Fluttering Monarch Butterfly Tiara creates breathtaking live butterfly flight across portrait in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/UbhfeLAvjbX9BQgXkIJcY?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/H9cRaglwR8xgLVU4uwhSG?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/jts7bk86Eqit1YOL0LRyy?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
