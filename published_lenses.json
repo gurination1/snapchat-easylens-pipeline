@@ -8697,7 +8697,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/KmELgdXDeudXlQVAUlg1w?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/vk6P0axZ6WeVESkRHA9rj?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -8813,6 +8813,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/u7YGTkrZTlmUwcGPZvS0D?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/NJH48lcW16lTFLs7uvTaX?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-16T00:02:07Z",
+    "account_id": "4",
+    "lens_name": "Chrome Aura Scan",
+    "lens_id": "247ed590-474c-4d4c-b041-ae3ae193bd4a",
+    "checkpoint_id": "06ad1655-27f0-797a-8000-f20f587fcbf4",
+    "prompt": "A polished liquid mercury arch floats above the forehead tracking facial movement with precision. Smiling activates a vibrant chromatic aura cloud surrounding the user. Tilting the head cycles through shifting mood frequencies. Raising eyebrows initiates a rapid scan pulse across the temples. Opening the mouth triggers an explosive burst of shimmering light particles. High contrast rim lighting defines the metallic geometry. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "aura",
+      "halo",
+      "makeup",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "aura_energy_scanner",
+    "channel_id": "11",
+    "visual_hook": "The instant 0.2s silhouette of a sleek, liquid mercury arch creates an irresistible, high-fashion futuristic aesthetic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/A2QifLshW0wZPu0KZ3Yaq?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/sX97rPxxewJ9b2i2BqZBz?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/2Kn93raCkKWehGa3gJ9mR?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
