@@ -8902,5 +8902,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/a1RviLmwwucReEmBPInld?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-16T02:43:21Z",
+    "account_id": "3",
+    "lens_name": "Dramatic Gossip",
+    "lens_id": "caef5d71-9c14-434e-b60e-5099bf939b34",
+    "checkpoint_id": "06ad18bf-fdd1-7a0b-8000-097eced91020",
+    "prompt": "Stylized neon magenta drama queen tiara with spinning miniature comic emergency beacons and orbiting porcelain teacup. Opening mouth unleashes hilarious cartoon splashed tea wave with floating comic exclamation badges and drama sparks; smiling defuses siren into angelic golden halo; eyebrow raise sounds silent comic siren spin; head tilt tips teacup. Peak comedy storytelling filter, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "cupid",
+      "love",
+      "redflag",
+      "greenflag",
+      "soulmate",
+      "crush",
+      "relationship",
+      "viral"
+    ],
+    "archetype": "drama_queen_siren_tiara",
+    "channel_id": "15",
+    "visual_hook": "Viral social challenge: Dramatic Gossip Siren Tiara turns everyday tea and gossip into hilarious viral drama.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/NsDFg3t7iWO8wULUTzXox?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/8hYMaiJhrDpJr4JpiavIg?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/VGmRlUQoDhZL0dahc1prK?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
