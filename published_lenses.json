@@ -9134,5 +9134,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/Z3pi11nMnXBUkVCdVFyXl?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-16T13:13:14Z",
+    "account_id": "5",
+    "lens_name": "Neon Cyber",
+    "lens_id": "71053f65-0306-455f-ae64-a160edadd951",
+    "checkpoint_id": "06ad21f5-2d1d-7cc8-8000-0d79a097f420",
+    "prompt": "Sleek ergonomic matte-black and neon red padded combat headguard framing forehead and temples with reinforced titanium cheek shields. Opening mouth delivers devastating kinetic sonic shockwave burst forward with flying electric sweat sparks and floating KO impact badge; smiling triggers championship belt gold flare; eyebrow raise pulses red neon guard rims; head tilt dodges incoming phantom punches. High-impact combat sports, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "sports",
+      "f1",
+      "champion",
+      "racing",
+      "boxing",
+      "athlete",
+      "goggles",
+      "gold"
+    ],
+    "archetype": "cyber_boxing_headguard",
+    "channel_id": "17",
+    "visual_hook": "Athletic adrenaline: Neon Cyber Boxing Headguard delivers raw fighting spirit and explosive knockout payoffs.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/gZBwEUPh2DKAVnMAYCu5U?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/P1geSZhqy1S19aMYmJUbW?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/q47StAEL9Scu7fcAA5PzM?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
