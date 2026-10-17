@@ -9453,5 +9453,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/JP0ckgrSFmabbHSIfdJaz?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-17T13:40:08Z",
+    "account_id": "2",
+    "lens_name": "Necromancer",
+    "lens_id": "41eff112-f393-4aa6-a4a6-a8d679cd3efa",
+    "checkpoint_id": "06ad3775-404e-7db1-8000-e1121f2ea228",
+    "prompt": "Intricately carved miniature electrum skulls linked into regal gothic coronet with floating cyan soulfire wisps orbiting temples. Opening mouth commands swirling orbit of ghostly soulfire orbs surging outward; smiling flashes piercing cyan eye luminescence; eyebrow raise flares crown spires in necrotic flame; head tilt trails ghostly soul smoke. Sovereign underworld conjurer, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "gothic",
+      "vampire",
+      "fangs",
+      "darkfantasy",
+      "bloodmoon",
+      "wraith",
+      "phantom",
+      "grunge"
+    ],
+    "archetype": "necromancer_soul_reaper",
+    "channel_id": "12",
+    "visual_hook": "Dark fantasy power: Necromancer Stygian Skull Crown unleashes swirling necrotic soulfire under creator command.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/KXthZP7rXuPAspzK8mWck?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/HPwZaaQ5pIGN7JRGItttQ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/EyMumb4DKrh6PB0bG7qsy?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
