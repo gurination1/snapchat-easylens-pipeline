@@ -9103,7 +9103,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/CmcQtXlB57XvyQ8kO4XSU?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/j131LkAXNsT9h2JzkA5tQ?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -9220,6 +9220,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/jts7bk86Eqit1YOL0LRyy?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-17T00:32:54Z",
+    "account_id": "1",
+    "lens_name": "Vampire Sovereign",
+    "lens_id": "26875f8d-d67f-44e0-bd2c-f993172d2821",
+    "checkpoint_id": "06ad2be4-5512-7160-8000-2b0d0b88fa20",
+    "prompt": "Sculpted matte obsidian bat-wing gothic coronet set with dripping ruby teardrop gems anchored to brow. Opening mouth reveals gleaming elongated ivory vampire fangs with swirling crimson blood-auroral sparkles. Smiling ignites piercing scarlet blood-moon eye glints. Eyebrow raise flares spiked wings; head tilt catches deep ruby caustics. Peak dark royalty PBR finish, zero UI, pure high-fashion gothic aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "cosplay",
+      "vampire",
+      "gothic",
+      "crown",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "vampire_sovereign_fangs",
+    "channel_id": "12",
+    "visual_hook": "The stark silhouette of obsidian bat-wing geometry against the forehead creates an instant dark-royalty transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/FLK4BrqKEjzP31eEycxEB?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/ny8P3tXpGaskONxleruPz?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/vAxARDmK2O8Mx7qwJeHuT?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
