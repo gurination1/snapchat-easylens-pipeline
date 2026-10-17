@@ -9540,5 +9540,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/iilNFdlvR70MrDe24IyFD?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-17T17:08:42Z",
+    "account_id": "4",
+    "lens_name": "Liquid Mercury",
+    "lens_id": "7c2f93cb-569b-45b0-874b-f1b348890cb4",
+    "checkpoint_id": "06ad3a8a-a799-7dcf-8000-2d43f80dc6ea",
+    "prompt": "Floating zero-g liquid mercury droplets orbit the temples and brow. PBR mirror-finish spheres reflect the environment. Mouth open triggers a surge of droplets fusing into a solid undulating chrome headpiece. Smiling shatters the geometry into a shimmering cloud of mirror micro-spheres. Eyebrow raise freezes droplets into sharp floating crystals. Head tilt sends a fluid wave dancing around the brow. High-fashion surrealism. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "chrome",
+      "makeup",
+      "glam",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "quantum_mercury_droplets",
+    "channel_id": "5",
+    "visual_hook": "The instant 0.2s silhouette of hyper-reflective, weightless liquid-metal spheres framing the brow creates an immediate, elite Y3K fashion transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/R3uVIVkMsO6pRWiPoZ6GU?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Nmgjo9UYmBtGCglpMAI1X?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Nr0FkcViBvOOMyooEeOMC?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
