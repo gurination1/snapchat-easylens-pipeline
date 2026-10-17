@@ -9569,5 +9569,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/Nr0FkcViBvOOMyooEeOMC?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-17T17:49:38Z",
+    "account_id": "5",
+    "lens_name": "Neon Laser Dodge",
+    "lens_id": "3c22a908-5fb0-4e86-8551-ef27faf7fe8b",
+    "checkpoint_id": "06ad3b18-578a-725a-8000-29e1a0997523",
+    "prompt": "Floating vibrant neon barriers drift toward the face. Tilt head left or right to weave through incoming light walls. Opening mouth deploys a hexagonal energy shield that shatters lasers into brilliant sparks. Smiling triggers a triumphant emerald pulse wave. Raising eyebrows activates a chrono-shift ripple effect. Pure 3D geometry with ray-traced reflections and high-contrast rim lighting. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "filter",
+      "game",
+      "challenge",
+      "neon",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "laser_dodge_matrix",
+    "channel_id": "6",
+    "visual_hook": "The instant 0.2s silhouette of a glowing neon grid framing the face compels immediate user interaction.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/lNQyJymf3wC3dttKpgFJ5?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/lga3RWMGOWz8ot1l0VTGe?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Q4IcwC526mqK7tKs3oUOo?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
