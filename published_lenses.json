@@ -9337,5 +9337,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/MIZLYpXjTWBuBbQW7ITkE?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-17T07:05:50Z",
+    "account_id": "3",
+    "lens_name": "Chrome Chitin",
+    "lens_id": "1a28ee0a-b515-4d6b-8974-f8e8a89a8d72",
+    "checkpoint_id": "06ad31a5-e090-702b-8000-94e7a1f10e3f",
+    "prompt": "Polished liquid metal brow shell with iridescent beetle-wing sheen. Fits precisely across forehead, leaving eyes and mouth clear. MouthOpen triggers an expanding toroidal mercury shockwave. Smile emits a radiant chromatic dispersion wave across face contours. EyebrowRaise flares outer chitin armor plates outward. HeadTilt shifts environmental light reflections. PBR materials, ray-traced shadows, 6500K rim lighting. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "chrome",
+      "glam",
+      "makeup",
+      "selfie",
+      "glow",
+      "y3k"
+    ],
+    "archetype": "cyber_chitin_exoshell",
+    "channel_id": "5",
+    "visual_hook": "The striking, high-contrast silhouette of a bio-surreal, mirror-finished chrome brow shell creates an immediate, elite Y3K fashion transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/OEfH0JLftdKETVbCurusl?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Ujvu0cBQsMM1zSjSoem1F?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/csLnULyKd9RbeWBNmupzx?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
