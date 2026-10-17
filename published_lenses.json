@@ -9306,7 +9306,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/hh9kWDCtyGJOAO9HwF2FH?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/OBjmNwILtA0XKdcyRAR4d?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -9423,6 +9423,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/U9fJheyA52zjkeRMO4PFb?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-17T12:18:27Z",
+    "account_id": "5",
+    "lens_name": "Kinetic Optics",
+    "lens_id": "bec96cfc-e76b-454c-a518-a608ff5ebd6f",
+    "checkpoint_id": "06ad3645-d100-738c-8000-ef945ee87ef4",
+    "prompt": "Precision forged titanium smart spectacles with integrated retinal scanners anchor to face, nose, and brow, featuring transparent optical prisms. Anisotropic reflections, PBR craft, and contrast lighting define bold geometry. Opening mouth discharges volumetric wireframe cubes expanding forward. Smiling pulses high-speed emerald photon glints through lenses. Eyebrow raise projects geometric laser matrix across brow. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "filter",
+      "visor",
+      "eyewear",
+      "glasses",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "matrix_kinetic_spectacles",
+    "channel_id": "2",
+    "visual_hook": "The instant 0.2s silhouette of high-end architectural titanium eyewear delivers an elite, futuristic high-fashion transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/uwyUcpsu4gF8uFZPT1kbJ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/vmc0l3ANlZ29u4WlRE9mN?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/JP0ckgrSFmabbHSIfdJaz?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
