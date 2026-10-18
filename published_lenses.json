@@ -9772,5 +9772,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/pMqIRJ6IZhMdbJ8plK0VM?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-18T08:41:56Z",
+    "account_id": "3",
+    "lens_name": "Lunar Huntress",
+    "lens_id": "fb3113e6-494d-49e7-b159-fdd881f72435",
+    "checkpoint_id": "06ad4832-f937-738d-8000-21380beaf910",
+    "prompt": "Hand-carved sterling silver crescent diadem resting elegantly atop the forehead. Adorned with intricate silver birch leaves and weightless starlight motes. Mouth opening releases swirling silver arrow light trails and floating celestial moon-dust. Smiling activates a luminous cool-toned skin glow. Raising eyebrows flares brilliant silver tips. Head tilting catches radiant starlight gleams. Pure lunar majesty. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "crown",
+      "halo",
+      "makeup",
+      "selfie",
+      "glow",
+      "vintage"
+    ],
+    "archetype": "artemis_lunar_huntress",
+    "channel_id": "8",
+    "visual_hook": "The instant 0.2s silhouette of a delicate, hand-carved silver crescent diadem establishes an elite, regal huntress aesthetic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/Lsyc0kuuBKv6UUKIQZmMr?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/OqGfBIfdFJhOeyA5xI6hr?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/mJheRS4IpUEkTkDewF2RR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
