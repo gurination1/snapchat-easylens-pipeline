@@ -9509,7 +9509,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/I1xftpQGwUA7NfyfKHHBd?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/8HBFjIclWCyVa3qz1hNTP?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -9626,6 +9626,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/TYMUzTxZiO4XYp728rnAL?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-18T00:02:11Z",
+    "account_id": "3",
+    "lens_name": "Synapse Brow",
+    "lens_id": "aea57cb4-b48a-438a-be2e-3ba4c45919c0",
+    "checkpoint_id": "06ad4094-43a3-78b8-8000-306ab00085da",
+    "prompt": "Brushed aerospace titanium neural bracket fitted to brow with glowing micro-fiber optical conduits. Anisotropic reflections and baked contact shadows. Mouth open releases kinetic spark wave across temples. Smiling surges electric blue volumetric particle pulses through conduits. Eyebrow raise flares glowing brow synapse nodes. Head tilt sends pulse waves across conduits. Pure 3D wearable hardware. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "cyber",
+      "visor",
+      "makeup",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "neural_synapse_cortex",
+    "channel_id": "2",
+    "visual_hook": "The stark silhouette of precision-engineered aerospace brow hardware delivers an instant, high-fashion futuristic transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/2cqGlyjGNa5vBfKBAskxZ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/TLJ3XGxkkLThSge4rvqiA?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/sHGXPgEXLb7sxEt0ySBRV?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
