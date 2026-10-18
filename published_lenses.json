@@ -9946,5 +9946,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/XIEHHatSK3VprpB9W51X4?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-18T17:29:32Z",
+    "account_id": "1",
+    "lens_name": "Storm Diadem",
+    "lens_id": "95690007-b4d4-4de4-a79f-e3acfc43e5f4",
+    "checkpoint_id": "06ad4fec-17dc-703c-8000-fe5e56f36f2b",
+    "prompt": "Sculpted dark thundercloud crown floats above hairline with crackling violet lightning spires and auroral sparkles droplets. Key rim lighting sculpts rich metallic clouds. MouthOpen triggers explosive lightning flash with expanding plasma shockwave ring. Smile illuminates electric purple eye glints and golden rain sparks. EyebrowRaise extends crackling lightning spires. HeadTilt tilts miniature storm cloud vortex across forehead. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "cosplay",
+      "crown",
+      "lightning",
+      "makeup",
+      "glow",
+      "selfie",
+      "trendy"
+    ],
+    "archetype": "tempest_storm_thunder_diadem",
+    "channel_id": "18",
+    "visual_hook": "A floating dark thundercloud crown with crackling violet lightning delivers an immediate 0.2s tempest ruler silhouette.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/3I4xzMUq3ZdGwcSatyYca?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/hIhnILeX3RlLYJwUVssiM?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/tT1GTsc243qGOAjzbd2CF?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
