@@ -10004,5 +10004,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/i7PDpXSTdvTU55Wmuuwua?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-18T20:40:27Z",
+    "account_id": "5",
+    "lens_name": "Ninja Steel Crest",
+    "lens_id": "71a83794-5014-48c3-9dcf-37307e03874c",
+    "checkpoint_id": "06ad52a9-cacd-7346-8000-5d03cf1555b7",
+    "prompt": "Forged dark steel forehead plate on rugged navy cloth headband featuring a sharp embossed leaf emblem. Twin floating kunai blades orbit the temples with high-contrast ray-traced reflections. Mouth open triggers a massive white ninja smoke poof with flying explosive parchment tags. Smile ignites steel plate glints. Eyebrow raise spins kunai rapidly. Head tilt catches dramatic 6500K rim lighting. Zero UI, pure 3D. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "anime",
+      "ninja",
+      "headband",
+      "kunai",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "ninja_shadow_clone_headband",
+    "channel_id": "16",
+    "visual_hook": "The sharp 0.2s silhouette of a metallic warrior headband instantly signals high-energy anime protagonist energy.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/nC7gxHWj377c1U6F1rv9M?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/wuesvFT3WpNqfnEwwwLXZ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/paztNJMiTBUvflfFi7XW6?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
