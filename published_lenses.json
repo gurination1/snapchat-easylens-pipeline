@@ -9859,5 +9859,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/2ZDjLJwm9d9xFGxDroRJp?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-18T13:42:55Z",
+    "account_id": "5",
+    "lens_name": "Flag Halo",
+    "lens_id": "f06789e1-a99e-42ea-9fed-7026a96f9b28",
+    "checkpoint_id": "06ad4c9e-0bb6-742b-8000-4efad509708a",
+    "prompt": "Floating curved halo diadem hovering above forehead with twin emerald and ruby neon prisms casting radiant rim light. Smiling triggers dazzling emerald burst with floating heart confetti and warm golden cheek glow. Head tilt locks on blazing crimson beacon with pulsing warning flare. Raising eyebrows accelerates alternating strobe speed. Opening mouth resets the scanner prisms into a swirling prismatic cascade. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "halo",
+      "crown",
+      "glow",
+      "selfie",
+      "trendy",
+      "viral"
+    ],
+    "archetype": "flag_scanner_halo",
+    "channel_id": "15",
+    "visual_hook": "Hypnotic alternating emerald and ruby neon halo beacon floating over the forehead instantly sparks high-stakes relationship verdict curiosity in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/PDeT0Iyw4ixVCv5BSHyM1?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/v3BSZIx0fNn51Kb6kUJ8N?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/SGSfWaaqFxzZLcxENvuC5?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
