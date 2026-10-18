@@ -9596,7 +9596,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/lga3RWMGOWz8ot1l0VTGe?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/Q4IcwC526mqK7tKs3oUOo?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -9713,6 +9713,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/Hl5QqPPL0sBjmUgWwxUoV?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-18T07:14:17Z",
+    "account_id": "5",
+    "lens_name": "Chrome Orbit",
+    "lens_id": "dea47aa9-32b5-4630-b80f-5b41609a4b77",
+    "checkpoint_id": "06ad46ea-952a-7511-8000-fc5956b2cc8b",
+    "prompt": "Aerodynamic Y3K wrap eyewear across eyes with polarized deep-violet mirror lenses reflecting distant spiral galaxies. Microscopic stellar dust motes orbit the frame temples. MouthOpen triggers explosive cosmic supernova flares and golden starburst particles. Smile illuminates cyan electric edge trim. EyebrowRaise shoots ultraviolet beam flares. HeadTilt rotates realistic ray-traced metal reflections. High-fashion PBR asset, face fully visible. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "filter",
+      "space",
+      "galaxy",
+      "glasses",
+      "selfie",
+      "glow",
+      "y2k"
+    ],
+    "archetype": "starlight_cosmic_shades",
+    "channel_id": "10",
+    "visual_hook": "Ultra-sleek aerodynamic Y3K galaxy glasses framing the face with instant cosmic mirror reflections.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/FRweNtdgBGuRamjiuHhgQ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/La9Aqe0DRCeuIQqKtNMSO?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/UQArslwf8hVKktWrRpmnz?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
