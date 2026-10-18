@@ -9538,7 +9538,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/adAjIBUPFXyqWXK4k2s5l?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/iilNFdlvR70MrDe24IyFD?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -9655,6 +9655,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/sHGXPgEXLb7sxEt0ySBRV?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-18T02:12:43Z",
+    "account_id": "1",
+    "lens_name": "Y2K Shades",
+    "lens_id": "a3ee5d8f-66f9-4eb1-906f-34940e0d5d3f",
+    "checkpoint_id": "06ad4274-12df-745d-8000-b3f853d4bc8f",
+    "prompt": "Frameless rose gradient sunglasses rest over eyes with sculpted crystal butterfly hinges at temples. MouthOpen flutters iridescent gemstone wings dispersing diamond glint motes. Smile blooms warm champagne gloss across cheekbones. EyebrowRaise flashes specular flares from faceted rhinestones. HeadTilt shifts chromatic refraction across polished bevel edges. Vintage 2000s cyber glam, 3-point contrast studio lighting, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "retro",
+      "sunglasses",
+      "glam",
+      "makeup",
+      "selfie",
+      "y2k",
+      "glow"
+    ],
+    "archetype": "y2k_frameless_butterfly_shades",
+    "channel_id": "7",
+    "visual_hook": "Ultra-glossy frameless rose lenses with faceted crystal butterfly hinges deliver an instant high-fashion Y2K pop star aesthetic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/KSkol2RQw1ZDbvkdNPktg?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/mIt9EaXSQEZUjjFoZ3ovK?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/y10X7c9HfeJWxa33myilH?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
