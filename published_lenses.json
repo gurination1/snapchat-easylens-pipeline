@@ -9915,7 +9915,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/3dXptTkubkfu8KttLUQfi?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/y8Bf332ChTDFeYE5cjc0A?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -10031,6 +10031,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/wuesvFT3WpNqfnEwwwLXZ?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/paztNJMiTBUvflfFi7XW6?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-18T22:00:21Z",
+    "account_id": "2",
+    "lens_name": "Rose Bloom Crown",
+    "lens_id": "8a67ce22-e9a3-4a04-856a-f75005db79be",
+    "checkpoint_id": "06ad53d5-a501-723c-8000-4b1508478056",
+    "prompt": "Intricately sculpted English garden botanical headpiece of deep crimson and blush roses with gold-tipped vines contouring temples. Ray-traced water droplets cling to velvety petals. Opening mouth releases a shower of soft falling petals; smiling activates dewy rose cheek flush and glossy lip shine; eyebrow raise unfolds rosebuds into full blossoms; head tilt catches sparkling morning dew glints. Regal romantic luxury. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "rose",
+      "flower",
+      "garden",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "royal_english_rose_diadem",
+    "channel_id": "14",
+    "visual_hook": "The bold silhouette of a lush, hyper-realistic floral crown commands instant regal attention on the carousel.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/iryrHXK8PZ8O8p1yVc09A?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/E5Is2D1yl2dWStEiiodFM?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/9TzxsYSy9q0wi4he9fIfJ?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
