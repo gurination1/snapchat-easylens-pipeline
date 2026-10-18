@@ -9770,7 +9770,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/WpP7FnUJCuDhdYXxAdSfh?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/pMqIRJ6IZhMdbJ8plK0VM?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -9887,6 +9887,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/SGSfWaaqFxzZLcxENvuC5?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-18T14:23:02Z",
+    "account_id": "2",
+    "lens_name": "Fox Spirit Ears",
+    "lens_id": "79364dcb-cfd7-458a-844e-1bd19612dc96",
+    "checkpoint_id": "06ad4d28-f704-72f3-8000-7056ba519b0d",
+    "prompt": "Ethereal fluffy white kitsune ears crown the head with dangling vermilion silk bells and twin floating cyan foxfire orbs at temples. MouthOpen summons an explosive vortex of glowing pink sakura petals and blue flame sparks. Smile casts warm golden iris flares and subtle crimson eyeliner blush. EyebrowRaise intensifies the foxfire brilliance, while HeadTilt sways the red silk tassels. Studio 3-point anime rim lighting, pure wearable 3D, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "anime",
+      "cute",
+      "ears",
+      "kitsune",
+      "blush",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "ethereal_spirit_kitsune_ears",
+    "channel_id": "13",
+    "visual_hook": "Ultra-plush, highly-flattering white kitsune ears with levitating cyan spirit orbs provide an instant 0.2s anime deity silhouette.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/23NKSwpu4zksdDx5rSrV9?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/3dXptTkubkfu8KttLUQfi?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/y8Bf332ChTDFeYE5cjc0A?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
