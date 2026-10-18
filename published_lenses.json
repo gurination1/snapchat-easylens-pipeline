@@ -9917,5 +9917,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/y8Bf332ChTDFeYE5cjc0A?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-18T15:26:25Z",
+    "account_id": "3",
+    "lens_name": "Vibe Aura Spinner",
+    "lens_id": "32708117-1c25-476a-8b58-b7df1cae67ce",
+    "checkpoint_id": "06ad4e20-a847-7d92-8000-049a51f0bd82",
+    "prompt": "A sophisticated neon tarot card carousel orbits the forehead. High-contrast brushed titanium frame with 6500K rim lighting. Mouth open triggers a hyper-speed card blur and radial shockwave. Smile locks a vibrant neon outcome with golden sparkle dust. Eyebrow raise resets the carousel deck. Head tilt shifts the card angle toward the camera. 100% immersive, no UI, pure wearable geometry. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "tarot",
+      "aura",
+      "neon",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "which_vibe_picker",
+    "channel_id": "11",
+    "visual_hook": "The instant 0.2s silhouette of a rotating neon card carousel creates a high-stakes personality-reveal hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/xlbPtSc0hbM6lvo5Z7db9?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/dip7sdW1lr2idQB29Xgvm?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/XIEHHatSK3VprpB9W51X4?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
