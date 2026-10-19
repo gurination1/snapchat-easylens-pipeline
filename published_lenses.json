@@ -10147,7 +10147,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/xnkOMXalbDRtbLEWJNTHT?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/PxnbXXcBPZPrEOFeQF2CJ?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -10264,6 +10264,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/mfzPhhsV5M8B6gw7Bl61f?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-19T14:53:58Z",
+    "account_id": "4",
+    "lens_name": "Aether Dragon",
+    "lens_id": "c7388b39-c989-46e7-bb03-855e47f218bc",
+    "checkpoint_id": "06ad62b9-1679-7a47-8000-474f11509f52",
+    "prompt": "Sculpted obsidian dragon horn crown anchored strictly to hairline and temples with liquid 24k gold filigree and caustic ruby gems, PBR anisotropic metallic reflections, 3-point contrast 6500K/2800K lighting with ray-traced contact shadows. Mouth open erupts turbulent emerald flame torrent with floating amber sparks; smiling ignites alpha-fading golden runic eye halos. Depth occlusion enabled, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "dragon",
+      "headpiece",
+      "horns",
+      "fantasy",
+      "aesthetic",
+      "trending",
+      "viral",
+      "gold"
+    ],
+    "archetype": "",
+    "channel_id": "",
+    "visual_hook": "Addictive gamified AR: Speed Pizza Chomp captures instant viral appetite with mouth-watering cartoon cheese physics.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/yAh4CCYageQHtiDGNPaM6?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/RXtNxjPXJsMUDXs6vYfjL?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/EWTr1QsTRp7Jo2zGZ5V47?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
