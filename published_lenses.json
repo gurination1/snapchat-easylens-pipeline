@@ -10236,5 +10236,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/FsQjlMQfUlCkBOC7KB0ki?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-19T14:09:52Z",
+    "account_id": "1",
+    "lens_name": "Oceanic Trident",
+    "lens_id": "f9d33129-da29-4ace-96b1-c961de5ded92",
+    "checkpoint_id": "06ad620c-4c39-77f6-8000-38def3a4bf42",
+    "prompt": "Head-anchored, PBR-rendered obsidian-gold trident circlet with polished turquoise sea-glass details and weightless bioluminescent deep-sea motes. MouthOpen triggers an explosive abyssal tidal wave vortex with glowing jellyfish particles. Smile activates piercing aquamarine eye glints and a golden sparkle dust halo. EyebrowRaise extends a fluid, shimmering spire. HeadTilt causes rippling underwater caustics to drift across the scene. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "filter",
+      "ocean",
+      "trident",
+      "crown",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "poseidon_ocean_trident",
+    "channel_id": "8",
+    "visual_hook": "A bold, high-contrast obsidian-gold trident circlet with turquoise sea-glass defines an instant 0.2s oceanic deity silhouette.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/zvmibWaWELfJBkf9rxmtZ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/UzNArWMKgoCrYPjqWNDDh?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/mfzPhhsV5M8B6gw7Bl61f?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
