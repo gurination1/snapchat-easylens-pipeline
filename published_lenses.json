@@ -10207,5 +10207,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/xQX9pX8nkjkXRs3DefAtA?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-19T13:27:26Z",
+    "account_id": "3",
+    "lens_name": "Cyber Glaze Wings",
+    "lens_id": "68722b50-294b-4449-b1ac-3389a1fbc4d9",
+    "checkpoint_id": "06ad6178-980a-75e5-8000-ebc20fd63740",
+    "prompt": "An iridescent chrome and holographic translucent butterfly diadem floats above the brow. Opening mouth triggers a rhythmic flutter of wings releasing glowing prismatic particles. Smiling illuminates a dewy cyber gloss sheen across cheekbones. Raising eyebrows expands the holographic wireframe wings, while tilting the head catches a shifting rainbow chrome reflection. Authentic Y2K aesthetic. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "butterfly",
+      "holographic",
+      "selfie",
+      "glow",
+      "y2k",
+      "retro"
+    ],
+    "archetype": "y2k_cyber_butterfly",
+    "channel_id": "7",
+    "visual_hook": "The striking silhouette of holographic chrome butterfly wings framing the forehead instantly signals high-fashion Y2K cyber-glam.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/CoPIuqfT2eewDzZda61tg?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/xWlLPSJJONiEIkr6HxV6I?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/FsQjlMQfUlCkBOC7KB0ki?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
