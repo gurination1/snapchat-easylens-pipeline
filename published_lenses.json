@@ -10323,5 +10323,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/a230VRp2BLBUR53f7zGXR?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-19T18:50:35Z",
+    "account_id": "2",
+    "lens_name": "Sakura Petal Blush",
+    "lens_id": "0b90d0b2-774e-4abe-8b48-bc1360e48e89",
+    "checkpoint_id": "06ad662a-de16-745a-8000-d5016d48167f",
+    "prompt": "Delicate soft-pink watercolor sakura blush on cheeks and nose tip with floating 3D cherry blossom petals drifting around brow. Opening mouth releases gentle swirl of fluttering sakura petals; smiling deepens soft rosy glow with glass-skin cheek sheen; eyebrow raise lifts petal crown; head tilt sways floating blossoms. Romantic Japanese anime beauty, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "glow",
+      "glassskin",
+      "goldenhour",
+      "freckles",
+      "glam",
+      "aesthetic",
+      "filter"
+    ],
+    "archetype": "cherry_blossom_blush",
+    "channel_id": "9",
+    "visual_hook": "Irresistible beauty glow-up: Sakura Petal Blush cascades dreamy cherry blossoms across cheekbones in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/EGVM48TNRQlnqnDQ1H8y1?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/rZbfY58Dd29xD2NVmsdnP?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/nYkkgsvCiucwp7bDmFGYo?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
