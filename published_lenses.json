@@ -10350,7 +10350,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/rZbfY58Dd29xD2NVmsdnP?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/nYkkgsvCiucwp7bDmFGYo?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -10467,6 +10467,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/vusebhK7xoMksRFhHvgyb?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-19T23:34:32Z",
+    "account_id": "2",
+    "lens_name": "Fallen Archangel",
+    "lens_id": "bda7486c-80ad-4ef8-ae7c-3a76358c3a06",
+    "checkpoint_id": "06ad6a5b-9224-7682-8000-2fc657dbb30e",
+    "prompt": "Barbed blackened iron thorn halo hovering weightlessly above head with floating iridescent black raven feathers. Opening mouth unleashes explosive dark feathered shockwave vortex with violet lightning arcs; smiling pulses cold violet rim lighting across cheekbones; eyebrow raise extends thorn spires; head tilt sways floating black feathers. Dramatic dark angel aesthetic, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "gothic",
+      "vampire",
+      "fangs",
+      "darkfantasy",
+      "bloodmoon",
+      "wraith",
+      "phantom",
+      "grunge"
+    ],
+    "archetype": "fallen_archangel_halo",
+    "channel_id": "12",
+    "visual_hook": "Dark fantasy power: Fallen Archangel Barbed Obsidian Halo commands solemn gothic majesty with fluttering raven feathers.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/A6VpaU3beIpwo815bxPcM?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/OhdPOOGjcLruLPTpqwkqN?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/gFEnC9A2fMHtRcGHQo1uO?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
