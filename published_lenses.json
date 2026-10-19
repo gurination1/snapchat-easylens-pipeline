@@ -10352,5 +10352,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/nYkkgsvCiucwp7bDmFGYo?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-19T19:29:12Z",
+    "account_id": "3",
+    "lens_name": "Fortune Scales",
+    "lens_id": "15fef69c-97ea-4ec2-91c3-815e47af5c06",
+    "checkpoint_id": "06ad66c1-1e0b-7932-8000-7771aaf51617",
+    "prompt": "Ornate beaten 24k gold celestial balance scales rest regally on brow with glowing sun and moon platters. Tilt head left or right to tip scales choosing comedic viral outcomes, unleashing bursting cosmic auras and floating ancient parchment on the winning side. Open mouth for a radiant solar ray blast. Smile to trigger harmonic brass chimes. Raise eyebrows to level the scales perfectly. High-fashion PBR gold. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "filter",
+      "crown",
+      "gold",
+      "makeup",
+      "selfie",
+      "trendy",
+      "viral"
+    ],
+    "archetype": "oracle_balance_scales",
+    "channel_id": "6",
+    "visual_hook": "The striking 0.2s silhouette of regal 24k gold scales framing the forehead instantly signals high-status interactive gameplay.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/dH0prRalJ4NHfUo1TEkm3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/mzpwjJnuOkwQ5C7ZP1RcE?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/b1R5lFvZRzyD5JpECGUcM?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
