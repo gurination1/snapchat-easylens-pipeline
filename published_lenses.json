@@ -10640,7 +10640,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/TMX7ksYeZa8EbmOh3GkqJ?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/qhrF12hZHHKtKHBK1EUJj?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -10757,6 +10757,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/DXqOlQXhVRGph37ErAM4G?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-20T20:54:47Z",
+    "account_id": "2",
+    "lens_name": "Speed Pizza Chomp",
+    "lens_id": "a71a02be-43ae-45ad-a77f-088be5f322b7",
+    "checkpoint_id": "06ad7d1e-4084-7a71-8000-012f4c85217b",
+    "prompt": "Stylized 3D neon chef toque hat resting on crown with tumbling cartoon pepperoni pizza slices descending toward mouth. Opening mouth chomps pizza with hilarious bubbling cheese-pull strands and floating +250 SCORE badges; smiling triggers pepperoni party confetti; eyebrow raise tosses spinning pizza dough into the air; head tilt catches slices at wild angles. Viral comedy food game, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "game",
+      "arcade",
+      "challenge",
+      "interactive",
+      "racer",
+      "catcher",
+      "reflex",
+      "viral"
+    ],
+    "archetype": "pizza_slice_catcher",
+    "channel_id": "6",
+    "visual_hook": "Addictive gamified AR: Speed Pizza Chomp captures instant viral appetite with mouth-watering cartoon cheese physics.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/wsILvLBdk2GWszOxVt6OV?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/00C000AaPqR7aplIVeofm?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/PJEJve6Lvw9nvVZaOaZcd?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
