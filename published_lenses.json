@@ -10729,5 +10729,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/WMJflS6doAetYJPttP9ku?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-20T20:15:56Z",
+    "account_id": "5",
+    "lens_name": "Apollo Radiant",
+    "lens_id": "4a61b249-c584-4544-aa2c-1bfc49d7a3c3",
+    "checkpoint_id": "06ad7c86-7526-7ee3-8000-0e4dbfd00e4b",
+    "prompt": "Molten electrum and rose-gold solar ray crown radiating sunbeams from hairline with warm 2800K god-rays. Opening mouth unleashes blinding golden solar flare burst and floating solar ember motes; smiling triggers radiant sun-halo eye flares; eyebrow raise expands blazing golden ray spires; head tilt showers molten sun-sparks. Solar deity majesty, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "greek",
+      "mythology",
+      "olympus",
+      "zeus",
+      "medusa",
+      "aphrodite",
+      "apollo",
+      "hades"
+    ],
+    "archetype": "apollo_solar_chariot",
+    "channel_id": "8",
+    "visual_hook": "Godly transformation: Apollo Radiant Solar Chariot Crown bathes the creator in blinding celestial radiance.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/TpFsENTBsCPPfAzzSjw57?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/IqVJMxHsqeNlJAB9CN6se?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/DXqOlQXhVRGph37ErAM4G?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
