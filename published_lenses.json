@@ -10582,7 +10582,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/BJYEkagpUUq1Qo0dMhVR0?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/uFaTYyG5XvH4YluwtdZgS?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -10699,6 +10699,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/TGrXoJoziBjTnzWFxZRzO?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-20T18:09:09Z",
+    "account_id": "4",
+    "lens_name": "Tempest Storm",
+    "lens_id": "63d351d9-5e63-4acc-81b3-d48989892277",
+    "checkpoint_id": "06ad7aad-dd32-76f2-8000-39e26d3a4473",
+    "prompt": "Swirling miniature dark thundercloud circlet floating above hairline with crackling violet lightning bolts and rain droplet auroral sparkles. Opening mouth summons blinding lightning strike blast with concussive thunder shockwave expanding outward; smiling illuminates glowing electric purple eye gaze; eyebrow raise sparks crackling plasma crown spires; head tilt swirls storm cloud vortex. Unstoppable tempest ruler, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "zodiac",
+      "astrology",
+      "constellation",
+      "elemental",
+      "fire",
+      "ocean",
+      "storm",
+      "earth"
+    ],
+    "archetype": "tempest_storm_thunder_diadem",
+    "channel_id": "18",
+    "visual_hook": "Cosmic elemental majesty: Tempest Storm Thunder Diadem commands supreme meteorological power.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/aFFsXrTLVTkV4wXT9PPQK?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/CVib4L6ESyu8Ynb3uCE3j?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/WMJflS6doAetYJPttP9ku?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
