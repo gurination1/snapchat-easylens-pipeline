@@ -10524,7 +10524,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/ORoxDky1fKapNv23ZAPXH?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/ZnucpAeJrJRNcmOaRtFQR?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -10640,6 +10640,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/TMX7ksYeZa8EbmOh3GkqJ?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/qhrF12hZHHKtKHBK1EUJj?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-20T16:46:57Z",
+    "account_id": "3",
+    "lens_name": "Cupid Rose-Gold",
+    "lens_id": "34c4b81b-5000-4f3d-b6b7-117ba56cfd1c",
+    "checkpoint_id": "06ad7972-a659-7c8b-8000-8cc6725185e3",
+    "prompt": "Sculpted 18k rose-gold cupid diadem with miniature sculpted wings resting at hairline with floating translucent ruby glass hearts orbiting temples. Opening mouth fires glowing golden cupid love-arrow forward into blooming explosion of sparkling pink heart confetti; smiling triggers cascading rosy love blush and heart pupil glints; eyebrow raise speeds up orbiting hearts; head tilt catches rose-gold luster. High viral shareability, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "cupid",
+      "love",
+      "redflag",
+      "greenflag",
+      "soulmate",
+      "crush",
+      "relationship",
+      "viral"
+    ],
+    "archetype": "cupid_arrow_heart_diadem",
+    "channel_id": "15",
+    "visual_hook": "Viral social challenge: Cupid Rose-Gold Arrow Diadem detonates explosive love-heart celebration on mouth open in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/EPTwuIaNuscXsec1U6BYw?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/uRwi4ATTrWTWaGkGG2ShR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/j03pasm3AJX5DsyCuRpJ3?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
