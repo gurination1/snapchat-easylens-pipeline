@@ -10698,7 +10698,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/TS1xJEGGyOqNCdJ76FRh2?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/TGrXoJoziBjTnzWFxZRzO?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -10815,6 +10815,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/H7M46HvC7WizNcN8zfPIA?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-20T22:18:51Z",
+    "account_id": "1",
+    "lens_name": "Mars Explorer",
+    "lens_id": "ca954986-ffc9-404c-88ab-827219bfeb6b",
+    "checkpoint_id": "06ad7e55-7118-7a58-8000-d44d9e8e5ce3",
+    "prompt": "Rugged carbon-kevlar planetary exploration helmet featuring a polarized amber optic shield. Opening mouth triggers a swirling red Martian dust vortex with floating basalt particles. Smiling activates twin LED temple searchlights. Raising eyebrows initiates a terrain scan flare while tilting the head sways atmospheric dust plumes. High-fidelity PBR textures, brushed metal finish, zero UI, full-screen immersive. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "retro",
+      "space",
+      "helmet",
+      "mars",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "mars_rover_explorer_visor",
+    "channel_id": "10",
+    "visual_hook": "The striking, high-contrast silhouette of a rugged, amber-tinted planetary visor creates an immediate, premium sci-fi hook.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/aO9fazvUb5q815KtlLisF?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/jqnFBxGejIXNSGqpWWELo?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/K6bbPBTTq5ENEyAYyiUKO?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
