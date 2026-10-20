@@ -10408,7 +10408,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/LfebwgKidpVuEjbfGUfVD?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/IbTAM0tHcQSpHIvq7pAPS?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -10524,6 +10524,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/ORoxDky1fKapNv23ZAPXH?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/ZnucpAeJrJRNcmOaRtFQR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-20T07:15:40Z",
+    "account_id": "1",
+    "lens_name": "Frost Lily Bloom",
+    "lens_id": "3ad392c8-1586-4873-bd89-d0dc859fb646",
+    "checkpoint_id": "06ad7119-de9e-7d8b-8000-9c8c48dc6b38",
+    "prompt": "Sculpted translucent ice lily flowers and frosted silver willow twigs rest delicately at the hairline with caustic diamond dispersion. Opening mouth releases a torrent of sparkling crystalline snowflakes. Smiling illuminates radiant frosted cheekbone sheen and glacial blue eye reflections. Raising eyebrows blooms crystalline petals outward. Tilting head refracts rainbow light through ice. Winter fairytale elegance, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "flower",
+      "crown",
+      "winter",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "crystalline_frost_lily_crown",
+    "channel_id": "14",
+    "visual_hook": "The striking silhouette of iridescent, diamond-dusted ice lilies creates an instant, high-fashion winter fairytale look.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/wd8xBGtcM1WA7ifo9xoHz?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/2y8lTaJvNT0bRZhkCpp6m?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/MN1WjaMu3kifSuOMaUq4N?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
