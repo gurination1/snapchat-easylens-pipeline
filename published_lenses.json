@@ -10495,7 +10495,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/OhdPOOGjcLruLPTpqwkqN?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/gFEnC9A2fMHtRcGHQo1uO?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -10612,6 +10612,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/wPP1cRmStbrAEAvNxfUhj?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-20T16:06:06Z",
+    "account_id": "2",
+    "lens_name": "Deep Space",
+    "lens_id": "2a64889c-9b56-49f4-9818-bcfb58c77953",
+    "checkpoint_id": "06ad78da-c8e7-7725-8000-1c3c2d2d3e10",
+    "prompt": "Transparent spherical astronaut pressure dome filled with swirling violet, cyan, and magenta cosmic nebula gas and twinkling distant star clusters. Opening mouth detonates glowing stellar supernova flash inside helmet releasing star sparks; smiling surges auroral plasma waves through nebula; eyebrow raise flares stellar eye glints; head tilt swirls cosmic gas vortex. Deep space majesty, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "space",
+      "astronaut",
+      "helmet",
+      "orbiting",
+      "planetarium",
+      "nebula",
+      "cosmic",
+      "aesthetic"
+    ],
+    "archetype": "deep_space_nebula_helmet",
+    "channel_id": "10",
+    "visual_hook": "Epic cosmic journey: Deep Space Cosmic Nebula Glass Dome captures the swirling majesty of deep interstellar space.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/GJkjwJ1WSyMcdjZOmIv5w?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/TMX7ksYeZa8EbmOh3GkqJ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/qhrF12hZHHKtKHBK1EUJj?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
