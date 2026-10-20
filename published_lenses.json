@@ -10584,5 +10584,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/uFaTYyG5XvH4YluwtdZgS?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-20T12:47:40Z",
+    "account_id": "5",
+    "lens_name": "Apex Race Visor",
+    "lens_id": "dc7cca29-c3fa-4c00-a105-2348683cfad9",
+    "checkpoint_id": "06ad75f4-dedf-7ced-8000-be7341614da0",
+    "prompt": "Matte forged carbon fiber race visor contoured across the brow with integrated 6500K tachometer LED strips. Mouth open triggers a high-velocity nitro-blue exhaust flame burst and supersonic wind warp lines. Smiling flashes prismatic checkered flag victory glints across the glass. Eyebrow raise redlines the tachometer LEDs into a pulse. Head tilt catches polarized iridescent visor caustics. Professional motorsport engineering, zero UI, pure speed. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "beauty",
+      "visor",
+      "race",
+      "sport",
+      "selfie",
+      "glow",
+      "viral"
+    ],
+    "archetype": "f1_carbon_racing_visor",
+    "channel_id": "17",
+    "visual_hook": "The aggressive, matte forged carbon fiber silhouette provides an instant high-octane motorsport aesthetic that commands immediate attention.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/RMeAkSq6XwyZ3TM413X6f?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/q7TYGgNlrArA9gKMfmxJc?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/wPP1cRmStbrAEAvNxfUhj?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
