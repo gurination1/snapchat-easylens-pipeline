@@ -10872,7 +10872,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/nmCnTm9K7xAdsJFnZcv6K?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/47f9qnvHTDWSbbLN9NEzu?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -10988,6 +10988,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/tND8GFQNxrxi45Vs0JSDA?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/pmwXBKld3gHq2TNEBUU4M?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-21T11:47:07Z",
+    "account_id": "4",
+    "lens_name": "Aether Dragon",
+    "lens_id": "e6a3f6e4-95bb-48ca-8d25-6c44e29c0149",
+    "checkpoint_id": "06ad8a31-0d45-71b5-8000-c7205a3c1d20",
+    "prompt": "Sculpted obsidian dragon horn crown anchored strictly to hairline and temples with liquid 24k gold filigree and caustic ruby gems, PBR anisotropic metallic reflections, 3-point contrast 6500K/2800K lighting with ray-traced contact shadows. Mouth open erupts turbulent emerald flame torrent with floating amber sparks; smiling ignites alpha-fading golden runic eye halos. Depth occlusion enabled, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "dragon",
+      "headpiece",
+      "horns",
+      "fantasy",
+      "aesthetic",
+      "trending",
+      "viral",
+      "gold"
+    ],
+    "archetype": "",
+    "channel_id": "",
+    "visual_hook": "Frameless oversized polarized alpine goggles reflecting snowy peaks provide a high-fashion 0.2s winter sports silhouette.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/1suhkXIbULwBg0GnKF3H2?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/thHz2k7LYFHo5efusSpxr?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Rt79CiId1hlA4uDLHLNDB?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
