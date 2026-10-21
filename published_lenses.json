@@ -11077,5 +11077,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/Inayt8l0sEdUGJJX6BGa0?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-21T17:24:36Z",
+    "account_id": "3",
+    "lens_name": "Cyber Shonen",
+    "lens_id": "c3a9bf66-119b-4056-adb1-44babe704499",
+    "checkpoint_id": "06ad8f1f-b8f7-71b3-8000-9bbe93904f1c",
+    "prompt": "Translucent emerald green aerodynamic combat scouter monocle clipped to left brow with glowing kanji power level glyphs cycling across lens. Opening mouth overloads scouter into shattering green energy shockwave with explosive spark shower; smiling locks target with high-pitch tactical laser glint; eyebrow raise calculates power level reading; head tilt catches polarized lens reflections. Iconic anime battle gear, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "manga",
+      "anime",
+      "shonen",
+      "supersaiyan",
+      "aura",
+      "comic",
+      "speedlines",
+      "scouter"
+    ],
+    "archetype": "cyber_shonen_scouter_monocle",
+    "channel_id": "16",
+    "visual_hook": "High-octane anime power: Cyber Shonen Power Scouter Monocle gives fans the iconic battle scanner experience.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/3tnRSDmlKqey2065TRw65?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/kGg9oQgUZxNsaYfM1wPEt?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/pVPL2c6RLD2IDW2tlxoH3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
