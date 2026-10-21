@@ -10930,7 +10930,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/uhf25XR8TO9OD093IdC0m?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/RnbBi89hVE6Xy7PhSUkCV?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11046,6 +11046,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/I3Y7IXcPHLwZhIdZdg0dS?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/6wkSDtFHjGDf4pxSZu4et?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-21T16:47:14Z",
+    "account_id": "2",
+    "lens_name": "Rotating",
+    "lens_id": "2899f37d-b547-4647-bad0-3ecfd07ba089",
+    "checkpoint_id": "06ad8e8c-bf61-7880-8000-3feab20b280e",
+    "prompt": "Ornate 3D gilded celestial fortune wheel spinning rapidly above forehead with spinning zodiac cards. Head tilt or smiling decisively stops the spinning ticker on the winning card\u2014unleashing giant golden trumpet fanfare confetti and glowing celestial aura; opening mouth re-spins wheel at high speed; eyebrow raise flashes cosmic fortune runes. Highly addictive viral decision game, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "randomizer",
+      "wheel",
+      "decision",
+      "tarot",
+      "vibe",
+      "quiz",
+      "interactive",
+      "viral"
+    ],
+    "archetype": "celestial_tarot_wheel",
+    "channel_id": "11",
+    "visual_hook": "Viral interactive game: Rotating Celestial Tarot Wheel hooks viewers with suspenseful spinning fortune reveal in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/T9fXtemywcHOkrG5bdLiX?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/EbdxcP4VBY8yyEXYfJtou?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Inayt8l0sEdUGJJX6BGa0?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
