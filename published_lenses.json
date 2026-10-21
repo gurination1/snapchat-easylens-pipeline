@@ -11106,5 +11106,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/pVPL2c6RLD2IDW2tlxoH3?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-21T20:13:31Z",
+    "account_id": "1",
+    "lens_name": "Soulmate",
+    "lens_id": "8df98fd6-986c-4753-b32b-bcc10607f8ed",
+    "checkpoint_id": "06ad9199-2de7-7d2b-8000-ca9325da314a",
+    "prompt": "Polished platinum celestial radar diadem anchored across brow with spinning holographic starlight compass pointing toward user's soulmate. Head tilt locks directional tracking beam with expanding golden starlight ripples; opening mouth unleashes celebratory supernova starburst with floating golden zodiac glyphs; smiling pulses warm astral glow across cheekbones; eyebrow raise sweeps radar beam. Romantic viral predictor, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "cupid",
+      "love",
+      "redflag",
+      "greenflag",
+      "soulmate",
+      "crush",
+      "relationship",
+      "viral"
+    ],
+    "archetype": "soulmate_constellation_radar",
+    "channel_id": "15",
+    "visual_hook": "Viral social challenge: Soulmate Constellation Radar taps the deepest romantic curiosity with mesmerizing cosmic tracking.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/6LJCbgqVbDUzdmESEHrIw?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Nbsf3Z2DjhFd8JWdzQ76o?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/39PJa9xkF4lcDEpHuVLWz?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
