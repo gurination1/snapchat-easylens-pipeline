@@ -10903,5 +10903,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/PCVQMhG0OVA1AKhxONIAq?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-21T02:19:25Z",
+    "account_id": "2",
+    "lens_name": "70s Studio 54",
+    "lens_id": "9fe720a8-2064-4774-8308-6feac87f02e3",
+    "checkpoint_id": "06ad81d8-cbd0-7c62-8000-5b3c1a9288a3",
+    "prompt": "Spinning multifaceted mirror disco ball crown anchored to hairline with golden starburst flares and warm sunset halation. Opening mouth showers cascading golden glitter dust and spinning roller-disco sparkles; smiling flashes multi-colored prism lightbeams across face; eyebrow raise ignites 70s funk disco aura; head tilt sweeps mirror facets. Pure 70s dancefloor glamour, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "retro",
+      "80s",
+      "90s",
+      "70s",
+      "synthwave",
+      "vhs",
+      "camcorder",
+      "disco"
+    ],
+    "archetype": "disco_70s_studio54",
+    "channel_id": "7",
+    "visual_hook": "Decades nostalgia hit: 70s Studio 54 Disco Ball Headpiece radiates irresistible retro party energy in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/YaJb46PX2AT9yhzRqUkSb?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/uhf25XR8TO9OD093IdC0m?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/RnbBi89hVE6Xy7PhSUkCV?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
