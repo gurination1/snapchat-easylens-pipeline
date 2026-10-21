@@ -10814,7 +10814,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/xBBezA1iQ3orBd4fUDV1A?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/H7M46HvC7WizNcN8zfPIA?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -10931,6 +10931,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/RnbBi89hVE6Xy7PhSUkCV?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-21T10:17:12Z",
+    "account_id": "3",
+    "lens_name": "Wraith Sovereign",
+    "lens_id": "4092da20-eb65-4c86-bef2-736342a2dead",
+    "checkpoint_id": "06ad88dd-cf36-7153-8000-6d0b680cd2c5",
+    "prompt": "An elegant, ethereal crown of obsidian thorns rests upon the forehead, radiating a cold stygian blue aura. Translucent spectral silk wisps float weightlessly around the temples. Mouth open triggers a massive cryogenic soulfire geyser; smiling causes piercing supernatural white eye flares; eyebrow raise billows the phantom shroud; head tilt creates ripples of ectoplasmic auroral sparkles. 3-point cinematic lighting. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "aesthetic",
+      "dark",
+      "crown",
+      "horns",
+      "makeup",
+      "selfie",
+      "glow",
+      "trendy"
+    ],
+    "archetype": "phantom_wraith_shroud",
+    "channel_id": "12",
+    "visual_hook": "The striking, high-contrast obsidian crown silhouette creates an instant, authoritative supernatural presence.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/lJ3keeEcLG3I8DkdX9pUz?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/TnOY3hhUvaJjBpJ8RZdRd?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/0gge28wZKyusbhoQDvRon?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
