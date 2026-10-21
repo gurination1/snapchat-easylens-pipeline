@@ -11019,5 +11019,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/Rt79CiId1hlA4uDLHLNDB?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-21T15:47:05Z",
+    "account_id": "5",
+    "lens_name": "Solar Fire",
+    "lens_id": "e606162b-e94c-4876-b733-d219260d574e",
+    "checkpoint_id": "06ad8daa-68a6-7e75-8000-74f334cbb615",
+    "prompt": "Sculpted molten magma and 24k gold solar diadem resting on brow with looping 3D solar flares and floating magma embers. Opening mouth erupts pressurized crimson-and-gold fire dragon breath vortex shooting forward with crackling embers; smiling illuminates burning amber solar eye glare; eyebrow raise loops solar flares higher into crown; head tilt wafts convective heat distortion waves. Untamed fire element majesty, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "zodiac",
+      "astrology",
+      "constellation",
+      "elemental",
+      "fire",
+      "ocean",
+      "storm",
+      "earth"
+    ],
+    "archetype": "solar_fire_elemental_diadem",
+    "channel_id": "18",
+    "visual_hook": "Cosmic elemental majesty: Solar Fire Elemental Diadem commands blazing solar authority with live looping flares.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/rObEHOq13AY1oxa7okWiJ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/I3Y7IXcPHLwZhIdZdg0dS?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/6wkSDtFHjGDf4pxSZu4et?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
