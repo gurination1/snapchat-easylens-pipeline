@@ -11075,7 +11075,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/EbdxcP4VBY8yyEXYfJtou?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/Inayt8l0sEdUGJJX6BGa0?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11191,6 +11191,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/eRjBM7NyCitOiBtRM7xzQ?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/vWkHBGUwV2nl2n1dn2d8m?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-21T22:56:39Z",
+    "account_id": "2",
+    "lens_name": "Neon Cyber",
+    "lens_id": "29157585-8601-4cc3-8aba-18fbea30b965",
+    "checkpoint_id": "06ad93f7-9784-7bcc-8000-f75a728f9861",
+    "prompt": "Sleek ergonomic matte-black and neon red padded combat headguard framing forehead and temples with reinforced titanium cheek shields. Opening mouth delivers devastating kinetic sonic shockwave burst forward with flying electric sweat sparks and floating KO impact badge; smiling triggers championship belt gold flare; eyebrow raise pulses red neon guard rims; head tilt dodges incoming phantom punches. High-impact combat sports, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "sports",
+      "f1",
+      "champion",
+      "racing",
+      "boxing",
+      "athlete",
+      "goggles",
+      "gold"
+    ],
+    "archetype": "cyber_boxing_headguard",
+    "channel_id": "17",
+    "visual_hook": "Athletic adrenaline: Neon Cyber Boxing Headguard delivers raw fighting spirit and explosive knockout payoffs.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/B3aK83mhCeiI2ELIUZeyo?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/4B4jF45TkDei5kztl2CmM?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/rffBDACpxUCzVIC7ZN0HY?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
