@@ -11135,5 +11135,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/39PJa9xkF4lcDEpHuVLWz?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-21T21:37:56Z",
+    "account_id": "4",
+    "lens_name": "Bioluminescent",
+    "lens_id": "4ba9ef9f-3fe9-4f35-831d-fc422ea4fab0",
+    "checkpoint_id": "06ad92d3-0c1c-70af-8000-6033405abc96",
+    "prompt": "Enchanted forest wreath of velvet emerald moss, miniature glowing mushrooms, and silver fern fronds resting on crown with orbiting fireflies. Opening mouth pulses radiant bioluminescent cyan wave across wreath releasing floating glowing spore motes; smiling illuminates emerald eye glints and ethereal forest glow; eyebrow raise awakens firefly swarm in bright spiral; head tilt ripples bioluminescent frond sheen. Avatar forest magic, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "floral",
+      "flowers",
+      "butterfly",
+      "nature",
+      "botanical",
+      "wreath",
+      "tiara",
+      "bloom"
+    ],
+    "archetype": "bioluminescent_forest_wreath",
+    "channel_id": "14",
+    "visual_hook": "Botanical nature majesty: Bioluminescent Moss Wreath immerses user in glowing deep-forest fantasy wonderland.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/6czPM0nt0jo7UylPzrrmm?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/4JhAYF3FWs56BRdvnv7vd?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/u7N07Kgqiwwuo0H5L4Xgm?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
