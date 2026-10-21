@@ -11222,5 +11222,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/rffBDACpxUCzVIC7ZN0HY?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-21T23:36:00Z",
+    "account_id": "3",
+    "lens_name": "Pastel Lop-Eared",
+    "lens_id": "c42354af-2514-4b62-9ec6-3d5f68b232da",
+    "checkpoint_id": "06ad948a-54f1-7703-8000-d1e02ecf050d",
+    "prompt": "Cozy pastel-pink lop-eared bunny hood sculpted over hair with floppy velvet physics and soft fleece micro-texture. Opening mouth unleashes fountain of bouncing cartoon strawberries and star dust; smiling triggers cute nose-twitch animation with rosy cheek blush bloom; eyebrow raise lifts floppy bunny ears; head tilt drapes soft velvet ears across shoulders. Irresistible cute aesthetic, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "kawaii",
+      "anime",
+      "catears",
+      "bunny",
+      "kitsune",
+      "chibi",
+      "pastel",
+      "cute"
+    ],
+    "archetype": "lop_eared_bunny_hood",
+    "channel_id": "13",
+    "visual_hook": "Viral kawaii charm: Pastel Lop-Eared Bunny Hood delights viewers with bouncy floppy ear physics in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/53O4VuBWthuHYptnknKn6?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Cw630YPMlaiMzpbYWhYZ1?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/HrOHIHZvNmc9oZlY3Vb1Z?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
