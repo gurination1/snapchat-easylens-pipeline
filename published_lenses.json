@@ -11336,7 +11336,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/gSVJpjorTS5y0Nesl3IDS?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/51bcD0Luv4HEP8aSYebEw?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11453,6 +11453,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/KiqmtgCytid8ph2mL7uKw?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-22T20:46:30Z",
+    "account_id": "5",
+    "lens_name": "Vampire",
+    "lens_id": "015ef3bb-67b2-4ac4-a992-dad5944aa4c3",
+    "checkpoint_id": "06ada72c-a9a1-744d-8000-d8466bf90636",
+    "prompt": "Sculpted matte obsidian bat-wing gothic coronet set with dripping ruby teardrop gems anchored to brow. Opening mouth reveals gleaming elongated 3D ivory vampire fangs with swirling crimson blood-auroral sparkles and dark gothic smoke; smiling ignites piercing crimson blood-moon eye glints; eyebrow raise flares gothic bat wings; head tilt catches ruby caustics. Peak dark royalty, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "gothic",
+      "vampire",
+      "fangs",
+      "darkfantasy",
+      "bloodmoon",
+      "wraith",
+      "phantom",
+      "grunge"
+    ],
+    "archetype": "vampire_sovereign_fangs",
+    "channel_id": "12",
+    "visual_hook": "Dark fantasy power: Vampire Sovereign Bat-Wing Coronet transforms selfies into regal gothic royalty in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/52UcErs69bY3BZCFdQLjP?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/gBrNdtaHjOZlZOTFr4Kdk?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Xme9sPGNpNhqct1zDBzAQ?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
