@@ -11394,7 +11394,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/u0JM3LtLvR0vP1EXHlRW2?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/wvdmxIJqv4G4noTgxiZA1?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11511,6 +11511,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/wcZqHFewerxiZz96isk7A?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-22T22:54:11Z",
+    "account_id": "3",
+    "lens_name": "Street Skater",
+    "lens_id": "8ef28e1a-4d72-4e2a-8556-7f1f55daccf5",
+    "checkpoint_id": "06ada909-8f18-7272-8000-bdaba0ae8385",
+    "prompt": "Authentic flat-brim streetwear snapback cap resting backwards on crown with embroidered chrome logo and floating kinetic grinding spark particles. Opening mouth releases explosive skateboard kickflip spark burst with expanding bass boom shockwave rings; smiling activates warm golden street-lamp halation; eyebrow raise tips snapback brim; head tilt trails kinetic orange grind sparks across temples. High-energy street culture, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "sports",
+      "f1",
+      "champion",
+      "racing",
+      "boxing",
+      "athlete",
+      "goggles",
+      "gold"
+    ],
+    "archetype": "street_skate_snapback_sparks",
+    "channel_id": "17",
+    "visual_hook": "Athletic adrenaline: Street Skater Graphic Snapback radiates authentic urban skate energy and kinetic sparks.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/RLHyrUDXw0WlNQL5MQaVf?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/uMhjqjGfqWqfR9FdJrmFf?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/e2r7A9nPapZJ6dceA00Ad?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
