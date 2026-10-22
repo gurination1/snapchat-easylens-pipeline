@@ -11162,7 +11162,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/4JhAYF3FWs56BRdvnv7vd?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/u7N07Kgqiwwuo0H5L4Xgm?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11278,6 +11278,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/hJQGwpTYjerUzl1pY7YF1?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/AGMJznl2GC2qFUB8JZzaw?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-22T03:26:18Z",
+    "account_id": "4",
+    "lens_name": "Aphrodite",
+    "lens_id": "48d7a50c-1cc5-4b27-b3c8-39725489e5d4",
+    "checkpoint_id": "06ad97e6-c7b5-7652-8000-d71d7fcb03c8",
+    "prompt": "Iridescent mother-of-pearl scallop seashell tiara adorned with floating baroque freshwater pearls and crystalline seafoam bubbles. Opening mouth releases swirling oceanic sea-auroral sparkles with floating luminescent pearl bubbles; smiling illuminates high-glamour pearlescent skin sheen and warm Aegean sunlight; eyebrow raise expands seashell crest; head tilt sways floating pearls. Celestial goddess beauty. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "greek",
+      "mythology",
+      "olympus",
+      "zeus",
+      "medusa",
+      "aphrodite",
+      "apollo",
+      "hades"
+    ],
+    "archetype": "aphrodite_seafoam_pearl",
+    "channel_id": "8",
+    "visual_hook": "Godly transformation: Aphrodite Seafoam Scallop Pearl Tiara elevates user to mythical Olympian beauty.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/alrqmp9xSfloWD8LLyULK?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/IuuT8cUpPlRfC0W3g9HSF?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/u2itlUkGDvoygwAygLZ3F?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
