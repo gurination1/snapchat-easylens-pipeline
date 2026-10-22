@@ -11251,5 +11251,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/HrOHIHZvNmc9oZlY3Vb1Z?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-22T02:06:35Z",
+    "account_id": "1",
+    "lens_name": "Clean Girl",
+    "lens_id": "9a28f06a-39c9-4245-a184-b1a94c836ea9",
+    "checkpoint_id": "06ad96c5-bba7-71f8-8000-7467abc8c636",
+    "prompt": "Natural no-makeup velvet skin texture with fluffy laminated brow lift and dewy honey lip glaze. Opening mouth floats warm golden shimmer dust; smiling activates soft natural ring-light reflections in pupils; eyebrow raise sharpens defined brow arches; head tilt catches subtle high-point cheekbone glints. Clean minimalist viral luxury, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "glow",
+      "glassskin",
+      "goldenhour",
+      "freckles",
+      "glam",
+      "aesthetic",
+      "filter"
+    ],
+    "archetype": "clean_girl_soft_glam",
+    "channel_id": "9",
+    "visual_hook": "Irresistible beauty glow-up: Clean Girl Minimalist Velvet Skin perfects natural beauty with effortless elegance.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/Zyg69BzrwMOmfSWgwumr0?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/hJQGwpTYjerUzl1pY7YF1?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/AGMJznl2GC2qFUB8JZzaw?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
