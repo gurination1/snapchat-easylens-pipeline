@@ -11191,7 +11191,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/eRjBM7NyCitOiBtRM7xzQ?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/vWkHBGUwV2nl2n1dn2d8m?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11307,6 +11307,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/IuuT8cUpPlRfC0W3g9HSF?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/u2itlUkGDvoygwAygLZ3F?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-22T04:04:43Z",
+    "account_id": "5",
+    "lens_name": "Royal Climbing",
+    "lens_id": "432ce306-07d7-4b3c-8ab0-8c2ec4f6a338",
+    "checkpoint_id": "06ad987d-99ed-7751-8000-8663ac417630",
+    "prompt": "Intricately sculpted English garden climbing diadem of deep crimson and blush roses with gold-tipped thorns contouring temples and brow. Ray-traced water droplets cling to velvety petals. Opening mouth releases swirling shower of soft falling rose petals; smiling activates dewy English rose cheek flush and glossy lip shine; eyebrow raise unfolds rosebuds into full blossoms; head tilt catches sparkling morning dew glints. Regal romantic luxury, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "floral",
+      "flowers",
+      "butterfly",
+      "nature",
+      "botanical",
+      "wreath",
+      "tiara",
+      "bloom"
+    ],
+    "archetype": "royal_english_rose_diadem",
+    "channel_id": "14",
+    "visual_hook": "Botanical nature majesty: Royal Climbing Rose Diadem crowns face with timeless English romantic grandeur.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/1m3BUBSWM0Uhyzlg0wHfX?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/gSVJpjorTS5y0Nesl3IDS?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/51bcD0Luv4HEP8aSYebEw?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
