@@ -11278,7 +11278,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/hJQGwpTYjerUzl1pY7YF1?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/AGMJznl2GC2qFUB8JZzaw?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11394,6 +11394,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/u0JM3LtLvR0vP1EXHlRW2?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/wvdmxIJqv4G4noTgxiZA1?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-22T18:39:35Z",
+    "account_id": "1",
+    "lens_name": "Flappy Bunny",
+    "lens_id": "96698ac6-4f08-46f1-8ae6-cda3d214af30",
+    "checkpoint_id": "06ada54f-54e7-71bf-8000-0430008040f9",
+    "prompt": "Floating pastel cloud platform game anchored across brow with hopping 3D animated bunny. Head tilt left or right steers bunny between cloud platforms; opening mouth triggers super-jump spring with rainbow sparkles; smiling collects floating golden stars with melodic chime cascades; eyebrow raise changes cloud theme. Addictive retro platformer, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "game",
+      "arcade",
+      "challenge",
+      "interactive",
+      "racer",
+      "catcher",
+      "reflex",
+      "viral"
+    ],
+    "archetype": "bunny_cloud_jumper",
+    "channel_id": "6",
+    "visual_hook": "Addictive gamified AR: Flappy Bunny Cloud Jumper delivers addictive infinite-jumper mechanics with head-tilt steering.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/urLr8ZpWHIJih6TrQrz4O?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/qy5awugtNY8k24YjXzUst?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/GIl60CRztisklwR7aneXK?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
