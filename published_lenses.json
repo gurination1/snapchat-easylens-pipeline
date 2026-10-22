@@ -11249,7 +11249,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/Cw630YPMlaiMzpbYWhYZ1?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/HrOHIHZvNmc9oZlY3Vb1Z?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11365,6 +11365,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/rodPvpFp8mcaygSee1lDN?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/RNtUqOycHvY27iof5CygO?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-22T13:50:26Z",
+    "account_id": "3",
+    "lens_name": "Apollo",
+    "lens_id": "c261bb81-03f9-4475-864f-27f92cc545df",
+    "checkpoint_id": "06ada10e-b850-7f2c-8000-5e89a9f2e5bb",
+    "prompt": "Realistic 3D Apollo astronaut helmet contoured over head with curved reflective 24k gold-coated sun-visor mirroring the Earth and lunar horizon. PBR brushed aerospace composite with micro-thrusters. Opening mouth vents pressurized white nitrogen gas plumes from helmet valves; smiling pulses blue HUD status ring on collar; eyebrow raise flares lunar sunburst off visor; head tilt reflects rotating Earth. Epic space exploration, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "space",
+      "astronaut",
+      "helmet",
+      "orbiting",
+      "planetarium",
+      "nebula",
+      "cosmic",
+      "aesthetic"
+    ],
+    "archetype": "apollo_astronaut_helmet",
+    "channel_id": "10",
+    "visual_hook": "Epic cosmic journey: Apollo Gold-Visor Astronaut Helmet locks user into full-fidelity space exploration in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/i3r3wuT177kcnZepYAheX?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/u0JM3LtLvR0vP1EXHlRW2?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/wvdmxIJqv4G4noTgxiZA1?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
