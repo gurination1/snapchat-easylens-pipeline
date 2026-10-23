@@ -11773,5 +11773,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/d2uqJkjtOgA61Ltl1op9z?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-23T11:35:43Z",
+    "account_id": "2",
+    "lens_name": "Zeus Olympian",
+    "lens_id": "0c1082d8-6fa4-4d19-ad9f-78ce1e40993d",
+    "checkpoint_id": "06adb429-e877-7b70-8000-7cb3ce4e672b",
+    "prompt": "Sculpted beaten 24k gold lightning-bolt laurel wreath resting on brow with crackling electric blue plasma arcs. Opening mouth summons blinding celestial thunderbolt shockwave with booming lightning bolts arcing across temples; smiling illuminates glowing electric blue gaze; eyebrow raise sparks crackling plasma crown; head tilt discharges golden lightning sparks. Supreme deity power, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "greek",
+      "mythology",
+      "olympus",
+      "zeus",
+      "medusa",
+      "aphrodite",
+      "apollo",
+      "hades"
+    ],
+    "archetype": "zeus_olympian_thunder",
+    "channel_id": "8",
+    "visual_hook": "Godly transformation: Zeus Olympian Thunderbolt Laurel crowns user with crackling divine authority in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/hwYtj5vEMIbKJDMLt42Uw?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/9D3nZymJ2xOLzuwEOT3Xd?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/PPUBlipduuZMxkhOtEKVm?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
