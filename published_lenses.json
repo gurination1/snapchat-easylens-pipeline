@@ -11539,7 +11539,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/uMhjqjGfqWqfR9FdJrmFf?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/e2r7A9nPapZJ6dceA00Ad?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11656,6 +11656,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/j3TR99vbZxcgfJEwIm6Wu?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-23T04:10:18Z",
+    "account_id": "3",
+    "lens_name": "Golden Sunflower",
+    "lens_id": "9a0e8a11-a128-46a6-99d9-429f47cf8404",
+    "checkpoint_id": "06adadab-954a-7691-8000-a01ac8f313db",
+    "prompt": "Lush headdress of sculpted velvet sunflowers and golden marigolds crowned with dewy honey-amber droplets resting along hairline. Warm 2800K summer solstice lighting with volumetric sunbeams. Opening mouth releases cascading cloud of glowing golden pollen dust floating around temples; smiling triggers radiant sun-halo eye flares and warm peach cheek bloom; eyebrow raise blooms outer sunflower petals; head tilt sways golden petals. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "floral",
+      "flowers",
+      "butterfly",
+      "nature",
+      "botanical",
+      "wreath",
+      "tiara",
+      "bloom"
+    ],
+    "archetype": "golden_sunflower_marigold_crown",
+    "channel_id": "14",
+    "visual_hook": "Botanical nature majesty: Golden Sunflower & Marigold Solstice Crown frames selfies in lush golden-hour floral warmth.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/7QmriJSNgGw2fZXNPFFv1?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/V2cYyT26a4BaBgzBqeekL?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/iJ7MNcjT2evbgni49VPFa?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
