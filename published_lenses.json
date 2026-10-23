@@ -11744,5 +11744,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/dpj0fDnl9Y5vt4jj8lVCJ?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-23T10:54:57Z",
+    "account_id": "5",
+    "lens_name": "Angel Aura",
+    "lens_id": "30e5c642-6b66-4179-8d33-e54eb9105872",
+    "checkpoint_id": "06adb391-f7ae-7a72-8000-117e169c2c87",
+    "prompt": "Ethereal pearlescent skin filter with pastel cloud blush and floating celestial micro-sparkles. Opening mouth summons gentle floating iridescent pearl orbs orbiting hair; smiling creates luminous high-fashion skin radiance and winged lash lift; eyebrow raise flares delicate pastel rainbow brow corona; head tilt shifts opalescent pink-to-gold cheek sheen. Dreamy aesthetic, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "beauty",
+      "glow",
+      "glassskin",
+      "goldenhour",
+      "freckles",
+      "glam",
+      "aesthetic",
+      "filter"
+    ],
+    "archetype": "angel_aura_ethereal",
+    "channel_id": "9",
+    "visual_hook": "Irresistible beauty glow-up: Angel Aura Iridescent Dew enchants selfies with ethereal heavenly glow.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/iTBkGoIqFcqCVP0ZLGSyg?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/BFlekP72qjlFHYI0NgrQo?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/d2uqJkjtOgA61Ltl1op9z?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
   }
 ]
