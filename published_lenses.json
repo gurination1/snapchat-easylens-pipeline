@@ -11684,7 +11684,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/V2cYyT26a4BaBgzBqeekL?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/iJ7MNcjT2evbgni49VPFa?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11800,6 +11800,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/9D3nZymJ2xOLzuwEOT3Xd?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/PPUBlipduuZMxkhOtEKVm?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-23T15:07:51Z",
+    "account_id": "3",
+    "lens_name": "12 Zodiac Golden",
+    "lens_id": "c911308a-17ab-41e2-9f03-e5a5394b133f",
+    "checkpoint_id": "06adb74b-e437-7f1e-8000-078d09f31ae8",
+    "prompt": "Floating celestial crown of spinning 24k gold astrological glyphs and connected starlight constellation lines orbiting above hairline. Opening mouth triggers cosmic alignment shockwave releasing expanding nebula gas cloud and floating golden star clusters; smiling flashes user's zodiac sign in brilliant gold flare; eyebrow raise accelerates constellation rotation; head tilt tilts orbital plane. Supreme astrological majesty, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "zodiac",
+      "astrology",
+      "constellation",
+      "elemental",
+      "fire",
+      "ocean",
+      "storm",
+      "earth"
+    ],
+    "archetype": "zodiac_constellation_corona",
+    "channel_id": "18",
+    "visual_hook": "Cosmic elemental majesty: 12 Zodiac Golden Constellation Corona crowns creator with personal destiny power in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/wRp9i1R4k14Gv0Np4oEt0?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/B1uDsToPnWwLOIpS7wzyH?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/FFeZGobXDitHFHGJvvSaA?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
