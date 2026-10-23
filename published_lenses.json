@@ -11597,7 +11597,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/Nwqd97Ho0aHWpuF96L6l6?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/OLJ9X3TDPWFCD7cO1jWCR?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11713,6 +11713,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/PTpz6QfVYQNNplj1Fg76e?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/E8o12jDJAMr6J03djcfLD?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-23T10:14:51Z",
+    "account_id": "4",
+    "lens_name": "Head-Tilt Neon",
+    "lens_id": "8eba529c-3a84-4a75-a060-d2e53ac98ea0",
+    "checkpoint_id": "06adb300-af1b-7a53-8000-da09fe20064f",
+    "prompt": "Sleek aerodynamic 3D neon cyber speeder hovercraft anchored above brow navigating floating neon obstacle gates. Head tilt left or right banks and steers the speeder smoothly with kinetic thruster trails; opening mouth triggers hyper-boost nitro warp with chromatic speed lines; smiling clears obstacle gates with sonic blast ring; eyebrow raise flares dual ion engine exhausts. High-velocity AR gameplay, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "game",
+      "arcade",
+      "challenge",
+      "interactive",
+      "racer",
+      "catcher",
+      "reflex",
+      "viral"
+    ],
+    "archetype": "tilt_speed_racer",
+    "channel_id": "6",
+    "visual_hook": "Addictive gamified AR: high-velocity Head-Tilt Neon Speeder puts players in the cockpit with instant responsive steering.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/2aGitO2gYo1iMo3PMfhTk?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/nLyp1CoHqh5dS9eFazhTR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/dpj0fDnl9Y5vt4jj8lVCJ?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
