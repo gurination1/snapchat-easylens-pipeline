@@ -11599,5 +11599,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/OLJ9X3TDPWFCD7cO1jWCR?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-23T02:49:55Z",
+    "account_id": "5",
+    "lens_name": "Tactical Orbital",
+    "lens_id": "8bbf6ff2-3275-402b-896b-c19154eb00ab",
+    "checkpoint_id": "06adac7f-951e-7c2a-8000-9ca5c48e8d70",
+    "prompt": "Matte carbon-fiber ballistic monocle anchored over right eye and brow with micro-aperture ring. Anisotropic PBR reflections, ray-traced shadows. Opening mouth projects 3D floating volumetric wireframe ring expanding into space; smiling pulses glowing red optic beam flare across lens; eyebrow raise projects rotating micro-aperture rings; head tilt shifts ballistic carbon reflections. Pure 3D assets, zero screen text. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "cyberpunk",
+      "visor",
+      "camcorder",
+      "vhs",
+      "optics",
+      "hud",
+      "scifi",
+      "aesthetic"
+    ],
+    "archetype": "tactical_orbital_monocle",
+    "channel_id": "2",
+    "visual_hook": "Futuristic silhouette: high-tech Tactical Orbital Monocle locks onto brow with micro-servo precision in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/6cSgqCycBJayIcBhSVK8i?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/COtupqhbQgyg6WAlwICjx?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/pyP8EmdAv1HAXdyROGA24?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
