@@ -11628,5 +11628,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/pyP8EmdAv1HAXdyROGA24?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-23T03:30:23Z",
+    "account_id": "2",
+    "lens_name": "Cursed Spirit",
+    "lens_id": "747c7bc9-8089-4c6f-a6b7-3655c8ae32eb",
+    "checkpoint_id": "06adad18-ab01-7333-8000-fbb94062ae61",
+    "prompt": "Weathered linen sorcerer talisman headband anchored across forehead inscribed with glowing vermilion sealing glyphs and creeping black ink curse marks around cheekbones. Opening mouth unleashes billowing vortex of purple cursed spirit flames and swirling ink tentacles; smiling clears curse marks into serene purification glow; eyebrow raise ignites talisman in crimson fire; head tilt sways linen ribbons. Dark anime sorcery, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "manga",
+      "anime",
+      "shonen",
+      "supersaiyan",
+      "aura",
+      "comic",
+      "speedlines",
+      "scouter"
+    ],
+    "archetype": "cursed_spirit_seal_headband",
+    "channel_id": "16",
+    "visual_hook": "High-octane anime power: Cursed Spirit Talisman Headband summons thrilling dark anime sorcerer power.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/9tg6iNPf4brG6j3c1G5Ec?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/ugX6uPXRzafjMnV3WCZ2g?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/j3TR99vbZxcgfJEwIm6Wu?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
