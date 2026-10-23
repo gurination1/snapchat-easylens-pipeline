@@ -11452,7 +11452,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/XRosQm00ySDSUzDzXKmfG?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/KiqmtgCytid8ph2mL7uKw?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11568,6 +11568,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/d2NokwV8gzVCneSZ0injy?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/xd69N0aJLVJCwsVsHLThe?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-23T02:08:20Z",
+    "account_id": "4",
+    "lens_name": "Viral Green Flag",
+    "lens_id": "f18b263e-e1a2-4ab9-a9db-d117bc3f7176",
+    "checkpoint_id": "06adabe1-39b4-7cd8-8000-42c3bea05851",
+    "prompt": "Curved holographic twin flag scanner floating above forehead alternating between emerald green and crimson red neon beacons. Smiling or head tilt snaps the scanner to reveal hilarious random verdict badge with explosive green confetti or dramatic red siren flash; opening mouth resets scanner for friends; eyebrow raise speeds up alternating frequency. Viral friendship/couple challenge magnet, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "cupid",
+      "love",
+      "redflag",
+      "greenflag",
+      "soulmate",
+      "crush",
+      "relationship",
+      "viral"
+    ],
+    "archetype": "flag_scanner_halo",
+    "channel_id": "15",
+    "visual_hook": "Viral social challenge: Green Flag Red Flag Scanner fuels endless couple debates and friend roast videos.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/Kh0lG8MP1qYXS32pTngCV?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Nwqd97Ho0aHWpuF96L6l6?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/OLJ9X3TDPWFCD7cO1jWCR?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
