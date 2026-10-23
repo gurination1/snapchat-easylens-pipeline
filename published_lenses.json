@@ -11771,7 +11771,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/BFlekP72qjlFHYI0NgrQo?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/d2uqJkjtOgA61Ltl1op9z?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11887,6 +11887,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/sOgY0QS5igjXzqxkZdgfX?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/OyGzZpU1Yeac8P76xuye3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-23T23:45:03Z",
+    "account_id": "5",
+    "lens_name": "Pastel Pandacorn",
+    "lens_id": "4eaf33b8-9b12-486b-aeec-7700c7a99868",
+    "checkpoint_id": "06adbedb-f5a4-7325-8000-bd5f6c46ba83",
+    "prompt": "Round fluffy panda bear ears flanking a twisting iridescent pearlescent unicorn horn at center brow with floating bamboo leaf sparkles. Opening mouth detonates pastel rainbow light beam shockwave forward with floating smiling star particles; smiling illuminates pearlescent cheek sheen and rainbow eye catches; eyebrow raise spirals horn light beam; head tilt catches prismatic horn caustics. Magical kawaii transformation, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "kawaii",
+      "anime",
+      "catears",
+      "bunny",
+      "kitsune",
+      "chibi",
+      "pastel",
+      "cute"
+    ],
+    "archetype": "pandacorn_rainbow_horn",
+    "channel_id": "13",
+    "visual_hook": "Viral kawaii charm: Pastel Pandacorn Bear Ears enchants selfies with iridescent pastel unicorn horn magic.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/Vt7woS9G7oq6G9krwruoo?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/GaA9uHKhl78XDT4diP8kl?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/hVvZ7U0u147PZYb2jmcev?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
