@@ -11423,7 +11423,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/qy5awugtNY8k24YjXzUst?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/GIl60CRztisklwR7aneXK?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11539,6 +11539,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/uMhjqjGfqWqfR9FdJrmFf?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/e2r7A9nPapZJ6dceA00Ad?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-23T00:45:44Z",
+    "account_id": "1",
+    "lens_name": "Which Vibe Are",
+    "lens_id": "e361b406-f5ea-4698-8e76-28354321ebe7",
+    "checkpoint_id": "06adaaa9-1f4d-70c9-8000-2d5e73b482b2",
+    "prompt": "High-energy floating neon cards flipping rapidly above brow with viral mood titles. Blinking or smiling locks the winner in a burst of sparkling neon confetti and celebratory sound chimes; opening mouth spins cards into hyper-speed blur; eyebrow raise resets the shuffle; head tilt tilts cards toward camera. Viral social challenge magnet, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "randomizer",
+      "wheel",
+      "decision",
+      "tarot",
+      "vibe",
+      "quiz",
+      "interactive",
+      "viral"
+    ],
+    "archetype": "which_vibe_picker",
+    "channel_id": "11",
+    "visual_hook": "Viral interactive game: Which Vibe Are You? drives massive comment debates and social share velocity.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/O3E2QoIxWgCAHClX1LBjk?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/d2NokwV8gzVCneSZ0injy?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/xd69N0aJLVJCwsVsHLThe?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
