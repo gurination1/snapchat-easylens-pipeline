@@ -11568,7 +11568,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/d2NokwV8gzVCneSZ0injy?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/xd69N0aJLVJCwsVsHLThe?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11684,6 +11684,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/V2cYyT26a4BaBgzBqeekL?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/iJ7MNcjT2evbgni49VPFa?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-23T05:43:46Z",
+    "account_id": "1",
+    "lens_name": "Celestial Spirit",
+    "lens_id": "071ccf69-cef8-424b-93ed-180e379e8afb",
+    "checkpoint_id": "06adaf04-c50d-7824-8000-a4a473c8ba50",
+    "prompt": "Ethereal white fur spirit fox ears resting on crown with vermilion silk ribbons and twin floating azure foxfire orbs hovering near temples. Opening mouth unleashes swirling blizzard of glowing spirit sakura petals and azure flame motes; smiling illuminates warm golden anime eye flares and delicate red eye-corner liner; eyebrow raise flares foxfire brilliance; head tilt sways silk tassels. Dreamy anime spirit aesthetic, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "kawaii",
+      "anime",
+      "catears",
+      "bunny",
+      "kitsune",
+      "chibi",
+      "pastel",
+      "cute"
+    ],
+    "archetype": "ethereal_spirit_kitsune_ears",
+    "channel_id": "13",
+    "visual_hook": "Viral kawaii charm: Celestial Spirit Fox Kitsune Ears combines mythic beauty with mesmerizing foxfire orbs.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/teheMlyFhQr4kaAkDQndf?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/PTpz6QfVYQNNplj1Fg76e?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/E8o12jDJAMr6J03djcfLD?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
