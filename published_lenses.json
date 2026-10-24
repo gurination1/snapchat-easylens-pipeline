@@ -12150,5 +12150,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/pCHUJxmgRM0V6XBEL2seA?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-24T12:10:48Z",
+    "account_id": "4",
+    "lens_name": "Hidden Village",
+    "lens_id": "431a9ba2-3152-4551-8ec7-9cedffa4346e",
+    "checkpoint_id": "06adc9cd-57f3-77ba-8000-ff656e9b3f09",
+    "prompt": "Forged steel ninja forehead plate on dark navy cloth headband with carved leaf crest and twin floating shadow kunai blades orbiting temples. Opening mouth detonates classic cartoon shadow-clone white smoke poof with flying explosive tags; smiling glints metallic steel plate reflectively; eyebrow raise spins floating kunai blades rapidly; head tilt catches ray-traced steel highlights. Legendary ninja warrior AR, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "manga",
+      "anime",
+      "shonen",
+      "supersaiyan",
+      "aura",
+      "comic",
+      "speedlines",
+      "scouter"
+    ],
+    "archetype": "ninja_shadow_clone_headband",
+    "channel_id": "16",
+    "visual_hook": "High-octane anime power: Hidden Village Metal Headband delivers instant nostalgic ninja warrior transformation.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/DWHhfaA4yemXCj55wfDTv?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/BGVwMIRcgCp8IQYEP0VwF?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Eftv8zVFTWkXSew0lkMq3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
