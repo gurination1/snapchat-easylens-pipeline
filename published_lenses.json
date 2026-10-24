@@ -11829,7 +11829,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/B1uDsToPnWwLOIpS7wzyH?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/FFeZGobXDitHFHGJvvSaA?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11945,6 +11945,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/QRGODvSxVTCOVsVU2k29X?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/zyU8TyLmUfUEmjKthn93v?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-24T01:36:03Z",
+    "account_id": "3",
+    "lens_name": "Zero-G Chrome",
+    "lens_id": "dec1d105-9ce0-47ea-9d06-7a6d4916ff52",
+    "checkpoint_id": "06adc079-aa4c-7501-8000-f2dec727abfe",
+    "prompt": "Weightless 4D liquid chrome tesseract frame rotating smoothly above head with mirrored vertices. Anisotropic reflections, ray-traced contact shadows. Opening mouth triggers gravitational shockwave ripple warping ambient reflections; smiling flashes prismatic chromatic aberration rings along cheek contours; eyebrow raise accelerates tesseract 4D rotation; head tilt distorts liquid chrome vertices. Y3K surrealism, zero strobing. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "surreal",
+      "chrome",
+      "mercury",
+      "y3k",
+      "zerog",
+      "halo",
+      "fluid",
+      "aesthetic"
+    ],
+    "archetype": "hypercube_tesseract_halo",
+    "channel_id": "5",
+    "visual_hook": "Hypnotic Y3K surrealism: zero-G Zero-G Chrome Tesseract Halo ripples with warped environmental reflections in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/FxY6V0Hp04TJ62K4XDqHt?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/tNvvBvdicRktxVZl7tyj0?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/6HMn83EPb2nqAXxzD8dPp?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
