@@ -12121,5 +12121,34 @@
     "icon_url": "https://cf-st.sc-cdn.net/d/Wi1o7VpzCent3M3hJ6WkC?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-24T07:47:13Z",
+    "account_id": "1",
+    "lens_name": "Floating Zero-G",
+    "lens_id": "96eaddc0-e2f0-4f9b-a77e-af21715f2050",
+    "checkpoint_id": "06adc5f3-1b1d-7f80-8000-79f9fa242d4c",
+    "prompt": "Suspended constellation of zero-G liquid mercury droplets hovering around temples and brow with fluid surface tension. Opening mouth surges droplets together into undulating chrome headpiece; smiling shatters geometry into shimmering cloud of mirror-finish micro-spheres; eyebrow raise freezes mercury droplets into floating sharp crystals; head tilt sends fluid droplet wave dancing around brow. Seamless physics AR. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "surreal",
+      "chrome",
+      "mercury",
+      "y3k",
+      "zerog",
+      "halo",
+      "fluid",
+      "aesthetic"
+    ],
+    "archetype": "quantum_mercury_droplets",
+    "channel_id": "5",
+    "visual_hook": "Hypnotic Y3K surrealism: zero-G Floating Zero-G Mercury Orb Field ripples with warped environmental reflections in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/8NF2aUTCfkJ2ifGHer5Qd?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/Lko31Wxr6zvqmTcO5rEPu?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/pCHUJxmgRM0V6XBEL2seA?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
   }
 ]
