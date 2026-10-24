@@ -11887,7 +11887,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/sOgY0QS5igjXzqxkZdgfX?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/OyGzZpU1Yeac8P76xuye3?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -12003,6 +12003,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/PoGAyxxhADugudcOahR32?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/2NpTbrdXDsZ4Fjaz35NYu?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-24T05:10:24Z",
+    "account_id": "4",
+    "lens_name": "Orbiting Solar",
+    "lens_id": "020f438f-e1f6-422c-add6-b7b6fa6c42f8",
+    "checkpoint_id": "06adc3a6-96ea-707d-8000-ac89799109cf",
+    "prompt": "Photorealistic 3D celestial planetarium orbiting user head with glowing Sun at crown, ringed Saturn, swirling Jupiter, and Earth traversing smooth elliptical orbits with floating stardust. Opening mouth triggers mini supernova starburst with expanding asteroid ring shockwave; smiling illuminates golden solar flare from brow; eyebrow raise expands planetary orbits; head tilt tilts Saturn ring plane. Kinetic space wonder, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "space",
+      "astronaut",
+      "helmet",
+      "orbiting",
+      "planetarium",
+      "nebula",
+      "cosmic",
+      "aesthetic"
+    ],
+    "archetype": "interstellar_orbiting_planetarium",
+    "channel_id": "10",
+    "visual_hook": "Epic cosmic journey: Orbiting Solar Planetarium Crown turns user into center of the universe with spinning celestial bodies.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/pjIulPA24jm7EwLDk5vY0?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/eOQowfk2Xt281B3rKHR6k?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/S2kAjsMi7x42TZKsRqbod?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
     "status": "pending"
   }
