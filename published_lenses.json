@@ -12119,7 +12119,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/FA6aOKjV8ls80qLEALfD9?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/Wi1o7VpzCent3M3hJ6WkC?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -12236,6 +12236,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/SvyibDIhTZ0sgLtFc3FTO?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": true,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-24T17:37:26Z",
+    "account_id": "3",
+    "lens_name": "80s Arcade Pixel",
+    "lens_id": "2d7d5755-73f1-4443-af22-3dc160913c78",
+    "checkpoint_id": "06adce96-8d7f-7b25-8000-eaab32f0109b",
+    "prompt": "Chunky 8-bit neon arcade visor contoured across brow with pixelated glowing coin insets and cathode-tube bloom. Opening mouth triggers explosive 8-bit pixel level-up burst with floating retro arcade stars; smiling pulses 1UP emerald glow; eyebrow raise charges pixel laser cannon; head tilt sweeps phosphor scanlines. Retro gaming gold, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "retro",
+      "80s",
+      "90s",
+      "70s",
+      "synthwave",
+      "vhs",
+      "camcorder",
+      "disco"
+    ],
+    "archetype": "arcade_80s_pixel",
+    "channel_id": "7",
+    "visual_hook": "Decades nostalgia hit: 80s Arcade Pixel CRT Visor sparks retro gaming euphoria with authentic 8-bit level-up bursts.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/qV5mk4FhbZHsythvm4dSK?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/bksepqV3ra7mfKzh8Iyr8?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/CZ9Y574lO3e7qDo0Dmnk3?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
     "status": "pending"
   }
 ]
