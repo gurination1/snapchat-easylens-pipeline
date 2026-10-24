@@ -11974,7 +11974,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/tNvvBvdicRktxVZl7tyj0?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/6HMn83EPb2nqAXxzD8dPp?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -12090,6 +12090,35 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/zYFtFJH9ARX0xfBzy0Vz8?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/zYem86bLLIGgcfNOZjKdR?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-24T07:07:37Z",
+    "account_id": "3",
+    "lens_name": "Kinetic Titanium",
+    "lens_id": "eacbc777-db01-4c39-9409-838e16285656",
+    "checkpoint_id": "06adc55a-fab7-77d9-8000-10c9ffc285cd",
+    "prompt": "Precision titanium wireframe smart spectacles docked to face, nose and brow with transparent optical prisms. Anisotropic reflections and ray-traced shadows. Opening mouth discharges floating 3D volumetric wireframe cubes expanding forward; smiling pulses high-speed emerald photon glints through lenses; eyebrow raise projects geometric laser matrix across brow; head tilt rotates floating wireframe cubes. Zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "cyberpunk",
+      "visor",
+      "camcorder",
+      "vhs",
+      "optics",
+      "hud",
+      "scifi",
+      "aesthetic"
+    ],
+    "archetype": "matrix_kinetic_spectacles",
+    "channel_id": "2",
+    "visual_hook": "Futuristic silhouette: high-tech Kinetic Titanium Smart Spectacles locks onto brow with micro-servo precision in 0.2s.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/YnZnSb1yBO6sFbJIN3pX5?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/FA6aOKjV8ls80qLEALfD9?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/Wi1o7VpzCent3M3hJ6WkC?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
     "status": "pending"
   }
