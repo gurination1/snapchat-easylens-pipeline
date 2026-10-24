@@ -11858,7 +11858,7 @@
     "preview_image_url": "https://cf-st.sc-cdn.net/d/r02EBthkv90uQfMunSIwX?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/cUHFdFe1Jm39EqCksAyOm?bo=EgkyAQRIAVALYAE%3D&uc=11",
-    "creator_rewards_enrolled": false,
+    "creator_rewards_enrolled": true,
     "status": "pending"
   },
   {
@@ -11975,6 +11975,35 @@
     "has_lens_icon": true,
     "icon_url": "https://cf-st.sc-cdn.net/d/6HMn83EPb2nqAXxzD8dPp?bo=EgkyAQRIAVALYAE%3D&uc=11",
     "creator_rewards_enrolled": false,
+    "status": "pending"
+  },
+  {
+    "timestamp": "2026-10-24T02:14:14Z",
+    "account_id": "1",
+    "lens_name": "Cursed Gothic",
+    "lens_id": "7341f4cd-2c1b-4618-a611-d1f6a7548a3b",
+    "checkpoint_id": "06adc112-f114-7cc5-8000-d3e144481699",
+    "prompt": "Chiseled ancient cathedral gargoyle stone crest anchored to brow with living glowing crimson eye fissures. Opening mouth cracks skin into ancient stone texture with billowing gothic incense smoke; smiling restores smooth alabaster marble sheen; eyebrow raise flares stone gargoyle wings; head tilt sways cathedral dust. Monumental stone metamorphosis, zero UI. Zero easing curves, no tweening, no UI sliders, pure 3D mesh only.",
+    "tags": [
+      "gothic",
+      "vampire",
+      "fangs",
+      "darkfantasy",
+      "bloodmoon",
+      "wraith",
+      "phantom",
+      "grunge"
+    ],
+    "archetype": "gargoyle_stone_cursed",
+    "channel_id": "12",
+    "visual_hook": "Dark fantasy power: Cursed Gothic Cathedral Gargoyle Crest transforms human features into living mythological stone.",
+    "has_preview_video": true,
+    "preview_url": "https://cf-st.sc-cdn.net/d/wr4sGxBYUOzGz5d64GSRh?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_preview_image": true,
+    "preview_image_url": "https://cf-st.sc-cdn.net/d/PoGAyxxhADugudcOahR32?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "has_lens_icon": true,
+    "icon_url": "https://cf-st.sc-cdn.net/d/2NpTbrdXDsZ4Fjaz35NYu?bo=EgkyAQRIAVALYAE%3D&uc=11",
+    "creator_rewards_enrolled": true,
     "status": "pending"
   }
 ]
